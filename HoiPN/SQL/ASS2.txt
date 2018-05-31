@@ -1,0 +1,6 @@
+4.SELECT * FROM `sinhvien` WHERE gender='N?' AND age>19;
+5.SELECT * FROM `sinhvien` WHERE name LIKE'%Nam';
+6.SELECT COUNT(class) As 'S? sinh viên FFSE1701' FROM sinhvien WHERE class='FFSE1701';
+7.DELETE FROM `sinhvien` WHERE age<18;
+8.UPDATE `sinhvien` SET `name` = 'Trung' WHERE name LIKE '%Nam';
+9.SELECT * FROM `sinhvien` ORDER BY age DESC LIMIT 3;
