@@ -1,0 +1,47 @@
+
+
+
+
+3.
+SELECT lms_students.code, lms_students.first_name, lms_countries.name AS nationality, countries.name AS country
+FROM lms_countries
+INNER JOIN lms_students
+ON lms_countries.id=lms_students.nationality
+INNER JOIN lms_countries AS countries
+ON countries.id=lms_students.country
+
+4.
+SELECT lms_students.code, lms_students.first_name, lms_countries.name AS nationality, countries.name AS country
+FROM lms_students
+INNER JOIN lms_countries
+ON lms_countries.id=lms_students.nationality
+INNER JOIN lms_countries AS countries
+ON countries.id=lms_students.country
+INNER JOIN lms_vietnam
+ON lms_students.province=lms_vietnam.id
+WHERE lms_vietnam.name<>'Ра N?ng'
+
+5.
+SELECT lms_students.code, lms_students.first_name, lms_vietnam.name AS province, countries.name AS country, lms_countries.name AS nationality
+FROM lms_students
+INNER JOIN lms_countries
+ON lms_countries.id=lms_students.nationality
+INNER JOIN lms_countries AS countries
+ON countries.id=lms_students.country
+INNER JOIN lms_vietnam
+ON lms_students.province=lms_vietnam.id
+ORDER BY lms_students.id DESC
+LIMIT 5
+
+
+Yeu cau nang cao
+1.
+SELECT lms_students.code, lms_students.first_name, lms_countries.name AS nationality, countries.name AS country
+FROM lms_students
+INNER JOIN lms_countries
+ON lms_countries.id=lms_students.nationality
+INNER JOIN lms_countries AS countries
+ON countries.id=lms_students.country
+ORDER BY birth_year ASC, birth_month ASC, birth_day ASC
+
+
