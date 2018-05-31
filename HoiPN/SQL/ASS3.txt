@@ -1,0 +1,38 @@
+3.
+SELECT lms_students.id, lms_students.code, lms_students.first_name, lms_countries.name AS nationality, lms_countries_1.name AS country
+FROM lms_students
+INNER JOIN lms_countries
+ON lms_students.nationality = lms_countries.id 
+INNER JOIN lms_countries AS lms_countries_1
+ON lms_students.country = lms_countries_1.id
+
+4.
+SELECT lms_students.id, lms_students.code, lms_students.first_name, lms_countries.name AS nationality, lms_countries_1.name AS country
+FROM lms_students
+INNER JOIN lms_countries
+ON lms_students.nationality = lms_countries.id
+INNER JOIN lms_countries AS lms_countries_1
+ON lms_students.country = lms_countries_1.id
+INNER JOIN lms_vietnam
+ON  lms_students.province = lms_vietnam.id
+WHERE lms_vietnam.name <> 'Ðà N?ng'
+
+5.
+SELECT lms_students.id, lms_students.code, lms_students.first_name,lms_vietnam.name AS 'Thành ph?', lms_countries.name AS nationality, lms_countries_1.name AS country
+FROM lms_students
+INNER JOIN lms_countries
+ON lms_students.nationality = lms_countries.id
+INNER JOIN lms_countries AS lms_countries_1
+ON lms_students.country = lms_countries_1.id
+INNER JOIN lms_vietnam
+ON  lms_students.province = lms_vietnam.id
+ORDER BY code DESC LIMIT 5
+
+1. 
+SELECT lms_students.id, lms_students.code, lms_students.first_name, lms_countries.name AS nationality, lms_countries_1.name AS country
+FROM lms_students
+INNER JOIN lms_countries
+ON lms_students.nationality = lms_countries.id 
+INNER JOIN lms_countries AS lms_countries_1
+ON lms_students.country = lms_countries_1.id
+ORDER BY birth_year,birth_month,birth_day ASC
