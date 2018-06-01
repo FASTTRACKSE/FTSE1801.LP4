@@ -1,7 +1,36 @@
-1. SELECT lms_students.code,lms_students.first_name,lms_students.nationality,lms_countries.name FROM `lms_students` INNER JOIN lms_countries ON lms_students.nationality=lms_countries.id
+﻿1. SELECT lms_students.code,lms_students.first_name,lms_students.nationality,lms_countries.name 
+FROM `lms_students` 
+INNER JOIN lms_countries 
+ON lms_students.nationality=lms_countries.id
 
-2. SELECT lms_students.code,lms_students.first_name,lms_students.nationality,lms_vietnam.name,lms_countries.name FROM lms_students JOIN lms_countries ON lms_students.country= lms_countries.id JOIN lms_vietnam ON lms_students.province = lms_vietnam.id WHERE lms_vietnam.name<>'Đà Nẵng'
+2. SELECT lms_students.code,lms_students.first_name,
+lms_students.nationality,lms_vietnam.name,lms_countries.name 
+FROM lms_students 
+JOIN lms_countries 
+ON lms_students.country= lms_countries.id 
+JOIN lms_vietnam 
+ON lms_students.province = lms_vietnam.id 
+WHERE lms_vietnam.name<>'Đà Nẵng'
 
-3. SELECT lms_students.code,lms_students.first_name,lms_vietnam.name,lms_countries.name AS country,co.name AS nationality FROM `lms_students` INNER JOIN lms_vietnam ON lms_students.province=lms_vietnam.id INNER JOIN lms_countries ON lms_students.country=lms_countries.id INNER JOIN lms_countries AS co ON lms_students.nationality=co.id ORDER BY lms_students.code DESC LIMIT 5
+3. SELECT lms_students.code,lms_students.first_name,lms_vietnam.name,
+lms_countries.name AS country,co.name AS nationality 
+FROM `lms_students` 
+INNER JOIN lms_vietnam 
+ON lms_students.province=lms_vietnam.id 
+INNER JOIN lms_countries 
+ON lms_students.country=lms_countries.id 
+INNER JOIN lms_countries AS co 
+ON lms_students.nationality=co.id 
+ORDER BY lms_students.code DESC LIMIT 5
 
-4. SELECT lms_students.code,lms_students.first_name,lms_students.birth_day,lms_students.birth_month,lms_students.birth_year,lms_vietnam.name,lms_countries.name AS country,co.name AS nationality FROM `lms_students` INNER JOIN lms_vietnam ON lms_students.province=lms_vietnam.id INNER JOIN lms_countries ON lms_students.country=lms_countries.id INNER JOIN lms_countries AS co ON lms_students.nationality=co.id ORDER BY lms_students.birth_year, lms_students.birth_month, lms_students.birth_day ASC
+4. SELECT lms_students.code,lms_students.first_name,lms_students.birth_day,
+lms_students.birth_month,lms_students.birth_year,lms_vietnam.name,
+lms_countries.name AS country,co.name AS nationality 
+FROM `lms_students` 
+INNER JOIN lms_vietnam 
+ON lms_students.province=lms_vietnam.id 
+INNER JOIN lms_countries 
+ON lms_students.country=lms_countries.id 
+INNER JOIN lms_countries AS co 
+ON lms_students.nationality=co.id 
+ORDER BY lms_students.birth_year, lms_students.birth_month, lms_students.birth_day ASC
