@@ -1,6 +1,0 @@
-﻿SELECT * FROM `sinhvien` WHERE gender='Nữ' AND age>19;
-SELECT * FROM `sinhvien` WHERE name LIKE'%Nam';
-SELECT COUNT(class) As 'Số sinh viên FFSE1701' FROM sinhvien WHERE class='FFSE1701';
-DELETE FROM `sinhvien` WHERE age<18;
-UPDATE `sinhvien` SET `name` = 'Trung' WHERE name LIKE '%Nam';
-SELECT * FROM `sinhvien` ORDER BY age DESC LIMIT 3;

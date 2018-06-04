@@ -1,0 +1,1 @@
+INDEX VERSION 1.130+D:\FTSE1801.LP4\congmt\java\.metadata\.plugins\org.eclipse.jdt.core
