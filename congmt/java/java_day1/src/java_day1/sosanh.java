@@ -1,3 +1,5 @@
+package java_day1;
+
 import java.util.Scanner;
 
 public class sosanh {
@@ -7,9 +9,9 @@ public class sosanh {
 		Scanner myInput = new Scanner(System.in);
 		System.out.println("- Nhập vào số a : ");
 		a= myInput.nextInt();
-		System.out.println("- Nhập vào số b : ");
+		System.out.println("- Nhập vào số  b : ");
 		b= myInput.nextInt();
-		System.out.println("- Nhập vào số c : ");
+		System.out.println("- Nhập vào số  c : ");
 		c= myInput.nextInt();
 		x= Math.min(a,Math.min(b, c));
 		y= Math.max(a,Math.max(b, c));
