@@ -11,4 +11,4 @@
 
 
 ### Java
-1. [Bài 1 - Aassignment1]()
+1. [Bài 1 - Aassignment1](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/sonvd/java/Assignment1/src)
