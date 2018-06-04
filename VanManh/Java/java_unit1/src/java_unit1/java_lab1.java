@@ -22,7 +22,7 @@ public class java_lab1 {
 		lp3= input.nextDouble();
 		
 		diemTB=(lp1+lp2+lp3)/3;
-		//In ra há» tĂªn vĂ  Ä‘iá»ƒm tb
+		//In ra giá trị
 		System.out.print("<<"+hoten+">>"+"<<"+lp1+","+lp2+","+lp3+">>");
 		System.out.printf("%.2f",diemTB);
 
