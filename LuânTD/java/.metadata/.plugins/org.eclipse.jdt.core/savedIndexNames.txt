@@ -1,0 +1,3 @@
+INDEX VERSION 1.130+D:\Hoclaptrinh\FTSE1801.LP4\LuânTD\java\.metadata\.plugins\org.eclipse.jdt.core
+2423537032.index
+1847399044.index
