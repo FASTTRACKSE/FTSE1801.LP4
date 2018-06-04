@@ -1,0 +1,2 @@
+INDEX VERSION 1.130+D:\FTSE1801.LP4\HoiPN\Java\.metadata\.plugins\org.eclipse.jdt.core
+3139484087.index

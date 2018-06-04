@@ -1,0 +1,6 @@
+﻿2.  SELECT * FROM `sinhv` WHERE gender='nữ' AND age>19
+3.  SELECT * FROM `sinhv` WHERE name LIKE '%Nam'
+4.  SELECT COUNT(class) AS'số sinh viên FFSE1701 là:' FROM sinhv WHERE class='FFSE1701'
+5.  DELETE FROM `sinhv` WHERE age<18
+6.  UPDATE `sinhv` SET name='Trần Nguyên Trung' WHERE name LIKE '%Nam'
+7.  SELECT * FROM `sinhv` ORDER BY age DESC LIMIT 3
