@@ -70,13 +70,7 @@ public class ass1bai2 {
 		System.out.println("Số dấu phẩy động bên cạnh đối số đầu tiên theo hướng của đối số 2 của a là: "+x17);
 		System.out.println("Cosin của a là: "+x18);
 		System.out.println("Cosin hyperbol của a là: "+x19);
-		System.out.println("Sin hyperbol của a là: "+x20);
-		
-		
-		
-		
-		
-		
+		System.out.println("Sin hyperbol của a là: "+x20);	
 	}
 
 }
