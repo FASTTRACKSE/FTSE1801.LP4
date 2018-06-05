@@ -49,5 +49,26 @@ public class btvn2_hamMath {
 		double x19 = Math.tanh(a);
 		//Trả về giá trị dấu phẩy động liền kề dtheo hướng của vô cực dương.
 		double x20 = Math.nextUp(b);
+		System.out.println("Giá trị hàm Math.min của a, b, c =" + x);
+		System.out.println("Giá trị hàm Math.max của a, b, c =" + x1);
+		System.out.println("Giá trị hàm Math.pow của (a,3)   =" + x2);
+		System.out.println("Giá trị hàm Math.sqrt của a      =" + x3);
+		System.out.println("Giá trị hàm Math.abs của c       =" + x4);
+		System.out.println("Giá trị hàm Math.ceil của b      =" + x5);
+		System.out.println("Giá trị hàm Math.floor của b     =" + x6);
+		System.out.println("Giá trị hàm Math.round của b     =" + x7);
+		System.out.println("Giá trị hàm Math.random          =" + x8);
+		System.out.println("Giá trị hàm Math.toRadians của b =" + x9);
+		System.out.println("Giá trị hàm Math.toDegrees của b =" + x10);
+		System.out.println("Giá trị hàm Math.hypot của a, b  =" + x11);
+		System.out.println("Giá trị hàm Math.log của a       =" + x12);
+		System.out.println("Giá trị hàm Math.log10 của a     =" + x13);
+		System.out.println("Giá trị hàm Math.rint của b      =" + x14);
+		System.out.println("Giá trị hàm Math.signum của a    =" + x15);
+		System.out.println("Giá trị hàm Math.sin của a       =" + x16);
+		System.out.println("Giá trị hàm Math.sinh của a      =" + x17);
+		System.out.println("Giá trị hàm Math.tan của a       =" + x18);
+		System.out.println("Giá trị hàm Math.tanh của a      =" + x19);
+		System.out.println("Giá trị hàm Math.nextUp của b	 =" + x20);
 	}
 }

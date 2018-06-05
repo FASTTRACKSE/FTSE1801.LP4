@@ -9,7 +9,10 @@
 
 
 ### javacore
-
-
-
-
+# [javad1](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/thienpn/javarcore/javad1/src/javad1)
+1. [Assignment 1_bài 1](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/thienpn/javarcore/javad1/src/javad1/Asiment_bai_1.java)
+2. [Assignment 1_bài 2](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/thienpn/javarcore/javad1/src/javad1/Asiment_bai_2.java)
+3. [Bài tập trên lớp_bài 1](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/thienpn/javarcore/javad1/src/javad1/lap1.java)
+4. [Bài tập trên lớp_bài 2](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/thienpn/javarcore/javad1/src/javad1/lap1_bai_2.java)
+5. [Bài tập trên lớp_bài 3](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/thienpn/javarcore/javad1/src/javad1/lap1_bai_3.java)
+6. [Bài tập trên lớp_bài 4](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/thienpn/javarcore/javad1/src/javad1/lap1_bai_4.java)
