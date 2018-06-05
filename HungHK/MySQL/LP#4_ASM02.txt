@@ -1,0 +1,30 @@
+
+
+4.
+SELECT * FROM `sinhvien`
+WHERE gender=1 AND age>19
+
+5.
+SELECT * FROM `sinhvien`
+WHERE name LIKE "%Nam"
+
+6.
+SELECT COUNT(*) AS lop_FFSE1701
+FROM `sinhvien`
+WHERE class='FFSE1701'
+
+7.
+DELETE FROM `sinhvien`
+WHERE age<18
+
+
+Yeu cau nang cao
+
+1.
+UPDATE sinhvien SET name="Trung"
+WHERE name LIKE "%Nam"
+
+2.
+SELECT * FROM `sinhvien`
+ORDER BY age DESC
+LIMIT 3
