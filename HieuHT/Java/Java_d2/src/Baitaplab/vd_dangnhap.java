@@ -16,7 +16,7 @@ public class vd_dangnhap {
 			System.out.print("Password: ");
 			j = sc.nextInt();
 			if(j==pass) {
-				System.out.print("�?ăng nhập thành công");
+				System.out.print("Đăng nhập thành công");
 				break;
 			}
 			
