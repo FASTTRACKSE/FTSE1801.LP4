@@ -16,3 +16,10 @@
 4. [Bài tập trên lớp_bài 2](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/thienpn/javarcore/javad1/src/javad1/lap1_bai_2.java)
 5. [Bài tập trên lớp_bài 3](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/thienpn/javarcore/javad1/src/javad1/lap1_bai_3.java)
 6. [Bài tập trên lớp_bài 4](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/thienpn/javarcore/javad1/src/javad1/lap1_bai_4.java)
+
+# [java_d2](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/thienpn/javarcore/java_d2/src/java_d2)
+1. [Assignment 2_chuyendoisothanhchu](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/thienpn/javarcore/java_d2/src/java_d2/Assignment_chuyendoisothanhchu.java)
+2. [Bảng cửu chương](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/thienpn/javarcore/java_d2/src/java_d2/lap2_bangcuuchuong.java)
+3. [tính tiền điện](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/thienpn/javarcore/java_d2/src/java_d2/lap2_tinhtiendien.java)
+4. [Tìm số nguyên tố](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/thienpn/javarcore/java_d2/src/java_d2/vidu_2.java)
+5. [Đăng nhập](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/thienpn/javarcore/java_d2/src/java_d2/vidu_dangnhap.java)
