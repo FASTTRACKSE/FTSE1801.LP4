@@ -23,3 +23,7 @@
 3. [tính tiền điện](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/thienpn/javarcore/java_d2/src/java_d2/lap2_tinhtiendien.java)
 4. [Tìm số nguyên tố](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/thienpn/javarcore/java_d2/src/java_d2/vidu_2.java)
 5. [Đăng nhập](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/thienpn/javarcore/java_d2/src/java_d2/vidu_dangnhap.java)
+
+# [java_d3](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/thienpn/javarcore/java_d3/src/java_d3)
+# [java_d4](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/thienpn/javarcore/java_d4_mang/src/java_d4_mang)
+1. [Danh sách SV sắp xếp theo điểm và xếp loai](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/thienpn/javarcore/java_d4_mang/src/java_d4_mang/mang_danhsach_sv.java)
