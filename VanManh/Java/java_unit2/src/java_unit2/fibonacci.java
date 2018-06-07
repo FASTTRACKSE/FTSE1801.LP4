@@ -20,9 +20,6 @@ public class fibonacci {
 	        int f1 = 1;
 	        int fn = 1;
 	 
-//	        if (n < 0) {
-//	            return -1;
-//	        } else 
 	        if (n == 0 || n == 1) {
 	            return n;
 	        } else {
