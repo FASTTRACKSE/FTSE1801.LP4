@@ -32,8 +32,9 @@ public class lab2_menu {
 				case 4:
 					System.out.println("Kết thúc chương trình");
 					break;
+					
 				default:
-					System.out.println("Chức năng bạn chọn không có");
+					System.out.println("Chức năng bạn chọn không có, mời bạn nhập lại");
 			}
 		}while(n!=4);	
 	}
