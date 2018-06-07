@@ -11,4 +11,5 @@ Java Core Project
 5. [Bài tập 5 - Dăng nhập](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/HieuHT/Java/Java_d2/src/Baitaplab/vd_dangnhap.java)
 6. [Bài tập 6 - Tìm ước chung](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/HieuHT/Java/Java_d2/src/Baitaplab/vd_timUOC.java)
 7. [Bài tập 7 - XĐ số nguyên](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/HieuHT/Java/Java_d2/src/Baitaplab/xdsonguyen.java)
-8. [Bài tập 8]- 
+8. [Bài tập 8 -Bảng cửu chương](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/HieuHT/Java/Java_d2/src/Baitaplab/bangcuuchuong.java)
+9. [Bài tập 9 - Quản lý](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/HieuHT/Java/Java_d2/src/Baitaplab/Quanly.java)
