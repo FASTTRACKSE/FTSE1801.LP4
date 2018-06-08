@@ -52,11 +52,11 @@ public class vd1 {
 		return rs;
 	}
 	
-	public static Integer[] day_Fibonaci(int n) {
+	public static int[] day_Fibonaci(int n) {
 		int t1,t2;
 		t1=0;
 		t2=1;
-		Integer[] rs= new Integer[n];
+		int[] rs= new int[n];
 		rs[0]=0;
 		rs[1]=1;
 		if(n>2) {
@@ -69,7 +69,6 @@ public class vd1 {
 		}
 		return rs;
 	}
-	
 	public static int so_Fibonaci(int n) {
 		int t1,t2,so = 0;
 		t1=0;
@@ -93,13 +92,10 @@ public class vd1 {
 	
 	
 	public static void main(String args[]) {
-		System.out.println("Xin mời nhập số n");
-		Scanner sc = new Scanner(System.in);
-		int n = sc.nextInt();
-		//fibonaci(n);
-		Integer[] day_so=day_Fibonaci(n);
-		for(int x:day_so) {
-			System.out.println(x);
-		}
+		int tuoi=20;
+		System.out.printf("%3s| %-30s| %4s| %4s| \n","STT","Ho ten","Tuoi","Diem");
+		System.out.printf("%3s| %-30s| %4s|%5.2f| \n","1","Nguyen Van Nam",20,10.127);
+		System.out.printf("%3s| %-30s| %4s|%5.2f|\n","1","Nguyen Van Nam",20,7.123);
+		System.out.printf("%3s| %-30s| %4s|%5.2f| \n","123","Nguyen Van Nam",20,7.123);
 	}
 }

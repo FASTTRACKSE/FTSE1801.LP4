@@ -2,7 +2,7 @@
 public class bai2 {
 	public static void main(String[] args) {
 		//Cho 2 số a, b
-		int x = 9;
+		int x = -9;
 		int y = 15;
 		double z = Math.random();
 		//Tìm min, max
