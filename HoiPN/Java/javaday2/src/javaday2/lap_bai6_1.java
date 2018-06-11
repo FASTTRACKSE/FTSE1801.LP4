@@ -23,24 +23,21 @@ public class lap_bai6_1 {
 			}else {
 				xl[i]="Yếu";
 			}
-		
-			for(i=0;i<ten.length-1;i++) {		
-				for(int j =i;j<dtb.length;j++) {	
-					int[] vitri = {0,1,2};
-					if(dtb[vitri[i]] <dtb[vitri[j]]) {
-						int tam;
-						tam = vitri[i];
-						vitri[i] = vitri[j];
-						vitri[j] = tam;
-					}	
-				
-			
-			for(i=0;i<3;i++) {
-				System.out.println(ten[vitri[i]]+" "+dtb[vitri[i]]+" "+xl[vitri[i]]+".");
-			}
-				}
+		}
+		for(int i=0;i<ten.length-1;i++) {		
+			for(int j =i;j<dtb.length;j++) {	
+				int[] vitri = {0,1,2};
+				if(dtb[vitri[i]] <dtb[vitri[j]]) {
+					int tam;
+					tam = vitri[i];
+					vitri[i] = vitri[j];
+					vitri[j] = tam;
+				}	
 			}
 		}
+		for(int i=0;i<3;i++) {
+			int[] vitri = null;
+			System.out.println(ten[vitri[i]]+" "+dtb[vitri[i]]+" "+xl[vitri[i]]+".");
 		}
 	}
 }
