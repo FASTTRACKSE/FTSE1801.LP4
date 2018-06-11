@@ -2,41 +2,8 @@ package java_d2;
 
 import java.util.Scanner;
 
-public class lap2bai4 {
-	public static void main(String[] args) {
-		System.out.println("+---------------------------------------------------+\r\n" + 
-				"1.	Giải phương trình bậc nhất\n" + 
-				"2.	Giải phương trình bậc 2\n" + 
-				"3.	Tính tiền điện\n" + 
-				"4.	Kết thúc\r\n" + 
-				"+---------------------------------------------------+\n");
-		int n;
-		Scanner sc=new Scanner(System.in);
-		do {
-			System.out.print("Chọn chức năng: ");
-			n=sc.nextInt();
-			switch(n) {
-			case 1:
-			System.out.print(PTbac1());
-			break;
-			case 2:
-			System.out.print(PTbac2());
-			break;
-			case 3:
-			System.out.print(Dien());
-			case 4:
-			System.out.println("Kết thúc chương trình");
-			break;
-			default:
-			System.out.println("Nhập sai");
-			}
-			
-		}while(n>4);
-		
-		sc.close();
-		
-	}
-	public static String PTbac1() {
+public class ham {
+	public static void PT_bac1(String[] args) {
 		double a,b;
 		
 		Scanner sc=new Scanner(System.in);
@@ -55,11 +22,8 @@ public class lap2bai4 {
 			double x=-b/a;
 			System.out.println("PT có nghiệm là x= "+x);
 		}
-		sc.close();
-		return "";
 	}
-	public static String PTbac2() {
-		
+	public static void PT_bac2(String[] args) {
 		double a,b,c;
 		Scanner sc=new Scanner(System.in);
 		
@@ -94,11 +58,10 @@ public class lap2bai4 {
 				System.out.println("PT có 2 nghiệm x1= "+x1+", x2= "+x2);
 			}
 		}
-		sc.close();
-		
-		return"";
+
 	}
-	public static String Dien() {
+	public static void tiendien(String[] args) {
+		
 		int sodien,tien;
 		Scanner sc= new Scanner(System.in);
 		
@@ -111,10 +74,14 @@ public class lap2bai4 {
 			tien=50*1000+(sodien-50)*1200;
 			System.out.println("Số tiền phải trả là: "+tien);
 		}
-		sc.close();
-		return "";
+
 	}
-	
-	
+	public static void xeploai(String[] args) {
+		int diem;
+		Scanner sc=new Scanner(System.in);
+		
+		
+		
+	}
+
 }
-	
