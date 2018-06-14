@@ -55,8 +55,6 @@ public class SinhVien {
 		System.out.printf("%3s|  %-20s| %10s| %10s \n","1",sv2.gethoTen(),sv2.getdiemTB(),sv2.getxepLoai());
 
 		SinhVien sv3 = new SinhVien("Phạm",9);
-		System.out.printf("%3s|  %-20s| %10s| %10s \n","1",sv3.gethoTen(),sv3.getdiemTB(),sv3.getxepLoai());
-
-		
+		System.out.printf("%3s|  %-20s| %10s| %10s \n","1",sv3.gethoTen(),sv3.getdiemTB(),sv3.getxepLoai());	
 	}
 }
