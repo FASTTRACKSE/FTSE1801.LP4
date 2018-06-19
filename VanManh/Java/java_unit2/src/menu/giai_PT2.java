@@ -16,7 +16,7 @@ public class giai_PT2 {
 		
 		System.out.print("Nhập c:");
 		c = input.nextDouble();
-		
+		input.close();
 		delta = Math.pow(b,2) - (4 * a * c);
 		can_delta = Math.sqrt(delta);
 		 if(a==0) {
