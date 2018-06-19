@@ -10,4 +10,9 @@ public class GiaiPTBac1 {
 		String thu  = tenthu(so);
 		System.out.println(thu);
 	}
+
+	private static String tenthu(int so) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

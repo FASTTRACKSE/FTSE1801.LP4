@@ -3,10 +3,10 @@ package menu;
 import java.util.Scanner;
 
 public class tienDien {
-	public static void tienDien(String[] args){
+	public static void tiendien(String[] args){
 		
 		Scanner input = new Scanner(System.in);
-		
+		input.close();
 		System.out.println("Nhập số điện = ");
 		int soDien = input.nextInt();
 		

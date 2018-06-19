@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="java_buoi7.nhanvien"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="java_buoi7.SinhVienBai5"/>
+<fullyQualifiedTypeName name="QuanLySinhVien"/>
+<fullyQualifiedTypeName name="java_day9_keThua.TruongPhong"/>
+<fullyQualifiedTypeName name="java_day9_keThua.ChuNhat"/>
 <fullyQualifiedTypeName name="java.util.Scanner"/>
 </qualifiedTypeNameHistroy>
