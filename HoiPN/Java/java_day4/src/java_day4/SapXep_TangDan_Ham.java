@@ -14,6 +14,7 @@ public class SapXep_TangDan_Ham {
 		}
 		return sapxep;
 	}
+	
 	public  static void main(String[] args) {
 		Integer[] mang = {1,5,8,4,2,6,9,3,7};
 		mang = tang_dan(mang);
