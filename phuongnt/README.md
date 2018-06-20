@@ -10,7 +10,7 @@ MySQL & java
 
 ### java
 1. [Assignment 1](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/phuongnt/java/assignment1)
-2. [Assignment 2https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/phuongnt/java/assignment2
+2. [Assignment 2](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/phuongnt/java/assignment2)
 3. [Assignment 3](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/phuongnt/java/assignment3)
 4. [Assignment 4](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/phuongnt/java/assignment4)
 
