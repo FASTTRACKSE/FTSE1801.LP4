@@ -62,18 +62,15 @@ public class QlSinhVien {
 				break;
 			case 2:
 				System.out.println("Nhập id cần sửa: ");
-				int idUpdate = sc.nextInt();
-				
+				int idUpdate = sc.nextInt();			
 				quanLy.updateSV(idUpdate);
 				break;
 			case 3:
 				System.out.println("Nhập id cần xóa:  ");
-				int idDelete = sc.nextInt();
-				
+				int idDelete = sc.nextInt();		
 				quanLy.deleteSV(idDelete);
 				break;
 			case 4:
-			
 				quanLy.sortSV();
 			case 5:
 				
@@ -95,13 +92,17 @@ public class QlSinhVien {
 				sc.nextLine();
 				System.out.println("nhập họ tên: ");
 				String name = sc.nextLine();
+				listSV.get(i).setName(name);
 				System.out.println("Nhập tuổi: ");
 			 	int age = sc.nextInt();
+			 	listSV.get(i).setAge(age);
 				sc.nextLine();
 				System.out.println("Nhập địa chỉ: ");
 				String address = sc.nextLine();
+				listSV.get(i).setAddress(address);
 				System.out.println("Nhập điểm: ");
-				double gpa = sc.nextDouble();  
+				double gpa = sc.nextDouble(); 
+				listSV.get(i).setGpa(gpa);
 
 				update.setName(name);
 				update.setAge(age);

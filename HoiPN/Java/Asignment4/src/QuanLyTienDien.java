@@ -12,10 +12,10 @@ public class QuanLyTienDien {
 		listKhachHang.add(khachHang); 
 	}
 	public void show() {
-		System.out.printf("%-20s %-10s %-20s %-15s %-15s %-15s", "Họ tên", "Số nhà", "Mã số Công tơ", "Chỉ số cũ", "Chỉ Số mới", "Tổng tiền");
+		System.out.printf("%-20s %-10s %-20s %-15s %-15s %-15s \n", "Họ tên", "Số nhà", "Mã số Công tơ", "Chỉ số cũ", "Chỉ Số mới", "Tổng tiền");
 		System.out.println();
 		for (KhachHang khachHang: listKhachHang) {
-			System.out.printf("%-20s %-10s %-20s %-15s %-15s %-15s", khachHang.getHoTen(),khachHang.getSoNha(),khachHang.getMaSoCt(),khachHang.getChiSoCu(),khachHang.getChiSoMoi(),khachHang.getTongTien());
+			System.out.printf("%-20s %-10s %-20s %-15s %-15s %-15s \n", khachHang.getHoTen(),khachHang.getSoNha(),khachHang.getMaSoCt(),khachHang.getChiSoCu(),khachHang.getChiSoMoi(),khachHang.getTongTien());
 
 		}
 		System.out.println();
