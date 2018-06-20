@@ -46,11 +46,16 @@ public class QuanLySv {
 		        }
 		    }
 	public void deletelSV(int id) {
-    	for(int i=0;i<soluongSv;i++) {
+    	for(int i=0;i<listSinhVien.length-1;i++) {
     		
-    		listSinhVien[i]=listSinhVien[i+1];
-    		soluongSv=soluongSv-1;
+			if(listSinhVien[i].getId()== id) {
+    			for( int j=0;j<listSinhVien.length-1;j++) {
+    				listSinhVien[j]=listSinhVien[j+1];
+    			}
+    		}
     	}
+    	listSinhVien[listSinhVien.length-1]= null;
+    	soluongSv -=1;
     	
     	
     	

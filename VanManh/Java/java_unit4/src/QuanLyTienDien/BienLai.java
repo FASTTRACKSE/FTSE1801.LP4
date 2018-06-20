@@ -50,8 +50,12 @@ public class BienLai extends KhachHang {
 				System.out.print("Nhập địa chỉ : ");
 				String address = input.nextLine();
 
+				System.out.print("Nhập mã công tơ : ");
+				int maCongTo = input.nextInt();
+
 				quanLy.get(i).setName(ten);
 				quanLy.get(i).setAddress(address);
+				quanLy.get(i).setMaCongTo(maCongTo);
 				break;
 			}
 		}
@@ -68,15 +72,14 @@ public class BienLai extends KhachHang {
 	}
 
 	// Hiển thị khách hàng
-
 	public void show() {
-		System.out.printf("%-5s %-20s %-20s %-20s %-20s %-20s", "STT", "Tên", "Địa chỉ", "Số điện cũ", "Số điện mới",
-				"tiền điện");
+		System.out.printf("%-5s %-20s %-20s %-20s %-20s %-20s %-20s", "STT", "Tên", "Địa chỉ", "Mã công tơ",
+				"Số điện cũ", "Số điện mới", "tiền điện");
 		System.out.println();
 		for (int i = 0; i < quanLy.size(); i++) {
-			System.out.printf("\n %-5s %-20s %-20s %-20s %-20s %-20.1f", (i + 1), quanLy.get(i).getName(),
-					quanLy.get(i).getAddress(), quanLy.get(i).getSoDienCu(), quanLy.get(i).getSoDienMoi(),
-					quanLy.get(i).getTienDien());
+			System.out.printf("\n %-5s %-20s %-20s %-20s %-20s %-20s %-20.1f", (i + 1), quanLy.get(i).getName(),
+					quanLy.get(i).getAddress(), quanLy.get(i).getMaCongTo(), quanLy.get(i).getSoDienCu(),
+					quanLy.get(i).getSoDienMoi(), quanLy.get(i).getTienDien());
 		}
 		System.out.println();
 		System.out.println();
@@ -111,10 +114,13 @@ public class BienLai extends KhachHang {
 					System.out.print("Nhập địa chỉ : ");
 					String address = input.nextLine();
 
+					System.out.print("Nhập mã công tơ : ");
+					int maCongTo = input.nextInt();
+
 					System.out.print("Nhập số  điện : ");
 					int number = input.nextInt();
 
-					KhachHang khachHang = new KhachHang(name, address, 0, number);
+					KhachHang khachHang = new KhachHang(name, address, maCongTo, 0, number);
 					quanLy.addKhachHang(khachHang);
 					System.out.println();
 					System.out.print("Bạn có muốn nhập tiếp không (0:không | 1:Có) ");
@@ -167,7 +173,7 @@ public class BienLai extends KhachHang {
 			case 5:
 				quanLy.tienDien();
 				quanLy.show();
-				break;
+				break;	
 
 			case 0:
 				input.close();
