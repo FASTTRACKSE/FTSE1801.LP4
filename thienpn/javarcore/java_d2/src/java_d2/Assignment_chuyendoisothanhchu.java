@@ -9,7 +9,9 @@ public class Assignment_chuyendoisothanhchu {
 	  int tr =(n%1000)/100;
 	  int ch=((n%1000)%100)/10;
 	  int dv= n%10;
-  
+      String l = String.valueOf(n);
+      int b = l.length();
+	  
 	  if((ng==1)&&(tr==0)&&(ch==0)&&(dv==0))
 	  System.out.print("một Ngàn ");
 	  else if((ng==2)&&(tr==0)&&(ch==0)&&(dv==0))
@@ -28,7 +30,8 @@ public class Assignment_chuyendoisothanhchu {
 	  System.out.print("Tám Ngàn ");
 	  else if((ng==9)&&(tr==0)&&(ch==0)&&(dv==0))
 	  System.out.print("Chín Ngàn ");
-
+ 
+	  
 	  else if((ng==0)&&(tr==1)&&(ch==0)&&(dv==0))
 	  System.out.print("một Trăm ");
 	  else if((ng==0)&&(tr==2)&&(ch==0)&&(dv==0))
@@ -48,6 +51,7 @@ public class Assignment_chuyendoisothanhchu {
 	  else if((ng==0)&&(tr==9)&&(ch==0)&&(dv==0))
 	  System.out.print("Chín Trăm ");
 
+	  
 	  else if((ng==0)&&(tr==0)&&(ch==1)&&(dv==0))
 	  System.out.print(" Mươi ");
 	  else if((ng==0)&&(tr==0)&&(ch==2)&&(dv==0))
@@ -67,6 +71,7 @@ public class Assignment_chuyendoisothanhchu {
 	  else if((ng==0)&&(tr==0)&&(ch==9)&&(dv==0))
 	  System.out.print("Chín Mươi ");
 
+	  
 	  else if((ng==0)&&(tr==0)&&(ch==0)&&(dv==0))
 	  System.out.print(" Không ");
 	  else if((ng==0)&&(tr==0)&&(ch==0)&&(dv==1))
@@ -88,56 +93,139 @@ public class Assignment_chuyendoisothanhchu {
 	  else if((ng==0)&&(tr==0)&&(ch==0)&&(dv==9))
 	  System.out.print("Chín ");
 
+	  
 	  else
 	  {
-	  switch(ng) {
-	  case 1:System.out.print("một Ngàn ");break;
-	  case 2:System.out.print("Hai Ngàn ");break;
-	  case 3:System.out.print("Ba Ngàn ");break;
-	  case 4:System.out.print("bốn Ngàn ");break;
-	  case 5:System.out.print("Năm Ngàn ");break;
-	  case 6:System.out.print("Sáu Ngàn ");break;
-	  case 7:System.out.print("Bảy Ngàn ");break;
-	  case 8:System.out.print("Tám Ngàn ");break;
-	  case 9:System.out.print("Chín Ngàn ");break;
+	  if(b==4) {
+		  switch(ng) {
+		  case 1:System.out.print("một Ngàn ");break;
+		  case 2:System.out.print("Hai Ngàn ");break;
+		  case 3:System.out.print("Ba Ngàn ");break;
+		  case 4:System.out.print("bốn Ngàn ");break;
+		  case 5:System.out.print("Năm Ngàn ");break;
+		  case 6:System.out.print("Sáu Ngàn ");break;
+		  case 7:System.out.print("Bảy Ngàn ");break;
+		  case 8:System.out.print("Tám Ngàn ");break;
+		  case 9:System.out.print("Chín Ngàn ");break;
 
-	  }
-	  switch(tr) {
-	  case 0:System.out.print("Lẻ ");break;
-	  case 1:System.out.print("một Trăm ");break;
-	  case 2:System.out.print("Hai Trăm ");break;
-	  case 3:System.out.print("Ba Trăm ");break;
-	  case 4:System.out.print("bốn Trăm ");break;
-	  case 5:System.out.print("Năm Trăm ");break;
-	  case 6:System.out.print("Sáu Trăm ");break;
-	  case 7:System.out.print("Bảy Trăm ");break;
-	  case 8:System.out.print("Tám Trăm ");break;
-	  case 9:System.out.print("Chín Trăm ");break;
-	  }
-	  switch(ch) {
-	  case 0:System.out.print("Lẻ ");break;
-	  case 1:System.out.print("Mươi ");break;
-	  case 2:System.out.print("Hai Mươi ");break;
-	  case 3:System.out.print("Ba Mươi ");break;
-	  case 4:System.out.print("bốn Mươi ");break;
-	  case 5:System.out.print("Năm Mươi ");break;
-	  case 6:System.out.print("Sáu Mươi ");break;
-	  case 7:System.out.print("Bảy Mươi ");break;
-	  case 8:System.out.print("Tám Mươi ");break;
-	  case 9:System.out.print("Chín Mươi ");break;
-	  }
-	  switch(dv) {
+		  }
+		  switch(tr) {
+		  case 0:System.out.print("Lẻ ");break;
+		  case 1:System.out.print("một Trăm ");break;
+		  case 2:System.out.print("Hai Trăm ");break;
+		  case 3:System.out.print("Ba Trăm ");break;
+		  case 4:System.out.print("bốn Trăm ");break;
+		  case 5:System.out.print("Năm Trăm ");break;
+		  case 6:System.out.print("Sáu Trăm ");break;
+		  case 7:System.out.print("Bảy Trăm ");break;
+		  case 8:System.out.print("Tám Trăm ");break;
+		  case 9:System.out.print("Chín Trăm ");break;
+		  }
+		  switch(ch) {
+		  case 0:System.out.print("Lẻ ");break;
+		  case 1:System.out.print("Mươi ");break;
+		  case 2:System.out.print("Hai Mươi ");break;
+		  case 3:System.out.print("Ba Mươi ");break;
+		  case 4:System.out.print("bốn Mươi ");break;
+		  case 5:System.out.print("Năm Mươi ");break;
+		  case 6:System.out.print("Sáu Mươi ");break;
+		  case 7:System.out.print("Bảy Mươi ");break;
+		  case 8:System.out.print("Tám Mươi ");break;
+		  case 9:System.out.print("Chín Mươi ");break;
+		  }
+		  switch(dv) {
 
-	  case 1:System.out.print("một ");break;
-	  case 2:System.out.print("Hai ");break;
-	  case 3:System.out.print("Ba ");break;
-	  case 4:System.out.print("bốn ");break;
-	  case 5:System.out.print("Năm ");break;
-	  case 6:System.out.print("Sáu ");break;
-	  case 7:System.out.print("Bảy ");break;
-	  case 8:System.out.print("Tám ");break;
-	  case 9:System.out.print("Chín");break;
-	  }
+		  case 1:System.out.print("một ");break;
+		  case 2:System.out.print("Hai ");break;
+		  case 3:System.out.print("Ba ");break;
+		  case 4:System.out.print("bốn ");break;
+		  case 5:System.out.print("Năm ");break;
+		  case 6:System.out.print("Sáu ");break;
+		  case 7:System.out.print("Bảy ");break;
+		  case 8:System.out.print("Tám ");break;
+		  case 9:System.out.print("Chín");break;
+		  }
+		  
+	      }
+	      else if(b==3) {
+	    	  switch(tr) {
+			  case 0:System.out.print("Lẻ ");break;
+			  case 1:System.out.print("một Trăm ");break;
+			  case 2:System.out.print("Hai Trăm ");break;
+			  case 3:System.out.print("Ba Trăm ");break;
+			  case 4:System.out.print("bốn Trăm ");break;
+			  case 5:System.out.print("Năm Trăm ");break;
+			  case 6:System.out.print("Sáu Trăm ");break;
+			  case 7:System.out.print("Bảy Trăm ");break;
+			  case 8:System.out.print("Tám Trăm ");break;
+			  case 9:System.out.print("Chín Trăm ");break;
+			  }
+			  switch(ch) {
+			  case 0:System.out.print("Lẻ ");break;
+			  case 1:System.out.print("Mươi ");break;
+			  case 2:System.out.print("Hai Mươi ");break;
+			  case 3:System.out.print("Ba Mươi ");break;
+			  case 4:System.out.print("bốn Mươi ");break;
+			  case 5:System.out.print("Năm Mươi ");break;
+			  case 6:System.out.print("Sáu Mươi ");break;
+			  case 7:System.out.print("Bảy Mươi ");break;
+			  case 8:System.out.print("Tám Mươi ");break;
+			  case 9:System.out.print("Chín Mươi ");break;
+			  }
+			  switch(dv) {
+
+			  case 1:System.out.print("một ");break;
+			  case 2:System.out.print("Hai ");break;
+			  case 3:System.out.print("Ba ");break;
+			  case 4:System.out.print("bốn ");break;
+			  case 5:System.out.print("Năm ");break;
+			  case 6:System.out.print("Sáu ");break;
+			  case 7:System.out.print("Bảy ");break;
+			  case 8:System.out.print("Tám ");break;
+			  case 9:System.out.print("Chín");break;
+			  }
+			   
+	          }
+	      else if(b==2) {
+	    	  switch(ch) {
+			  case 0:System.out.print("Lẻ ");break;
+			  case 1:System.out.print("Mươi ");break;
+			  case 2:System.out.print("Hai Mươi ");break;
+			  case 3:System.out.print("Ba Mươi ");break;
+			  case 4:System.out.print("bốn Mươi ");break;
+			  case 5:System.out.print("Năm Mươi ");break;
+			  case 6:System.out.print("Sáu Mươi ");break;
+			  case 7:System.out.print("Bảy Mươi ");break;
+			  case 8:System.out.print("Tám Mươi ");break;
+			  case 9:System.out.print("Chín Mươi ");break;
+			  }
+			  switch(dv) {
+
+			  case 1:System.out.print("một ");break;
+			  case 2:System.out.print("Hai ");break;
+			  case 3:System.out.print("Ba ");break;
+			  case 4:System.out.print("bốn ");break;
+			  case 5:System.out.print("Năm ");break;
+			  case 6:System.out.print("Sáu ");break;
+			  case 7:System.out.print("Bảy ");break;
+			  case 8:System.out.print("Tám ");break;
+			  case 9:System.out.print("Chín");break;
+			  }
+	      }
+	      else if(b==1){
+	    	  switch(dv) {
+
+			  case 1:System.out.print("một ");break;
+			  case 2:System.out.print("Hai ");break;
+			  case 3:System.out.print("Ba ");break;
+			  case 4:System.out.print("bốn ");break;
+			  case 5:System.out.print("Năm ");break;
+			  case 6:System.out.print("Sáu ");break;
+			  case 7:System.out.print("Bảy ");break;
+			  case 8:System.out.print("Tám ");break;
+			  case 9:System.out.print("Chín");break;
+			  }
+	      }
 	  }
 
   }

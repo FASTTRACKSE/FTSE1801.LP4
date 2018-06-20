@@ -3,6 +3,7 @@ package java_d2;
 import java.util.Scanner;
 
 public class vidu_2 {
+	
 	public static void main(String[]args) {
 		  //khai báo biến
 		  int n, i;
