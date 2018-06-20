@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.Scanner;
 
 public class QlSinhVien {
-
+	// Phạm Ngọc Hợi
 	private ArrayList<SinhVien> listSV;
 
 	public QlSinhVien() {
