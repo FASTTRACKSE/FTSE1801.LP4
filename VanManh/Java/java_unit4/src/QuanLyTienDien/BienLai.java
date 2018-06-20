@@ -173,7 +173,7 @@ public class BienLai extends KhachHang {
 			case 5:
 				quanLy.tienDien();
 				quanLy.show();
-				break;
+				break;	
 
 			case 0:
 				input.close();
