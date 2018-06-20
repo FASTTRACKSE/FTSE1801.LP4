@@ -1,21 +1,18 @@
 import java.util.Scanner;
 
 public class QuanLySinhVien {
-	private int id=0;
+	public static int id = 0;
 	private String name;
 	private int age;
 	private String address;
 	private double gpa;
-	
-	public static QuanLySinhVien[] listSv =new QuanLySinhVien[100];
+
+	public static QuanLySinhVien[] listSinhVien = new QuanLySinhVien[100];
 	
 	public int getId() {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;
@@ -48,106 +45,154 @@ public class QuanLySinhVien {
 	public void setGpa(double gpa) {
 		this.gpa = gpa;
 	}
-	
-	public static QuanLySinhVien[] getListSv() {
-		return listSv;
-	}
-
-	public static void setListSv(QuanLySinhVien[] listSv) {
-		QuanLySinhVien.listSv = listSv;
-	}
-	public void addSV(String ten, int tuoi,String diaChi, double diem) {
-		QuanLySinhVien sv= new QuanLySinhVien();
-		
-		Scanner sc= new Scanner(System.in);
-		
-			
-		sv.name = ten;
-		sv.age = tuoi;
-		sv.address = diaChi;
-		sv.gpa = diem;
-		listSv[id] = sv;
+	//Thêm sinh viên
+	public void addSV(QuanLySinhVien sinhVien) {
+		listSinhVien[id] = sinhVien;
 		id++;
 	}
-	public void nhap() {
-		
+	//Xóa sinh viên
+	public void deleteSV(int idDelete) {
+		for (int i = idDelete; i < id; i++) {
+			listSinhVien[i-1] = listSinhVien[i];
+		}
+		id = id-1;
 	}
-	public void menu() {
-		System.out.println("/****************************************/");
-		System.out.println("1.Thêm sinh viên.");
-		System.out.println("2.Cập nhật thông tin sinh viên theo ID.");
-		System.out.println("3.Xóa sinh viên theo ID.");
-		System.out.println("4.Sắp xếp sinh viên theo tên.");
-		System.out.println("5.Hiển thị danh sách sinh viên");
-		System.out.println("0.Kết thúc chương trình.");
-		System.out.println("/****************************************/");
-		Scanner sc  = new Scanner(System.in);
-		int so = sc.nextInt();
-		switch(so) {
-			case 1:
-			System.out.println("Thêm sinh viên");
-			System.out.println("Nhập tên sinh viên: ");
-			String ten = sc.nextLine();
-			sc.nextLine();
-			System.out.println("Nhập tuổi: ");
-			int tuoi = (sc.nextInt());
-			sc.nextLine();
-			System.out.println("Nhập địa chỉ: ");
-			String diaChi = (sc.nextLine());
-			System.out.println("Nhập điểm trung bình: ");
-			double diem = (sc.nextDouble());
-			sc.nextLine();
-			System.out.println("Bạn muốn tiếp tục không 0 - Không|1 - Có");
-			int chon = sc.nextInt();
-			sc.nextLine();
-			if(chon == 1) {
-				addSV(ten,tuoi,diaChi,diem);
+	// Hiển thị danh sách sinh viên
+	public void show() {
+		System.out.printf("%-5s %-20s %-6s %-20s %-6s","ID", "Tên", "Tuổi", "Địa chỉ" ,"ĐTB" );
+		System.out.println();
+		for (int i = 0; i < id; i++) {
+			System.out.printf("\n %-4s %-20s %-6s %-20s %-6.2f",(i+1),listSinhVien[i].getName(),listSinhVien[i].getAge(),listSinhVien[i].getAddress(),listSinhVien[i].getGpa());
+		}
+		System.out.println();
+		System.out.println();
+	}
+	//Sửa đổi thông tin sinh viên
+	public void repairSV(Scanner input, int id) {
+		QuanLySinhVien repair = new QuanLySinhVien();
+		input.nextLine();
+		System.out.print("Nhập tên SV : ");
+		String name = input.nextLine();
+
+		System.out.print("Nhập tuổi : ");
+		int age = input.nextInt();
+
+		input.nextLine();
+		System.out.print("Nhập địa chỉ : ");
+		String address = input.nextLine();
+
+		System.out.print("Nhập điểm trung bình : ");
+		double gpa = input.nextDouble();
+		
+		repair.setName(name);
+		repair.setAge(age);
+		repair.setAddress(address);
+		repair.setGpa(gpa);
+		listSinhVien[id-1] = repair;
+	}
+	
+	//Sắp xếp danh sách sinh viên theo tuổi
+	public void sapXep() {
+		QuanLySinhVien sapXepSV = new QuanLySinhVien();
+		for(int i = 0; i < id-1 ; i++) {
+			for(int j = 1; j < id ; j++) {
+				if(listSinhVien[i].getAge() > listSinhVien[j].getAge()) {
+					sapXepSV = listSinhVien[i];
+					listSinhVien[i]=listSinhVien[j];
+					listSinhVien[j] = sapXepSV;
+				}
 			}
-			menu();
-			break;
-			case 2:System.out.println("Cập nhật thông tin sinh viên theo ID");
-				    updateSV();
-			break;
-			case 3: System.out.println("Sắp xếp sinh viên theo tên");
-					deleteSV();
-			break;
-			case 4:System.out.println("Sắp xếp sinh viên theo tên");
-			 		sapXepSV();
-			break;
-			case 5:System.out.println("Hiển thị danh sách sinh viên");
-					showSV();
-			break;
-			case 0:System.out.println("Chương trình kết thúc");
-					end();
-			break;
 		}
-
+		sapXepSV.show();
 	}
 
-
-	public void updateSV() {
-		
+	public static void menu() {
+		int tt, luaChon;
+		while(true) {
+			Scanner input = new Scanner(System.in);
+			System.out.println("/***********************************/");
+			System.out.println("1. Thêm sinh viên.");
+			System.out.println("2. Cập nhật thông tin sinh viên theo ID.");
+			System.out.println("3. Xóa sinh viên theo ID  .");
+			System.out.println("4. Sắp sếp sinh viên theo tuổi .");
+			System.out.println("5. Hiển thị danh sách sinh viên .");
+			System.out.println("0. Kết thúc chương trình .");
+			System.out.println("/***********************************/");
+			System.out.print("Mời bạn nhập lựa chọn : ");
+			luaChon = input.nextInt();
+			System.out.println();
+			
+			switch (luaChon) {
+			case 1:
+				do {
+					QuanLySinhVien qlsv = new QuanLySinhVien();
+					input.nextLine();
+					System.out.print("Nhập tên SV : ");
+					String name = input.nextLine();
+	
+					System.out.print("Nhập tuổi : ");
+					int age = input.nextInt();
+	
+					input.nextLine();
+					System.out.print("Nhập địa chỉ : ");
+					String address = input.nextLine();
+	
+					System.out.print("Nhập điểm trung bình : ");
+					double gpa = input.nextDouble();
+	
+					qlsv.setName(name);
+					qlsv.setAge(age);
+					qlsv.setAddress(address);
+					qlsv.setGpa(gpa);
+					qlsv.addSV(qlsv);
+					System.out.println();
+					System.out.print("Bạn có muốn nhập tiếp không (0:không | 1:Có) ");
+					tt = input.nextInt();
+					System.out.println();
+				} while (tt == 1);
+				
+				break;
+			case 2:
+				System.out.println();
+				System.out.print("Nhập ID cần sửa : ");
+				int idRepair = input.nextInt();
+				System.out.println();
+				QuanLySinhVien repair = new QuanLySinhVien();
+				repair.repairSV(input, idRepair);
+				break;
+				
+			case 3:
+				System.out.println();
+				System.out.print("Nhập ID cần xóa : ");
+				System.out.println();
+				int idDelete = input.nextInt();
+				QuanLySinhVien delete = new QuanLySinhVien();
+				delete.deleteSV(idDelete);
+				break;
+			case 4:
+				QuanLySinhVien sapXep = new QuanLySinhVien();
+				sapXep.sapXep();
+				break;
+			case 5:
+				QuanLySinhVien in = new QuanLySinhVien();
+				in.show();
+				break;
+			
+			case 0:
+				input.close();
+				System.out.println("Kết thúc chương trình!!! ");
+				System.exit(0);
+				break;
+				
+			default:
+				System.out.println("Chọn sai chức năng, mời bạn chọn lại.");
+				break;
+			}
+		}
 	}
 	
-	public void deleteSV() {
-		
-	}
-	
-	public void sapXepSV() {
-		
-	}
-	public void end() {
-		System.exit(0);
-	}
-
-	public void showSV() {
-		System.out.printf("%3s| %20s| %10s| %20s| %10s| \n","Id","Name","Age","Address","Gpa");
-		for(int i=0;i<id;i++) {		
-			System.out.printf("%3s| %20s| %10s| %20s| %10s| \n",(i+1),listSv[i].getName(),listSv[i].getAge(),listSv[i].getAddress(),listSv[i].getGpa());
-		}
-	}
 	public static void main(String[] args) {
-		QuanLySinhVien qlsv =new QuanLySinhVien();
-		qlsv.menu();
+		menu();
 	}
+
 }

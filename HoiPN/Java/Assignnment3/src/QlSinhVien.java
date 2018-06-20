@@ -1,123 +1,147 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class QlSinhVien {
-	static int id;
-	static String name;
-	static int age;
-	static String address;
-	static double gpa;
-	static QlSinhVien sv = new QlSinhVien();
 
-	public int getId() {
-		return id;
+	private ArrayList<SinhVien> listSV;
+
+	public QlSinhVien() {
+		listSV = new ArrayList<SinhVien>();
 	}
-	public void setId(int id) {
-		this.id = id;
+
+	public void menu() {
+		int tt, so;
+		QlSinhVien quanLy = new QlSinhVien();
+		while (true) {
+			System.out.println("/****************************************/");
+			System.out.println("1.Thêm sinh viên.");
+			System.out.println("2.Cập nhật thông tin sinh viên theo ID.");
+			System.out.println("3.Xóa sinh viên theo ID.");
+			System.out.println("4.Sắp xếp sinh viên theo tên.");
+			System.out.println("5.Hiển thị danh sách sinh viên");
+			System.out.println("0.Kết thúc chương trình.");
+			System.out.println("/****************************************/");
+			System.out.println("Lựa chọn của bạn: ");
+			Scanner sc = new Scanner(System.in);
+			so = sc.nextInt();
+			System.out.println();
+			switch (so) {
+			case 1:
+				do {
+					System.out.println("Nhập id: ");
+					int id = sc.nextInt();
+					sc.nextLine();
+					System.out.println("Nhập họ tên: ");
+					String name = sc.nextLine();
+
+					System.out.println("Nhập tuổi: ");
+					int age = sc.nextInt();
+
+					sc.nextLine();
+					System.out.println("Nhập địa chỉ: ");
+					String address = sc.nextLine();
+
+					System.out.println("Nhập điểm: ");
+					double gpa = sc.nextDouble();
+					
+					SinhVien sinhVien = new SinhVien();
+					sinhVien.setId(id);
+					sinhVien.setName(name);
+					sinhVien.setAge(age);
+					sinhVien.setAddress(address);
+					sinhVien.setGpa(gpa);
+					quanLy.addSV(sinhVien);
+					
+					System.out.println();
+					System.out.println("Bạn muốn tiếp tục 0 - không | 1 - có");
+					tt = sc.nextInt();
+					System.out.println();
+				} while (tt == 1);
+				break;
+			case 2:
+				System.out.println("Nhập id cần sửa: ");
+				int idUpdate = sc.nextInt();
+				
+				quanLy.updateSV(idUpdate);
+				break;
+			case 3:
+				System.out.println("Nhập id cần xóa:  ");
+				int idDelete = sc.nextInt();
+				
+				quanLy.deleteSV(idDelete);
+				break;
+			case 4:
+			
+				quanLy.sortSV();
+			case 5:
+				
+				quanLy.showSV();
+			}
+		}
 	}
-	public String getName() {
-		return name;
+
+	public void addSV(SinhVien sinhvien) {
+		listSV.add(sinhvien);
 	}
-	public void setName(String name) {
-		this.name = name;
+
+	public void updateSV(int id) {
+		SinhVien update = new SinhVien();
+		Scanner sc = new Scanner(System.in);
+
+		for (int i = 0; i < listSV.size(); i++) {
+			if (listSV.get(i).getId() == id) {
+				sc.nextLine();
+				System.out.println("nhập họ tên: ");
+				String name = sc.nextLine();
+				System.out.println("Nhập tuổi: ");
+			 	int age = sc.nextInt();
+				sc.nextLine();
+				System.out.println("Nhập địa chỉ: ");
+				String address = sc.nextLine();
+				System.out.println("Nhập điểm: ");
+				double gpa = sc.nextDouble();  
+
+				update.setName(name);
+				update.setAge(age);
+				update.setAddress(address);
+				update.setGpa(gpa);
+			}
+		}
 	}
-	public int getAge() {
-		return age;
-	}
-	public void setAge(int age) {
-		this.age = age;
-	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	public double getGpa() {
-		return gpa;
-	}
-	public void setGpa(double gpa) {
-		this.gpa = gpa;
-	}
-	public static  void menu() {
-		System.out.println("/****************************************/");
-		System.out.println("1.Thêm sinh viên.");
-		System.out.println("2.Cập nhật thông tin sinh viên theo ID.");
-		System.out.println("3.Xóa sinh viên theo ID.");
-		System.out.println("4.Sắp xếp sinh viên theo tên.");
-		System.out.println("5.Hiển thị danh sách sinh viên");
-		System.out.println("0.Kết thúc chương trình.");
-		System.out.println("/****************************************/");
-		Scanner sc  = new Scanner(System.in);
-		int so = sc.nextInt();
-		switch(so) {
-			case 1:System.out.println("Thêm sinh viên");
-					addSV();
-			break;
-			case 2:System.out.println("Cập nhật thông tin sinh viên theo ID");
-				    updateSV();
-			break;
-			case 3: System.out.println("Sắp xếp sinh viên theo tên");
-					deleteSV();
-			break;
-			case 4:System.out.println("Sắp xếp sinh viên theo tên");
-			 		sapXepSV();
-			break;
-			case 5:System.out.println("Hiển thị danh sách sinh viên");
-					showSV();
-			break;
-			case 0:System.out.println("Chương trình kết thúc");break;
+
+	public void deleteSV(int idDelete) {
+		for (int i = 0; i < listSV.size(); i++) {
+			if (listSV.get(i).getId() == idDelete) {
+				listSV.remove(idDelete);
+				break;
+			}
 		}
 
 	}
-	public static void addSV() {
-		Scanner sc= new Scanner(System.in);
-		System.out.println("Nhập id: ");
-		sv.setId(sc.nextInt());
-		sc.nextLine();
-		System.out.println("Nhập tên sinh viên: ");
-		sv.setName(sc.nextLine());
-		System.out.println("Nhập tuổi: ");
-		sv.setAge(sc.nextInt());
-		sc.nextLine();
-		System.out.println("Nhập địa chỉ: ");
-		sv.setAddress(sc.nextLine());
-		System.out.println("Nhập điểm trung bình: ");
-		sv.setGpa(sc.nextDouble());
-		sc.nextLine();
-		System.out.println("Bạn muốn tiếp tục không 0 - Không|1 - Có");
-		int chon = sc.nextInt();
-		if(chon == 1) {
-			addSV();
-		}else {
-			showSV();
-			end();
+
+	public void sortSV() {
+		Collections.sort(listSV, new Comparator<SinhVien>() {
+			public int compare(SinhVien o1, SinhVien o2) {
+				return o1.getName().compareToIgnoreCase(o2.getName());
+			}
+		});
+	}
+
+	public void showSV() {
+		System.out.printf("%-5s %-20s %-6s %-20s %-6s", "ID", "Tên", "Tuổi", "Địa chỉ", "ĐTB");
+		System.out.println();
+		for (SinhVien sinhVien: listSV) {
+			System.out.printf("\n %-4s %-20s %-6s %-20s %-6.2f", sinhVien.getId(), sinhVien.getName(),
+					sinhVien.getAge(),sinhVien.getAddress(),sinhVien.getGpa());
 		}
-		
+		System.out.println();
+		System.out.println();
 	}
-	
-	public static void updateSV() {
-		
-	}
-	
-	public static void deleteSV() {
-		
-	}
-	
-	public static void sapXepSV() {
-		
-	}
-	public static void end() {
-		System.out.println("Chương trình kết thúc!!!!");
-		System.exit(0);
-	}
-	public static void xuat() {
-		
-	}
-	public static void showSV() {
-		System.out.printf("%3s| %20s| %10s| %20s| %10s| \n","Id","Name","Age","Address","Gpa");
-		System.out.printf("%3s| %20s| %10s| %20s| %10s| \n",sv.getId(),sv.getName(),sv.getAge(),sv.getAddress(),sv.getGpa());
-	}
+
 	public static void main(String[] args) {
-		menu();		
+		QlSinhVien ql = new QlSinhVien();
+		ql.menu();
 	}
 }

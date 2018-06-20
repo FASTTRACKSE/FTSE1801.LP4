@@ -1,10 +1,19 @@
+package java_day10;
 
 public class SinhVien {
-	public int id;
+	private int id;
 	private String name;
-	private int age;
+	private int old;
 	private String address;
 	private double gpa;
+
+	public SinhVien(int id, String name, int old, String address, double gpa) {
+		this.id = id;
+		this.name = name;
+		this.old = old;
+		this.address = address;
+		this.gpa = gpa;
+	}
 
 	public int getId() {
 		return id;
@@ -22,12 +31,12 @@ public class SinhVien {
 		this.name = name;
 	}
 
-	public int getAge() {
-		return age;
+	public int getOld() {
+		return old;
 	}
 
-	public void setAge(int age) {
-		this.age = age;
+	public void setOld(int old) {
+		this.old = old;
 	}
 
 	public String getAddress() {
