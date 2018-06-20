@@ -30,6 +30,20 @@ public class QuanLySV {
 			}
 			System.out.println("Kết thúc");
 		}
+
+//		boolean flagExist = false;
+//		for (int i = 0; i < id; i++) {
+//			if (flagExist == false) {
+//				if (listSV[i].getName().equals(ten)) {
+//					flagExist = true;
+//					listSV[i] = listSV[i + 1];
+//				}
+//			} else {
+//				listSV[i] = listSV[i + 1];
+//			}
+//		}
+//		listSV[listSV.length] = null;
+//		id = id - 1;
 	}
 
 	// Hiển thị sinh viên
@@ -46,28 +60,30 @@ public class QuanLySV {
 
 	// Sắp xếp sinh viên
 	public void sapXep() {
-		//Sắp xếp theo tuổi từ thấp đến cao
+		 //Sắp xếp theo tuổi từ thấp đến cao
+		
+		 for (int i = 0; i < id - 1; i++) {
+			 for (int j = 1; j < id; j++) {
+				 if (listSV[i].getAge() > listSV[j].getAge()) {
+				 SinhVien sapXep = listSV[i];
+				 listSV[i] = listSV[j];
+				 listSV[j] = sapXep;
+				 }
+			 }
+		 }
+
+		// Sắp xếp theo tên từ a - z
+		 
 //		for (int i = 0; i < id - 1; i++) {
 //			for (int j = 1; j < id; j++) {
-//				if (listSV[i].getAge() > listSV[j].getAge()) {
+//				if (listSV[i].getName().compareTo(listSV[j].getName()) > 0) {
 //					SinhVien sapXep = listSV[i];
 //					listSV[i] = listSV[j];
 //					listSV[j] = sapXep;
 //				}
 //			}
 //		}
-		
-		//Sắp xếp theo tên từ a - z
-		for (int i = 0; i < id - 1; i++) {
-			for (int j = 1; j < id; j++) {
-				if (listSV[i].getName().compareTo(listSV[j].getName())>0) {
-					SinhVien sapXep = listSV[i];
-					listSV[i] = listSV[j];
-					listSV[j] = sapXep;
-				}
-			}
-		}
-		
+
 	}
 
 	// Sửa đổi thông tin sinh viên
@@ -120,7 +136,6 @@ public class QuanLySV {
 			switch (luaChon) {
 			case 1:
 				do {
-
 					input.nextLine();
 					System.out.print("Nhập tên SV : ");
 					String name = input.nextLine();
