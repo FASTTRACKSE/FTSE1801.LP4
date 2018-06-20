@@ -1,37 +1,18 @@
-## Welcome to GitHub Pages
+# FTSE1801.LP4- Mai Thành Công
+## Đây là thư mục của tôi:
 
-You can use the [editor on GitHub](https://github.com/FASTTRACKSE/FTSE1801.LP2/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-### Markdown
+### MySQL
+github
+1. [Bài tập 1](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/congmt/sql/ftse180102.sql)
+2. [Bài tập 2](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/congmt/sql/baitap2.docx)
+3. [Bài tập 3](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/congmt/sql/baitap3.docx)
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/FASTTRACKSE/FTSE1801.LP2/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+### java
+1. [java_day1](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/congmt/java/java_day1/src/java_day1)
+2. [java_day2 + java_day3](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/congmt/java/java_day2/src)
+3. [java_day4](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/congmt/java/java_day4/src/java_day4)
+4. [java_ Bài tập asgnment 3: Quản lý Sinh Viên theo arraylist](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/congmt/java/java_tuan3/src/java_tuan3/QLSinhVien.java)
+5. [java_ Bài tập asgnment 3: Quản lý Sinh Viên theo array](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/congmt/java/java_tuan2_day1/src/quanlysinhvien/QuanLySv.java)
+6. [java_ Bài tập assgnment 4: Quản lý tiền điện](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/congmt/java/java_tuan3/src/java_tuan3/BienLai.java)
