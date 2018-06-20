@@ -1,217 +1,120 @@
 package java_d2;
 
-import java.util.*;
-public class lap2bai4 {
+import java.util.Scanner;
 
+public class lap2bai4 {
 	public static void main(String[] args) {
-		Scanner input = new Scanner(System.in);
-		System.out.print("Nhập số N=  ");
-		int n=input.nextInt();
-		int ng = n/1000;
-		int tr =(n%1000)/100;
-		int ch=((n%1000)%100)/10;
-		int dv= n%10;
-		String m=String.valueOf(n);
-		int l=m.length();
-		if((ng==1)&&(tr==0)&&(ch==0)&&(dv==0))
-		System.out.print("Một ngàn ");
-		else if((ng==2)&&(tr==0)&&(ch==0)&&(dv==0))
-		System.out.print("Hai ngàn ");
-		else if((ng==3)&&(tr==0)&&(ch==0)&&(dv==0))
-		System.out.print("Ba ngàn ");
-		else if((ng==4)&&(tr==0)&&(ch==0)&&(dv==0))
-		System.out.print("Bốn ngàn ");
-		else if((ng==5)&&(tr==0)&&(ch==0)&&(dv==0))
-		System.out.print("Năm ngàn ");
-		else if((ng==6)&&(tr==0)&&(ch==0)&&(dv==0))
-		System.out.print("Sáu ngàn ");
-		else if((ng==7)&&(tr==0)&&(ch==0)&&(dv==0))
-		System.out.print("Bảy ngàn ");
-		else if((ng==8)&&(tr==0)&&(ch==0)&&(dv==0))
-		System.out.print("Tám ngàn ");
-		else if((ng==9)&&(tr==0)&&(ch==0)&&(dv==0))
-		System.out.print("Chín ngàn ");
+		System.out.println("+---------------------------------------------------+\r\n" + 
+				"1.	Giải phương trình bậc nhất\n" + 
+				"2.	Giải phương trình bậc 2\n" + 
+				"3.	Tính tiền điện\n" + 
+				"4.	Kết thúc\r\n" + 
+				"+---------------------------------------------------+\n");
+		int n;
+		Scanner sc=new Scanner(System.in);
+		do {
+			System.out.print("Chọn chức năng: ");
+			n=sc.nextInt();
+			switch(n) {
+			case 1:
+			System.out.print(PTbac1());
+			break;
+			case 2:
+			System.out.print(PTbac2());
+			break;
+			case 3:
+			System.out.print(Dien());
+			case 4:
+			System.out.println("Kết thúc chương trình");
+			break;
+			default:
+			System.out.println("Nhập sai");
+			}
+			
+		}while(n>4);
 		
-		else if((ng==0)&&(tr==1)&&(ch==0)&&(dv==0))
-		System.out.print("Một trăm ");
-		else if((ng==0)&&(tr==2)&&(ch==0)&&(dv==0))
-		System.out.print("Hai trăm ");
-		else if((ng==0)&&(tr==3)&&(ch==0)&&(dv==0))
-		System.out.print("Ba  trăm");
-		else if((ng==0)&&(tr==4)&&(ch==0)&&(dv==0))
-		System.out.print("bốn trăm ");
-		else if((ng==0)&&(tr==5)&&(ch==0)&&(dv==0))
-		System.out.print("năm trăm ");
-		else if((ng==0)&&(tr==6)&&(ch==0)&&(dv==0))
-		System.out.print("sáu trăm ");
-		else if((ng==0)&&(tr==7)&&(ch==0)&&(dv==0))
-		System.out.print("bảy trăm ");
-		else if((ng==0)&&(tr==8)&&(ch==0)&&(dv==0))
-		System.out.print("tám trăm ");
-		else if((ng==0)&&(tr==9)&&(ch==0)&&(dv==0))
-		System.out.print("chín trăm ");
+		sc.close();
 		
-		else if((ng==0)&&(tr==0)&&(ch==1)&&(dv==0))
-		System.out.print(" Mười ");
-		else if((ng==0)&&(tr==0)&&(ch==2)&&(dv==0))
-		System.out.print("Hai mươi ");
-		else if((ng==0)&&(tr==0)&&(ch==3)&&(dv==0))
-		System.out.print("Ba mươi ");
-		else if((ng==0)&&(tr==0)&&(ch==4)&&(dv==0))
-		System.out.print("bốn mươi ");
-		else if((ng==0)&&(tr==0)&&(ch==5)&&(dv==0))
-		System.out.print("năm mươi ");
-		else if((ng==0)&&(tr==0)&&(ch==6)&&(dv==0))
-		System.out.print("sáu mươi ");
-		else if((ng==0)&&(tr==0)&&(ch==7)&&(dv==0))
-		System.out.print("bảy mươi ");
-		else if((ng==0)&&(tr==0)&&(ch==8)&&(dv==0))
-		System.out.print("tám mươi ");
-		else if((ng==0)&&(tr==0)&&(ch==9)&&(dv==0))
-		System.out.print("chín mươi ");
+	}
+	public static String PTbac1() {
+		double a,b;
 		
-		else if((ng==0)&&(tr==0)&&(ch==0)&&(dv==0))
-		System.out.print("Không ");
-		else if((ng==0)&&(tr==0)&&(ch==0)&&(dv==1))
-		System.out.print("một ");
-		else if((ng==0)&&(tr==0)&&(ch==0)&&(dv==2))
-		System.out.print("Hai ");
-		else if((ng==0)&&(tr==0)&&(ch==0)&&(dv==3))
-		System.out.print("Ba ");
-		else if((ng==0)&&(tr==0)&&(ch==0)&&(dv==4))
-		System.out.print("bốn ");
-		else if((ng==0)&&(tr==0)&&(ch==0)&&(dv==5))
-		System.out.print("năm ");
-		else if((ng==0)&&(tr==0)&&(ch==0)&&(dv==6))
-		System.out.print("sáu ");
-		else if((ng==0)&&(tr==0)&&(ch==0)&&(dv==7))
-		System.out.print("bảy ");
-		else if((ng==0)&&(tr==0)&&(ch==0)&&(dv==8))
-		System.out.print("tám ");
-		else if((ng==0)&&(tr==0)&&(ch==0)&&(dv==9))
-		System.out.print("chín ");
+		Scanner sc=new Scanner(System.in);
 		
-		else{
-			if(l==4) {
-				switch(ng) {
-				case 1:System.out.print("một ngàn ");break;
-				case 2:System.out.print("Hai ngàn ");break;
-				case 3:System.out.print("Ba ngàn ");break;
-				case 4:System.out.print("bốn ngàn ");break;
-				case 5:System.out.print("năm ngàn ");break;
-				case 6:System.out.print("sáu ngàn ");break;
-				case 7:System.out.print("bảy ngàn ");break;
-				case 8:System.out.print("tám ngàn ");break;
-				case 9:System.out.print("chín ngàn ");break;
-				
+		System.out.print("Nhập a= ");
+		a=sc.nextDouble();
+		System.out.print("Nhâp b= ");
+		b=sc.nextDouble();
+		if(a==0) {
+			if(b==0) {
+				System.out.println("PT có vô số nghiệm");
+			}else {
+				System.out.println("PT vô nghiệm");
+			}
+		}else {
+			double x=-b/a;
+			System.out.println("PT có nghiệm là x= "+x);
+		}
+		sc.close();
+		return "";
+	}
+	public static String PTbac2() {
+		
+		double a,b,c;
+		Scanner sc=new Scanner(System.in);
+		
+		System.out.print("Nhập a= ");
+		a=sc.nextDouble();
+		System.out.print("Nhập b= ");
+		b=sc.nextDouble();
+		System.out.print("Nhập c= ");
+		c=sc.nextDouble();
+		double delta= Math.pow(b,2)-4*a*c;
+		
+		if(a==0) {
+			if(b==0) {
+				if(c==0) {
+					System.out.println("PT vô số nghiệm");
+				}else {
+					System.out.println("PT vô nghiệm");
 				}
-				switch(tr) {
-				case 0:System.out.print("không trăm ");break;
-				case 1:System.out.print("một trăm ");break;
-				case 2:System.out.print("Hai trăm ");break;
-				case 3:System.out.print("Ba trăm ");break;
-				case 4:System.out.print("bốn trăm ");break;
-				case 5:System.out.print("năm trăm ");break;
-				case 6:System.out.print("sáu trăm ");break;
-				case 7:System.out.print("bảy trăm ");break;
-				case 8:System.out.print("tám trăm ");break;
-				case 9:System.out.print("chín trăm ");break;
-				}
-				switch(ch) {
-				case 0:System.out.print("lẻ ");break;
-				case 1:System.out.print("mười ");break;
-				case 2:System.out.print("Hai mươi ");break;
-				case 3:System.out.print("Ba mươi ");break;
-				case 4:System.out.print("bốn mươi ");break;
-				case 5:System.out.print("năm mươi ");break;
-				case 6:System.out.print("sáu mươi ");break;
-				case 7:System.out.print("bảy mươi ");break;
-				case 8:System.out.print("tám mươi ");break;
-				case 9:System.out.print("chín mươi ");break;
-				}
-				switch(dv) {
-				case 1:System.out.print("một ");break;
-				case 2:System.out.print("Hai ");break;
-				case 3:System.out.print("Ba ");break;
-				case 4:System.out.print("bốn ");break;
-				case 5:System.out.print("năm ");break;
-				case 6:System.out.print("sáu ");break;
-				case 7:System.out.print("bảy ");break;
-				case 8:System.out.print("tám ");break;
-				case 9:System.out.print("chín");break;
-				}
-			}else if(l==3) {
-				switch(tr) {
-				case 1:System.out.print("một trăm ");break;
-				case 2:System.out.print("Hai trăm ");break;
-				case 3:System.out.print("Ba trăm ");break;
-				case 4:System.out.print("bốn trăm ");break;
-				case 5:System.out.print("năm trăm ");break;
-				case 6:System.out.print("sáu trăm ");break;
-				case 7:System.out.print("bảy trăm ");break;
-				case 8:System.out.print("tám trăm ");break;
-				case 9:System.out.print("chín trăm ");break;
-				}
-				switch(ch) {
-				case 0:System.out.print("lẻ ");break;
-				case 1:System.out.print("mười ");break;
-				case 2:System.out.print("Hai mươi ");break;
-				case 3:System.out.print("Ba mươi ");break;
-				case 4:System.out.print("bốn mươi ");break;
-				case 5:System.out.print("năm mươi ");break;
-				case 6:System.out.print("sáu mươi ");break;
-				case 7:System.out.print("bảy mươi ");break;
-				case 8:System.out.print("tám mươi ");break;
-				case 9:System.out.print("chín mươi ");break;
-				}
-				switch(dv) {
-				case 1:System.out.print("một ");break;
-				case 2:System.out.print("Hai ");break;
-				case 3:System.out.print("Ba ");break;
-				case 4:System.out.print("bốn ");break;
-				case 5:System.out.print("năm ");break;
-				case 6:System.out.print("sáu ");break;
-				case 7:System.out.print("bảy ");break;
-				case 8:System.out.print("tám ");break;
-				case 9:System.out.print("chín");break;
-				}
-			}else if(l==2) {
-				switch(ch) {
-				case 1:System.out.print("mười ");break;
-				case 2:System.out.print("Hai mươi ");break;
-				case 3:System.out.print("Ba mươi ");break;
-				case 4:System.out.print("bốn mươi ");break;
-				case 5:System.out.print("năm mươi ");break;
-				case 6:System.out.print("sáu mươi ");break;
-				case 7:System.out.print("bảy mươi ");break;
-				case 8:System.out.print("tám mươi ");break;
-				case 9:System.out.print("chín mươi ");break;
-				}
-				switch(dv) {
-				case 1:System.out.print("một ");break;
-				case 2:System.out.print("Hai ");break;
-				case 3:System.out.print("Ba ");break;
-				case 4:System.out.print("bốn ");break;
-				case 5:System.out.print("năm ");break;
-				case 6:System.out.print("sáu ");break;
-				case 7:System.out.print("bảy ");break;
-				case 8:System.out.print("tám ");break;
-				case 9:System.out.print("chín");break;
-				}
-			}else if(l==1) {
-				switch(dv) {
-				case 1:System.out.print("một ");break;
-				case 2:System.out.print("Hai ");break;
-				case 3:System.out.print("Ba ");break;
-				case 4:System.out.print("bốn ");break;
-				case 5:System.out.print("năm ");break;
-				case 6:System.out.print("sáu ");break;
-				case 7:System.out.print("bảy ");break;
-				case 8:System.out.print("tám ");break;
-				case 9:System.out.print("chín");break;
-				}
+			}else {
+				double x=-c/b;
+				System.out.println("PT có 1 nghiêm x= "+x);
+			}
+		}else {
+			if(delta<0) {
+				System.out.println("PT vô nghiệm");
+			}else if(delta==0) {
+				double xx=-b/2*a;
+				System.out.println("PT có nghiệm kép x1=x2="+xx);
+			}else {
+				double x1=(-b+Math.sqrt(delta))/2*a;
+				double x2=(-b-Math.sqrt(delta))/2*a;
+				System.out.println("PT có 2 nghiệm x1= "+x1+", x2= "+x2);
 			}
 		}
+		sc.close();
+		
+		return"";
 	}
+	public static String Dien() {
+		int sodien,tien;
+		Scanner sc= new Scanner(System.in);
+		
+		System.out.print("Nhập số điện sử dụng: ");
+		sodien=sc.nextInt();
+		if(sodien<50) {
+			tien=sodien*1000;
+			System.out.println("Số tiền phải trả là: "+tien);
+		}else {
+			tien=50*1000+(sodien-50)*1200;
+			System.out.println("Số tiền phải trả là: "+tien);
+		}
+		sc.close();
+		return "";
+	}
+	
+	
 }
 	
