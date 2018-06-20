@@ -16,9 +16,10 @@
 <fullyQualifiedTypeName name="java.util.Comparator"/>
 <fullyQualifiedTypeName name="java_day10.QuanLySv"/>
 <fullyQualifiedTypeName name="QlSinhVien"/>
-<fullyQualifiedTypeName name="SinhVien"/>
 <fullyQualifiedTypeName name="java.util.Scanner"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="KhachHang"/>
 <fullyQualifiedTypeName name="QuanLyTienDien"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="SinhVien"/>
 </qualifiedTypeNameHistroy>
