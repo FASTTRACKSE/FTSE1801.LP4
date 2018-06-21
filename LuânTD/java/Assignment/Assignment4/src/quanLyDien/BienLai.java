@@ -90,7 +90,7 @@ public class BienLai {
 				System.out.println("Chọn sai chức năng, mời bạn chọn lại.");
 				break;
 			}
-
+			sc.close();
 		}
 
 	}
