@@ -1,4 +1,4 @@
-package demo;
+package lab4;
 
 public class staff extends Person {
 	public void printPerson() {

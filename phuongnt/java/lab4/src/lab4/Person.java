@@ -1,4 +1,4 @@
-package demo;
+package lab4;
 
 public abstract class Person {
 	private String name;

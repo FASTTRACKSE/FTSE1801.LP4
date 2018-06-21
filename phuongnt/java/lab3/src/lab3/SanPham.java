@@ -1,4 +1,4 @@
-package demo6;
+package lab3;
 
 import java.util.Scanner;
 
@@ -52,7 +52,7 @@ public class SanPham {
 
 	public void xuat() {
 		System.out.println("Tên sản phẩm: " + tenSP);
-		System.out.println("Đơn giá: " + donGia);
+		System.out.println("�?ơn giá: " + donGia);
 		System.out.println("Giảm giá: " + giamGia);
 		System.out.println("Thuế nhập khẩu: " + getThueNhapKhau());
 	}

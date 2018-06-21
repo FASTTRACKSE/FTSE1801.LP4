@@ -1,4 +1,4 @@
-package demo1;
+package lab2;
 import java.util.Scanner;
 
 public class menu_4 {
