@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
 
+import quanlysinhvien.Student;
+
 public class QuanLySv {
 	private Student[] listSinhVien;
 	private int soluongSv;
@@ -26,10 +28,24 @@ public class QuanLySv {
 			}
 
 		});
+		Student sapxep = new Student();
+
+		for (int i = 0; i < id - 1; i++) {
+			for (int j = 1; j < id; j++) {
+				if (listSinhVien[i].getGpa() > listSinhVien[j].getGpa()) {
+					listSinhVien[i] = sapxep;
+					listSinhVien[i] = listSinhVien[j];
+					listSinhVien[j] = sapxep;
+				}
+			}
+		}
+		
+		
 
 	}
 
 	public void hienThiHocLuc() {
+		
 		for (int i = 0; i < id; i++) {
 			if (listSinhVien[i].getGpa() >= 8) {
 
