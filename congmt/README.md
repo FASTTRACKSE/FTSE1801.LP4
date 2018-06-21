@@ -15,7 +15,7 @@ github
 3. [Assignment3](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/congmt/java/Assignment3/src)
 4. [Assignment4](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/congmt/java/Assignment4/src)
 5. [Lap1](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/congmt/java/Lap1)
-6. [Lap2]https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/congmt/java/Lap2)
+6. [Lap2](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/congmt/java/Lap2)
 7. [Lap3](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/congmt/java/Lap3)
 8. [Lap4](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/congmt/java/Lap4)
 
