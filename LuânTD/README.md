@@ -10,6 +10,8 @@ Java Core Project
 
 ## Java
 
-1. [java_d1 - bài tập 1](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/Lu%C3%A2nTD/Hoc_java/java_d1/src/java_d1/ass1bai1.java)
-2. [java_d1 - bài tập 2](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/Lu%C3%A2nTD/Hoc_java/java_d1/src/java_d1/ass1bai2.java)
-3. [java_d2 - bài tập 1](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/Lu%C3%A2nTD/Hoc_java/java_d2/src/java_d2/ass1.java)
+1. [Assignment1 - bài 1](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/Lu%C3%A2nTD/java/Assignment/Assignment1/src/Assignment1/Bai1.java)
+2. [Assignment1 - bài 2](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/Lu%C3%A2nTD/java/Assignment/Assignment1/src/Assignment1/bai2.java)
+3. [Assignment2 - bài 1](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/Lu%C3%A2nTD/java/Assignment/Assignment2/src/Assignment2/Bai1.java)
+4. [Assignment3 - bài 1](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/Lu%C3%A2nTD/java/Assignment/Assignment3/src/quanLySV)
+5. [Assignment4 - bài 1](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/Lu%C3%A2nTD/java/Assignment/Assignment4/src/quanLyDien/BienLai.java)

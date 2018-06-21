@@ -1,8 +1,4 @@
 eclipse.preferences.version=1
-encoding//src/demo_d1/Quanly.java=UTF-8
-encoding//src/demo_d1/lab_tinhtiendien.java=UTF-8
-encoding//src/demo_d1/vd1.java=UTF-8
-encoding//src/demo_d1/vd2_ptbac2.java=UTF-8
 encoding//src/demo_d1/vd3_hamtrave.java=UTF-8
 encoding//src/demo_d1/vd_dangnhap.java=UTF-8
 encoding//src/demo_d1/vd_fibonacci.java=UTF-8
@@ -13,7 +9,6 @@ encoding//src/demo_d2/vd_traveham.java=UTF-8
 encoding//src/demo_d3/NhanVien.java=UTF-8
 encoding//src/demo_d3/sinhvien.java=UTF-8
 encoding//src/demo_d3/vd_sv.java=UTF-8
-encoding//src/demo_d4/ChuNhat.java=UTF-8
-encoding//src/demo_d4/HinhTron.java=UTF-8
 encoding//src/demo_d4/SanPham.java=UTF-8
 encoding//src/demo_d4/TruongPhong.java=UTF-8
+encoding//src/demo_d5/NhanVien.java=UTF-8
