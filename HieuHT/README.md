@@ -13,3 +13,12 @@ Java Core Project
 7. [Bài tập 7 - XĐ số nguyên](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/HieuHT/Java/Java_d2/src/Baitaplab/xdsonguyen.java)
 8. [Bài tập 8 -Bảng cửu chương](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/HieuHT/Java/Java_d2/src/Baitaplab/bangcuuchuong.java)
 9. [Bài tập 9 - Quản lý](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/HieuHT/Java/Java_d2/src/Baitaplab/Quanly.java)
+## Java core
+1. [Assignment1 - Công thức toán học](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/HieuHT/Java/Assignment1/src/B%C3%A0iT%E1%BA%ADp/congThucToanHoc.java)
+2. [Assignment1 - Vẽ hình bằng lý tự](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/HieuHT/Java/Assignment1/src/B%C3%A0iT%E1%BA%ADp/veHinhBangKyTu.java)
+3. [Assignment2 - Đổi số thành chữ](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/HieuHT/Java/Assignment2/src/BaiTap/doisorachu.java)
+4. [Assignment3 - MyClass](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/HieuHT/Java/Assignment3/src/BaiTap/MyClass.java)
+5. [Assignment3 - Quản lý sinh viên](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/HieuHT/Java/Assignment3/src/BaiTap/QuanLySV.java)
+6. [Assignment3 - Sinh viên](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/HieuHT/Java/Assignment3/src/BaiTap/SinhVien.java)
+7. [Assignment4 - Tiền điện](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/HieuHT/Java/Assignment4/src/Baitap_tienDien)
+8. [Assignment4 - Person](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/HieuHT/Java/Assignment4/src/person)
