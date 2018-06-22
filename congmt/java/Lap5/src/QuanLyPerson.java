@@ -139,7 +139,7 @@ public class QuanLyPerson {
 		System.out.println("5. Hiển thị danh sách person");
 		System.out.println("0. exit.");
 		System.out.println("---------------------------");
-		System.out.print("Please choose: a ");
+		System.out.print("Please choose: ");
 		
 	}
 	
