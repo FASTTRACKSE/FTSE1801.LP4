@@ -24,7 +24,7 @@ public class QuanLyTienDien {
 		}
 		System.out.println();
 	}
-	
+
 	public void menu() {
 		int tt, so;
 		QuanLyTienDien quanLy = new QuanLyTienDien();
@@ -76,7 +76,10 @@ public class QuanLyTienDien {
 				System.out.println("Biên lai: ");
 				quanLy.show();
 				break;
-
+			case 0:
+				sc.close();
+				System.out.println("Chương trình kết thúc!!!");
+				System.exit(0);
 			}
 		}
 	}
