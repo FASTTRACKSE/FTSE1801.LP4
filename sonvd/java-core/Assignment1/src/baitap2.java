@@ -11,6 +11,7 @@ public class baitap2 {
 		b = input.nextDouble();
 		System.out.println("Nhập c: ");
 		c = input.nextDouble();
+		input.close();
 		
 		//Giá trị lớn nhất, nhỏ nhất
 		double x1 = Math.min(a, Math.min(c, b));
