@@ -49,6 +49,7 @@ public class BienLai {
 		System.out.println("Nhập chỉ số mới: ");
 		chiSoMoi = input.nextInt();
 		soTienPhaiTra = (chiSoMoi - chiSoCu)*750;
+		input.close();
 	}
 	
 	public void hienThiBienLai() {
