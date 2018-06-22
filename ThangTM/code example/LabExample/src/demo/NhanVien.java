@@ -77,9 +77,9 @@ public class NhanVien {
 		NhanVien nv3 = new NhanVien("Buon", 13);
 		System.out.println("" + nv3.getTen() + " - " + nv3.getTuoi());*/
 		
-		NhanVien nv1 = new NhanVien("Vui", 12, "193 Nguyen Luong Bang", "Nam", 122100);
+		/*NhanVien nv1 = new NhanVien("Vui", 12, "193 Nguyen Luong Bang", "Nam", 122100);
 		NhanVien nv2 = new NhanVien();
 		NhanVien nv3 = new NhanVien();
-		System.out.println();
+		System.out.println();*/
 	}
 }

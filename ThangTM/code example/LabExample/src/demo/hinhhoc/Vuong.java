@@ -14,7 +14,4 @@ public class Vuong extends ChuNhat {
 		System.out.println("Day la hinh vuong ....");
 	}
 
-	public static void main(String[] args) {
-		Vuong v = new Vuong(1, 1);
-	}
 }
