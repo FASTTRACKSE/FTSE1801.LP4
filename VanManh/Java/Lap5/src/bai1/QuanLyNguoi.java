@@ -86,7 +86,7 @@ public class QuanLyNguoi {
 			case 1:
 				do {
 					input.nextLine();
-					System.out.print("Nhập tên : ");
+					System.out.print("Nhập name : ");
 					String name = input.nextLine();
 
 					System.out.print("Nhập tuổi : ");
