@@ -9,16 +9,7 @@ public class KhachHang {
 	private int newNumber;
 	private int tienDien;
 	
-	public KhachHang() {}
 	
-	public KhachHang(String hoTen, String soNha, String maSoCongTo,int oldNumber,int newNumber) {
-		super();
-		this.hoTen = hoTen;
-		this.soNha = soNha;
-		this.maSoCongTo = maSoCongTo;
-		this.oldNumber=oldNumber;
-		this.newNumber=newNumber;
-	}
 	
 	public int getTienDien() {
 		return tienDien;
@@ -64,7 +55,16 @@ public class KhachHang {
 	}
 
 	
+	public KhachHang(String hoTen, String soNha, String maSoCongTo,int oldNumber,int newNumber) {
+		super();
+		this.hoTen = hoTen;
+		this.soNha = soNha;
+		this.maSoCongTo = maSoCongTo;
+		this.oldNumber=oldNumber;
+		this.newNumber=newNumber;
+	}
 	
+	public KhachHang() {}
 	
 	
 }
