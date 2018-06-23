@@ -88,7 +88,7 @@ public class QuanLy {
 			public static void main(String[] args) {
 				
 
-				int tt, luaChon;
+				int tiepTuc, luaChon;
 				QuanLy quanly = new QuanLy();
 				while (true) {
 					Scanner input = new Scanner(System.in);
@@ -130,9 +130,9 @@ public class QuanLy {
 							quanly.addSV(msv);
 							System.out.println();
 							System.out.print("Bạn có muốn nhập tiếp không (0:không | 1:Có) ");
-							tt = input.nextInt();
+							tiepTuc = input.nextInt();
 							System.out.println();
-						} while (tt == 1);
+						} while (tiepTuc == 1);
 
 						break;
 					case 2:

@@ -2,7 +2,9 @@ package quanLyDien;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-
+/*
+ * 
+ */
 public class BienLai {
 
 	ArrayList<KhachHang> listKH;
@@ -72,7 +74,7 @@ public class BienLai {
 					System.out.println();
 					System.out.print("Bạn có muốn nhập tiếp không (0:không | 1:Có) ");
 					tt = sc.nextInt();
-					
+
 					System.out.println();
 				} while (tt == 1);
 				break;
