@@ -1,5 +1,7 @@
 package demo;
 
+import java.util.Random;
+
 public class Demo3 {
 	static int x;
 	static String s = "Hello";
@@ -8,6 +10,11 @@ public class Demo3 {
 		System.out.println(new String("12345"));
 	}
 
+	/**
+	 * 
+	 * @param x
+	 * @return 
+	 */
 	public static int sum(int... x) {
 		int sum = 0;
 		for (int i = 0; i < x.length; i++) {
@@ -20,6 +27,9 @@ public class Demo3 {
 		System.out.println(x);
 	}
 
+	/**
+	 * 
+	 */
 	public void printS() {
 		System.out.println(s);
 	}
@@ -65,6 +75,9 @@ public class Demo3 {
 		MyClass.X += 500;
 		MyClass.method();
 		System.out.println(MyClass.X);
+		
+		Random rand = new Random();
+		System.out.println(rand.nextInt(9));
 
 	}
 
