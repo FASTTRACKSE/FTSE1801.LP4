@@ -9,6 +9,7 @@ public class Baitap {
 		int tr =(n%1000)/100;
 		int ch=((n%1000)%100)/10;
 		int dv= n%10;
+		input.close();
 
 		if((ng==1)&&(tr==0)&&(ch==0)&&(dv==0))
 		System.out.print("Một ngàn ");

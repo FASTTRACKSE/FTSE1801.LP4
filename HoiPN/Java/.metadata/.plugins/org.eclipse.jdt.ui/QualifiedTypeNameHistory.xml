@@ -22,4 +22,5 @@
 <fullyQualifiedTypeName name="QuanLyTienDien"/>
 <fullyQualifiedTypeName name="java.util.HashMap"/>
 <fullyQualifiedTypeName name="SinhVien"/>
+<fullyQualifiedTypeName name="java.lang.StringBuilder"/>
 </qualifiedTypeNameHistroy>
