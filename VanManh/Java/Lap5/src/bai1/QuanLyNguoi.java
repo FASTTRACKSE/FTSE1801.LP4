@@ -25,6 +25,7 @@ public class QuanLyNguoi {
 					listPeople.get(i).getAddress());
 			System.out.println();
 		}
+		System.out.println();
 	}
 
 	// Hien thi danh sach people ngau nhien
@@ -37,6 +38,7 @@ public class QuanLyNguoi {
 					listPeople.get(i).getAddress());
 			System.out.println();
 		}
+		System.out.println();
 	}
 
 	// Sap xep theo ten tu z den a
@@ -46,11 +48,19 @@ public class QuanLyNguoi {
 
 	// Tim va xoa prenson theo ten
 	public void delete(String name) {
-
+		Object person = null;
 		for (int i = 0; i < listPeople.size(); i++) {
 			if (listPeople.get(i).getName().equals(name)) {
-				listPeople.remove(i);
+				person = listPeople.get(i);
+				break;
 			}
+		}
+
+		if (person != null) {
+			listPeople.remove(person);
+		} else {
+			System.out.println("Bạn đã nhập sai tên vui lòng chọn lại chức năng của chương trình. ");
+			System.out.println();
 		}
 	}
 
