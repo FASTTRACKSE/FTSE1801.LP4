@@ -1,5 +1,10 @@
 import java.util.Scanner;
 
+/**
+ * 
+ * @author SonVD
+ *
+ */
 public class Baitap1 {
 	public static void main(String[] args) {
 		int a;
@@ -54,6 +59,7 @@ public class Baitap1 {
 					"____@@@@@__@@@@_____@@______@@@@@\r\n" + 
 					"");
 		} else {
+			input.close();
 			System.out.println("Nhập sai (Từ 1 đến 3)");
 		}
 		
