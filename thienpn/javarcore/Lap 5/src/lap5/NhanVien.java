@@ -1,6 +1,6 @@
 package lap5;
 
-public class ql_tenNV {
+public class NhanVien {
 
 	private String hoTen;
 	private String diachi;
@@ -21,4 +21,5 @@ public class ql_tenNV {
 	public void setHoTen(String hoTen) {
 		this.hoTen = hoTen;
 	}
+
 }
