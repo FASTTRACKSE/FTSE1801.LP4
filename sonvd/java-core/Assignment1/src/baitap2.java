@@ -1,5 +1,10 @@
 import java.util.Scanner;
 
+/**
+ * 
+ * @author SonVD
+ *
+ */
 public class baitap2 {
 	public static void main(String[] args) {
 		double a, b, c;
