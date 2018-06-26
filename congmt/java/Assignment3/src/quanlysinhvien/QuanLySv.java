@@ -2,6 +2,12 @@ package quanlysinhvien;
 
 import java.util.Scanner;
 
+/**
+ * Class QuanLySv
+ * 
+ * @author CôngMT
+ *
+ */
 public class QuanLySv {
 	private Student[] listSinhVien;
 	private int soluongSv;
@@ -12,6 +18,11 @@ public class QuanLySv {
 		soluongSv = 0;
 	}
 
+	/**
+	 * Add Student
+	 * 
+	 * @param sv
+	 */
 	public void addSv(Student sv) {
 		listSinhVien[soluongSv] = sv;
 		soluongSv += 1;
@@ -91,32 +102,11 @@ public class QuanLySv {
 
 		}
 	}
-
+	/**
+	 * Main
+	 * @param args
+	 */
 	public static void main(String[] args) {
-		// Scanner sc=new Scanner(System.in);
-		// QuanLySv qlsv=new QuanLySv();
-		// Student sv1=new Student();
-		//
-		// System.out.println("- Nháº­p ID sinh viÃªn:");
-		// int id=sc.nextInt();
-		// sv1.setId(id);
-		// sc.nextLine();
-		// System.out.println("- Nháº­p tÃªn sinh viÃªn:");
-		// String name=sc.nextLine();
-		// sv1.setName(name);
-		// System.out.println("- Nháº­p tuá»•i sinh viÃªn:");
-		// byte age= sc.nextByte();
-		// sc.nextLine();
-		// sv1.setAge(age);
-		// System.out.println("- Nháº­p Ä‘á»‹a chá»‰ sinh viÃªn:");
-		// String address=sc.nextLine();
-		// sv1.setAddress(address);
-		// System.out.println("- Nháº­p Ä‘iá»ƒm TB sinh viÃªn:");
-		// float gpa=sc.nextFloat();
-		// sv1.setGpa(gpa);
-		//
-		// qlsv.addSv(sv1);
-		// qlsv.displayAllSV();
 		menu();
 	}
 
@@ -125,7 +115,7 @@ public class QuanLySv {
 		QuanLySv qlsv = new QuanLySv();
 		int tt, luaChon;
 		while (true) {
-			// Scanner input = new Scanner(System.in);
+			
 			System.out.println("/***********************************/");
 			System.out.println("1. Thêm sinh viên.");
 			System.out.println("2. Cập nhập sinh viên  theo ID.");
