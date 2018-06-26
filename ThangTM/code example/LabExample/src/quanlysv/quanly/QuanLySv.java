@@ -2,7 +2,7 @@ package quanlysv.quanly;
 
 import java.util.ArrayList;
 
-import quanlysv.sinhvien.SinhVien;
+import quanlysv.entity.SinhVien;
 
 /**
  * Manage list student
@@ -59,13 +59,12 @@ public class QuanLySv {
 		QuanLySv quanLySv = new QuanLySv();
 		SinhVien sinhVien = new SinhVien("ffse1801", "Vui", 15, 6);
 		quanLySv.addSinhVien(sinhVien);
-		
+
 		sinhVien = new SinhVien("ffse1802", "Vui Hon", 16, 7);
 		quanLySv.addSinhVien(sinhVien);
 
 		quanLySv.displayAllSinhVien();
 		System.out.println("so luong sinh vien la : " + quanLySv.getTotalSinhVien());
-		
-		
+
 	}
 }

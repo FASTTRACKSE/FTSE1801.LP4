@@ -1,4 +1,4 @@
-package quanlysv.sinhvien;
+package quanlysv.entity;
 
 public class SinhVien {
 	private String id;
