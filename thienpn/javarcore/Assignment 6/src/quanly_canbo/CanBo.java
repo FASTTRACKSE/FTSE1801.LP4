@@ -1,6 +1,7 @@
 package quanly_canbo;
 
 
+import java.util.EmptyStackException;
 import java.util.Scanner;
 
 public class CanBo  {
@@ -57,12 +58,47 @@ public class CanBo  {
 		return 0;
 	}
     public void nhapCanBo(Scanner sc) {
+    	String HoTen = null;
+    	float heSoLuong = 0;
+    	boolean kiemTra;
+    	do {
+    		kiemTra = false;
+    		try {
+    			System.out.print("Nhập Họ tên:");
+    	    	 HoTen = sc.nextLine();
+    	    	 if (HoTen.isEmpty()) {
+						kiemTra = true;
+						throw new Exception("Không được để rổng họ tên");
+					}if(HoTen.length()> 40) {
+						throw new Exception("Không được nhập quá 40 kí tự");
+					}
+					
+    		}catch(EmptyStackException er) {
+    			kiemTra = true;
+    			System.out.println("nhập tên không quá 40 ký tự");
+    		}
+    		catch (Exception e) {
+    			kiemTra = true;
+				System.out.println(e.getMessage());
+			}
+    	}while(kiemTra);
     	
-    	System.out.print("Nhập Họ tên:");
-    	String HoTen = sc.nextLine();
     	setHoTen(HoTen);
-    	System.out.print("Nhập hệ số lương:");
-    	float heSoLuong = sc.nextFloat();
+    	do {
+    		kiemTra = false;
+    		try {
+    			System.out.print("Nhập hệ số lương:");
+    	    	heSoLuong = sc.nextFloat();
+    	    	if(heSoLuong<0) {
+    	    		
+    	    		throw new Exception("Không được nhập số âm");
+    	    	}
+    		}catch(Exception e) {
+    			kiemTra = true;
+    			System.out.println(e.getMessage());
+    		}
+    	}while(kiemTra);
+    	
     	setHeSoLuong(heSoLuong);
     }
     public void xuatCanBo() {

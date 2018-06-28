@@ -42,6 +42,8 @@ public class GiangVien extends CanBo{
 	}
      
      public void nhapGiangVien(Scanner sc) {
+    	 boolean kiemTra;
+    	 int soTiet = 0;
     	 super.nhapCanBo(sc);
     	 sc.nextLine();
     	 System.out.print("Nhập khoa của Giảng Viên:");
@@ -72,9 +74,20 @@ public class GiangVien extends CanBo{
              }
          } while (choose < 1 || choose > 3);
     	 setTrinhDo(trinhDo);
+    	 do {
+    		 kiemTra = false;
+    		 try {
+    			 System.out.print("Nhập số tiết dạy của giảng viên: ");
+    	    	 soTiet = sc.nextInt();
+    	    	 if(soTiet< 0 ) {
+    	    		 throw new Exception("Không được nhập số âm");
+    	    	 }
+    		 }catch(Exception e) {
+    			 kiemTra = true;
+    			 System.out.println(e.getMessage());
+    		 }
+    	 }while(kiemTra);
     	
-    	 System.out.print("Nhập số tiết dạy của giảng viên: ");
-    	 int soTiet = sc.nextInt();
     	 setSoTiet(soTiet);
      }@Override
     public double tinhLuong() {

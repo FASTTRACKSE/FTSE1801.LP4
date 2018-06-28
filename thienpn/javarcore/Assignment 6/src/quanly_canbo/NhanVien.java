@@ -11,6 +11,7 @@ public class NhanVien extends CanBo {
    }
 
 public NhanVien(String phongBan, String chucVu, int soNgayCong) {
+	
 	super();
 	this.phongBan = phongBan;
 	this.chucVu = chucVu;
@@ -42,6 +43,8 @@ public void setSoNgayCong(int soNgayCong) {
 }
    
    public void nhapNhanVien(Scanner sc) {
+	   boolean kiemTra;
+	   int soNgayCong = 0;
 	   super.nhapCanBo(sc);
 	   sc.nextLine();
 	   System.out.print("Nhập phòng ban của nhân viên: ");
@@ -72,9 +75,20 @@ public void setSoNgayCong(int soNgayCong) {
            }
        } while (choose < 1 || choose > 3);
 	   setChucVu(chucVu);
-	   
-	   System.out.print("Nhập số ngày công nhân viên: ");
-	   int soNgayCong = sc.nextInt();
+	   do {
+  		 kiemTra = false;
+  		 try {
+  			 System.out.print("Nhập số ngày công nhân viên: ");
+  		    soNgayCong = sc.nextInt();
+  	    	 if(soNgayCong< 0 ) {
+  	    		 throw new Exception("Không được nhập số âm");
+  	    	 }
+  		 }catch(Exception e) {
+  			kiemTra = true;
+  			 System.out.println(e.getMessage());
+  		 }
+  	 }while(kiemTra);
+	  
 	   setSoNgayCong(soNgayCong);
    }
    public double tinhLuong() {

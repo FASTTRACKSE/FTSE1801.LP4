@@ -145,6 +145,7 @@ public class quanLy_SinhVien {
 				double gba = 0;
 				int id = 0;
 				int age = 0;
+
 				String a = sc.nextLine();
 				SinhVien sv = new SinhVien();
 				/**
@@ -154,7 +155,7 @@ public class quanLy_SinhVien {
 				do {
 					kiemTra = false;
 					try {
-						kiemTra = true;
+
 						System.out.println("Nhập id: ");
 						a = sc.nextLine();
 						if (a.isEmpty())
@@ -173,10 +174,11 @@ public class quanLy_SinhVien {
 							System.out.println("co the them sinh vien nay");
 						}
 					} catch (NumberFormatException er) {
-
+						kiemTra = true;
 						System.out.println("Vui lòng nhập số không nhập chữ");
 
 					} catch (Exception e) {
+						kiemTra = true;
 						System.out.println(e.getMessage());
 					}
 
@@ -224,16 +226,23 @@ public class quanLy_SinhVien {
 				do {
 					kiemTra = false;
 					try {
+
 						System.out.println("Nhập tuổi SV :");
-						age = sc.nextInt();
+						a = sc.nextLine();
+						if (a.isEmpty())
+							throw new Exception("không được để rỗng");
+
+						age = Integer.parseInt(a);
 						if (age < 0 || age > 100) {
 							kiemTra = true;
 							throw new Exception("tuổi nhập không nhỏ hơn 0 và lớn hơn 100");
-						} else {
-							kiemTra = false;
-							System.out.println("Tuổi nhập hợp lệ");
 						}
+						System.out.println("Tuổi nhập hợp lệ");
+					} catch (NumberFormatException er) {
+						kiemTra = true;
+						System.out.println("bắt buộc phải nhập số nguyên");
 					} catch (Exception e) {
+						kiemTra = true;
 						System.out.println(e.getMessage());
 					}
 				} while (kiemTra);
@@ -250,18 +259,24 @@ public class quanLy_SinhVien {
 				 */
 				do {
 					kiemTra = false;
-
 					try {
-						System.out.println("Nhập điểm trung bình của SV :");
-						gba = sc.nextDouble();
+
+						System.out.println("Nhập điểm SV :");
+						a = sc.nextLine();
+						if (a.isEmpty())
+							throw new Exception("không được để rỗng");
+
+						gba = Integer.parseInt(a);
 						if (gba < 0 || gba > 10) {
 							kiemTra = true;
 							throw new Exception("Điểm nhập không nhỏ hơn 0 và lớn hơn 10");
-						} else {
-							kiemTra = false;
-							System.out.println("Điểm nhập hợp lệ");
 						}
+						System.out.println("điểm nhập hợp lệ");
+					} catch (NumberFormatException er) {
+						kiemTra = true;
+						System.out.println("bắt buộc phải nhập đúng định dạng ");
 					} catch (Exception e) {
+						kiemTra = true;
 						System.out.println(e.getMessage());
 					}
 				} while (kiemTra);
