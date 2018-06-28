@@ -8,6 +8,17 @@ public class KhachHang {
 	private int soDienMoi;
 	private double tienDien;
 
+	public KhachHang() {
+	}
+
+	public KhachHang(String name, String address, int maCongTo, int soDienCu, int soDienMoi) {
+		this.name = name;
+		this.address = address;
+		this.maCongTo = maCongTo;
+		this.soDienCu = soDienCu;
+		this.soDienMoi = soDienMoi;
+	}
+
 	public int getMaCongTo() {
 		return maCongTo;
 	}
@@ -56,14 +67,4 @@ public class KhachHang {
 		this.soDienMoi = soDienMoi;
 	}
 
-	public KhachHang() {
-	}
-
-	public KhachHang(String name, String address, int maCongTo, int soDienCu, int soDienMoi) {
-		this.name = name;
-		this.address = address;
-		this.maCongTo = maCongTo;
-		this.soDienCu = soDienCu;
-		this.soDienMoi = soDienMoi;
-	}
 }

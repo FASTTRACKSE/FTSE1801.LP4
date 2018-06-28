@@ -118,20 +118,77 @@ public class ArrayListSV {
 			switch (luaChon) {
 			case 1:
 				do {
+					String name = null;
+					int age = 0;
+					double gpa = 0.0;
+					boolean kiemTra;
 
+					/**
+					 * Kiem tra nhap ten co de trong hay co ki tu so khong, neu co bat nhap lai
+					 */
 					input.nextLine();
-					System.out.print("Nhập tên SV : ");
-					String name = input.nextLine();
+					do {
+						try {
+							kiemTra = false;
+							System.out.print("Nhập tên SV : ");
+							name = input.nextLine();
+							if (name.isEmpty()) {
+								throw new Exception("Nhap sai, ten duoc de trong hoac co ki tu so");
+							} else {
+								for (int i = 0; i < name.length(); i++) {
+									if (!Character.isLetter(name.charAt(i))
+											&& !Character.isWhitespace(name.charAt(i))) {
+										throw new Exception("Nhap sai, ten duoc de trong hoac co ki tu so");
+									}
+								}
+							}
 
-					System.out.print("Nhập tuổi : ");
-					int age = input.nextInt();
+						} catch (Exception e) {
+							System.out.println(e.getMessage());
+							kiemTra = true;
+						}
+					} while (kiemTra);
+
+					/**
+					 * Kiem tra nhap tuoi co nho hon 0 hay lon hon 100 khong, neu co bat nhap lai
+					 */
+					do {
+						try {
+							kiemTra = false;
+							System.out.print("Nhập tuổi : ");
+							age = input.nextInt();
+							if (age <= 0 || age > 100) {
+								throw new Exception("Tuoi khong duoc nho hon 0 va lon on 100");
+							}
+						} catch (Exception e) {
+							System.out.println(e.getMessage());
+							kiemTra = true;
+						}
+
+					} while (kiemTra);
 
 					input.nextLine();
 					System.out.print("Nhập địa chỉ : ");
 					String address = input.nextLine();
 
-					System.out.print("Nhập điểm trung bình : ");
-					double gpa = input.nextDouble();
+					/**
+					 * Kiem tra nhap diem trung binh co nho hon 0 hay lon hon 10 khong, neu co bat
+					 * nhap lai
+					 */
+					do {
+						try {
+							kiemTra = false;
+							System.out.print("Nhập điểm trung bình : ");
+							gpa = input.nextDouble();
+							if (0 < gpa || gpa > 10) {
+								throw new Exception("Diem khong duoc nho hon 0 va lon hon 10");
+							}
+						} catch (Exception e) {
+							System.out.println(e.getMessage());
+							kiemTra = true;
+						}
+
+					} while (kiemTra);
 
 					SinhVienArray sv = new SinhVienArray(name, age, address, gpa);
 					quanLy.addSV(sv);

@@ -1,3 +1,4 @@
+package Lap6;
 import java.util.EmptyStackException;
 
 //import java.util.Scanner;

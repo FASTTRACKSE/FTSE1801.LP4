@@ -1,3 +1,5 @@
+package Lap6;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -8,6 +10,16 @@ public class QLSinhVien {
 
 	public QLSinhVien() {
 		listSinhVien = new ArrayList<quanLySinhVien>();
+	}
+
+	public boolean isExistStudent(int id) {
+		for (quanLySinhVien sinhVien : listSinhVien) {
+			if (id == sinhVien.getId()) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public void menu() {
@@ -30,23 +42,135 @@ public class QLSinhVien {
 
 			switch (chooseMenu) {
 			case 1:
+				int Id = 0;
+				boolean check = false;
 				quanLySinhVien sv = new quanLySinhVien();
-				System.out.println("Nhập Id:");
-				int Id = input.nextInt();
+				String a = input.nextLine();
+
+				/**
+				 * 
+				 */
+				do {
+					check = false;
+					try {
+
+						System.out.println("Nhập Id: ");
+						a = input.nextLine();
+						if (a.isEmpty())
+
+							throw new Exception("Vui lòng nhập Id không để rỗng.");
+						Id = Integer.parseInt(a);
+
+						if (ql.isExistStudent(Id)) {
+							check = true;
+							throw new Exception("Id đã tồn tại.");
+
+						} else {
+
+							System.out.println("Có thể sử dụng Id này.");
+						}
+					} catch (NumberFormatException er) {
+						System.out.println("Vui lòng nhập số không được nhập chữ.");
+					} catch (Exception e) {
+						check = true;
+						System.out.println(e.getMessage());
+					}
+				} while (check);
+
 				sv.setId(Id);
-				input.nextLine();
-				System.out.println("Nhập tên sinh viên:");
-				String Name = input.nextLine();
-				sv.setName(Name);
-				System.out.println("Nhập tuổi sinh viên: ");
-				int Age = input.nextInt();
+
+				/**
+				 * 
+				 */
+				String name = null;
+
+				do {
+					check = false;
+					try {
+						System.out.print("Nhập tên SV : ");
+						name = input.nextLine();
+						if (name.isEmpty()) {
+							check = true;
+							System.out.println("Không được để khoảng trống. Vui lòng nhập lại tên sinh viên.");
+
+						} else {
+							for (int i = 0; i < name.length(); i++) {
+								if (!Character.isLetter(name.charAt(i)) && name.charAt(i) != ' ') {
+									check = true;
+									System.out.println("Không được nhập số vui lòng nhập chữ.");
+									break;
+								}
+							}
+						}
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
+				} while (check);
+
+				sv.setName(name);
+				int Age = 0;
+				do {
+					check = false;
+					try {
+						System.out.println("Nhập tuổi sinh viên: ");
+						a = input.nextLine();
+						if (a.isEmpty())
+							throw new Exception("Vui lòng nhập tuổi không để rỗng.");
+						Age = Integer.parseInt(a);
+
+						if (Age < 0 || Age > 100) {
+							check = true;
+							if (Age < 0) {
+								System.out.println("Không được nhập dưới 0");
+							} else if (Age > 100) {
+								System.out.println("Không được nhập quá 100");
+							}
+						} else {
+							System.out.println("Nhập tuổi hợp lệ");
+						}
+					} catch (NumberFormatException er) {
+						System.out.println("Bắt buộc nhập tuổi là số nguyên");
+					} catch (Exception e) {
+						check = true;
+						System.out.println(e.getMessage());
+					}
+				} while (check);
+
 				sv.setAge(Age);
 				input.nextLine();
 				System.out.println("Nhập địa chỉ sinh viên: ");
 				String Address = input.nextLine();
 				sv.setAddress(Address);
-				System.out.println("Nhập điểm trung bình");
-				double Gpa = input.nextDouble();
+
+				double Gpa = 0;
+				do {
+					check = false;
+					try {
+						System.out.println("Nhập điểm trung bình: ");
+						a = input.nextLine();
+						if (a.isEmpty())
+							throw new Exception("Vui lòng nhập điểm không để rỗng.");
+						Gpa = Integer.parseInt(a);
+
+						if (Gpa < 0.0 || Gpa > 10.0) {
+							check = true;
+							if (Gpa < 0.0) {
+								System.out.println("Không được nhập dưới 0.0");
+							} else if (Gpa > 10.0) {
+								System.out.println("Không được nhập quá 10.0");
+							}
+						} else {
+							System.out.println("Nhập điểm hợp lệ");
+						}
+					} catch (NumberFormatException er) {
+						check = true;
+						System.out.println("Bắt buộc nhập đúng định dạng");
+					} catch (Exception e) {
+						check = true;
+						System.out.println(e.getMessage());
+					}
+				} while (check);
+
 				sv.setGpa(Gpa);
 				ql.addSV(sv);
 				break;

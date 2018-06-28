@@ -1,19 +1,18 @@
-package bai1_quan_ly_sinh_vien_array;
+package bai1;
 
-public class SinhVien {
+public class SinhVienArray {
 	private String name;
 	private int age;
 	private String address;
 	private double gpa;
+	private String maSinhVien;
 
-	public SinhVien() {
+	public String getMaSinhVien() {
+		return maSinhVien;
 	}
 
-	public SinhVien(String name, int age, String address, double gpa) {
-		this.name = name;
-		this.age = age;
-		this.address = address;
-		this.gpa = gpa;
+	public void setMaSinhVien(String maSinhVien) {
+		this.maSinhVien = maSinhVien;
 	}
 
 	public String getName() {
@@ -48,4 +47,14 @@ public class SinhVien {
 		this.gpa = gpa;
 	}
 
+	public SinhVienArray(String name, String maSinhVien, int age, String address, double gpa) {
+		this.name = name;
+		this.maSinhVien = maSinhVien;
+		this.age = age;
+		this.address = address;
+		this.gpa = gpa;
+	}
+
+	public SinhVienArray() {
+	}
 }
