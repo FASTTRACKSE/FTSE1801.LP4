@@ -1,7 +1,7 @@
 package Lap5;
 
 public class SinhVien {
-	public int id;
+	private int id;
 	private String name;
 	private int age;
 	private String address;
