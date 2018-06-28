@@ -3,7 +3,7 @@ package demo;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import quanlysv.sinhvien.SinhVien;
+import quanlysv.entity.SinhVien;
 
 /**
  * Manager student name list

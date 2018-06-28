@@ -3,7 +3,13 @@ package bai1;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
-
+/**
+ * 
+ * Quan ly danh sach person
+ * 
+ * @author manh
+ *
+ */
 public class QuanLyNguoi {
 	ArrayList<People> listPeople;
 
@@ -11,44 +17,58 @@ public class QuanLyNguoi {
 		listPeople = new ArrayList<People>();
 	}
 
-	// Them nguoi
+	/**
+	 * Them person
+	 * @param person
+	 */
 	public void addNguoi(People person) {
 		listPeople.add(person);
 	}
 
-	// Hien thi danh sach people
-	public void show() {
+	/**
+	 * Hien thi danh sach person
+	 */
+	public void showAll() {
 		System.out.printf("%-5s %-20s %-5s %-20s", "STT", "Name", "Age", "Address");
 		System.out.println();
 		for (int i = 0; i < listPeople.size(); i++) {
-			System.out.printf("%-5s %-20s %-5s %-20s", i + 1, listPeople.get(i).getName(), listPeople.get(i).getAge(),
-					listPeople.get(i).getAddress());
+			People person = listPeople.get(i);
+			System.out.printf("%-5s %-20s %-5s %-20s", i + 1, person.getName(), person.getAge(),
+					person.getAddress());
 			System.out.println();
 		}
 		System.out.println();
 	}
 
-	// Hien thi danh sach people ngau nhien
+	/**
+	 * Hien thi danh sach person ngau nhien
+	 */
 	public void showRandom() {
 		Collections.shuffle(listPeople);
 		System.out.printf("%-5s %-20s %-5s %-20s", "STT", "Name", "Age", "Address");
 		System.out.println();
 		for (int i = 0; i < listPeople.size(); i++) {
-			System.out.printf("%-5s %-20s %-5s %-20s", i + 1, listPeople.get(i).getName(), listPeople.get(i).getAge(),
-					listPeople.get(i).getAddress());
+			People person = listPeople.get(i);
+			System.out.printf("%-5s %-20s %-5s %-20s", i + 1, person.getName(), person.getAge(),
+					person.getAddress());
 			System.out.println();
 		}
 		System.out.println();
 	}
 
-	// Sap xep theo ten tu z den a
+	/**
+	 * Sap xep theo ten tu z den a
+	 */
 	public void sortZtoA() {
 		Collections.sort(listPeople, new Sort());
 	}
 
-	// Tim va xoa prenson theo ten
-	public void delete(String name) {
-		Object person = null;
+	/**
+	 * Tim va xoa person theo ten
+	 * @param name
+	 */
+	public void deletePersonByName(String name) {
+		People person = null;
 		for (int i = 0; i < listPeople.size(); i++) {
 			if (listPeople.get(i).getName().equals(name)) {
 				person = listPeople.get(i);
@@ -65,7 +85,7 @@ public class QuanLyNguoi {
 	}
 
 	public static void main(String[] args) {
-		int tt, luaChon;
+		int tiepTuc, luaChon;
 		QuanLyNguoi quanLy = new QuanLyNguoi();
 		while (true) {
 			Scanner input = new Scanner(System.in);
@@ -103,12 +123,12 @@ public class QuanLyNguoi {
 					quanLy.addNguoi(person);
 					System.out.println();
 					System.out.print("Bạn có muốn nhập tiếp không (0:không | 1:Có) ");
-					tt = input.nextInt();
+					tiepTuc = input.nextInt();
 					System.out.println();
-				} while (tt == 1);
+				} while (tiepTuc == 1);
 				break;
 			case 2:
-				quanLy.show();
+				quanLy.showAll();
 				break;
 
 			case 3:
@@ -117,14 +137,14 @@ public class QuanLyNguoi {
 			case 4:
 
 				quanLy.sortZtoA();
-				quanLy.show();
+				quanLy.showAll();
 				break;
 			case 5:
 				System.out.println("Nhập tên cần xóa : ");
 				input.nextLine();
 				String name = input.nextLine();
-				quanLy.delete(name);
-				quanLy.show();
+				quanLy.deletePersonByName(name);
+				quanLy.showAll();
 				break;
 			case 6:
 				input.close();
