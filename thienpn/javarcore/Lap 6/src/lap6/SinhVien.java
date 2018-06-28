@@ -1,51 +1,55 @@
-package bai1_quan_ly_sinh_vien_array;
+package lap6;
 
-public class SinhVien {
+public class SinhVien{
+	private int id;
 	private String name;
 	private int age;
 	private String address;
-	private double gpa;
-
-	public SinhVien() {
-	}
-
-	public SinhVien(String name, int age, String address, double gpa) {
+	private double gba;
+	
+	
+	
+	public SinhVien(int id, String name, int age, String address, double gba) {
+		super();
+		this.id = id;
 		this.name = name;
 		this.age = age;
 		this.address = address;
-		this.gpa = gpa;
+		this.gba = gba;
 	}
-
+	public SinhVien() {
+		
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
 	public int getAge() {
 		return age;
 	}
-
 	public void setAge(int age) {
 		this.age = age;
 	}
-
 	public String getAddress() {
 		return address;
 	}
-
 	public void setAddress(String address) {
 		this.address = address;
 	}
-
-	public double getGpa() {
-		return gpa;
+	public double getGba() {
+		return gba;
 	}
-
-	public void setGpa(double gpa) {
-		this.gpa = gpa;
+	public void setGba(double gba) {
+		this.gba = gba;
 	}
-
+	
+   
 }

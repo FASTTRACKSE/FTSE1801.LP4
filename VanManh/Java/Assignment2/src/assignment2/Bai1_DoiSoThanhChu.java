@@ -458,6 +458,9 @@ public class Bai1_DoiSoThanhChu {
 			}
 		} else if (l == 1) {
 			switch (dv) {
+			case 0:
+				System.out.println("Không");
+				break;
 			case 1:
 				System.out.print("Một.");
 				break;
