@@ -1,75 +1,90 @@
 package quanLy;
 
 import java.util.ArrayList;
+
 import java.util.Collections;
 import java.util.Scanner;
 
 import sinhVien.SinhVien;
-import sinhVien.Sort;
+import sinhVien.SortSinhVienByNameFromZToA;
 
+/**
+ * 
+ * @author luan
+ *
+ */
 public class QuanLySV {
 
-	private ArrayList<SinhVien> listSV;
+	private ArrayList<SinhVien> listSinhVien;
 
 	public QuanLySV() {
-		listSV = new ArrayList<SinhVien>();
+		listSinhVien = new ArrayList<SinhVien>();
 	}
 
-	// them sinh vien
-	public void addSV(SinhVien SV) {
-		listSV.add(SV);
+	/**
+	 * them sinh vien vao danh sach
+	 * 
+	 * @param SV	Sinh vien
+	 *            
+	 */
+	public void addSinhVien(SinhVien SV) {
+		listSinhVien.add(SV);
 	}
 
-	// hien thi danh sach ngau nhien
+	/**
+	 * hien thi danh sach ngau nhien
+	 */
 	public void random() {
-		Collections.shuffle(listSV);
-		System.out.printf("%-5s %-20s %-20s %-6s", "ID", "Họ", "Tên", "Tuổi");
-		System.out.println();
-		for (int i = 0; i < listSV.size(); i++) {
-			System.out.printf("\n %-5s %-20s %-20s %-6s", (i + 1), listSV.get(i).getFistName(),
-					listSV.get(i).getLastName(), listSV.get(i).getAge());
-		}
-		System.out.println();
-		System.out.println();
+		Collections.shuffle(listSinhVien);
 	}
 
-	// xoa sinh vien
-	public void delSV(String name) {
-		Object person = null;
-		for (int i = 0; i < listSV.size(); i++) {
-			if (listSV.get(i).getLastName().equals(name)) {
-				person = listSV.get(i);
+	/**
+	 * xoa sinh vien
+	 * 
+	 * @param name 	ten Sinh Vien
+	 *            
+	 */
+	public void delSinhVienByName(String name) {
+		SinhVien person = null;
+		for (int i = 0; i < listSinhVien.size(); i++) {
+			if (listSinhVien.get(i).getLastName().equals(name)) {
+				person = listSinhVien.get(i);
 				break;
 			}
 		}
 		if (person != null) {
-			listSV.remove(person);
+			listSinhVien.remove(person);
 		} else {
 			System.out.println("Nhap sai chuc nang");
 		}
 
 	}
 
-	// Hiển thị sinh viên
+	/**
+	 * Hien thị danh sach sinh vien
+	 */
 	public void show() {
 		System.out.printf("%-5s %-20s %-20s %-6s", "ID", "Họ", "Tên", "Tuổi");
 		System.out.println();
-		for (int i = 0; i < listSV.size(); i++) {
-			System.out.printf("\n %-5s %-20s %-20s %-6s", (i + 1), listSV.get(i).getFistName(),
-					listSV.get(i).getLastName(), listSV.get(i).getAge());
+		for (int i = 0; i < listSinhVien.size(); i++) {
+			System.out.printf("\n %-5s %-20s %-20s %-6s", (i + 1), listSinhVien.get(i).getFistName(),
+					listSinhVien.get(i).getLastName(), listSinhVien.get(i).getAge());
 		}
 		System.out.println();
 		System.out.println();
 	}
-	// Sắp xếp sinh viên theo tên từ a-z
+
+	/**
+	 * sap xep danh sach sinh vien tu Z-A
+	 */
 
 	public void sort() {
-		Collections.sort(listSV, new Sort());
+		Collections.sort(listSinhVien, new SortSinhVienByNameFromZToA());
 
 	}
 
 	public static void main(String[] args) {
-		int tt, luaChon;
+		int tiepTuc, luaChon;
 		QuanLySV quanly = new QuanLySV();
 		while (true) {
 			Scanner input = new Scanner(System.in);
@@ -77,7 +92,7 @@ public class QuanLySV {
 			System.out.println("1. Nhập danh sách sinh viên.");
 			System.out.println("2. Hiển thị danh sách sinh viên .");
 			System.out.println("3. Xuất danh sách sinh viên ngẫu nhiên  .");
-			System.out.println("4. Sắp sếp sinh viên theo giảm dần .");
+			System.out.println("4. Sắp sếp sinh viên theo tên từ Z-A .");
 			System.out.println("5. Tìm và xóa họ tên sinh viên nhập từ bàn phím .");
 			System.out.println("6. Kết thúc chương trình  .");
 			System.out.println("/***********************************/");
@@ -100,12 +115,12 @@ public class QuanLySV {
 					int age = input.nextInt();
 
 					SinhVien sv = new SinhVien(fistname, lastname, age);
-					quanly.addSV(sv);
+					quanly.addSinhVien(sv);
 					System.out.println();
 					System.out.print("Bạn có muốn nhập tiếp không (0:không | 1:Có) ");
-					tt = input.nextInt();
+					tiepTuc = input.nextInt();
 					System.out.println();
-				} while (tt == 1);
+				} while (tiepTuc == 1);
 				break;
 
 			case 2:
@@ -114,6 +129,7 @@ public class QuanLySV {
 
 			case 3:
 				quanly.random();
+				quanly.show();
 				break;
 
 			case 4:
@@ -125,7 +141,7 @@ public class QuanLySV {
 				System.out.print("Nhập tên cần xóa : ");
 				input.nextLine();
 				String ten = input.nextLine();
-				quanly.delSV(ten);
+				quanly.delSinhVienByName(ten);
 				quanly.show();
 				break;
 

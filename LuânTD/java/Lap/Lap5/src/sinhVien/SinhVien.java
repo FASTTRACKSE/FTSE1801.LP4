@@ -9,7 +9,6 @@ public class SinhVien {
 	}
 
 	public SinhVien(String fistName, String lastName, int age) {
-		super();
 		this.fistName = fistName;
 		this.lastName = lastName;
 		this.age = age;
