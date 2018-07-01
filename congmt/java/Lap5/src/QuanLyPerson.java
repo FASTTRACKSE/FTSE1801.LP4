@@ -1,7 +1,11 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
-
+/**
+ * Person Class
+ * @author CôngMT
+ *
+ */
 public class QuanLyPerson {
 	private ArrayList<Person> listPerson;
 	public QuanLyPerson() {
@@ -16,6 +20,9 @@ public class QuanLyPerson {
 		listPerson.add(person);
 
 	}
+	/**
+	 * Show Person
+	 */
 	public void show() {
 		System.out.printf("%-3s|%-20s|%-10s|%-20s \n","STT","Họ và tên","Tuổi","Địa chỉ");
 		int size= listPerson.size();
@@ -24,10 +31,16 @@ public class QuanLyPerson {
 			
 		}
 	}
-	public void sapxepten() {
+	/**
+	 * Sắp xếp tên từ A-->Z
+	 */
+	public void sapXepTenAZ() {
 		Collections.sort(listPerson, new SortPersonByName());
 	}
-	public void xuatngaunhien() {
+	/**
+	 * Sắp xếp ngẫu nhiên
+	 */
+	public void xuatNgauNhien() {
 		Collections.shuffle(listPerson);
 		this.show();
 	}
@@ -37,14 +50,8 @@ public class QuanLyPerson {
 	 * @param name:
 	 *            
 	 */
-	public void deletel(String name) {
-//		int size = listPerson.size();
-//		for (int i = 0; i < size; i++) {
-//			if (listPerson.get(i).getName().equals(name) ) {
-//				listPerson.remove(i);
-//				break;
-//			}	
-//		}
+	public void deletelPerson(String name) {
+
 		Person person = null;
 		int size = listPerson.size();
 		for (int i = 0; i < size; i++) {
@@ -61,10 +68,29 @@ public class QuanLyPerson {
 		}
 			
 	}
+	/**
+	 * create showMenu
+	 */
+	public static void showMenu() {
+		System.out.println("-----------MENU------------");
+		System.out.println("1. Nhập họ và tên.");
+		System.out.println("2. Xuất danh sách ngẫu nhiên.");
+		System.out.println("3. Xóa danh sách theo tên.");
+		System.out.println("4. Sắp xếp theo tên.");
+		System.out.println("5. Hiển thị danh sách person");
+		System.out.println("0. Exit.");
+		System.out.println("---------------------------");
+		System.out.print("Please choose: ");
+		
+	}
+	/**
+	 * Main 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		Scanner sc=new Scanner(System.in);
 		QuanLyPerson quanly=new QuanLyPerson();
-		int choose, tt;
+		int choose, tiepTuc;
 		showMenu();
 		while (true) {
 			choose = sc.nextInt();
@@ -88,13 +114,13 @@ public class QuanLyPerson {
 					quanly.add(person1);
 					System.out.println();
 					System.out.print("Bạn có muốn nhập tiếp không (0:không | 1:Có) ");
-					tt = sc.nextInt();
+					tiepTuc = sc.nextInt();
 					System.out.println();
-				} while (tt == 1);
+				} while (tiepTuc == 1);
 
 				break;
 			case 2:
-				quanly.xuatngaunhien();
+				quanly.xuatNgauNhien();
 				break;
 
 			case 3:
@@ -103,11 +129,11 @@ public class QuanLyPerson {
 				System.out.println();
 				sc.nextLine();
 				String idDelete = sc.nextLine();
-				quanly.deletel(idDelete);
+				quanly.deletelPerson(idDelete);
 				quanly.showMenu();
 				break;
-			case 4:
-				quanly.sapxepten();
+			case 4:	
+				quanly.sapXepTenAZ();
 				break;
 			case 5:
 				quanly.show();
@@ -127,21 +153,6 @@ public class QuanLyPerson {
 		}
 	}
 
-	/**
-	 * create menu
-	 */
-	public static void showMenu() {
-		System.out.println("-----------menu------------");
-		System.out.println("1. Nhập họ và tên.");
-		System.out.println("2. Xuất danh sách ngẫu nhiên.");
-		System.out.println("2. Xóa danh sách theo tên.");
-		System.out.println("4. Sắp xếp theo tên.");
-		System.out.println("5. Hiển thị danh sách person");
-		System.out.println("0. exit.");
-		System.out.println("---------------------------");
-		System.out.print("Please choose: ");
-		
-	}
 	
 
 }
