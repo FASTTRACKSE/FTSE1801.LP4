@@ -1,5 +1,10 @@
 import java.util.Scanner;
 
+/**
+ * 
+ * @author SonVD
+ *
+ */
 public class Baitap1 {
 	public static void main(String[] args) {
 		int a;

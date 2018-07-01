@@ -5,19 +5,27 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
 
+/**
+ * Quan ly sinh vien
+ * 
+ * @author SonVD
+ *
+ */
 public class QLSinhVien {
 	private ArrayList<SinhVien> listSinhVien;
 
 	public QLSinhVien() {
 		listSinhVien = new ArrayList<SinhVien>();
 	}
-	
-	//Menu list sinh vien
+
+	/**
+	 * Menu list sinh vien
+	 */
 	public void menu() {
 		int chooseMenu;
 		Scanner input = new Scanner(System.in);
 
-		QLSinhVien ql = new QLSinhVien();
+		
 
 		while (true) {
 			System.out.println("/****************************************/");
@@ -53,24 +61,25 @@ public class QLSinhVien {
 				double Gpa = input.nextDouble();
 				sv.setGpa(Gpa);
 
-				ql.addSV(sv);
-				System.out.println("Thêm sinh viên có Id " +Id+ " thành công!");
+				addSV(sv);
+				System.out.println("Thêm sinh viên có Id " + Id + " thành công!");
 				break;
 			case 2:
-				ql.displaySV();
+				displaySV();
 				break;
 			case 3:
 				sortSVByName();
 				break;
 			case 4:
-				ql.hoanDoiNgauNhien();
+				hoanDoiNgauNhien();
 				break;
 			case 5:
 				System.out.println("Nhập tên sinh viên cần xóa: ");
 				input.nextLine();
 				String name1 = input.nextLine();
-				ql.deleteSVByName(name1);
-				System.out.println("Xóa sinh viên thành công theo tên " +name1+ " !");
+				
+				deleteSVByName(name1);
+				System.out.println("Xóa sinh viên thành công theo tên " + name1 + " !");
 				break;
 			case 0:
 				input.close();
@@ -83,13 +92,18 @@ public class QLSinhVien {
 		}
 
 	}
-	
-	//add sinh vien in list
+
+	/**
+	 * add sinh vien in list
+	 * @param Sv Sinh viên
+	 */
 	public void addSV(SinhVien Sv) {
 		listSinhVien.add(Sv);
 	}
-	
-	//display list sinh vien
+
+	/**
+	 * display list sinh vien
+	 */
 	public void displaySV() {
 		System.out.format("%3s|%-30s|%9s|%-30s|%9s%n", "Id", "Tên sinh viên", "Tuổi", "Địa chỉ", "Trung bình");
 		for (int i = 0; i < listSinhVien.size(); i++) {
@@ -97,8 +111,10 @@ public class QLSinhVien {
 					listSinhVien.get(i).getAge(), listSinhVien.get(i).getAddress(), listSinhVien.get(i).getGpa());
 		}
 	}
-	
-	//Sort sinh vien by name
+
+	/**
+	 * sort sinh vien by name
+	 */
 	public void sortSVByName() {
 		Collections.sort(listSinhVien, new Comparator<SinhVien>() {
 
@@ -109,21 +125,34 @@ public class QLSinhVien {
 		});
 		System.out.println("Sắp xếp danh sách sinh viên theo tên thành công!");
 	}
-	
-	//hoán đổi ngẫu nhiên
+
+	/**
+	 * hoan doi ngau nhien
+	 */
 	public void hoanDoiNgauNhien() {
 		Collections.shuffle(listSinhVien);
 		System.out.println("Hóa đổi ngẫu nhiên thành công!");
 	}
-	
-	// delete sinhvien by Id
+
+	/**
+	 * delete sinh vien by name
+	 * @param name tên 
+	 */
 	public void deleteSVByName(String name) {
+		SinhVien Name = null;
 		for (int i = 0; i < listSinhVien.size(); i++) {
 			if (listSinhVien.get(i).getName().equals(name)) {
-				listSinhVien.remove(i);
+				Name = listSinhVien.get(i);
+				break;
 			}
 		}
+		if (Name != null) {
+			listSinhVien.remove(Name);
+		} else {
+			System.out.println("Tên sinh viên không có trong danh sách.");
+		}
 	}
+
 
 	public static void main(String[] args) {
 		QLSinhVien qlsv = new QLSinhVien();
