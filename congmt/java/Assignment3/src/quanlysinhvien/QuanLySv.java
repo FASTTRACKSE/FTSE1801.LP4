@@ -2,6 +2,12 @@ package quanlysinhvien;
 
 import java.util.Scanner;
 
+/**
+ * Class QuanLySv
+ * 
+ * @author CôngMT
+ *
+ */
 public class QuanLySv {
 	private Student[] listSinhVien;
 	private int soluongSv;
@@ -12,35 +18,46 @@ public class QuanLySv {
 		soluongSv = 0;
 	}
 
+	/**
+	 * Add Student
+	 * 
+	 * @param sv
+	 */
 	public void addSv(Student sv) {
 		listSinhVien[soluongSv] = sv;
 		soluongSv += 1;
 	}
+	/**
+	 * Update Student
+	 * @param sc
+	 * @param id
+	 */
 
 	public void updateSv(Scanner sc, int id) {
 		boolean isExisted = false;
-
+		
 		int size = soluongSv;
 
 		for (int i = 0; i < size; i++) {
-			if (listSinhVien[i].getId() == id) {
+			Student sv=listSinhVien[i];
+			if (sv.getId() == id) {
 				isExisted = true;
 				sc.nextLine();
 				System.out.println("- Nhập tên sinh viên:");
 				String name = sc.nextLine();
-				listSinhVien[i].setName(name);
+				sv.setName(name);
 				System.out.println("- Nhập tuổi sinh viên:");
 				byte age = sc.nextByte();
 				sc.nextLine();
-				listSinhVien[i].setAge(age);
+				sv.setAge(age);
 				System.out.println("- Nhập địa chỉ sinh viên:");
 				String address = sc.nextLine();
-				listSinhVien[i].setAddress(address);
+				sv.setAddress(address);
 				System.out.println("- Nhập điểm trung bình:");
 				float gpa = sc.nextFloat();
-				listSinhVien[i].setGpa(gpa);
+				sv.setGpa(gpa);
 
-				// qlsv.displayAllSV();
+		
 				break;
 			}
 		}
@@ -49,21 +66,33 @@ public class QuanLySv {
 		}
 	}
 
-	public void deletelSV(int id) {
+	public void deletelSv(int id) {
+		boolean isExisted = false;
+		
+		int size = soluongSv;
 		for (int i = 0; i < listSinhVien.length - 1; i++) {
-
-			if (listSinhVien[i].getId() == id) {
+			Student sv=listSinhVien[i];
+			isExisted = true;
+			if (sv.getId() == id) {
 				for (int j = 0; j < listSinhVien.length - 1; j++) {
 					listSinhVien[j] = listSinhVien[j + 1];
+					break;
 				}
+				
 			}
 		}
 		listSinhVien[listSinhVien.length - 1] = null;
 		soluongSv -= 1;
+		if (!isExisted) {
+			System.out.printf("id = %d not existed.\n", id);
+		}
 
 	}
+	/**
+	 * Sắp xếp Student tăng dần
+	 */
 
-	public void sapxep() {
+	public void sapXepTangDan() {
 		Student sapxep = new Student();
 
 		for (int i = 0; i < id - 1; i++) {
@@ -77,8 +106,11 @@ public class QuanLySv {
 		}
 
 	}
+	/**
+	 * Hiển thị DS Student
+	 */
 
-	public void displayAllSV() {
+	public void displayAllSv() {
 		System.out.printf("%-3s %-20s %-6s %-20s %-6s \n", "ID", "Tên", "Tuổi", "Địa chỉ", "ĐiểmTB");
 		System.out.println();
 
@@ -91,41 +123,21 @@ public class QuanLySv {
 
 		}
 	}
-
+	/**
+	 * Main
+	 * @param args
+	 */
 	public static void main(String[] args) {
-		// Scanner sc=new Scanner(System.in);
-		// QuanLySv qlsv=new QuanLySv();
-		// Student sv1=new Student();
-		//
-		// System.out.println("- Nháº­p ID sinh viÃªn:");
-		// int id=sc.nextInt();
-		// sv1.setId(id);
-		// sc.nextLine();
-		// System.out.println("- Nháº­p tÃªn sinh viÃªn:");
-		// String name=sc.nextLine();
-		// sv1.setName(name);
-		// System.out.println("- Nháº­p tuá»•i sinh viÃªn:");
-		// byte age= sc.nextByte();
-		// sc.nextLine();
-		// sv1.setAge(age);
-		// System.out.println("- Nháº­p Ä‘á»‹a chá»‰ sinh viÃªn:");
-		// String address=sc.nextLine();
-		// sv1.setAddress(address);
-		// System.out.println("- Nháº­p Ä‘iá»ƒm TB sinh viÃªn:");
-		// float gpa=sc.nextFloat();
-		// sv1.setGpa(gpa);
-		//
-		// qlsv.addSv(sv1);
-		// qlsv.displayAllSV();
 		menu();
 	}
 
 	public static void menu() {
 		Scanner sc = new Scanner(System.in);
 		QuanLySv qlsv = new QuanLySv();
-		int tt, luaChon;
+		Student sv1 = new Student();
+		int tiepTuc, luaChon;
 		while (true) {
-			// Scanner input = new Scanner(System.in);
+			
 			System.out.println("/***********************************/");
 			System.out.println("1. Thêm sinh viên.");
 			System.out.println("2. Cập nhập sinh viên  theo ID.");
@@ -141,7 +153,7 @@ public class QuanLySv {
 			switch (luaChon) {
 			case 1:
 				do {
-					Student sv1 = new Student();
+					
 
 					System.out.println("-  Nhập Id:");
 					int id = sc.nextInt();
@@ -163,9 +175,9 @@ public class QuanLySv {
 					qlsv.addSv(sv1);
 					System.out.println();
 					System.out.print("Bạn có muốn tiếp tục không: (0:không | 1:Có) ");
-					tt = sc.nextInt();
+					tiepTuc = sc.nextInt();
 					System.out.println();
-				} while (tt == 1);
+				} while (tiepTuc == 1);
 
 				break;
 			case 2:
@@ -180,13 +192,13 @@ public class QuanLySv {
 				System.out.print("Nhập Id cần xóa: ");
 				System.out.println();
 				int idDelete = sc.nextInt();
-				qlsv.deletelSV(idDelete);
+				qlsv.deletelSv(idDelete);
 				break;
 			case 4:
-				qlsv.sapxep();
+				qlsv.sapXepTangDan();
 				break;
 			case 5:
-				qlsv.displayAllSV();
+				qlsv.displayAllSv();
 				break;
 
 			case 0:

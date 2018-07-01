@@ -140,10 +140,27 @@ public class QLSinhVien {
 					String id = sc.nextLine();
 					sc.nextLine();
 					sv1.setId(id);
-					System.out.println("- Nhập tên sinh viên:");
-					String name = sc.nextLine();
-					sv1.setName(name);
-					sc.nextLine();
+					String name = null;
+					boolean kiemTra;
+					do {
+						kiemTra = false;
+						System.out.println("- Nhập tên sinh viên:");
+						name = sc.nextLine();
+						sv1.setName(name);
+
+						if (name.isEmpty()) {
+							kiemTra = true;
+						} else {
+							for (int i = 0; i < name.length(); i++) {
+								if (!Character.isLetter(name.charAt(i)) && name.charAt(i)!=' ') {
+									kiemTra = true;
+									break;
+								}
+							}
+						}
+
+					} while (kiemTra);
+					
 					System.out.println("- Nhập tuổi sinh viên:");
 					byte age = sc.nextByte();
 					sc.nextLine();

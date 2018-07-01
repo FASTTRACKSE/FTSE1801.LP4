@@ -15,9 +15,9 @@ public class QuanLyTienDien {
 		soLuongKh += 1;
 	}
 	public void hienThiBienLai() {
-		System.out.printf("%-20s|%-10s|%-8s|%-7s|%-7s|%-10s|%n", "Họ tên", "Địa chỉ", "Mã số", "Chỉ số cũ", "Chỉ số mới", "Số tiền");
+		System.out.printf("%-20s|%-10s|%-8s|%-12s|%-12s|%-10s|%n", "Họ tên", "Địa chỉ", "Mã số", "Chỉ số cũ", "Chỉ số mới", "Số tiền");
 		for (int i=0; i<soLuongKh; i++) {
-			System.out.printf("%-20s|%-10s|%-8s|%-7s|%-7s|%-10s|%n", listKh[i].getHoTen(), listKh[i].getDiaChi(), listKh[i].getMaSoCongTo(), listKh[i].getChiSoCu(), listKh[i].getChiSoMoi(), (listKh[i].getChiSoMoi() - listKh[i].getChiSoCu())*750);
+			System.out.printf("%-20s|%-10s|%-8s|%-12s|%-12s|%-10s|%n", listKh[i].getHoTen(), listKh[i].getDiaChi(), listKh[i].getMaSoCongTo(), listKh[i].getChiSoCu(), listKh[i].getChiSoMoi(), (listKh[i].getChiSoMoi() - listKh[i].getChiSoCu())*750);
 		}
 	}
 	
@@ -39,6 +39,7 @@ public class QuanLyTienDien {
 				System.out.print("Nhập tên khách hàng: ");
 				String hoTen  = sc.nextLine();
 				bl1.setHoTen(hoTen);
+				sc.nextLine();
 				
 				System.out.print("Nhập địa chỉ khách hàng: ");
 				String diaChi = sc.nextLine();
@@ -70,7 +71,7 @@ public class QuanLyTienDien {
 				break;
 				
 			default:
-				System.out.println("\n\n\n\n********Menu not exist feature********");
+				System.out.println("\n\n********Menu not exist feature********");
 				break;
 			}
 		}
