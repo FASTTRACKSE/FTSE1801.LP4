@@ -1,8 +1,9 @@
 package demo;
+
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class Hello {
+public class ExampleException {
 
 	public void viDuThrow() throws IOException {
 		FileWriter fileWriter = new FileWriter("data.txt");
@@ -25,30 +26,37 @@ public class Hello {
 	public void callViDuThrow3() {
 		try {
 			viDuThrow();
-			throw new NullPointerException();
+			throw new IOException();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("da bat lai ngoai le cua chinh no tao ra");
+			throw new NullPointerException();
 		}
 	}
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws IOException {
 
-		Hello hello = new Hello();
+		ExampleException hello = new ExampleException();
 
 		try {
 			hello.viDuThrow();
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 
 		hello.callViDuThrow();
 
-		hello.callViDuThrow2();
+		try {
+			hello.callViDuThrow2();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		try {
 			hello.callViDuThrow3();
 		} catch (NullPointerException e) {
-			System.err.println("loi null pointer");
+			System.out.println("loi null");
 		}
 
 		System.out.println("hahahahaha");

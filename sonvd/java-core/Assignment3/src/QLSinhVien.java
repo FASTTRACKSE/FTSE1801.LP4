@@ -31,7 +31,6 @@ public class QLSinhVien {
 			switch (chooseMenu) {
 			case 1:
 				quanLySinhVien sv = new quanLySinhVien();
-				
 				System.out.println("Nhập Id:");
 				int Id = input.nextInt();
 				sv.setId(Id);
@@ -49,7 +48,6 @@ public class QLSinhVien {
 				System.out.println("Nhập điểm trung bình");
 				double Gpa = input.nextDouble();
 				sv.setGpa(Gpa);
-
 				ql.addSV(sv);
 				break;
 			case 2:

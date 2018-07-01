@@ -6,6 +6,16 @@ public class SinhVien {
 	private String address;
 	private double gpa;
 
+	public SinhVien() {
+	}
+
+	public SinhVien(String name, int age, String address, double gpa) {
+		this.name = name;
+		this.age = age;
+		this.address = address;
+		this.gpa = gpa;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -38,13 +48,4 @@ public class SinhVien {
 		this.gpa = gpa;
 	}
 
-	public SinhVien(String name, int age, String address, double gpa) {
-		this.name = name;
-		this.age = age;
-		this.address = address;
-		this.gpa = gpa;
-	}
-
-	public SinhVien() {
-	}
 }
