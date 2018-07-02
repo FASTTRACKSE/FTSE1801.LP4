@@ -3,6 +3,11 @@ package quanly_canbo;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * 
+ * @author Ngọc Thiên
+ *
+ */
 public class QuanLy {
 	ArrayList<CanBo> listQuanLy;
 
@@ -11,10 +16,10 @@ public class QuanLy {
 
 	}
 
-	public void meNu() {
-    	int chooseMenu;
-    	int soCanBo;
-    	CanBo canBo;
+	public void menu() {
+		int chooseMenu;
+		int soCanBo;
+		CanBo canBo;
 		Scanner sc = new Scanner(System.in);
 		do {
 			System.out.print("\n*************************************************\n");
@@ -24,10 +29,8 @@ public class QuanLy {
 			System.out.print("*************************************************\n ");
 			System.out.print("\n chọn chức năng bạn muốn : ");
 			chooseMenu = sc.nextInt();
-			switch(chooseMenu) {
-			  
-			
-			
+			switch (chooseMenu) {
+
 			case 1:
 				System.out.print("Nhập số lượng cán bộ trong trường: ");
 				soCanBo = sc.nextInt();
@@ -40,11 +43,11 @@ public class QuanLy {
 					sc.nextLine();
 					if (cb == 1) {
 						canBo = new GiangVien();
-						((GiangVien)canBo).nhapGiangVien(sc);
+						((GiangVien) canBo).nhapGiangVien(sc);
 						listQuanLy.add(canBo);
 					} else if (cb == 2) {
 						canBo = new NhanVien();
-						((NhanVien)canBo).nhapNhanVien(sc);
+						((NhanVien) canBo).nhapNhanVien(sc);
 						listQuanLy.add(canBo);
 					}
 
@@ -52,33 +55,33 @@ public class QuanLy {
 			case 2:
 				System.out.println("Hiển thị danh sách cán cán bộ trong trường: ");
 				CanBo cb;
-				for (int i = 0; i<listQuanLy.size() ; i++) {
-		        	cb = listQuanLy.get(i);
-		            if (cb instanceof NhanVien) {
-		            	((NhanVien)cb).xuatNhanVien();
-		            } else {
-		            	((GiangVien)cb).xuatGiangVien();
-		            } 
-		            
-		        }
-                
-                
+				for (int i = 0; i < listQuanLy.size(); i++) {
+					cb = listQuanLy.get(i);
+					if (cb instanceof NhanVien) {
+						((NhanVien) cb).xuatNhanVien();
+					} else {
+						((GiangVien) cb).xuatGiangVien();
+					}
+
+				}
+
 			case 3:
 				sc.close();
 				System.out.println("***Bye bye***");
 				System.exit(0);
 				break;
-				
+
 			default:
 				System.out.println("\n\n\n\n********Menu not exist feature********");
-				break;	
+				break;
 			}
-			
-		}while(true);
-    }
+
+		} while (true);
+	}
 
 	public static void main(String[] args) {
 		QuanLy ql = new QuanLy();
-		ql.meNu();
+		ql.menu();
+		
 	}
 }
