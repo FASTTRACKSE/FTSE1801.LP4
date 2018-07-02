@@ -40,31 +40,31 @@ public class bai4_5 implements Serializable {
 		int tieptuc;
 		ArrayList<bai4_5> listNhanVien = new ArrayList<bai4_5>();
 		do {
-			// Nhap ten
+			// Nhập tên
 			do {
 				String pantter = "([A-Z][a-z]* )*([A-Z][a-z]*)";
 				System.out.println("Nhap ten : ");
 				ten = input.nextLine();
 				if (ten.matches(pantter)) {
-					System.out.println("chuc mung ban da nhap dung.");
+					System.out.println("Bạn đã chọn đúng.");
 					kiemTra = false;
 				} else {
-					System.out.println("Nhap sai cmnr, nhap lai.");
+					System.out.println("Nhập sai, mời nhập lại.");
 					kiemTra = true;
 				}
 			} while (kiemTra);
 
-			// Nhap tuoi
+			// Nhập tuổi
 			do {
 				String pantter = "[1-6]\\d";
-				System.out.println("Nhap tuoi : ");
+				System.out.println("Nhập tuổi : ");
 				ageStr = input.nextLine();
 				if (ageStr.matches(pantter)) {
-					System.out.println("chuc mung ban da nhap dung.");
+					System.out.println("Bạn đã nhập đúng.");
 					kiemTra = false;
 					age = Integer.parseInt(ageStr);
 				} else {
-					System.out.println("Nhap sai cmnr, nhap lai.");
+					System.out.println("Nhập sai, mời nhập lại.");
 					kiemTra = true;
 				}
 			} while (kiemTra);
@@ -72,13 +72,13 @@ public class bai4_5 implements Serializable {
 			// Nhap dia chi
 			do {
 
-				System.out.println("Nhap dia chi : ");
+				System.out.println("Nhập địa chỉ : ");
 				diaChi = input.nextLine();
 				if (!diaChi.isEmpty()) {
-					System.out.println("chuc mung ban da nhap dung.");
+					System.out.println("Bnạ đã nhập đúng.");
 					kiemTra = false;
 				} else {
-					System.out.println("Nhap sai cmnr, nhap lai.");
+					System.out.println("Nhập sai, mời nhập lại.");
 					kiemTra = true;
 				}
 			} while (kiemTra);
@@ -86,28 +86,28 @@ public class bai4_5 implements Serializable {
 			bai4_5 nhanVien = new bai4_5(ten, age, diaChi);
 			listNhanVien.add(nhanVien);
 
-			System.out.println("Ban co muon nhap tiep (1: co | 0: khong)");
+			System.out.println("Bạn có muốn nhập tiếp (1: có | 0: không)");
 			tieptuc = input.nextInt();
 			input.nextLine();
 		} while (tieptuc == 1);
 		input.close();
 
-		// Tao doi tuong va lien ket voi nguon du lieu
+		// Tạo đối tượng và liên kết với nguồn dữ liệu
 		FileOutputStream fileOutputStream = new FileOutputStream("nhanvien.bin");
 		ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
-		// Ghi du lieu vao file
+		// Ghi dữ liệu vào file
 		objectOutputStream.writeObject(listNhanVien);
 
 		// Dong luong du lieu
 		objectOutputStream.close();
 		fileOutputStream.close();
 
-		// Tao doi tuong va lien ket voi nguon du lieu
+		// Tạo đối tượng và liên kết với nguồn dữ liệu
 		FileInputStream fileInputStream = new FileInputStream("nhanvien.bin");
 		ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
-		// Doc du lieu tu file
+		// Dọc dữ liệu từ file
 		ArrayList<bai4_5> myList = (ArrayList) objectInputStream.readObject();
 		for (Object s : myList) {
 			System.out.println(s.toString());

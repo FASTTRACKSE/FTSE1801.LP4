@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class GiangVien extends CanBo {
 
 	/**
-	 * Them giang vien
+	 * Thên giảng viên
 	 * 
 	 * @param giangvien
 	 * @param input
@@ -19,20 +19,20 @@ public class GiangVien extends CanBo {
 		int soTiet = 0;
 		double heSoLuong = 0.0;
 
-		// Kiem tra nhap ten giang vien khong duoc rong va khong qua 40 ki tu
+		// Kiểm tra nhập tên giảng viên không được rỗng và không quá 50 kí tự
 		do {
 			kiemTra = false;
-			System.out.print("Nhap ten giang vien : ");
+			System.out.print("Nhập tên giảng viên : ");
 			name = input.nextLine();
 			try {
 				if (name.isEmpty()) {
-					throw new Exception("Ten khong duoc de rong");
+					throw new Exception("Tên không được để rỗng");
 				} else if (name.length() > 40) {
-					throw new Exception("Ten khong duoc dai hon 40 ki tu");
+					throw new Exception("Tên không được quá 50 kí tự");
 				} else {
 					for (int i = 0; i < name.length(); i++) {
 						if (!Character.isLetter(name.charAt(i)) && !Character.isWhitespace(name.charAt(i))) {
-							throw new Exception("Ten khong duoc nhap so");
+							throw new Exception("Tên không được nhập số");
 						}
 					}
 				}
@@ -42,29 +42,29 @@ public class GiangVien extends CanBo {
 			}
 		} while (kiemTra);
 
-		// khoa khong duoc de trong
+		// khoa không được để trống
 		do {
 			kiemTra = false;
-			System.out.print("nhap khoa giang vien : ");
+			System.out.print("Nhập khoa giảng viên : ");
 			khoa = input.nextLine();
 			if (khoa.isEmpty()) {
-				System.out.println("Phong ban khong duoc de trong");
+				System.out.println("Phòng ban không được để trống");
 				kiemTra = true;
 			}
 		} while (kiemTra);
 
-		// Kiem tra nhap trinh do giang vien chi duoc cu nhan, thac si or tien si
+		// Kiểm tra nhập trình độ giảng viên chỉ được cử nhân, thạc sĩ hoặc tiến sĩ
 		do {
 			kiemTra = false;
-			System.out.print("Chon trinh do giang vien : (1: Cu nhan | 2: Thac si | 3: Tien si) ");
+			System.out.print("Chọn tình độ giảng viên : (1: Cử nhân | 2: Thạc sĩ | 3: Tiến sĩ) ");
 			chooseStr = input.nextLine();
 			try {
 				choose = Integer.parseInt(chooseStr);
 				if (choose != 1 && choose != 2 && choose != 3) {
-					throw new Exception("Chi duoc chon 1 hoac 2 hoac 3");
+					throw new Exception("Chỉ được chọn 1 hoặc 2 hoặc 3");
 				}
 			} catch (NumberFormatException e) {
-				System.out.println("Khong duoc nhap gia tri ngoai so va de trong");
+				System.out.println("Không được nhập giá trị ngoài số và để trống");
 				kiemTra = true;
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -73,31 +73,31 @@ public class GiangVien extends CanBo {
 		} while (kiemTra);
 		switch (choose) {
 		case 1:
-			giangVien.setTrinhDo("Cu nhan");
+			giangVien.setTrinhDo("Cử nhân");
 			giangVien.setPhuCap(300);
 			break;
 		case 2:
-			giangVien.setTrinhDo("Thac si");
+			giangVien.setTrinhDo("Thạc sĩ");
 			giangVien.setPhuCap(500);
 			break;
 		case 3:
-			giangVien.setTrinhDo("Tien si");
+			giangVien.setTrinhDo("Tiến sĩ");
 			giangVien.setPhuCap(1000);
 			break;
 		}
 
-		// Kiem tra nhap so tiet phai la so va khong duoc am
+		// Kiểm tra số tiết là phải số và không âm
 		do {
 			try {
 				kiemTra = false;
-				System.out.print("Nhap so tiet day : ");
+				System.out.print("Nhập số tiết dạy : ");
 				String soTietStr = input.nextLine();
 				soTiet = Integer.parseInt(soTietStr);
 				if (soTiet <= 0) {
-					throw new Exception("So tiet khong duoc am");
+					throw new Exception("Số tiết không được âm");
 				}
 			} catch (NumberFormatException e) {
-				System.out.println("Chi duoc nhap so va khong duoc de trong");
+				System.out.println("Chỉ được nhập số và không để trống");
 				kiemTra = true;
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -105,21 +105,21 @@ public class GiangVien extends CanBo {
 			}
 		} while (kiemTra);
 
-		// He so luong chi duoc nhap so thuc va khong am
+		// Hệ số lương chỉ được nhập số thực và không âm
 		do {
 			try {
 				kiemTra = false;
-				System.out.print("Nhap he so luong : ");
+				System.out.print("Nhập hệ số lương : ");
 				String heSoLuongStr = input.nextLine();
 				heSoLuong = Double.parseDouble(heSoLuongStr);
 				String pantter = "[0-9]+\\.[0-9]+";
 				if (!heSoLuongStr.matches(pantter)) {
-					throw new Exception("He so luong phai la so thuc");
+					throw new Exception("Hệ số lương phải là số thực");
 				} else if (heSoLuong <= 0) {
-					throw new Exception("He so luong khong duoc am");
+					throw new Exception("Hệ số lương không âm");
 				}
 			} catch (NumberFormatException e) {
-				System.out.println("He so luong khong duoc nhap chu");
+				System.out.println("Hệ số lương không được âm");
 				kiemTra = true;
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -132,7 +132,7 @@ public class GiangVien extends CanBo {
 		giangVien.setThoiGianTinhLuong(soTiet);
 		giangVien.setHeSoLuong(heSoLuong);
 		giangVien.setLuong(heSoLuong * 730 + giangVien.getPhuCap() + soTiet * 45);
-		giangVien.setNganh("Giang vien");
+		giangVien.setNganh("Giảng viên");
 	}
 
 }

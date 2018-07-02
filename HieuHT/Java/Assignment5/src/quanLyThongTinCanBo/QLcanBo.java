@@ -13,7 +13,7 @@ public class QLcanBo {
 	}
 
 	/**
-	 * Them giang vien vao danh sach can bo
+	 * Thêm giảng viên và danh sách cán bộ
 	 * 
 	 * @param input
 	 */
@@ -24,7 +24,7 @@ public class QLcanBo {
 	}
 
 	/**
-	 * Them nhan vien vao danh sach can bo
+	 * Thêm giảng viên và danh sách cán bộ
 	 * 
 	 * @param input
 	 */
@@ -35,7 +35,7 @@ public class QLcanBo {
 	}
 
 	/**
-	 * hien thi danh sach giang vien theo don vi
+	 * Hiển thị danh sách giảng viên theo đơn vị
 	 * 
 	 * @param donVi
 	 */
@@ -46,7 +46,7 @@ public class QLcanBo {
 					throw new Exception();
 				}
 			}
-			System.out.println("Nhap sai khoa (phong ban)");
+			System.out.println("Nhập sai khoa (phòng ban)");
 			System.out.println();
 		} catch (Exception e) {
 			System.out.printf("%3s %20s %25s %20s %20s %10s %20s %10s %15s", "STT", "Ten", "Nganh", "Khoa(phong ban)",
@@ -66,7 +66,7 @@ public class QLcanBo {
 	}
 
 	/**
-	 * hien thi tat ca giang vien
+	 * Hiển thị tất cả giảng viên
 	 */
 	public void showAll() {
 		System.out.printf("%3s %20s %25s %20s %20s %10s %20s %10s %15s", "STT", "Ten", "Nganh", "Khoa(phong ban)",
@@ -81,7 +81,7 @@ public class QLcanBo {
 	}
 
 	/**
-	 * sap xep giang vien theo ten a to z, neu trung len thi sap xep theo luong
+	 * Sặp xếp giảng viên theo tên a to z, nếu trùng tên sắp xếp theo lương
 	 */
 	public void sapXepAToZ() {
 		Collections.sort(listCanBo, new sapXep());
@@ -100,14 +100,14 @@ public class QLcanBo {
 	}
 
 	/**
-	 * tinh tong luong phai tra
+	 * Tính tổng lương phải trả
 	 */
 	public void tongLuong() {
 		double tongLuong = 0;
 		for (int i = 0; i < listCanBo.size(); i++) {
 			tongLuong = listCanBo.get(i).getLuong() + tongLuong;
 		}
-		System.out.println("Tong luong phai tra la: " + tongLuong);
+		System.out.println("Tổng lương phải trả: " + tongLuong);
 		System.out.println();
 	}
 
@@ -117,14 +117,14 @@ public class QLcanBo {
 		int luaChon = 0, tiepTuc = 0, choose = 0;
 		String donVi;
 		while (true) {
-			System.out.println("1. Them can bo.");
-			System.out.println("2. Xuat danh sach can bo");
-			System.out.println("3. Xuat danh sach giang vien khoa x hoac nhan vien phong ban y.");
-			System.out.println("4. Tinh tong so luong truong phai tra.");
-			System.out.println("5. Sap xep can bo theo ten neu trung ten thi sap xep theo luong.");
-			System.out.println("6. Ket thuc.");
+			System.out.println("1. Thêm cán bộ.");
+			System.out.println("2. Xuất danh sách cán bộ");
+			System.out.println("3. Xuất danh sách giảng viên khoa x hoặc nhân viên phòng ban y.");
+			System.out.println("4. Tính tổng số lương phải trả.");
+			System.out.println("5. Sắp xếp cán bộ theo tên nếu trùng tên thì sắp xếp theo lương.");
+			System.out.println("6. Kết thúc.");
 
-			System.out.println("Moi ban nhap lua chon : ");
+			System.out.println("Mời bạn nhập lựa chọn : ");
 			String luaChonStr = input.nextLine();
 			try {
 				luaChon = Integer.parseInt(luaChonStr);
@@ -135,7 +135,7 @@ public class QLcanBo {
 			switch (luaChon) {
 			case 1:
 				do {
-					System.out.println("Nhap (1: them giang vien | 2: them nhan vien)");
+					System.out.println("Nhập (1: thêm giảng viên | 2: thêm nhân viên)");
 					String chooseStr = input.nextLine();
 					try {
 						choose = Integer.parseInt(chooseStr);
@@ -149,10 +149,10 @@ public class QLcanBo {
 						quanLy.addNhanVienVaoListCanBo(input);
 						break;
 					default:
-						System.out.println("Ban da chon sai.");
+						System.out.println("Bạn đã chọn sai.");
 						break;
 					}
-					System.out.println("Ban co muon tiep tuc khong : (1:co | con lai:khong )");
+					System.out.println("Bạn có muốn tiếp tục không : (1:có | còn lại:không )");
 					String tiepTucStr = input.nextLine();
 					try {
 						tiepTuc = Integer.parseInt(tiepTucStr);
@@ -167,7 +167,7 @@ public class QLcanBo {
 				break;
 
 			case 3:
-				System.out.println("Nhap ten khoa(phong ban) can hien thi");
+				System.out.println("Nhập tên khoa(phòng ban) cần hiển thị");
 				input.nextLine();
 				donVi = input.nextLine();
 				quanLy.showDonVi(donVi);
@@ -183,13 +183,13 @@ public class QLcanBo {
 				break;
 
 			case 6:
-				System.out.println("Ket thuc chuong trinh");
+				System.out.println("Kết thúc chương trình");
 				input.close();
 				System.exit(0);
 				break;
 
 			default:
-				System.out.println("nhap sai, moi ban chon lai.");
+				System.out.println("nhập sai, mời bạn chọn lại.");
 				break;
 			}
 		}
