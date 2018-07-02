@@ -4,7 +4,7 @@ import java.util.Comparator;
 /**
  * SortStudentByName class
  * 
- * @author viettuts.vn
+ * @author CôngMT
  */
 public class SortPersonByName implements Comparator<Person> {
 	@Override
