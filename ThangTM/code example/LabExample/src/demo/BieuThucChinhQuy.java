@@ -11,11 +11,10 @@ public class BieuThucChinhQuy {
 		System.out.println("A a : " + "A a".matches(pattern));
 		System.out.println("A : " + "A".matches(pattern));
 		System.out.println("Aaa : " + "Aaa".matches(pattern));
-		System.out.println("aAA : " + "aAA".matches(pattern));
+	    System.out.println("aAA : " + "aAA".matches(pattern));
 		System.out.println("Tran Van An : " + "Tran Van An".matches(pattern));
 		System.out.println("Tran Van An : " + "Tran Van AA".matches(pattern));
 		System.out.println("lsnfs@ljdlf.df : " + "lsnfs@ljdlf.df".matches(patternEmail));
 		System.out.println("lsnfs@ljdlf.df : " + "lsnfs@ljdlf.df ".matches(patternEmail));
-		BieuThucChinhQuy bieuThucChinhQuy = new BieuThucChinhQuy();
 	}
 }
