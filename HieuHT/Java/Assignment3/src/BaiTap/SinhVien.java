@@ -1,31 +1,10 @@
 package BaiTap;
 
-import java.util.ArrayList;
-
 public class SinhVien {
-	private String id;
 	private String name;
-	private int old;
+	private int age;
 	private String address;
 	private double gpa;
-
-	public SinhVien() {
-		this.id = id;
-		this.name = name;
-		this.old = old;
-		this.address = address;
-		this.gpa = gpa;
-
-	}
-
-	public SinhVien(String id, String name, int old, String address, double gpa) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.old = old;
-		this.address = address;
-		this.gpa = gpa;
-	}
 
 	public String getName() {
 		return name;
@@ -35,20 +14,12 @@ public class SinhVien {
 		this.name = name;
 	}
 
-	public int getOld() {
-		return old;
+	public int getAge() {
+		return age;
 	}
 
-	public void setOld(int old) {
-		this.old = old;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
+	public void setAge(int age) {
+		this.age = age;
 	}
 
 	public String getAddress() {
@@ -66,19 +37,14 @@ public class SinhVien {
 	public void setGpa(double gpa) {
 		this.gpa = gpa;
 	}
-	
-	public String xuat() {
-		return "Ten: "+name +"; tuoi: "+old;
+
+	public SinhVien(String name, int age, String address, double gpa) {
+		this.name = name;
+		this.age = age;
+		this.address = address;
+		this.gpa = gpa;
 	}
-	
-	public static void main(String[] args) {
-		ArrayList<SinhVien> listSv = new ArrayList<SinhVien>();
-		SinhVien sv1 = new SinhVien("ftse1", "phuong", 23, "da nang", 6);
-		SinhVien sv2 = new SinhVien("ftse2", "hieu", 22, "quang nam", 5);
-		listSv.add(sv1);
-		listSv.add(sv2);
-		for(SinhVien sv:listSv) {
-			System.out.println(sv.xuat());
-		}
+
+	public SinhVien() {
 	}
 }
