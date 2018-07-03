@@ -1,59 +1,128 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Scanner;
 
-
+/**
+ * Quản lý sinh viên
+ * @author Khanh Hung
+ *
+ */
 public class QuanLySinhVien {
-	private SinhVien2[] listSv;
-	private static int soLuongSv;
+	private ArrayList<SinhVien> listSinhVien;
 	
 	public QuanLySinhVien() {
-		listSv = new SinhVien2[100];
-		soLuongSv = 0;
+		listSinhVien = new ArrayList<SinhVien>();
 	}
 	
-	public void addSv(SinhVien2 sv) {
-		listSv[soLuongSv] = sv;
-		soLuongSv += 1;
+	public void nhapSv(SinhVien sinhVien) {
+		listSinhVien.add(sinhVien);
 	}
 	
-	public void updateSv(String id) {
-		for (int i=0; i<soLuongSv; i++) {
-			if(listSv[i].getId().equals(id)) {
-				listSv[i].setId("ftse5");
+	public void xuatDanhSachSv() {
+		System.out.printf("%-8s %-15s %-7s %-15s %-7s\n", "Id", "Tên", "Tuổi", "Địa chỉ", "ĐTB");
+		for (SinhVien sinhVien: listSinhVien) {
+			System.out.printf("%-8s %-15s %-7s %-15s %-7s\n", sinhVien.getId(), sinhVien.getName(), sinhVien.getAge(), sinhVien.getAddress(), sinhVien.getGpa());
+		}
+	}
+	
+	public void sapXepDanhSachSv() {
+		Collections.sort(listSinhVien, new Comparator<SinhVien>() {
+			public int compare(SinhVien o1, SinhVien o2) {
+				return o1.getName().compareToIgnoreCase(o2.getName());
+			}
+		});
+	}
+	
+	public void xoaSvTheoId(String id) {
+		SinhVien Id = null;
+		for (int i=0; i<listSinhVien.size(); i++) {
+			if (listSinhVien.get(i).getId().equals(id)) {
+				Id = listSinhVien.get(i);
 				break;
 			}
 		}
+		if (Id != null) {
+			listSinhVien.remove(Id);
+		}else {
+			System.out.println("Bạn đã nhập sai!");
+		}
 	}
 	
-	public void deleteSv(String id) {
-		for (int i=0; i<listSv.length-1; i++) {
-			if(listSv[i].getId().equals(id)) {
-				for (int j=i; j<listSv.length-1; j++) {
-					listSv[j] = listSv[j+1];
-				}
+	public void menu() {
+		int chooseMenu;
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Mời bạn chon menu!");
+		
+		while (true) {
+			System.out.println("1. Thêm sinh viên");
+			System.out.println("2. Hiển thị danh sách sinh viên");
+			System.out.println("3. Sắp xếp danh sách sinh viên");
+			System.out.println("4. Xóa sinh viên theo Id");
+			System.out.println("5. Chương trình kết thúc");
+			
+			chooseMenu = sc.nextInt();
+			switch (chooseMenu) {
+			case 1:
+				SinhVien sinhVien = new SinhVien();
+				sc.nextLine();
+				
+				System.out.print("Nhập Id sinh viên: ");
+				String id = sc.nextLine();
+				sinhVien.setId(id);
+				
+				System.out.print("Nhập tên sinh viên: ");
+				String name = sc.nextLine();
+				sinhVien.setName(name);
+				
+				System.out.print("Nhập tuổi sinh viên: ");
+				int age = sc.nextInt();
+				sinhVien.setAge(age);
+				
+				System.out.print("Nhập địa chỉ sinh viên: ");
+				String address = sc.next();
+				sinhVien.setAddress(address);
+				
+				System.out.print("Nhập điểm trung bình: ");
+				double gpa = sc.nextDouble();
+				sinhVien.setGpa(gpa);
+				
+				nhapSv(sinhVien);
+				break;
+				
+			case 2:
+				xuatDanhSachSv();
+				break;
+				
+			case 3:
+				sapXepDanhSachSv();
+				xuatDanhSachSv();
+				break;
+				
+			case 4:
+				System.out.print("Nhập Id sinh viên cần xóa: ");
+				sc.nextLine();
+				String Id = sc.nextLine();
+				xoaSvTheoId(Id);
+				xuatDanhSachSv();
+				break;
+				
+			case 5:
+				sc.close();
+				System.out.println("***Bye bye***");
+				System.exit(0);
+				break;
+				
+			default:
+				System.out.println("\n\n********Menu not exist feature********");
+				break;
 			}
-		}
-		listSv[listSv.length-1] = null;
-		soLuongSv -=1;
-	}
-	public void displayAllsv() {
-		for (int i=0; i<soLuongSv; i++) {
-			System.out.format("%-7s|%-20s|%-7s|%-12s|%-7s|%n", listSv[i].getId(), listSv[i].getName(), listSv[i].getAge(), listSv[i].getAddress(), listSv[i].getGpa());
+			System.out.println("\n");
 		}
 	}
 	
 	public static void main(String[] args) {
-		QuanLySinhVien qlsv = new QuanLySinhVien();
-		SinhVien2 sv = new SinhVien2("ftse1", "Hưng", 28, "Đà Nẵng", 7);
-		qlsv.addSv(sv);
-		sv = new SinhVien2("ftse2", "Phuong", 22, "Đà Nẵng", 7);
-		qlsv.addSv(sv);
-		sv = new SinhVien2("ftse3", "Hieu", 22, "Quảng Nam", 7);
-		qlsv.addSv(sv);
-		qlsv.displayAllsv();
-		qlsv.updateSv("ftse3");
-		System.out.println(soLuongSv);
-		qlsv.displayAllsv();
-		qlsv.deleteSv("ftse1");
-		qlsv.displayAllsv();
-		
+		QuanLySinhVien quanLy = new QuanLySinhVien();
+		quanLy.menu();
 	}
 }
