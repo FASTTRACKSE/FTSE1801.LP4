@@ -1,5 +1,9 @@
 package canBo;
-
+/**
+ * 
+ * @author Luan
+ *
+ */
 public class CanBo {
 	private String hoTen;
 	private String donVi;

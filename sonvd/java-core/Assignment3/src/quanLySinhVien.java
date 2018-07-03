@@ -1,25 +1,26 @@
-import java.util.EmptyStackException;
 
-//import java.util.Scanner;
-
+/**
+ * Quản lý sinh viên
+ * 
+ * @author SonVD
+ *
+ */
 public class quanLySinhVien {
 	public int id;
 	private String name;
 	private int age;
 	private String address;
 	private double gpa;
+
 	/**
-	 * Quan ly sinh vien
-	 * 
-	 * @author VDSon
-	 *
+	 * Tạo mảng listSinhVien
 	 */
 	public quanLySinhVien[] listSv = new quanLySinhVien[100];
 
 	public int getId() {
 		return id;
 	}
-	
+
 	public void setId(int id) {
 		this.id = id;
 	}

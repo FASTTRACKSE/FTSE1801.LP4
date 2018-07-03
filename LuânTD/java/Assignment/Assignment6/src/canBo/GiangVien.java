@@ -9,16 +9,16 @@ import java.util.Scanner;
 
 public class GiangVien extends CanBo {
 /**
- * 
+ * Tinh luong giang vien
  * @return luong giang vien
  */
 	public double luongGiangVien() {
 		return this.getHeSoLuong() * 730 + this.getPhuCap() + this.getSoGioLam() * 30;
 	}
 /**
- * 
+ * Them giang vien
  * @param sc scanner
- * @param nhap thong tin giang vien
+ * @param giangVien giang vien
  */
 	public void nhapGiangVien(Scanner sc, GiangVien giangVien) {
 		boolean kiemtra;

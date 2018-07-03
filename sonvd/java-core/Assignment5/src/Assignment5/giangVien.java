@@ -3,7 +3,7 @@ package Assignment5;
 import java.util.Scanner;
 
 /**
- * Thong tin giang vien extends can bo
+ * Thông tin giangVien extends CanBo
  * 
  * @author SonVD
  *
@@ -16,8 +16,11 @@ public class giangVien extends CanBo {
 	public giangVien() {
 	}
 
-	public giangVien(String hoTen, String loaiCanBo, double phuCap, double heSoLuong) {
-		super(hoTen, loaiCanBo, phuCap, heSoLuong);
+	public giangVien(String khoa, String trinhDo, int soTietDay) {
+		super();
+		this.khoa = khoa;
+		this.trinhDo = trinhDo;
+		this.soTietDay = soTietDay;
 	}
 
 	public String getKhoa() {
