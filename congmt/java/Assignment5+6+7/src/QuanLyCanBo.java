@@ -18,7 +18,9 @@ public class QuanLyCanBo {
 	public QuanLyCanBo() {
 		dsCanBo = new ArrayList<CanBo>();
 	}
-
+	/**
+	 * Ham menu
+	 */
 	public static void menu() {
 		System.out.println("+---------------------------------------------------+");
 		System.out.println("+------------------------MENU-----------------------+");
@@ -32,7 +34,12 @@ public class QuanLyCanBo {
 		System.out.println("+---------------------------------------------------+");
 		System.out.println("Mời Bạn Chọn Chức Năng");
 	}
-
+	/**
+	 * Ham Main
+	 * @param args
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	public static void main(String[] args) throws IOException, ClassNotFoundException {
 		Scanner sc = new Scanner(System.in);
 		NhanVien nhanVien = new NhanVien();
@@ -43,11 +50,11 @@ public class QuanLyCanBo {
 			choose = sc.nextInt();
 			switch (choose) {
 			case 1:
-				quanlycanbo.NhapThongTinNv(sc);
+				quanlycanbo.NhapThongTinCb(sc);
 				break;
 
 			case 2:
-				quanlycanbo.XuatThongTin(sc);
+				quanlycanbo.XuatThongTinCb(sc);
 				break;
 			case 3:
 				quanlycanbo.TongSoLuong();
@@ -74,8 +81,11 @@ public class QuanLyCanBo {
 
 		}
 	}
-
-	public void NhapThongTinNv(Scanner sc) {
+	/**
+	 * Nhap thong tin can bo
+	 * @param sc
+	 */
+	public void NhapThongTinCb(Scanner sc) {
 		CanBo canbo;
 		System.out.println("    Nhập thông tin");
 		System.out.println("    Mời chọn Loại cán bộ:");
@@ -98,7 +108,11 @@ public class QuanLyCanBo {
 		}
 
 	}
-
+	/**
+	 * Ghi file 
+	 * @return
+	 * @throws IOException
+	 */
 	public boolean GhiFile() throws IOException {
 		try {
 			FileOutputStream fos = new FileOutputStream("Danhsach.txt");
@@ -113,7 +127,11 @@ public class QuanLyCanBo {
 		return false;
 
 	}
-
+	/**
+	 * Docfile du lieu
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	public void DocFile() throws IOException, ClassNotFoundException {
 		FileInputStream fileInputStream = new FileInputStream("Danhsach.txt");
 		ObjectInputStream object = new ObjectInputStream(fileInputStream);
@@ -135,8 +153,11 @@ public class QuanLyCanBo {
 		object.close();
 		fileInputStream.close();
 	}
-
-	public void XuatThongTin(Scanner sc) {
+	/**
+	 * Xuat thong tin can bo
+	 * @param sc
+	 */
+	public void XuatThongTinCb(Scanner sc) {
 		CanBo giangvien = new GiangVien();
 		System.out.println("    Xuất Thông Tin");
 		System.out.println("    Mời chọn Loại cán bộ:");
@@ -166,7 +187,9 @@ public class QuanLyCanBo {
 		}
 	}
 
-
+	/**
+	 * Tinh  tong so luong  phai tra cho can bo
+	 */
 	public void TongSoLuong() {
 		for (CanBo x : dsCanBo) {
 			luong = x.tinhLuong();
@@ -174,7 +197,9 @@ public class QuanLyCanBo {
 		}
 		System.out.println("Tổng lương phải trả cho cán bộ = " + tongLuong);
 	}
-
+	/**
+	 * Sap xep Can bo theo ten, neu khong thi theo so luong
+	 */
 	public void SapXepNV() {
 		Collections.sort(dsCanBo, NvComparator.CanBoLuongASComparator);
 		for (CanBo x : dsCanBo) {
@@ -196,7 +221,9 @@ public class QuanLyCanBo {
 			}
 		}
 	}
-
+	/**
+	 * Ket thuc chuong tinh
+	 */
 	public static void KetThuc() {
 		System.out.println("Cảm ơn bạn đã sử dụng chương trình!");
 		System.exit(0);

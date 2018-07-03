@@ -52,11 +52,16 @@ public class GiangVien extends CanBo implements Serializable {
 	public void setSoTietDay(int soTietDay) {
 		this.soTietDay = soTietDay;
 	}
-
+	/**
+	 * Tinh luong theo so tiet day cua giang vien
+	 */
 	public long tinhLuong() {
 		return (long) (this.getHeSoLuong() * 730000 + this.getPhuCap() + this.getSoTietDay() * 45);
 	}
-
+	/**
+	 * Nhap thong tin giang vien
+	 * @param sc
+	 */
 	public void NhapThongTinGiangVien(Scanner sc) {
 		boolean kiemTra;
 		int N = 0;
@@ -189,7 +194,9 @@ public class GiangVien extends CanBo implements Serializable {
 			setNganh("GiangVien");
 		}
 	}
-
+	/**
+	 * Xuat thong tin giang vien
+	 */
 	public void XuatThongTinGiangVien() {
 
 		System.out.println(
