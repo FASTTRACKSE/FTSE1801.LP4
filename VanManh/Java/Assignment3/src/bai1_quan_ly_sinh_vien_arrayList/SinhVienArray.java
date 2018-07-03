@@ -6,6 +6,16 @@ public class SinhVienArray {
 	private String address;
 	private double gpa;
 
+	public SinhVienArray() {
+	}
+
+	public SinhVienArray(String name, int age, String address, double gpa) {
+		this.name = name;
+		this.age = age;
+		this.address = address;
+		this.gpa = gpa;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -38,13 +48,4 @@ public class SinhVienArray {
 		this.gpa = gpa;
 	}
 
-	public SinhVienArray(String name, int age, String address, double gpa) {
-		this.name = name;
-		this.age = age;
-		this.address = address;
-		this.gpa = gpa;
-	}
-
-	public SinhVienArray() {
-	}
 }
