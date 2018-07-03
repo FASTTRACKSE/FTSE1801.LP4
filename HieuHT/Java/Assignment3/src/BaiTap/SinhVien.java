@@ -1,10 +1,31 @@
 package BaiTap;
 
 public class SinhVien {
+	private int id;
 	private String name;
 	private int age;
 	private String address;
 	private double gpa;
+
+	public SinhVien(int id, String name, int age, String address, double gba) {
+		this.id = id;
+		this.name = name;
+		this.age = age;
+		this.address = address;
+		this.gpa = gba;
+	}
+
+	public SinhVien() {
+
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;
@@ -34,17 +55,8 @@ public class SinhVien {
 		return gpa;
 	}
 
-	public void setGpa(double gpa) {
+	public void setGpa(double gba) {
 		this.gpa = gpa;
 	}
 
-	public SinhVien(String name, int age, String address, double gpa) {
-		this.name = name;
-		this.age = age;
-		this.address = address;
-		this.gpa = gpa;
-	}
-
-	public SinhVien() {
-	}
 }
