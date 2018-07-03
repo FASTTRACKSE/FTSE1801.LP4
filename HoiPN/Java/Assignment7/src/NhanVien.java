@@ -1,3 +1,4 @@
+import java.util.EmptyStackException;
 import java.util.Scanner;
 
 /**
@@ -5,8 +6,8 @@ import java.util.Scanner;
  * @author Phạm Ngọc Hợi
  *
  */
-public class GiangVien extends CanBo {
-	public void addGiangVien(Scanner sc, GiangVien giangVien) {
+public class NhanVien extends CanBo {
+	public void addNhanVien(Scanner sc, NhanVien nhanVien) {
 		sc.nextLine();
 		boolean check = false;
 		do {
@@ -26,47 +27,57 @@ public class GiangVien extends CanBo {
 
 					}
 				}
-				giangVien.setHoTen(ten);
+				nhanVien.setHoTen(ten);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 				check = true;
 			}
 		} while (check);
 
-		System.out.println("Nhập khoa: ");
-		String khoa = sc.nextLine();
+		System.out.println("Nhập phòng ban: ");
+		String ban = sc.nextLine();
 
-		System.out.println("Lựa chọn trình độ: 1-Cử nhân | 2-Thạc sĩ | 3-Tiến sĩ.");
-		int trinhDo = sc.nextInt();
+		System.out.println("Lựa chọn chức vụ: 1-Trưởng phòng | 2-Phó phòng | 3-Nhân viên.");
+		String trinhDoStr = sc.nextLine();
+		int trinhDo = 0;
+		try {
+			trinhDo = Integer.parseInt(trinhDoStr);
+		} catch (NumberFormatException e) {
+			System.out.println("loi");
+		}
+
 		switch (trinhDo) {
 		case 1:
-			giangVien.setCapBac("Cử nhân");
-			giangVien.setPhuCap(300);
+			nhanVien.setCapBac("Trưởng phòng");
+			nhanVien.setPhuCap(2000);
 			break;
 		case 2:
-			giangVien.setCapBac("Thạc sĩ");
-			giangVien.setPhuCap(500);
+			nhanVien.setCapBac("Phó phòng");
+			nhanVien.setPhuCap(1000);
 			break;
 		case 3:
-			giangVien.setCapBac("Tiến sĩ");
-			giangVien.setPhuCap(1000);
+			nhanVien.setCapBac("Nhân viên");
+			nhanVien.setPhuCap(500);
+			break;
+		default:
+			System.out.println("Chọn sai");
 			break;
 		}
 		
-		sc.nextLine();
-		int soTiet = 0;
+		int soNgayCong = 0;
+		String ngayCong = null;
 
 		do {
-			check = false;
 
 			try {
+				check = false;
 				System.out.println("Số ngày công trong tháng: ");
-				String tiet = sc.nextLine();
-				soTiet = Integer.parseInt(tiet);
-				if (tiet.isEmpty()) {
+				ngayCong = sc.nextLine();
+				soNgayCong = Integer.parseInt(ngayCong);
+				if (ngayCong.isEmpty()) {
 					throw new Exception("Số ngày công không được để trống.");
-				} else if (soTiet < 0) {
-					throw new Exception("Số ngày công phỉa là số dương.");
+				} else if (soNgayCong < 0) {
+					throw new Exception("Số ngày công phải là số dương.");
 				}
 			} catch (NumberFormatException e) {
 				System.out.println("Vui lòng nhập số.");
@@ -80,12 +91,12 @@ public class GiangVien extends CanBo {
 
 		do {
 			check = false;
-			try {			
+			try {
 				System.out.println("Hệ số lương: ");
 				String heSo = sc.nextLine();
-				if (heSo.isEmpty())
+				if (heSo.isEmpty()) {
 					throw new Exception("Hệ số lương không được để trống.");
-
+				}
 				heSoLuong = Double.parseDouble(heSo);
 			} catch (NumberFormatException e) {
 				System.out.println("Vui lòng nhập số.");
@@ -95,9 +106,10 @@ public class GiangVien extends CanBo {
 			}
 		} while (check);
 
-		giangVien.setDonVi(khoa);
-		giangVien.setThoiGianLamViec(soTiet);
-		giangVien.setHeSoLuong(heSoLuong);
-		giangVien.setLuong(heSoLuong * 730 + giangVien.getPhuCap() + soTiet * 45);
+		nhanVien.setDonVi(ban);
+		nhanVien.setThoiGianLamViec(soNgayCong);
+		nhanVien.setHeSoLuong(heSoLuong);
+		nhanVien.setLuong(heSoLuong * 730 + nhanVien.getPhuCap() + soNgayCong * 30);
+
 	}
 }

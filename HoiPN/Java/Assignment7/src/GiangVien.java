@@ -6,7 +6,7 @@ import java.util.Scanner;
  *
  */
 public class GiangVien extends CanBo {
-	public void addGiangVien(Scanner sc, GiangVien giangVien) {
+	public void addGiangVien(Scanner sc,GiangVien giangVien){
 		sc.nextLine();
 		boolean check = false;
 		do {
@@ -32,41 +32,51 @@ public class GiangVien extends CanBo {
 				check = true;
 			}
 		} while (check);
-
+		
 		System.out.println("Nhập khoa: ");
 		String khoa = sc.nextLine();
-
+		
 		System.out.println("Lựa chọn trình độ: 1-Cử nhân | 2-Thạc sĩ | 3-Tiến sĩ.");
-		int trinhDo = sc.nextInt();
+		String trinhDoStr = sc.nextLine();
+		int trinhDo = 0;
+		try {
+			trinhDo = Integer.parseInt(trinhDoStr);
+		} catch (NumberFormatException e) {
+			System.out.println("loi");
+		}
+
 		switch (trinhDo) {
 		case 1:
 			giangVien.setCapBac("Cử nhân");
 			giangVien.setPhuCap(300);
 			break;
 		case 2:
-			giangVien.setCapBac("Thạc sĩ");
+			giangVien.setCapBac("Thạc sĩ ");
 			giangVien.setPhuCap(500);
 			break;
 		case 3:
 			giangVien.setCapBac("Tiến sĩ");
 			giangVien.setPhuCap(1000);
 			break;
+		default:
+			System.out.println("Chọn sai");
+			break;
 		}
 		
-		sc.nextLine();
 		int soTiet = 0;
+		String tiet = null;
 
 		do {
-			check = false;
 
 			try {
+				check = false;
 				System.out.println("Số ngày công trong tháng: ");
-				String tiet = sc.nextLine();
+				tiet = sc.nextLine();
 				soTiet = Integer.parseInt(tiet);
 				if (tiet.isEmpty()) {
 					throw new Exception("Số ngày công không được để trống.");
 				} else if (soTiet < 0) {
-					throw new Exception("Số ngày công phỉa là số dương.");
+					throw new Exception("Số ngày công phải là số dương.");
 				}
 			} catch (NumberFormatException e) {
 				System.out.println("Vui lòng nhập số.");
@@ -76,28 +86,29 @@ public class GiangVien extends CanBo {
 			}
 		} while (check);
 
+		
 		double heSoLuong = 0;
-
+		
 		do {
 			check = false;
-			try {			
+			try {
 				System.out.println("Hệ số lương: ");
 				String heSo = sc.nextLine();
-				if (heSo.isEmpty())
+				if(heSo.isEmpty())
 					throw new Exception("Hệ số lương không được để trống.");
-
-				heSoLuong = Double.parseDouble(heSo);
-			} catch (NumberFormatException e) {
+				
+				heSoLuong =  Double.parseDouble(heSo);
+			}catch(NumberFormatException e) {
 				System.out.println("Vui lòng nhập số.");
-			} catch (Exception er) {
+			}catch(Exception er) {
 				System.out.println(er.getMessage());
 				check = true;
 			}
-		} while (check);
-
+		}while(check);
+	
 		giangVien.setDonVi(khoa);
 		giangVien.setThoiGianLamViec(soTiet);
 		giangVien.setHeSoLuong(heSoLuong);
-		giangVien.setLuong(heSoLuong * 730 + giangVien.getPhuCap() + soTiet * 45);
+		giangVien.setLuong(heSoLuong*730 + giangVien.getPhuCap() + soTiet*45);
 	}
 }

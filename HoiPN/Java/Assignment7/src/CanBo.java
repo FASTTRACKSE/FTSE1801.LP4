@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-public class CanBo {
+public class CanBo implements Serializable{
 	private String hoTen;
 	private int phuCap;
 	private double heSoLuong;
