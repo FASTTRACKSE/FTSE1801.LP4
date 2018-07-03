@@ -2,6 +2,12 @@ package Assignment4;
 
 import java.util.Scanner;
 
+/**
+ * Thông tin khách hàng
+ * 
+ * @author SonVD
+ *
+ */
 public class KhachHang {
 	private String tenChuHo;
 	private String diaChi;
@@ -30,7 +36,10 @@ public class KhachHang {
 	public void setMaSoCongTo(int maSoCongTo) {
 		this.maSoCongTo = maSoCongTo;
 	}
-	
+
+	/**
+	 * Input information khachHang
+	 */
 	public void nhapKhachHang() {
 		Scanner input = new Scanner(System.in);
 		System.out.println("Nhập tên khách hàng: ");
@@ -41,8 +50,11 @@ public class KhachHang {
 		maSoCongTo = input.nextInt();
 		input.close();
 	}
-	
+
+	/**
+	 * Output information khachHang
+	 */
 	public void hienthiKhachHang() {
-		System.out.println("Tên khách hàng: " +tenChuHo+"\nĐịa chỉ: "+diaChi+"\nMã số công tơ: "+maSoCongTo);
+		System.out.println("Tên khách hàng: " + tenChuHo + "\nĐịa chỉ: " + diaChi + "\nMã số công tơ: " + maSoCongTo);
 	}
 }

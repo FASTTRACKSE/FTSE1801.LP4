@@ -1,13 +1,24 @@
 package canBo;
 
 import java.util.Scanner;
-
+/**
+ * Class nhan vien
+ * @author Luan
+ *
+ */
 public class NhanVien extends CanBo {
-
+	/**
+	 *  Tinh luong nhan vien
+	 * @return luong nhan vien
+	 */
 	public double luongNhanVien() {
 		return this.getHeSoLuong() * 730 + this.getPhuCap() + this.getSoGioLam() * 30;
 	}
-
+	/**
+	 * Them nhan vien
+	 * @param sc scanner
+	 * @param nhanVien nhan vien
+	 */
 	public void nhapNhanVien(Scanner sc, NhanVien nhanVien) {
 		boolean kiemtra;
 		String hoTen = null;
