@@ -1,5 +1,9 @@
 package sinhVien;
-
+/**
+ * 
+ * @author Luan
+ *
+ */
 public class SinhVien {
 		
 	private String name;
