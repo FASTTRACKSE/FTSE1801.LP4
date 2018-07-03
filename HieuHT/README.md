@@ -24,9 +24,14 @@ Java Core Project
 6. [Assignment3 - Sinh viên](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/HieuHT/Java/Assignment3/src/BaiTap/SinhVien.java)
 7. [Assignment4 - Tiền điện](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/HieuHT/Java/Assignment4/src/Baitap_tienDien)
 8. [Assignment4 - Person](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/HieuHT/Java/Assignment4/src/person)
+9. [Assignment5 - Cán bộ](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/HieuHT/Java/Assignment5/src/quanLyThongTinCanBo)
 
 ## Java core_Bài Tập Lab
 1. [Lab_1](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/HieuHT/Java/lab_1/src/lab1)
 2. [lab_2](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/HieuHT/Java/Lab_2/src/lab2)
 3. [lab_3](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/HieuHT/Java/lab_3/src/lab3)
 4. [lab_4](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/HieuHT/Java/lab_4/src/lab4)
+5. [lab_5 - Sinh viên](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/HieuHT/Java/lab_5/src/SinhVien)
+6. [lab_5 - Nhà trọ](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/HieuHT/Java/lab_5/src/nhaTro)
+7. [lab_6](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/HieuHT/Java/lab_6/src/lab6)
+8. [lab_7](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/HieuHT/Java/lab_7/src/lab7)

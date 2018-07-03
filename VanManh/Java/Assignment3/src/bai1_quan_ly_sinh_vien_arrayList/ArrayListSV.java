@@ -11,12 +11,18 @@ public class ArrayListSV {
 		listSV = new ArrayList<SinhVienArray>();
 	}
 
-	// Thêm sinh viên
+	/**
+	 * Thêm sinh viên
+	 * @param SV
+	 */
 	public void addSV(SinhVienArray SV) {
 		listSV.add(SV);
 	}
 
-	// Xóa sinh viên
+	/**
+	 * Xóa sinh viên theo ten
+	 * @param ten
+	 */
 	public void deleteSV(String ten) {
 		for (int i = 0; i < listSV.size(); i++) {
 			if (listSV.get(i).getName().equals(ten)) {
@@ -26,8 +32,10 @@ public class ArrayListSV {
 		}
 	}
 
-	// Hiển thị sắp xếp sinh viên
-	public void show() {
+	/**
+	 * Hiển thị All sinh viên
+	 */
+	public void showAll() {
 		System.out.printf("%-5s %-20s %-6s %-20s %-6s", "ID", "Tên", "Tuổi", "Địa chỉ", "ĐTB");
 		System.out.println();
 		for (int i = 0; i < listSV.size(); i++) {
@@ -38,8 +46,10 @@ public class ArrayListSV {
 		System.out.println();
 	}
 
-	// Sắp xếp sinh viên theo tuổi cách 1
-	public void sapXepAge() {
+	/**
+	 *  Sắp xếp sinh viên theo tuổi tu thap den cao cách 1
+	 */
+	public void sapXepAgeTuThapDenCao() {
 		Collections.sort(listSV, new SapXepArray() {
 			public int compare(SinhVienArray sv1, SinhVienArray sv2) {
 				return sv1.getAge() - (sv2.getAge());
@@ -48,13 +58,17 @@ public class ArrayListSV {
 
 	}
 
-	// Sắp xếp sinh viên theo tên
-	public void sapXepName() {
+	/**
+	 * Sắp xếp sinh viên theo tên A-Z
+	 */
+	public void sapXepNameAtoZ() {
 		Collections.sort(listSV, new SapXepArray());
 	}
 
-	// Sắp xếp sinh viên theo tuổi cách 2
-	public void sapXepAgeCach2() {
+	/**
+	 *  Sắp xếp sinh viên theo tuổi tu thap den cao cách 2
+	 */
+	public void sapXepAgeTuThapDenCaoCach2() {
 		for (int i = 0; i < listSV.size() - 1; i++) {
 			for (int j = 1; j < listSV.size(); j++) {
 				if (listSV.get(i).getAge() > listSV.get(j).getAge()) {
@@ -67,7 +81,11 @@ public class ArrayListSV {
 
 	}
 
-	// Sửa đổi thông tin sinh viên
+	/**
+	 * Sửa đổi thông tin sinh viên theo ten
+	 * @param input
+	 * @param ten
+	 */
 	public void repairSV(Scanner input, String ten) {
 
 		for (int i = 0; i < listSV.size(); i++) {
@@ -122,23 +140,25 @@ public class ArrayListSV {
 					int age = 0;
 					double gpa = 0.0;
 					boolean kiemTra;
-
+					String ageStr = null;
+					
 					/**
 					 * Kiem tra nhap ten co de trong hay co ki tu so khong, neu co bat nhap lai
 					 */
 					input.nextLine();
+					
 					do {
 						try {
 							kiemTra = false;
 							System.out.print("Nhập tên SV : ");
 							name = input.nextLine();
 							if (name.isEmpty()) {
-								throw new Exception("Nhap sai, ten duoc de trong hoac co ki tu so");
+								throw new Exception("Nhap sai, ten khong duoc de trong");
 							} else {
 								for (int i = 0; i < name.length(); i++) {
 									if (!Character.isLetter(name.charAt(i))
 											&& !Character.isWhitespace(name.charAt(i))) {
-										throw new Exception("Nhap sai, ten duoc de trong hoac co ki tu so");
+										throw new Exception("Nhap sai, ten khong co ki tu so");
 									}
 								}
 							}
@@ -154,12 +174,20 @@ public class ArrayListSV {
 					 */
 					do {
 						try {
+
 							kiemTra = false;
 							System.out.print("Nhập tuổi : ");
-							age = input.nextInt();
-							if (age <= 0 || age > 100) {
+							ageStr = input.nextLine();
+							if(ageStr.isEmpty()) {
+								throw new Exception("Tuoi khong duoc de trong");
+							}
+							age = Integer.parseInt(ageStr);						
+							if ((age <= 0 || age > 100)) {
 								throw new Exception("Tuoi khong duoc nho hon 0 va lon on 100");
 							}
+						}catch (NumberFormatException e) {
+							System.out.println("Tuoi phai la so nguyen");
+							kiemTra = true;
 						} catch (Exception e) {
 							System.out.println(e.getMessage());
 							kiemTra = true;
@@ -167,7 +195,6 @@ public class ArrayListSV {
 
 					} while (kiemTra);
 
-					input.nextLine();
 					System.out.print("Nhập địa chỉ : ");
 					String address = input.nextLine();
 
@@ -192,6 +219,7 @@ public class ArrayListSV {
 
 					SinhVienArray sv = new SinhVienArray(name, age, address, gpa);
 					quanLy.addSV(sv);
+					
 					System.out.println();
 					System.out.print("Bạn có muốn nhập tiếp không (0:không | 1:Có) ");
 					tt = input.nextInt();
@@ -204,7 +232,7 @@ public class ArrayListSV {
 				input.nextLine();
 				String name = input.nextLine();
 				quanLy.repairSV(input, name);
-				quanLy.show();
+				quanLy.showAll();
 				break;
 
 			case 3:
@@ -214,14 +242,14 @@ public class ArrayListSV {
 				input.nextLine();
 				String ten = input.nextLine();
 				quanLy.deleteSV(ten);
-				quanLy.show();
+				quanLy.showAll();
 				break;
 			case 4:
-				quanLy.sapXepAge();
-				quanLy.show();
+				quanLy.sapXepAgeTuThapDenCao();
+				quanLy.showAll();
 				break;
 			case 5:
-				quanLy.show();
+				quanLy.showAll();
 				break;
 
 			case 0:

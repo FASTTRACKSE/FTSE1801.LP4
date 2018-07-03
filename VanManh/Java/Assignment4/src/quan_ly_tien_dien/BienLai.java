@@ -10,19 +10,30 @@ public class BienLai extends KhachHang {
 		quanLy = new ArrayList<KhachHang>();
 	}
 
-	// Tính tiền điện
-	public void tienDien() {
+	/**
+	 * Tính tiền điện
+	 */
+	public void tinhTienDien() {
 		for (int i = 0; i < quanLy.size(); i++) {
 			quanLy.get(i).setTienDien((quanLy.get(i).getSoDienMoi() - quanLy.get(i).getSoDienCu()) * 750);
 		}
 	}
 
-	// Thêm khách hàng
+	/**
+	 * Thêm khách hàng
+	 * 
+	 * @param khachHang
+	 */
 	public void addKhachHang(KhachHang khachHang) {
 		quanLy.add(khachHang);
 	}
 
-	// Cập nhập số điện
+	/**
+	 * Cập nhập số điện
+	 * 
+	 * @param input
+	 * @param name
+	 */
 	public void repairSoDien(Scanner input, String name) {
 		for (int i = 0; i < quanLy.size(); i++) {
 			if (quanLy.get(i).getName().equals(name)) {
@@ -40,7 +51,12 @@ public class BienLai extends KhachHang {
 		}
 	}
 
-	// sửa đổi thông tin khách hàng
+	/**
+	 * sửa đổi thông tin khách hàng theo ten
+	 * 
+	 * @param input
+	 * @param name
+	 */
 	public void repairKhachHang(Scanner input, String name) {
 		for (int i = 0; i < quanLy.size(); i++) {
 			if (quanLy.get(i).getName().equals(name)) {
@@ -61,7 +77,11 @@ public class BienLai extends KhachHang {
 		}
 	}
 
-	// Xóa khách hàng
+	/**
+	 * Xóa khách hàng theo ten
+	 * 
+	 * @param name
+	 */
 	public void deleteKhachHang(String name) {
 		for (int i = 0; i < quanLy.size(); i++) {
 			if (quanLy.get(i).getName().equals(name)) {
@@ -71,7 +91,9 @@ public class BienLai extends KhachHang {
 		}
 	}
 
-	// Hiển thị khách hàng
+	/**
+	 * Hiển thị khách hàng
+	 */
 	public void show() {
 		System.out.printf("%-5s %-20s %-20s %-20s %-20s %-20s %-20s", "STT", "Tên", "Địa chỉ", "Mã công tơ",
 				"Số điện cũ", "Số điện mới", "tiền điện");
@@ -140,7 +162,7 @@ public class BienLai extends KhachHang {
 					nhapTiep = input.nextInt();
 					System.out.println();
 				} while (nhapTiep == 1);
-				quanLy.tienDien();
+				quanLy.tinhTienDien();
 				quanLy.show();
 
 				break;
@@ -171,7 +193,7 @@ public class BienLai extends KhachHang {
 				break;
 
 			case 5:
-				quanLy.tienDien();
+				quanLy.tinhTienDien();
 				quanLy.show();
 				break;
 
