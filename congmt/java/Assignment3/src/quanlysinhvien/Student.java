@@ -3,7 +3,7 @@ package quanlysinhvien;
 /**
  * Student class
  * 
- * @author viettuts.vn
+ * @author CôngMT
  */
 public class Student {
 	private int id;

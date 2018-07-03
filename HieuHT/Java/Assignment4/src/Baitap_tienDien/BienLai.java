@@ -9,7 +9,7 @@ public class BienLai {
      public BienLai() {
     	 listKH = new ArrayList<KhachHang>();
      }
-     // tính ti�?n Kh
+     // tính tiền Kh
      public void TienDienTra() {
     	 for(int i=0; i<listKH.size(); i++) {
     		listKH.get(i).setTienDien((listKH.get(i).getChiSoMoi()-listKH.get(i).getChiSoCu())*750);
@@ -21,8 +21,8 @@ public class BienLai {
      }
      // in danh sách khách hàng.
      public void printKH() {
-   	 System.out.printf("%20s|%-20s|%20s|%-20s|%20s|%20s%n", "Tên KH","�?ịa Chỉ",
-   			 "Số Công Tơ","Số �?iện Cũ","Số �?iện Mới","Ti�?n điên");
+   	 System.out.printf("%20s|%-20s|%20s|%-20s|%20s|%20s%n", "Tên KH","Địa Chỉ",
+   			 "Số Công Tơ","Số Điện Cũ","Số điện Mới","Tiền điện");
     	 for(int i = 0; i<listKH.size();  i++) {
 //    		 System.out.println("Ten"+ listKH.get(i).getName());
 //    		 System.out.println("Ten"+ listKH.get(i).getAddress());

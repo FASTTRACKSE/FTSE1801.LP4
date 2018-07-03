@@ -39,6 +39,7 @@ public class KhachHang {
 		diaChi = input.nextLine();
 		System.out.println("Nhập mã số công tơ: ");
 		maSoCongTo = input.nextInt();
+		input.close();
 	}
 	
 	public void hienthiKhachHang() {

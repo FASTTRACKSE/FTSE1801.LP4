@@ -3,6 +3,7 @@ Java Core Project
 ## MySQL
 1. [bài tập 1 - MySQL](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/HieuHT/MySQL/b%C3%A0i%20t%E1%BA%ADp%20v%E1%BB%81%20nh%C3%A0.txt)
 2. [bài tập 2 - MySQL](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/HieuHT/MySQL/ftse1801004_css.sql)
+
 ## Java
 1. [Bài tập 1 - MIN,MAX](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/HieuHT/Java/Java_d1/src/baivd/ass2.java)
 2. [Bài tập 2 - PT bậc nhất 1 ẩn](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/HieuHT/Java/Java_d1/src/baivd/vd1.java)
@@ -13,7 +14,8 @@ Java Core Project
 7. [Bài tập 7 - XĐ số nguyên](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/HieuHT/Java/Java_d2/src/Baitaplab/xdsonguyen.java)
 8. [Bài tập 8 -Bảng cửu chương](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/HieuHT/Java/Java_d2/src/Baitaplab/bangcuuchuong.java)
 9. [Bài tập 9 - Quản lý](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/HieuHT/Java/Java_d2/src/Baitaplab/Quanly.java)
-## Java core
+
+## Java core_Assignment
 1. [Assignment1 - Công thức toán học](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/HieuHT/Java/Assignment1/src/B%C3%A0iT%E1%BA%ADp/congThucToanHoc.java)
 2. [Assignment1 - Vẽ hình bằng lý tự](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/HieuHT/Java/Assignment1/src/B%C3%A0iT%E1%BA%ADp/veHinhBangKyTu.java)
 3. [Assignment2 - Đổi số thành chữ](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/HieuHT/Java/Assignment2/src/BaiTap/doisorachu.java)
@@ -22,3 +24,14 @@ Java Core Project
 6. [Assignment3 - Sinh viên](https://github.com/FASTTRACKSE/FTSE1801.LP4/blob/master/HieuHT/Java/Assignment3/src/BaiTap/SinhVien.java)
 7. [Assignment4 - Tiền điện](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/HieuHT/Java/Assignment4/src/Baitap_tienDien)
 8. [Assignment4 - Person](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/HieuHT/Java/Assignment4/src/person)
+9. [Assignment5 - Cán bộ](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/HieuHT/Java/Assignment5/src/quanLyThongTinCanBo)
+
+## Java core_Bài Tập Lab
+1. [Lab_1](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/HieuHT/Java/lab_1/src/lab1)
+2. [lab_2](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/HieuHT/Java/Lab_2/src/lab2)
+3. [lab_3](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/HieuHT/Java/lab_3/src/lab3)
+4. [lab_4](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/HieuHT/Java/lab_4/src/lab4)
+5. [lab_5 - Sinh viên](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/HieuHT/Java/lab_5/src/SinhVien)
+6. [lab_5 - Nhà trọ](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/HieuHT/Java/lab_5/src/nhaTro)
+7. [lab_6](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/HieuHT/Java/lab_6/src/lab6)
+8. [lab_7](https://github.com/FASTTRACKSE/FTSE1801.LP4/tree/master/HieuHT/Java/lab_7/src/lab7)

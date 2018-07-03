@@ -25,5 +25,6 @@ public class QuanLyBienLaiTienDien {
 	            System.out.println("Thông tin biên lai hộ gia đình thứ " + (i + 1) + ": ");
 	            listBienLai.get(i).hienThiBienLai();
 	    }
+	        scanner.close();
 	}
 }

@@ -11,29 +11,22 @@ public class QuanLySinhVien {
 		id = 0;
 	}
 
-	// Thêm sinh viên
+	/**
+	 * Them sinh vien
+	 * 
+	 * @param SV
+	 */
 	public void addSV(SinhVien SV) {
 		listSV[id] = SV;
 		id += 1;
 	}
 
-	// Xóa sinh viên cách 1
+	/**
+	 * Xoa sing vien theo ten cach
+	 * 
+	 * @param ten
+	 */
 	public void deleteSV(String ten) {
-
-		for (int i = 0; i < id; i++) {
-			if (listSV[i].getName().equals(ten)) {
-				for (int j = i; j < id; j++) {
-					listSV[j] = listSV[j + 1];
-				}
-				id = id - 1;
-				break;
-			}
-			System.out.println("Kết thúc");
-		}
-	}
-
-	// Xóa sinh viên cách 2
-	public void deleteSV2(String ten) {
 
 		boolean flagExist = false;
 		for (int i = 0; i < id; i++) {
@@ -51,8 +44,10 @@ public class QuanLySinhVien {
 
 	}
 
-	// Hiển thị sinh viên
-	public void show() {
+	/**
+	 * Hien thi all sinh vien
+	 */
+	public void showAll() {
 		System.out.printf("%-5s %-20s %-6s %-20s %-6s", "ID", "Tên", "Tuổi", "Địa chỉ", "ĐTB");
 		System.out.println();
 		for (int i = 0; i < id; i++) {
@@ -63,8 +58,10 @@ public class QuanLySinhVien {
 		System.out.println();
 	}
 
-	// Sắp xếp theo tuổi từ thấp đến cao
-	public void sapXep() {
+	/**
+	 * Sắp xếp theo tuổi từ thấp đến cao
+	 */
+	public void sapXepAgeThapDenCao() {
 
 		for (int i = 0; i < id - 1; i++) {
 			for (int j = 1; j < id; j++) {
@@ -78,9 +75,10 @@ public class QuanLySinhVien {
 
 	}
 
-	// Sắp xếp theo tên từ a - z
+	/**
+	 * Sắp xếp theo tên từ a - z
+	 */
 	public void sapXepAtoZ() {
-		// Sắp xếp theo tên từ a - z
 
 		for (int i = 0; i < id - 1; i++) {
 			for (int j = 1; j < id; j++) {
@@ -94,13 +92,20 @@ public class QuanLySinhVien {
 
 	}
 
-	// Sửa đổi thông tin sinh viên
+	/**
+	 * Sửa đổi thông tin sinh viên theo ten
+	 * 
+	 * @param input
+	 * @param ten
+	 */
 	public void repairSV(Scanner input, String ten) {
 
 		for (int i = 0; i < id; i++) {
 			if (listSV[i].getName().equals(ten)) {
 				System.out.print("Nhập tên SV : ");
 				String name = input.nextLine();
+
+				SinhVien sv = listSV[i];
 
 				System.out.print("Nhập tuổi : ");
 				int age = input.nextInt();
@@ -112,20 +117,20 @@ public class QuanLySinhVien {
 				System.out.print("Nhập điểm trung bình : ");
 				double gpa = input.nextDouble();
 
-				listSV[i].setName(name);
-				listSV[i].setAge(age);
-				listSV[i].setAddress(address);
-				listSV[i].setGpa(gpa);
+				sv.setName(name);
+				sv.setAge(age);
+				sv.setAddress(address);
+				sv.setGpa(gpa);
 				break;
 			}
 		}
 		System.out.println("Bạn đã nhập sai!!!!");
-
 	}
 
 	public static void main(String[] args) {
-		int tt, luaChon;
+		int tiepTuc, luaChon;
 		QuanLySinhVien quanLy = new QuanLySinhVien();
+		SinhVien sv;
 		while (true) {
 			Scanner input = new Scanner(System.in);
 			System.out.println("/***********************************/");
@@ -158,13 +163,13 @@ public class QuanLySinhVien {
 					System.out.print("Nhập điểm trung bình : ");
 					double gpa = input.nextDouble();
 
-					SinhVien sv = new SinhVien(name, age, address, gpa);
+					sv = new SinhVien(name, age, address, gpa);
 					quanLy.addSV(sv);
 					System.out.println();
 					System.out.print("Bạn có muốn nhập tiếp không (0:không | 1:Có) ");
-					tt = input.nextInt();
+					tiepTuc = input.nextInt();
 					System.out.println();
-				} while (tt == 1);
+				} while (tiepTuc == 1);
 				break;
 			case 2:
 				System.out.println();
@@ -172,7 +177,7 @@ public class QuanLySinhVien {
 				input.nextLine();
 				String name = input.nextLine();
 				quanLy.repairSV(input, name);
-				quanLy.show();
+				quanLy.showAll();
 				break;
 
 			case 3:
@@ -182,14 +187,14 @@ public class QuanLySinhVien {
 				input.nextLine();
 				String ten = input.nextLine();
 				quanLy.deleteSV(ten);
-				quanLy.show();
+				quanLy.showAll();
 				break;
 			case 4:
-				quanLy.sapXep();
-				quanLy.show();
+				quanLy.sapXepAgeThapDenCao();
+				quanLy.showAll();
 				break;
 			case 5:
-				quanLy.show();
+				quanLy.showAll();
 				break;
 
 			case 0:
