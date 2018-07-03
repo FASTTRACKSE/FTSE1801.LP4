@@ -12,7 +12,7 @@ public class array {
 			System.out.println("hình như có phần tử: ");
 		}
 
-		//
+		
 		listString.add("Vui 1");
 
 		if (listString.isEmpty()) {
@@ -42,8 +42,8 @@ public class array {
 		for (String string : listString) {
 			System.out.println(string);
 		}
-		
-//		System.out.println("-----------------");
-//		listString.clear();
+//		
+////		System.out.println("-----------------");
+////		listString.clear();
 	}
 }
