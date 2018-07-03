@@ -5,6 +5,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
 
+/**
+ * QLSinhVien Class
+ * 
+ * @author CongMT
+ *
+ */
 public class QLSinhVien {
 	private ArrayList<SinhVien> listSinhVien;
 
@@ -58,7 +64,10 @@ public class QLSinhVien {
 
 	}
 
-	public void sapxeptheotuoi() {
+	/**
+	 * Sap xep theo tuoi tang dan
+	 */
+	public void sapXepTheoTuoi() {
 		Collections.sort(listSinhVien, new Comparator<SinhVien>() {
 			public int compare(SinhVien sv1, SinhVien sv2) {
 				return sv2.getAge() - sv2.getAge();
@@ -68,12 +77,18 @@ public class QLSinhVien {
 
 	}
 
-	public void sapxeptheodiem() {
+	/**
+	 * Sap xep theo diem tang dan
+	 */
+	public void sapXepTheoDiem() {
 		Collections.sort(listSinhVien, new SortStudentByGPA());
 
 	}
 
-	public void sapxepten() {
+	/**
+	 * Sap xep theo ten tu a den z
+	 */
+	public void sapXepTheoTenAZ() {
 		Collections.sort(listSinhVien, new SortStudentByName());
 	}
 
@@ -83,7 +98,7 @@ public class QLSinhVien {
 	 * @param id:
 	 *            student id
 	 */
-	public void deletel(String id) {
+	public void deletelSv(String id) {
 		SinhVien sinhvien = null;
 		int size = listSinhVien.size();
 		for (int i = 0; i < size; i++) {
@@ -104,7 +119,7 @@ public class QLSinhVien {
 	/**
 	 * show list student to screen
 	 */
-	public void displayAllSV(SinhVien sinhvien) {
+	public void displayAllSv() {
 		int size = listSinhVien.size();
 		System.out.printf("%-3s %-20s %-6s %-20s %-6s \n", "ID", "Tên", "Tuổi", "Địa chỉ", "ĐTB");
 		System.out.println();
@@ -119,11 +134,14 @@ public class QLSinhVien {
 
 	}
 
-	public static Scanner sc = new Scanner(System.in);
-
+	/**
+	 * Ham main
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		int choose, tt;
-
+		Scanner sc = new Scanner(System.in);
 		QLSinhVien qlsv = new QLSinhVien();
 
 		// show menu
@@ -152,7 +170,7 @@ public class QLSinhVien {
 							kiemTra = true;
 						} else {
 							for (int i = 0; i < name.length(); i++) {
-								if (!Character.isLetter(name.charAt(i)) && name.charAt(i)!=' ') {
+								if (!Character.isLetter(name.charAt(i)) && name.charAt(i) != ' ') {
 									kiemTra = true;
 									break;
 								}
@@ -160,7 +178,7 @@ public class QLSinhVien {
 						}
 
 					} while (kiemTra);
-					
+
 					System.out.println("- Nhập tuổi sinh viên:");
 					byte age = sc.nextByte();
 					sc.nextLine();
@@ -194,20 +212,20 @@ public class QLSinhVien {
 				System.out.print("Nhập ID cần xóa : ");
 				System.out.println();
 				String idDelete = sc.nextLine();
-				qlsv.deletel(idDelete);
+				qlsv.deletelSv(idDelete);
 				break;
 			case 4:
-				qlsv.sapxeptheodiem();
+				qlsv.sapXepTheoDiem();
 				break;
 			case 5:
-				qlsv.sapxepten();
+				qlsv.sapXepTheoTenAZ();
 				break;
 			case 6:
-				qlsv.sapxeptheotuoi();
+				qlsv.sapXepTheoTuoi();
 				break;
 			case 7:
 
-				qlsv.displayAllSV(null);
+				qlsv.displayAllSv();
 				break;
 
 			case 0:
@@ -220,8 +238,7 @@ public class QLSinhVien {
 				System.out.println("Chọn sai chức năng, mời bạn chọn lại.");
 				break;
 			}
-			// show menu
-			showMenu();
+
 		}
 	}
 

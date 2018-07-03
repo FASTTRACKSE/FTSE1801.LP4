@@ -53,11 +53,16 @@ public class NhanVien extends CanBo implements Serializable {
 	public void setChucVu(String chucVu) {
 		this.chucVu = chucVu;
 	}
-
+	/**
+	 *  Tinh luong theo so ngay cong cua nhan vien
+	 */
 	public long tinhLuong() {
 		return (long) (this.getHeSoLuong() * 730 + this.getPhuCap() + this.getSoNgayCong() * 45);
 	}
-
+	/**
+	 * Nhap thong tin nhan vien
+	 * @param sc
+	 */
 	public void NhapThongTinNhanVien(Scanner sc) {
 		boolean inputOK;
 		int N = 0;
@@ -185,7 +190,9 @@ public class NhanVien extends CanBo implements Serializable {
 			setNganh("NhanVien");
 		}
 	}
-
+	/**
+	 * Xuat thong tin nhan vien
+	 */
 	public void XuatThongTinNhanVien() {
 		System.out.println(
 				"+---------------------------------DANH SÁCH CÁN BỘ HÀNH CHÍNH--------------------------------------+");

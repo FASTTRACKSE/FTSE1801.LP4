@@ -28,7 +28,7 @@ public class QuanLySv {
 		soluongSv += 1;
 	}
 	/**
-	 * Update Student
+	 * Update Student by ID
 	 * @param sc
 	 * @param id
 	 */
@@ -65,7 +65,10 @@ public class QuanLySv {
 			System.out.printf("id = %d not existed.\n", id);
 		}
 	}
-
+	/**
+	 * Xoa danh sach sinh vien thep Id
+	 * @param id
+	 */
 	public void deletelSv(int id) {
 		boolean isExisted = false;
 		
