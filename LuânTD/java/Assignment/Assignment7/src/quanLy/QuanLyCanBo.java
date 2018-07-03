@@ -1,5 +1,10 @@
 package quanLy;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -15,9 +20,7 @@ import canBo.NhanVien;
  */
 public class QuanLyCanBo {
 	private ArrayList<CanBo> listCanBo;
-	/**
-	 * Mang can bo
-	 */
+
 	public QuanLyCanBo() {
 		listCanBo = new ArrayList<CanBo>();
 	}
@@ -31,7 +34,7 @@ public class QuanLyCanBo {
 		listCanBo.add(giangVien);
 	}
 	/**
-	 * Them Nhan Vien
+	 * Them nhan vien
 	 * @param sc scanner
 	 */
 	public void addNhanVien(Scanner sc) {
@@ -54,24 +57,35 @@ public class QuanLyCanBo {
 		System.out.println();
 	}
 	/**
-	 * Tim can bo them don vi(Khoa hoac phong ban)
+	 * Tim can bo them don vi ( Khoa, phong ban)
 	 * @param donVi don vi
 	 */
 	public void findCanBo(String donVi) {
-		System.out.printf("%3s %20s %25s %20s %10s %20s %10s %15s", "STT", "Ho Ten", "Don Vi", "Trinh Do", "Phu Cap",
-				"So Gio Lam", "He So Luong", "Luong");
-		System.out.println();
-		for (int i = 0; i < listCanBo.size(); i++) {
-			if (listCanBo.get(i).getDonVi().equals(donVi))
-				System.out.printf("%n %3s %20s %25s %20s %10s %20s %10s %15s", i + 1, listCanBo.get(i).getHoTen(),
-						listCanBo.get(i).getDonVi(), listCanBo.get(i).getTrinhDo(), listCanBo.get(i).getPhuCap(),
-						listCanBo.get(i).getSoGioLam(), listCanBo.get(i).getHeSoLuong(), listCanBo.get(i).getLuong());
+		try {
+			for (int i = 0; i < listCanBo.size(); i++) {
+				if (listCanBo.get(i).getDonVi().equals(donVi)) {
+					throw new Exception();
+				}
+			}
+			System.out.println("Nhap sai khoa (phong ban)");
 			System.out.println();
+		} catch (Exception e) {
+			System.out.printf("%3s %20s %25s %20s %10s %20s %10s %15s", "STT", "Ho Ten", "Don Vi", "Trinh Do",
+					"Phu Cap", "So Gio Lam", "He So Luong", "Luong");
+			System.out.println();
+			for (int i = 0; i < listCanBo.size(); i++) {
+				if (listCanBo.get(i).getDonVi().equals(donVi))
+					System.out.printf("%n %3s %20s %25s %20s %10s %20s %10s %15s", i + 1, listCanBo.get(i).getHoTen(),
+							listCanBo.get(i).getDonVi(), listCanBo.get(i).getTrinhDo(), listCanBo.get(i).getPhuCap(),
+							listCanBo.get(i).getSoGioLam(), listCanBo.get(i).getHeSoLuong(),
+							listCanBo.get(i).getLuong());
+				System.out.println();
+			}
 		}
-		System.out.println();
+
 	}
 	/**
-	 * Tinh tong tien truong phai tra cho Can bo;
+	 * Tinh tong luong truong phai tra cho nhan vien
 	 */
 	public void sumLasary() {
 		double tongLuong = 0;
@@ -81,7 +95,7 @@ public class QuanLyCanBo {
 		System.out.println("Tong luong truong phai tra cho can bo la:  " + tongLuong);
 	}
 	/**
-	 * Sap xep can bo theo luong tu thap den cao;
+	 * Sap xep can bo theo luong
 	 */
 	public void sortCanBo() {
 		Collections.sort(listCanBo, new Comparator<CanBo>() {
@@ -92,6 +106,38 @@ public class QuanLyCanBo {
 		});
 
 	}
+	
+	public void addCanBoForFile() throws IOException {
+		FileOutputStream fos= new FileOutputStream("CanBo.txt");
+		ObjectOutputStream oos=new ObjectOutputStream(fos);
+		oos.writeObject(listCanBo);
+		oos.close();
+		fos.close();
+	}
+	
+	
+	public void showCanBoFromFile() throws IOException, ClassNotFoundException {
+		FileInputStream fis = new FileInputStream("CanBo.txt");
+		ObjectInputStream ois =new ObjectInputStream(fis);
+		ArrayList<CanBo> list= (ArrayList<CanBo>) ois.readObject();
+		System.out.printf("%3s %20s %25s %20s %10s %20s %10s %15s", "STT", "Ho Ten", "Don Vi", "Trinh Do",
+				"Phu Cap", "So Gio Lam", "He So Luong", "Luong");
+		System.out.println();
+		for (int i = 0; i < list.size(); i++) {
+			System.out.printf("%n %3s %20s %25s %20s %10s %20s %10s %15s", i + 1, listCanBo.get(i).getHoTen(),
+					listCanBo.get(i).getDonVi(), listCanBo.get(i).getTrinhDo(), listCanBo.get(i).getPhuCap(),
+					listCanBo.get(i).getSoGioLam(), listCanBo.get(i).getHeSoLuong(), listCanBo.get(i).getLuong());
+		}
+		System.out.println();
+		
+		//dong luong du lieu
+		ois.close();
+		fis.close();
+		
+		
+		
+	}
+	
 
 	public static void main(String[] args) {
 		int tiepTuc, luaChon;
@@ -105,6 +151,8 @@ public class QuanLyCanBo {
 			System.out.println("3. Hiển thị danh sách cán bộ thêm khoa(Phòng ban) .");
 			System.out.println("4. Tổng số lương trường trả cho cán bộ .");
 			System.out.println("5. Hiển thị danh sách cán bộ sắp xếp theo lương .");
+			System.out.println("6. Lưu cán bộ vào file CanBo.txt");
+			System.out.println("7. Đọc thông tin cán bộ trong file CanBo.txt");
 			System.out.println("0. Kết thúc chương trình .");
 			System.out.println("/***********************************/");
 
@@ -140,6 +188,20 @@ public class QuanLyCanBo {
 				quanLy.sortCanBo();
 				quanLy.showCanBo();
 				break;
+			case 6:
+				try {
+					quanLy.addCanBoForFile();
+				} catch (IOException e) {
+					System.out.println("Có lỗi");
+				}
+				break;
+			case 7:
+				try {
+					quanLy.showCanBoFromFile();
+				} catch (ClassNotFoundException | IOException e) {
+					System.out.println("Có lỗi");
+				}
+				break;
 			case 0:
 				System.out.println("Ket thuc chuong trinh");
 				sc.close();
@@ -148,8 +210,7 @@ public class QuanLyCanBo {
 			default:
 				System.out.println("nhap sai, moi ban chon lai.");
 				break;
-				
-				
+
 			}
 		}
 	}

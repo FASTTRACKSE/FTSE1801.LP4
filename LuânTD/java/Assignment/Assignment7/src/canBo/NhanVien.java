@@ -1,12 +1,15 @@
 package canBo;
 
+import java.io.Serializable;
 import java.util.Scanner;
 /**
  * Class nhan vien
  * @author Luan
  *
  */
-public class NhanVien extends CanBo {
+public class NhanVien extends CanBo implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	/**
 	 *  Tinh luong nhan vien
 	 * @return luong nhan vien

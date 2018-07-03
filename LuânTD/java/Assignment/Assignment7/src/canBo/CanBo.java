@@ -1,10 +1,15 @@
 package canBo;
+
+import java.io.Serializable;
+
 /**
  * 
  * @author Luan
  *
  */
-public class CanBo {
+public class CanBo implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private String hoTen;
 	private String donVi;
 	private String trinhDo;

@@ -1,5 +1,6 @@
 package canBo;
 
+import java.io.Serializable;
 import java.util.Scanner;
 /**
  * 
@@ -7,7 +8,9 @@ import java.util.Scanner;
  *
  */
 
-public class GiangVien extends CanBo {
+public class GiangVien extends CanBo implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 /**
  * Tinh luong giang vien
  * @return luong giang vien
