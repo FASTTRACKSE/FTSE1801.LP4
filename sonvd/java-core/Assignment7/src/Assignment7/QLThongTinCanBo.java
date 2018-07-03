@@ -1,10 +1,12 @@
-package Assignment5;
+package Assignment7;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Scanner;
-
 
 /**
  * Quan ly thong tin can bo
@@ -21,17 +23,19 @@ public class QLThongTinCanBo {
 
 	/**
 	 * Display menu
+	 * 
+	 * @throws IOException
 	 */
-	public void menu() {
+	public void menu() throws IOException {
 		CanBo canBo;
 		int chooseMenu;
 		Scanner sc = new Scanner(System.in);
+		canBoDAO CanBoDAO = new canBoDAO();
 
 		while (true) {
 			System.out.println("/****************************************/");
 			System.out.println("1. Nhập thông tin cán bộ");
 			System.out.println("2. Hiển thị thông tin cán bộ");
-			System.out.println("3. Sắp xếp cán bộ theo lương, lương bằng theo tên.");
 			System.out.println("0. Kết thúc chương trình.");
 			System.out.println("/****************************************/");
 
@@ -51,13 +55,16 @@ public class QLThongTinCanBo {
 						canBo = new giangVien();
 						((giangVien) canBo).inputGiangVien();
 						listQLCanBo.add(canBo);
+						CanBoDAO.write(listQLCanBo);
 					} else if (canbo == 2) {
 						canBo = new nhanVien();
 						((nhanVien) canBo).inputNhanVien();
 						listQLCanBo.add(canBo);
+						CanBoDAO.write(listQLCanBo);
+					} else {
+						System.out.println("Nhập sai chức năng.");
 					}
 				}
-				System.out.println("Nhập thông tin nhân viên thành công.");
 				break;
 			case 2:
 				CanBo canbo;
@@ -65,40 +72,22 @@ public class QLThongTinCanBo {
 					canbo = listQLCanBo.get(i);
 					if (canbo instanceof giangVien) {
 						((giangVien) canbo).outputGiangVien();
+						CanBoDAO.read();
 					} else {
 						((nhanVien) canbo).outputNhanVien();
+						CanBoDAO.read();
 					}
 				}
-				break;
-			case 3: 
-				sortCanBoByLuong();
-				System.out.println("Sắp xếp cán bộ theo lương thành công.");
 				break;
 			case 0:
 				sc.close();
 				System.out.println("Kết thúc chương trình.");
 				System.exit(0);
-				break;
 			}
 		}
 	}
-	
-	public void sortCanBoByLuong() {
-		Collections.sort(listQLCanBo, new Comparator<CanBo>() {
 
-			@Override
-			public int compare(CanBo o1, CanBo o2) {
-				if (Double.compare(o1.getLuong(),o2.getLuong())==0) {
-					return o1.getHoTen().compareToIgnoreCase(o2.getHoTen());
-				} else {
-					return Double.compare(o1.getLuong(), o2.getLuong());
-				}
-			}
-			
-		});
-	}
-
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		QLThongTinCanBo quanLithongTinCanBo = new QLThongTinCanBo();
 		quanLithongTinCanBo.menu();
 	}

@@ -1,4 +1,4 @@
-package Assignment5;
+package Assignment6;
 
 import java.util.Scanner;
 
@@ -16,11 +16,8 @@ public class nhanVien extends CanBo {
 	public nhanVien() {
 	}
 
-	public nhanVien(String phongBan, int soNgayCong, String chucVu) {
-		super();
-		this.phongBan = phongBan;
-		this.soNgayCong = soNgayCong;
-		this.chucVu = chucVu;
+	public nhanVien(String hoTen, String loaiCanBo, double phuCap, double heSoLuong) {
+		super(hoTen, loaiCanBo, phuCap, heSoLuong);
 	}
 
 	public String getPhongBan() {

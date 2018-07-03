@@ -1,9 +1,9 @@
-package Assignment5;
+package Assignment6;
 
 import java.util.Scanner;
 
 /**
- * Thông tin giangVien extends CanBo
+ * Thông tin giảng viên extends CanBo
  * 
  * @author SonVD
  *
@@ -16,11 +16,8 @@ public class giangVien extends CanBo {
 	public giangVien() {
 	}
 
-	public giangVien(String khoa, String trinhDo, int soTietDay) {
-		super();
-		this.khoa = khoa;
-		this.trinhDo = trinhDo;
-		this.soTietDay = soTietDay;
+	public giangVien(String hoTen, String loaiCanBo, double phuCap, double heSoLuong) {
+		super(hoTen, loaiCanBo, phuCap, heSoLuong);
 	}
 
 	public String getKhoa() {
