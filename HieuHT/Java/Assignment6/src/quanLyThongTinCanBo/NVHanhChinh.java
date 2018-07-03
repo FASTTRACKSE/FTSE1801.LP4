@@ -7,8 +7,8 @@ public class NVHanhChinh extends CanBo {
 	/**
 	 * Thêm nhân viên hành chính
 	 * 
-	 * @param input
-	 * @param nhanVienHanhChinh
+	 * @ input
+	 * @ nhanVienHanhChinh
 	 */
 	public void addNhanVienHanhChinh(Scanner input, NVHanhChinh nhanVienHanhChinh) {
 		boolean kiemTra;
@@ -19,7 +19,7 @@ public class NVHanhChinh extends CanBo {
 		int soNgayCong = 0;
 		double heSoLuong = 0.0;
 
-		// Kiểm tra tên nhân viên không được rỗng và không quá 50 kí tự
+		// Kiểm tra tên nhân viên không được rỗng và không quá 40 kí tự
 		do {
 			kiemTra = false;
 			System.out.print("Nhập tên nhân viên : ");
@@ -28,7 +28,7 @@ public class NVHanhChinh extends CanBo {
 				if (name.isEmpty()) {
 					throw new Exception("Tên không được để rỗng");
 				} else if (name.length() > 40) {
-					throw new Exception("Tên không được nhiều hơn 50 kí tự");
+					throw new Exception("Tên không được nhiều hơn 40 kí tự");
 				} else {
 					for (int i = 0; i < name.length(); i++) {
 						if (!Character.isLetter(name.charAt(i)) && !Character.isWhitespace(name.charAt(i))) {

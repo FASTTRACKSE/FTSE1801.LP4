@@ -15,7 +15,7 @@ public class QLcanBo {
 	/**
 	 * Thêm giảng viên và danh sách cán bộ
 	 * 
-	 * @param input
+	 * @ input
 	 */
 	public void addGiangVienVaoListCanBo(Scanner input) {
 		GiangVien giangVien = new GiangVien();
@@ -23,11 +23,6 @@ public class QLcanBo {
 		listCanBo.add(giangVien);
 	}
 
-	/**
-	 * Thêm giảng viên và danh sách cán bộ
-	 * 
-	 * @param input
-	 */
 	public void addNhanVienVaoListCanBo(Scanner input) {
 		NVHanhChinh nhanVienHanhChinh = new NVHanhChinh();
 		nhanVienHanhChinh.addNhanVienHanhChinh(input, nhanVienHanhChinh);
@@ -37,7 +32,7 @@ public class QLcanBo {
 	/**
 	 * Hiển thị danh sách giảng viên theo đơn vị
 	 * 
-	 * @param donVi
+	 * @ donVi
 	 */
 	public void showDonVi(String donVi) {
 		try {
@@ -81,7 +76,7 @@ public class QLcanBo {
 	}
 
 	/**
-	 * Sặp xếp giảng viên theo tên a to z, nếu trùng tên sắp xếp theo lương
+	 * Sắp xếp giảng viên theo tên a to z, nếu trùng tên sắp xếp theo lương
 	 */
 	public void sapXepAToZ() {
 		Collections.sort(listCanBo, new sapXep());

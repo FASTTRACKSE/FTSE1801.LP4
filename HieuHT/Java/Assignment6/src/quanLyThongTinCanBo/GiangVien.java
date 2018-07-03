@@ -7,8 +7,8 @@ public class GiangVien extends CanBo {
 	/**
 	 * Thên giảng viên
 	 * 
-	 * @param giangvien
-	 * @param input
+	 * @ giangvien
+	 * @ input
 	 */
 	public void addGiangVien(Scanner input, GiangVien giangVien) {
 		boolean kiemTra;
@@ -19,7 +19,7 @@ public class GiangVien extends CanBo {
 		int soTiet = 0;
 		double heSoLuong = 0.0;
 
-		// Kiểm tra nhập tên giảng viên không được rỗng và không quá 50 kí tự
+		// Kiểm tra nhập tên giảng viên không được rỗng và không quá 40 kí tự
 		do {
 			kiemTra = false;
 			System.out.print("Nhập tên giảng viên : ");
@@ -28,7 +28,7 @@ public class GiangVien extends CanBo {
 				if (name.isEmpty()) {
 					throw new Exception("Tên không được để rỗng");
 				} else if (name.length() > 40) {
-					throw new Exception("Tên không được quá 50 kí tự");
+					throw new Exception("Tên không được quá 40 kí tự");
 				} else {
 					for (int i = 0; i < name.length(); i++) {
 						if (!Character.isLetter(name.charAt(i)) && !Character.isWhitespace(name.charAt(i))) {

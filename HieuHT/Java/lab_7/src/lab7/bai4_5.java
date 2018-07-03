@@ -11,8 +11,11 @@ import java.util.Scanner;
 
 public class bai4_5 implements Serializable {
 
-	private static final long serialVersionUID = 1L;
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private int age;
 	private String address;
@@ -75,7 +78,7 @@ public class bai4_5 implements Serializable {
 				System.out.println("Nhập địa chỉ : ");
 				diaChi = input.nextLine();
 				if (!diaChi.isEmpty()) {
-					System.out.println("Bnạ đã nhập đúng.");
+					System.out.println("Bạn đã nhập đúng.");
 					kiemTra = false;
 				} else {
 					System.out.println("Nhập sai, mời nhập lại.");
@@ -107,8 +110,8 @@ public class bai4_5 implements Serializable {
 		FileInputStream fileInputStream = new FileInputStream("nhanvien.bin");
 		ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
-		// Dọc dữ liệu từ file
-		ArrayList<bai4_5> myList = (ArrayList) objectInputStream.readObject();
+		// Doc do lieu to file
+		ArrayList<bai4_5> myList = (ArrayList<bai4_5>) objectInputStream.readObject();
 		for (Object s : myList) {
 			System.out.println(s.toString());
 		}
