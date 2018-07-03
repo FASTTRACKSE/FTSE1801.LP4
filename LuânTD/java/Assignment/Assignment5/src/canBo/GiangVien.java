@@ -1,13 +1,24 @@
 package canBo;
 
 import java.util.Scanner;
-
+/**
+ * Class Giang Vien
+ * @author Luan
+ *
+ */
 public class GiangVien extends CanBo {
-
+	/**
+	 * tinh luong giang vien
+	 * @return Tra ve luong Giang Vien
+	 */
 	public double luongGiangVien() {
 		return this.getHeSoLuong() * 730 + this.getPhuCap() + this.getSoGioLam() * 30;
 	}
-
+	/**
+	 * them giang vien
+	 * @param sc scanner
+	 * @param giangVien giang vien
+	 */
 	public void nhapGiangVien(Scanner sc, GiangVien giangVien) {
 		sc.nextLine();
 		System.out.println("Nhap ho ten: ");

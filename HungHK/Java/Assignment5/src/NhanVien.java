@@ -1,67 +1,35 @@
 import java.util.Scanner;
 
 public class NhanVien extends CanBo {
-	private String phongBan;
-	private int soNgayCong;
-	private String chucVu;
-
-	public NhanVien() {
-	}
-
-	public NhanVien(String phongBan, int soNgayCong, String chucVu) {
-		super();
-		this.phongBan = phongBan;
-		this.soNgayCong = soNgayCong;
-		this.chucVu = chucVu;
-	}
-
-	public String getPhongBan() {
-		return phongBan;
-	}
-
-	public void setPhongBan(String phongBan) {
-		this.phongBan = phongBan;
-	}
-
-	public int getSoNgayCong() {
-		return soNgayCong;
-	}
-
-	public void setSoNgayCong(int soNgayCong) {
-		this.soNgayCong = soNgayCong;
-	}
-
-	public String getChucVu() {
-		return chucVu;
-	}
-
-	public void setChucVu(String chucVu) {
-		this.chucVu = chucVu;
-	}
 
 	public void nhapNhanVien(Scanner sc) {
-		super.nhapCanBo(sc);
-		sc.nextLine();
-
+		System.out.print("Nhập họ tên: ");
+		String hoTen = sc.next();
+		setHoTen(hoTen);
+		
+		System.out.print("Nhập hệ số lương: ");
+		float heSoLuong = sc.nextFloat();
+		setHeSoLuong(heSoLuong);
+		
 		System.out.print("Nhập phòng ban: ");
-		String phongBan = sc.nextLine();
-		setPhongBan(phongBan);
-
+		String phongBan = sc.next();
+		setDonVi(phongBan);
+		
 		int choose;
 		do {
 			System.out.println("Nhập chức vụ, chọn: \n1. Trưởng phòng \n2. Phó phòng \n3. Nhân viên");
 			choose = sc.nextInt();
 			switch (choose) {
 			case 1:
-				chucVu = "Trưởng phòng";
+				capBac = "Trưởng phòng";
 				this.setPhuCap(2000);
 				break;
 			case 2:
-				chucVu = "Phó phòng";
+				capBac = "Phó phòng";
 				this.setPhuCap(1000);
 				break;
 			case 3:
-				chucVu = "Nhân viên";
+				capBac = "Nhân viên";
 				this.setPhuCap(500);
 				break;
 			default:
@@ -69,23 +37,17 @@ public class NhanVien extends CanBo {
 				break;
 			}
 		} while (choose < 1 || choose > 3);
-		setChucVu(chucVu);
-
+		setCapBac(capBac);
+		
 		System.out.print("Nhập số ngày công: ");
 		int soNgayCong = sc.nextInt();
-		setSoNgayCong(soNgayCong);
-	}
-
-	public double tinhLuong() {
-		double luong = getHeSoLuong() * 730 + getPhuCap() + getSoNgayCong() * 30;
-		return luong;
+		setThoiGianLamViec(soNgayCong);
+		
+		setLuong(getHeSoLuong()*730 + getPhuCap() + getThoiGianLamViec()*30);
 	}
 
 	public void xuatNhanVien() {
-		super.xuatCanBo();
-		System.out.println("Phòng ban: " + getPhongBan());
-		System.out.println("Chức vụ: " + getChucVu());
-		System.out.println("Số ngày công: " + getSoNgayCong());
-		System.out.println("Tổng lương: " + tinhLuong());
+		System.out.printf("%-14s %-14s %-14s %-14s %-14s %-14s\n", "Họ tên", "Hệ số lương", "Phòng ban", "Chức vụ", "Số ngày công", "Tổng lương");
+		System.out.printf("%-14s %-14s %-14s %-14s %-14s %-14s\n\n", getHoTen(), getHeSoLuong(), getDonVi(), getCapBac(), getThoiGianLamViec(), getLuong());
 	}
 }

@@ -8,26 +8,38 @@ import java.util.Scanner;
 import canBo.CanBo;
 import canBo.GiangVien;
 import canBo.NhanVien;
-
+/**
+ * Class quan ly can bo
+ * @author Luan
+ *
+ */
 public class QuanLyCanBo {
 	private ArrayList<CanBo> listCanBo;
 
 	public QuanLyCanBo() {
 		listCanBo = new ArrayList<CanBo>();
 	}
-
+	/**
+	 * Them giang vien
+	 * @param sc scanner
+	 */
 	public void addGiangVien(Scanner sc) {
 		GiangVien giangVien = new GiangVien();
 		giangVien.nhapGiangVien(sc, giangVien);
 		listCanBo.add(giangVien);
 	}
-
+	/**
+	 * Them nhan vien
+	 * @param sc scanner
+	 */
 	public void addNhanVien(Scanner sc) {
 		NhanVien nhanVien = new NhanVien();
 		nhanVien.nhapNhanVien(sc, nhanVien);
 		listCanBo.add(nhanVien);
 	}
-
+	/**
+	 * Hien thi danh sach can bo
+	 */
 	public void showCanBo() {
 		System.out.printf("%3s %20s %25s %20s %10s %20s %10s %15s", "STT", "Ho Ten", "Don Vi", "Trinh Do", "Phu Cap",
 				"So Gio Lam", "He So Luong", "Luong");
@@ -39,7 +51,10 @@ public class QuanLyCanBo {
 		}
 		System.out.println();
 	}
-
+	/**
+	 * Tim can bo them don vi ( Khoa, phong ban)
+	 * @param donVi don vi
+	 */
 	public void findCanBo(String donVi) {
 		try {
 			for (int i = 0; i < listCanBo.size(); i++) {
@@ -64,7 +79,9 @@ public class QuanLyCanBo {
 		}
 
 	}
-
+	/**
+	 * Tinh tong luong truong phai tra cho nhan vien
+	 */
 	public void sumLasary() {
 		double tongLuong = 0;
 		for (int i = 0; i < listCanBo.size(); i++) {
@@ -72,7 +89,9 @@ public class QuanLyCanBo {
 		}
 		System.out.println("Tong luong truong phai tra cho can bo la:  " + tongLuong);
 	}
-
+	/**
+	 * Sap xep can bo theo luong
+	 */
 	public void sortCanBo() {
 		Collections.sort(listCanBo, new Comparator<CanBo>() {
 			public int compare(CanBo o1, CanBo o2) {

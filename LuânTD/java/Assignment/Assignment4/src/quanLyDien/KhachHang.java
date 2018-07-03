@@ -1,5 +1,9 @@
 package quanLyDien;
-
+/**
+ * 
+ * @author Luan
+ *
+ */
 public class KhachHang {
 	
 	private String hoTen;

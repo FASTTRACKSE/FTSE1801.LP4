@@ -2,25 +2,38 @@ package quanLyDien;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-
+/**
+ * Bien Lai thanh toan tien dien
+ * @author Luan
+ *
+ */
 public class BienLai {
 
 	ArrayList<KhachHang> listKH;
-
+	/**
+	 * Mang bien lai
+	 */
 	public BienLai() {
 		listKH = new ArrayList<KhachHang>();
 	}
-
+	/**
+	 * them khach hang
+	 * @param kh Khach hang
+	 */
 	public void addKH(KhachHang kh) {
 		listKH.add(kh);
 	}
-
+	/**
+	 * Tinh tien dien
+	 */
 	public void dien() {
 		for (int i = 0; i < listKH.size(); i++) {
 			listKH.get(i).setTienDien((listKH.get(i).getNewNumber() - listKH.get(i).getOldNumber()) * 750);
 		}
 	}
-
+	/**
+	 * hien thi danh sach khach hang
+	 */
 	public void show() {
 		System.out.printf("%-5s %-20s %-20s %10s %10s %10s %10s", "STT", "Tên", "Địa chỉ", "Mã Công tơ", "Số điện cũ",
 				"Số điện mới", "Số tiền");
@@ -33,7 +46,10 @@ public class BienLai {
 		System.out.println();
 		System.out.println();
 	}
-
+	/**
+	 * Menu
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		int luaChon, tt;
 

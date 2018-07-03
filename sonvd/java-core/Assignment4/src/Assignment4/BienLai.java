@@ -2,6 +2,12 @@ package Assignment4;
 
 import java.util.Scanner;
 
+/**
+ * Thông tin biên lai
+ * 
+ * @author SonVD
+ *
+ */
 public class BienLai {
 	private KhachHang khachHang;
 	private int chiSoCu;
@@ -39,7 +45,10 @@ public class BienLai {
 	public void setSoTienPhaiTra(double soTienPhaiTra) {
 		this.soTienPhaiTra = soTienPhaiTra;
 	}
-	
+
+	/**
+	 * Input bienLai
+	 */
 	public void nhapBienLai() {
 		Scanner input = new Scanner(System.in);
 		khachHang = new KhachHang();
@@ -48,12 +57,16 @@ public class BienLai {
 		chiSoCu = input.nextInt();
 		System.out.println("Nhập chỉ số mới: ");
 		chiSoMoi = input.nextInt();
-		soTienPhaiTra = (chiSoMoi - chiSoCu)*750;
+		soTienPhaiTra = (chiSoMoi - chiSoCu) * 750;
 		input.close();
 	}
-	
+
+	/**
+	 * Output bienLai
+	 */
 	public void hienThiBienLai() {
 		khachHang.hienthiKhachHang();
-		System.out.println("Chỉ số củ: "+chiSoCu+"\nChỉ số mới: "+chiSoMoi+"\nSố tiền phải trả: "+soTienPhaiTra);
+		System.out.println(
+				"Chỉ số củ: " + chiSoCu + "\nChỉ số mới: " + chiSoMoi + "\nSố tiền phải trả: " + soTienPhaiTra);
 	}
 }
