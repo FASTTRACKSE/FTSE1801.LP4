@@ -1,4 +1,4 @@
-package lap7;
+  package lap7;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

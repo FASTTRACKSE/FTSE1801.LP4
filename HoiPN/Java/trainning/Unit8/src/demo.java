@@ -19,6 +19,7 @@ public class demo {
 		String[] a2 = c.split(" Ngoc ");
 		for(String x:a1) {
 			System.out.println(x);
+			
 		}
 		
 		for(String x:a2) {
