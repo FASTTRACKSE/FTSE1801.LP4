@@ -1,23 +1,22 @@
 import java.util.Scanner;
 /**
- * Assignment 1 
+ * Assignment 1 Hiển thị nội dung.
  * @author Phạm Ngọc Hợi
  *
  */
 public class bai1 {
 	public static void main(String[] args) {	
-		int a;
 		Scanner sc= new Scanner(System.in);
-		System.out.println("Nhập a: ");
-		a = sc.nextInt();
-		if(a==0) {
+		System.out.println("Nhập số: ");
+		int so = sc.nextInt();
+		if(so==0) {
 			System.out.println(
 					"____@@@___@@@@@___@@___@@___@@@@@ \r\n" + 
 					"____@@@__@@___@@___@@__@@___@@ \r\n" + 
 					"____@@@__@@___@@____@@_@@___@@@@ \r\n" + 
 					"____@@@__@@___@@_____@@@____@@ \r\n" + 
 					"____@@@@@_@@@@________@@____@@@@@\r\n");
-		}else if(a%2==0){
+		}else if(so%2==0){
 			System.out.println(
 					"________________d88888b_____________d888b\r\n" + 
 							"_______________d88888888b__________d888888b\r\n" + 

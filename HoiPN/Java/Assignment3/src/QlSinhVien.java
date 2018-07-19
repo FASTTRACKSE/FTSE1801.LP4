@@ -17,7 +17,7 @@ public class QlSinhVien {
 	}
 
 	public void menu() {
-		int tt, so;
+		int tiepTuc, luaChon;
 		QlSinhVien quanLy = new QlSinhVien();
 		while (true) {
 			System.out.println("/****************************************/");
@@ -30,9 +30,9 @@ public class QlSinhVien {
 			System.out.println("/****************************************/");
 			System.out.println("Lựa chọn của bạn: ");
 			Scanner sc = new Scanner(System.in);
-			so = sc.nextInt();
+			luaChon = sc.nextInt();
 			System.out.println();
-			switch (so) {
+			switch (luaChon) {
 			case 1:
 				do {
 					System.out.println("Nhập id: ");
@@ -61,9 +61,9 @@ public class QlSinhVien {
 					
 					System.out.println();
 					System.out.println("Bạn muốn tiếp tục 0 - không | 1 - có");
-					tt = sc.nextInt();
+					tiepTuc = sc.nextInt();
 					System.out.println();
-				} while (tt == 1);
+				} while (tiepTuc == 1);
 				break;
 			case 2:
 				System.out.println("Nhập id cần sửa: ");
@@ -77,9 +77,14 @@ public class QlSinhVien {
 				break;
 			case 4:
 				quanLy.sortSV();
+				break;
 			case 5:
-				
 				quanLy.showSV();
+				break;
+			case 0:
+				System.out.println("Kết thúc chương trình!!!");
+				sc.close();
+				System.exit(0);
 			}
 		}
 	}
