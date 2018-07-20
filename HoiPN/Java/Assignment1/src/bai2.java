@@ -1,5 +1,5 @@
 /**
- * Assignment 1
+ * Assignment 1 - Bài 2 các toán phép tính toán.
  * @author Phạm Ngọc Hợi
  *
  */
