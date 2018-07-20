@@ -5,11 +5,7 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
-<<<<<<< HEAD
-import java.awt.TextArea;
-=======
 import java.awt.GridLayout;
->>>>>>> 34084e71b239d8d55247469886d33b1d6a6e8490
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -20,10 +16,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTree;
-<<<<<<< HEAD
-import javax.swing.border.Border;
-=======
->>>>>>> 34084e71b239d8d55247469886d33b1d6a6e8490
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
