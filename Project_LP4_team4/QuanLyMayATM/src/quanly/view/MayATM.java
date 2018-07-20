@@ -25,7 +25,7 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-public class MayATM extends JFrame implements ActionListener {
+public class MayATM extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
@@ -36,6 +36,7 @@ public class MayATM extends JFrame implements ActionListener {
 	Border border;
 	TitledBorder titledBorder;
 	JButton btDangNhap;
+	
 
 	// public void mayATM() {
 	// Container con = getContentPane();
@@ -74,14 +75,17 @@ public class MayATM extends JFrame implements ActionListener {
 	// }
 	JPanel pnAllCenter, pnMenu, pnSouth, pnButton;
 	JPanel pnThongTin, pnRutTien, pnThoat;
-	JPanel pnLabel1, pnTextField1;
+	JPanel pnLabel1, pnLabel2, pnTextField1, pnTextField2, pnLabel3, pnButton2;
 	JLabel logoname;
 	JTable table;
-	JButton btThongTin, btRutTien, btThoat;
+	JButton btThongTin, btRutTien, btThoat, btRut;
 	JLabel lbMaKH, lbTen, lbDiaChi, lbQuan, lbPhuong, lbSoDT, lbEmail, lbSoThe, lbSoTK, lbSoTien;
+	JLabel lbRutTien;
+	JTextField txtRutTien;
 	JTextField maKH, ten, diaChi, quan, phuong, soDT, email, soThe, soTK, soTien;
 	CardLayout card;
 	Container con;
+	JPanel cardLayout;
 
 	public void thongTinKH() {
 
@@ -131,14 +135,9 @@ public class MayATM extends JFrame implements ActionListener {
 		lbDiaChi = new JLabel("Địa chỉ nhà");
 		lbQuan = new JLabel("Quận");
 		lbPhuong = new JLabel("Phường");
-		lbSoDT = new JLabel("Số điện thoại");
-		lbEmail = new JLabel("Email");
-		lbSoThe = new JLabel("Số thẻ");
-		lbSoTK = new JLabel("Số tài khoản ngân hàng");
-		lbSoTien = new JLabel("Số tiền trong tài khoản");
-		pnLabel1.add(lbMaKH);pnLabel1.add(lbTen);pnLabel1.add(lbDiaChi);pnLabel1.add(lbQuan);
-		pnLabel1.add(lbPhuong);pnLabel1.add(lbSoDT);pnLabel1.add(lbEmail);pnLabel1.add(lbSoThe);
-		pnLabel1.add(lbSoTK);pnLabel1.add(lbSoTien);
+		
+		pnLabel1.add(lbMaKH);pnLabel1.add(lbTen);pnLabel1.add(lbDiaChi);
+		pnLabel1.add(lbQuan);pnLabel1.add(lbPhuong);
 		pnThongTin.add(pnLabel1);
 		
 		pnTextField1 = new JPanel();
@@ -148,15 +147,42 @@ public class MayATM extends JFrame implements ActionListener {
 		diaChi = new JTextField(10);
 		quan = new JTextField(10);
 		phuong = new JTextField(10);
+		pnTextField1.add(maKH);pnTextField1.add(ten);pnTextField1.add(diaChi);
+		pnTextField1.add(quan);pnTextField1.add(phuong);
+		pnThongTin.add(pnTextField1);
+		
+		pnLabel2 = new JPanel();
+		pnLabel2.setLayout(new BoxLayout(pnLabel2, BoxLayout.Y_AXIS));
+		lbSoDT = new JLabel("Số điện thoại");
+		lbEmail = new JLabel("Email");
+		lbSoThe = new JLabel("Số thẻ");
+		lbSoTK = new JLabel("Số tài khoản ngân hàng");
+		lbSoTien = new JLabel("Số tiền trong tài khoản");
+		pnLabel2.add(lbSoDT);pnLabel2.add(lbEmail);pnLabel2.add(lbSoThe);
+		pnLabel2.add(lbSoTK);pnLabel2.add(lbSoTien);
+		pnThongTin.add(pnLabel2);
+		
+		pnTextField2 = new JPanel();
+		pnTextField2.setLayout(new BoxLayout(pnTextField2, BoxLayout.Y_AXIS));
 		soDT = new JTextField(10);
 		email = new JTextField(10);
 		soThe = new JTextField(10);
 		soTK = new JTextField(10);
 		soTien = new JTextField(10);
-		pnTextField1.add(maKH);pnTextField1.add(ten);pnTextField1.add(diaChi);pnTextField1.add(quan);
-		pnTextField1.add(phuong);pnTextField1.add(soDT);pnTextField1.add(email);pnTextField1.add(soThe);
-		pnTextField1.add(soTK);pnTextField1.add(soTien);
-		pnThongTin.add(pnTextField1);
+		pnTextField2.add(soDT);pnTextField2.add(email);pnTextField2.add(soThe);
+		pnTextField2.add(soTK);pnTextField2.add(soTien);
+		pnThongTin.add(pnTextField2);
+		
+		pnRutTien = new JPanel();
+		pnLabel3 = new JPanel();
+		lbRutTien = new JLabel("Nhập số tiền cần rút");
+		txtRutTien = new JTextField(10);
+		pnLabel3.add(lbRutTien);pnLabel3.add(txtRutTien);
+		
+		pnButton2 = new JPanel();
+		btRut = new JButton("Rút tiền");
+		pnButton2.add(btRut);
+		pnRutTien.add(pnLabel3);pnRutTien.add(pnButton2);
 		
 		
 		
@@ -165,14 +191,24 @@ public class MayATM extends JFrame implements ActionListener {
 		
 		
 		
-		pnAllCenter.add(pnThongTin);
+		card = new CardLayout();
+		cardLayout = new JPanel();
+		pnAllCenter.add(cardLayout);
+		cardLayout.setLayout(card);
+		cardLayout.add(pnThongTin, "thongTin");
+		cardLayout.add(pnRutTien, "rutTien");
 		
-//		card = new CardLayout();
-//		pnAllCenter.setLayout(card);
-
+		
+		
+		
 		con.add(pnSouth, "West");
 		con.add(pane, "Center");
-
+		getAction();
+	}
+	public void getAction() {
+		btThongTin.addActionListener(actionListener);
+		btRutTien.addActionListener(actionListener);
+		btThoat.addActionListener(actionListener);
 	}
 
 	public void display() {
@@ -187,12 +223,16 @@ public class MayATM extends JFrame implements ActionListener {
 		atm.thongTinKH();
 		atm.display();
 	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btThongTin) {
-
+	
+	ActionListener actionListener = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource() == btThongTin) {
+				card.show(cardLayout, "thongTin");
+			} else if(e.getSource() == btRutTien) {
+				card.show(cardLayout, "rutTien");
+			}
 		}
-
-	}
+	};
 }
