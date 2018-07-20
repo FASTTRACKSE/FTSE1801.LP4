@@ -240,4 +240,6 @@ public class MayAtmDAO {
 		DatabaseUntil.closeConnection(conn);
 		return myList;
 	}
+	
+
 }
