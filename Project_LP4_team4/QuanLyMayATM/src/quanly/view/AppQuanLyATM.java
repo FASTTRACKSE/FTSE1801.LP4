@@ -129,10 +129,10 @@ public class AppQuanLyATM extends JFrame {
 		// Quản lý giao dịch
 		pnQuanLyGD = new JPanel();
 		pnQuanLyGD.setLayout(new BoxLayout(pnQuanLyGD, BoxLayout.Y_AXIS));
-		 title = new JLabel("Máy ATM");
-		 title.setFont(new Font("Times New Roman", Font.BOLD, 30));
-		 title.setForeground(Color.RED);
-		 pnQuanLyGD.add(title);
+		title = new JLabel("Máy ATM");
+		title.setFont(new Font("Times New Roman", Font.BOLD, 30));
+		title.setForeground(Color.RED);
+		pnQuanLyGD.add(title);
 		pnMayATM = new JPanel();
 		pnMayATM.setLayout(new GridLayout(2, 5));
 		btMay1 = new JButton("May001");

@@ -12,6 +12,24 @@ public class KhachHangDAO {
 	Connection conn;
 
 	/**
+	 * Kiem tra trung số thẻ ATM
+	 * 
+	 * @param soTheATM
+	 * @return
+	 */
+	public boolean kiemTraTrungSoTheATM(String soTheATM, String soTK) {
+		boolean check = false;
+
+		ArrayList<KhachHang> myList = new ArrayList<>();
+		for (int i = 0; i < myList.size(); i++) {
+			if (!myList.get(i).getSoTheATM().equals(soTheATM) && !myList.get(i).getSoTK().equals(soTK)) {
+				check = true;
+			}
+		}
+		return check;
+	}
+
+	/**
 	 * Thêm khách hàng
 	 * 
 	 * @param khachHang
@@ -20,35 +38,37 @@ public class KhachHangDAO {
 	public boolean addKhachHang(KhachHang khachHang) {
 		boolean kiemTra = false;
 		String sql = "INSERT INTO khach_hang VALUES (?,?,?,?,?,?,?,?,?,?)";
-		conn = DatabaseUntil.getConnect();
-		PreparedStatement statement = null;
-		try {
-			statement = conn.prepareStatement(sql);
-			statement.setString(1, khachHang.getMaKH());
-			statement.setString(2, khachHang.getTenKH());
-			statement.setString(3, khachHang.getDiaChi());
-			statement.setString(4, khachHang.getPhuong());
-			statement.setString(5, khachHang.getQuan());
-			statement.setString(6, khachHang.getSoDT());
-			statement.setString(7, khachHang.getEmail());
-			statement.setString(8, khachHang.getSoTheATM());
-			statement.setString(9, khachHang.getSoTK());
-			statement.setString(10, khachHang.getSoTienTrongTK());
-			if (statement.executeUpdate() > 0) {
-				kiemTra = true;
-			}
-		} catch (SQLException e) {
-			System.out.println("loi");
-		} finally {
-			if (statement != null) {
-				try {
-					statement.close();
-				} catch (SQLException e) {
-					System.out.println("Đóng lỗi");
+		if (!kiemTraTrungSoTheATM(khachHang.getSoTheATM(), khachHang.getSoTK())) {
+			conn = DatabaseUntil.getConnect();
+			PreparedStatement statement = null;
+			try {
+				statement = conn.prepareStatement(sql);
+				statement.setString(1, khachHang.getMaKH());
+				statement.setString(2, khachHang.getTenKH());
+				statement.setString(3, khachHang.getDiaChi());
+				statement.setString(4, khachHang.getPhuong());
+				statement.setString(5, khachHang.getQuan());
+				statement.setString(6, khachHang.getSoDT());
+				statement.setString(7, khachHang.getEmail());
+				statement.setString(8, khachHang.getSoTheATM());
+				statement.setString(9, khachHang.getSoTK());
+				statement.setString(10, khachHang.getSoTienTrongTK());
+				if (statement.executeUpdate() > 0) {
+					kiemTra = true;
+				}
+			} catch (SQLException e) {
+				System.out.println("loi");
+			} finally {
+				if (statement != null) {
+					try {
+						statement.close();
+					} catch (SQLException e) {
+						System.out.println("Đóng lỗi");
+					}
 				}
 			}
+			DatabaseUntil.closeConnection(conn);
 		}
-		DatabaseUntil.closeConnection(conn);
 		return kiemTra;
 	}
 
@@ -60,7 +80,7 @@ public class KhachHangDAO {
 	 */
 	public boolean updateKhachHang(KhachHang khachHang) {
 		boolean kiemTra = false;
-		String sql = "UPDATE khach_hang SET tenKhachHang = ?, diaChi = ?, phuong = ?, quan = ?, soDienThoai = ?, email = ?, soTheATM = ?, soTK = ? WHERE maKhachHang = ?";
+		String sql = "UPDATE khach_hang SET tenKhachHang = ?, diaChi = ?, phuong = ?, quan = ?, soDienThoai = ?, email = ?, soTienTrongTK = ? WHERE maKhachHang = ?";
 		conn = DatabaseUntil.getConnect();
 		PreparedStatement statement = null;
 		try {
@@ -71,9 +91,8 @@ public class KhachHangDAO {
 			statement.setString(4, khachHang.getQuan());
 			statement.setString(5, khachHang.getSoDT());
 			statement.setString(6, khachHang.getEmail());
-			statement.setString(7, khachHang.getSoTheATM());
-			statement.setString(8, khachHang.getSoTK());
-			statement.setString(9, khachHang.getMaKH());
+			statement.setString(7, khachHang.getSoTienTrongTK());
+			statement.setString(8, khachHang.getMaKH());
 			if (statement.executeUpdate() > 0) {
 				kiemTra = true;
 			}
@@ -95,17 +114,17 @@ public class KhachHangDAO {
 	/**
 	 * Xóa khách hàng theo tên
 	 * 
-	 * @param tenKH
+	 * @param maKH
 	 * @return
 	 */
-	public boolean deleteKhachHang(String tenKH) {
+	public boolean deleteKhachHang(String maKH) {
 		boolean kiemTra = false;
 		String sql = "DELETE FROM khach_hang WHERE maKhachHang = ?";
 		conn = DatabaseUntil.getConnect();
 		PreparedStatement statement = null;
 		try {
 			statement = conn.prepareStatement(sql);
-			statement.setString(1, tenKH);
+			statement.setString(1, maKH);
 			if (statement.executeUpdate() > 0) {
 				kiemTra = true;
 			}
@@ -294,4 +313,72 @@ public class KhachHangDAO {
 		DatabaseUntil.closeConnection(conn);
 		return kiemTra;
 	}
+
+	/**
+	 * lấy ra all danh sách quận
+	 * 
+	 * @return
+	 */
+	public ArrayList<String> showAllDanhSachQuan() {
+		ArrayList<String> myList = new ArrayList<>();
+		PreparedStatement statement = null;
+		conn = DatabaseUntil.getConnect();
+		String sql = "SELECT * FROM danh_sach_quan";
+		try {
+			statement = conn.prepareStatement(sql);
+			ResultSet resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				myList.add(resultSet.getString("tenQuan"));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		DatabaseUntil.closeConnection(conn);
+		return myList;
+	}
+
+	/**
+	 * lấy ra all danh sách phường theo quận
+	 * 
+	 * @return
+	 */
+	public ArrayList<String> showDanhSachPhuong(String tenQuan) {
+		ArrayList<String> myList = new ArrayList<>();
+		PreparedStatement statement = null;
+		conn = DatabaseUntil.getConnect();
+		String sql = "SELECT * FROM danh_sach_phuong LEFT JOIN danh_sach_quan ON danh_sach_phuong.maQuan = danh_sach_quan.maQuan WHERE danh_sach_quan.tenQuan = ?";
+		try {
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, tenQuan);
+			ResultSet resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				myList.add(resultSet.getString("tenPhuong"));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		DatabaseUntil.closeConnection(conn);
+		return myList;
+	}
+
 }
