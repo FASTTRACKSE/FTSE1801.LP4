@@ -73,7 +73,7 @@ public class MayATM extends JFrame {
 	// con.add(pnCenter, "Center");
 	//
 	// }
-	JPanel pnAllCenter, pnMenu, pnSouth, pnButton;
+	JPanel pnAllCenter, pnMenu, pnSouth, pnButton, pnThongtinGD;
 	JPanel pnThongTin, pnRutTien, pnThoat;
 	JPanel pnLabel1, pnLabel2, pnTextField1, pnTextField2, pnLabel3, pnButton2;
 	JLabel logoname;
@@ -184,8 +184,8 @@ public class MayATM extends JFrame {
 		pnButton2.add(btRut);
 		pnRutTien.add(pnLabel3);pnRutTien.add(pnButton2);
 		
-//		pnAllCenter = new JPanel();
-//		pnAllCenter.setBorder(BorderFactory.createTitledBorder("ProGram"));
+//		pnThongtinGD = new JPanel();
+//		pnThongtinGD.setBorder(BorderFactory.createTitledBorder("ProGram"));
 //		JScrollPane pane2 = new JScrollPane(pnAllCenter);
 		
 		

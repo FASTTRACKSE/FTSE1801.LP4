@@ -34,7 +34,7 @@ public class QuanLyKhachHang extends JFrame {
 	JLabel title, maKH, tenKH, diaChi, phuong, quan, dienThoai, email, soTheATM, soTK, soTien;
 	JTextField txtMaKH, txtTenKH, txtDiaChi, txtDienThoai, txtEmail, txtSoTheATM, txtSoTK, txtSoTien;
 	JComboBox<String> boxPhuong, boxQuan;
-	JButton them, sua, xoa;
+	JButton them, sua, xoa, tim;
 	DefaultTableModel tableModel;
 	JTable table;
 	Border border;
@@ -182,12 +182,14 @@ public class QuanLyKhachHang extends JFrame {
 		pnbutton = new JPanel();
 		them = new JButton("Thêm thông tin khách hàng");
 		sua = new JButton("Sửa thông tin khách hàng");
+		tim = new JButton("Tìm kiếm");
 		xoa = new JButton("Xóa thông tin khách hàng");
 		them.addActionListener(actionListener);
 		sua.addActionListener(actionListener);
 		xoa.addActionListener(actionListener);
 		pnbutton.add(them);
 		pnbutton.add(sua);
+		pnbutton.add(tim);
 		pnbutton.add(xoa);
 		pnQuanLyKH.add(pnbutton);
 
