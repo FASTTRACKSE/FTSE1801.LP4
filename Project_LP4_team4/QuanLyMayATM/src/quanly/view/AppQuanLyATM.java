@@ -8,6 +8,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -39,9 +41,9 @@ public class AppQuanLyATM extends JFrame {
 	DefaultMutableTreeNode file, file2;
 	DefaultMutableTreeNode quanLyKH, quanLyATM, quanLyGD;
 	DefaultMutableTreeNode baoCaoKH, baoCaoTinhTrangATM, baoCaoRutTienKH, BaoCaoRutTienATM;
+	MayATM mayATM;
 
 	TreeSelectionListener treeSelectionListener = new TreeSelectionListener() {
-
 		@Override
 		public void valueChanged(TreeSelectionEvent e) {
 			JTree tree = (JTree) e.getSource();
@@ -52,10 +54,24 @@ public class AppQuanLyATM extends JFrame {
 				card.show(pnAllCenter, "quanLyATM");
 			} else if (treeNode.toString().equals("Quản lý giao dịch")) {
 				card.show(pnAllCenter, "quanLyGD");
+			} else if (treeNode.toString().equals("Báo cáo khách hàng")) {
+				card.show(pnAllCenter, "baoCaoKH");
+			} else if (treeNode.toString().equals("Báo cáo tình hình rút tiền của khách hàng")) {
+				card.show(pnAllCenter, "baoCaoRutTien");
+			} else if (treeNode.toString().equals("Báo cáo tình trạng máy ATM")) {
+				card.show(pnAllCenter, "tinhTrangATM");
 			} else if (treeNode.toString().equals("Chương trình quản lý máy ATM của ngân hàng")) {
 				card.show(pnAllCenter, "Đây là trang chủ");
 			}
 
+		}
+	};
+
+	ActionListener actionListener = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			mayATM = new MayATM();
+			mayATM.mayATM();
 		}
 	};
 
@@ -81,9 +97,7 @@ public class AppQuanLyATM extends JFrame {
 		pnTitle.add(logoname);
 		con.add(pnTitle, "North");
 
-		/**
-		 * Phan Menu
-		 */
+		// Phần Menu
 		root = new DefaultMutableTreeNode("Chương trình quản lý máy ATM của ngân hàng");
 		file = new DefaultMutableTreeNode(" Quản Lý ");
 		quanLyKH = new DefaultMutableTreeNode("Quản lý khách hàng");
@@ -97,7 +111,7 @@ public class AppQuanLyATM extends JFrame {
 		file2 = new DefaultMutableTreeNode(" Báo cáo ");
 		baoCaoKH = new DefaultMutableTreeNode("Báo cáo khách hàng");
 		baoCaoRutTienKH = new DefaultMutableTreeNode("Báo cáo tình hình rút tiền của khách hàng");
-		baoCaoTinhTrangATM = new DefaultMutableTreeNode("Báo cáo máy ATM");
+		baoCaoTinhTrangATM = new DefaultMutableTreeNode("Báo cáo tình trạng máy ATM");
 		BaoCaoRutTienATM = new DefaultMutableTreeNode("Báo cáo tình hình rút tiền theo máy ATM");
 		file2.add(baoCaoKH);
 		file2.add(baoCaoRutTienKH);
@@ -148,7 +162,18 @@ public class AppQuanLyATM extends JFrame {
 		btMay8 = new JButton("May008");
 		btMay9 = new JButton("May009");
 		btMay10 = new JButton("May010");
-		
+
+		btMay1.addActionListener(actionListener);
+		btMay2.addActionListener(actionListener);
+		btMay3.addActionListener(actionListener);
+		btMay4.addActionListener(actionListener);
+		btMay5.addActionListener(actionListener);
+		btMay6.addActionListener(actionListener);
+		btMay7.addActionListener(actionListener);
+		btMay8.addActionListener(actionListener);
+		btMay9.addActionListener(actionListener);
+		btMay10.addActionListener(actionListener);
+
 		addItem(pnMayATM, btMay1, 0, 0, 1, 1, GridBagConstraints.CENTER);
 		addItem(pnMayATM, btMay2, 0, 1, 1, 1, GridBagConstraints.CENTER);
 		addItem(pnMayATM, btMay3, 0, 2, 1, 1, GridBagConstraints.CENTER);
@@ -159,16 +184,38 @@ public class AppQuanLyATM extends JFrame {
 		addItem(pnMayATM, btMay8, 1, 2, 1, 1, GridBagConstraints.CENTER);
 		addItem(pnMayATM, btMay9, 1, 3, 1, 1, GridBagConstraints.CENTER);
 		addItem(pnMayATM, btMay10, 1, 4, 1, 1, GridBagConstraints.CENTER);
-		
+
 		pnQuanLyGD.add(pnMayATM);
 		pnAllCenter.add(pnQuanLyGD, "quanLyGD");
 		
-
+		// Báo cáo khách hàng
+		BaoCaoKhachHang khachHang = new BaoCaoKhachHang();
+		pnAllCenter.add(khachHang.BaoCaoKH(), "baoCaoKH");
+		
+		// Báo cáo tình hình rút tiền của khách hàng
+		BaoCaoTinhHinhRutTien rutTien = new BaoCaoTinhHinhRutTien();
+		pnAllCenter.add(rutTien.tinhHinhRutTien(), "baoCaoRutTien");
+		
+		// Báo cáo tình trạng máy ATM
+		BaoCaoTinhTrangATM tinhTrangATM = new BaoCaoTinhTrangATM();
+		pnAllCenter.add(tinhTrangATM.tinhTrangMayATM(), "tinhTrangATM");
+		
 		tree.addTreeSelectionListener(treeSelectionListener);
 		con.add(pnSouth, "South");
 		con.add(pane, "Center");
 	}
-	
+
+	/**
+	 * Sắp xếp button
+	 * 
+	 * @param p
+	 * @param c
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 * @param align
+	 */
 	public void addItem(JPanel p, JComponent c, int x, int y, int width, int height, int align) {
 		GridBagConstraints gc = new GridBagConstraints();
 		gc.gridx = x;
@@ -183,6 +230,9 @@ public class AppQuanLyATM extends JFrame {
 		p.add(c, gc);
 	}
 
+	/**
+	 * Tạo 1 cửa sổ
+	 */
 	public void display() {
 		setSize(1200, 750);
 		setVisible(true);

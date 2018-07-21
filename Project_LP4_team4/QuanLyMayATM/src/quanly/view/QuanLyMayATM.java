@@ -50,8 +50,8 @@ public class QuanLyMayATM extends JFrame {
 		pnNhap.setLayout(new GridLayout(1, 3));
 		pnLabel1 = new JPanel();
 		pnLabel1.setLayout(new GridBagLayout());
-		maMayATM = new JLabel("Mã máy ATM");
-		viTri = new JLabel("Vị trí đặt máy");
+		maMayATM = new JLabel("Mã máy ATM:");
+		viTri = new JLabel("Vị trí đặt máy:");
 		
 		txtMaMayATM = new JTextField(10);
 		txtViTri = new JTextField(10);
@@ -67,8 +67,8 @@ public class QuanLyMayATM extends JFrame {
 				
 		pnLabel2 = new JPanel();
 		pnLabel2.setLayout(new GridBagLayout());
-		quan = new JLabel("Quận");
-		phuong = new JLabel("Phường");
+		quan = new JLabel("Quận:");
+		phuong = new JLabel("Phường:");
 		String strQuan[] = {" "};
 		boxQuan = new JComboBox<>(strQuan);
 		String strPhuong[] = {" "};
@@ -84,7 +84,7 @@ public class QuanLyMayATM extends JFrame {
 		
 		
 		pnLabel3 = new JPanel();
-		tongTien = new JLabel("Tổng tiền trong máy");
+		tongTien = new JLabel("Tổng tiền trong máy:");
 		txtTongTien = new JTextField(10);
 		addItem(pnLabel3, tongTien, 0, 0, 1, 1, GridBagConstraints.EAST);
 		addItem(pnLabel3, txtTongTien, 1, 0, 2, 1, GridBagConstraints.WEST);

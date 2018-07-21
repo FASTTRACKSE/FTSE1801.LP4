@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -15,81 +16,82 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-public class BaoCaoKhachHang extends JFrame {
+public class BaoCaoTinhHinhRutTien extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	
-	JPanel pnBaoCaoKH, chon;
+
+	JPanel pnBaoCaoTH, chon, pnTongTienRut;
 	JPanel pnLabel, pnBox, pnTim;
-	JLabel title, phuong, quan;
-	JComboBox<?> boxPhuong, boxQuan;
+	JLabel title, thoiGian, tongTienRut, maKH;
+	JTextField txtMaKH, txtTongTienRut;
+	JComboBox<?> boxThoiGian;
 	JButton tim;
 	DefaultTableModel tableModel;
 	JTable table;
 	Border border;
 	TitledBorder  titledBorder;
 	
-	
-	public JPanel BaoCaoKH() {
-		pnBaoCaoKH = new JPanel();
-		pnBaoCaoKH.setLayout(new BoxLayout(pnBaoCaoKH, BoxLayout.Y_AXIS));
+	public JPanel tinhHinhRutTien() {
+		pnBaoCaoTH = new JPanel();
+		pnBaoCaoTH.setLayout(new BoxLayout(pnBaoCaoTH, BoxLayout.Y_AXIS));
 		// Tiêu đề
 		title = new JLabel("Báo cáo khách hàng");
 		title.setFont(new Font("Times New Roman", Font.BOLD, 30));
 		title.setForeground(Color.RED);
-		pnBaoCaoKH.add(title);
+		pnBaoCaoTH.add(title);
 		
 		// Chọn tiêu chí
 		chon = new JPanel();
 		chon.setLayout(new GridBagLayout());
 		pnLabel = new JPanel();
-		phuong = new JLabel("Chọn phường:");
-		String strPhuong[] = {" "};
-		boxPhuong = new JComboBox<>(strPhuong);
 		
-		quan = new JLabel("Chọn quận:");
-		String strQuan[] = {" "};
-		boxQuan = new JComboBox<>(strQuan);
+		maKH = new JLabel("Mã khách hàng:");
+		txtMaKH = new JTextField(10);
 		
-		addItem(pnLabel, quan, 0, 0, 1, 1, GridBagConstraints.EAST);
-		addItem(pnLabel, boxQuan, 1, 0, 2, 1, GridBagConstraints.WEST);
-		addItem(pnLabel, phuong, 0, 1, 1, 1, GridBagConstraints.EAST);
-		addItem(pnLabel, boxPhuong, 1, 1, 2, 1, GridBagConstraints.WEST);
+		thoiGian = new JLabel("Chọn thời gian:");
+		String strThoiGian[] = {" "};
+		boxThoiGian = new JComboBox<>(strThoiGian);
+		
+		
+		addItem(pnLabel, maKH, 0, 0, 1, 1, GridBagConstraints.EAST);
+		addItem(pnLabel, txtMaKH, 1, 0, 2, 1, GridBagConstraints.WEST);
+		addItem(pnLabel, thoiGian, 0, 1, 1, 1, GridBagConstraints.EAST);
+		addItem(pnLabel, boxThoiGian, 1, 1, 2, 1, GridBagConstraints.WEST);
 		chon.add(pnLabel);
 		
 		pnTim = new JPanel();
 		tim = new JButton("Tìm danh sách");
 		pnTim.add(tim);
 		chon.add(pnTim);
-		pnBaoCaoKH.add(chon);
+		pnBaoCaoTH.add(chon);
 		
 		// Bảng báo cáo
 		border = BorderFactory.createLineBorder(Color.BLUE, 3, true);
-		titledBorder = new TitledBorder(border,"Danh sách thông tin khách hàng");
+		titledBorder = new TitledBorder(border,"Danh sách tình hình rút tiền rút tiền của khách hàng");
 		tableModel = new DefaultTableModel();
-		tableModel.addColumn("Mã Khách hàng");
-		tableModel.addColumn("Họ tên khách hàng");
-		tableModel.addColumn("Địa chỉ nhà");
-		tableModel.addColumn("Phường");
-		tableModel.addColumn("Quận");
-		tableModel.addColumn("Số điện thoại");
-		tableModel.addColumn("Email");
-		tableModel.addColumn("Số thẻ ATM");
-		tableModel.addColumn("Số tài khoản");
-		tableModel.addColumn("Số tiền trong tài khoản");
-		tableModel.addColumn("Số tiền đã rút");
+		tableModel.addColumn("Máy ATM");
+		tableModel.addColumn("Thời gian giao dịch");
+		tableModel.addColumn("Số tiền giao dịch");
 		
 		table = new JTable(tableModel);
 		JScrollPane jScrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		jScrollPane.setBorder(titledBorder);
-		pnBaoCaoKH.add(jScrollPane);
-		return pnBaoCaoKH;
+		pnBaoCaoTH.add(jScrollPane);
 		
+		pnTongTienRut = new JPanel();
+		tongTienRut = new JLabel("Tổng số tiền đã rút:");
+		txtTongTienRut = new JTextField(10);
+		pnTongTienRut.add(tongTienRut);pnTongTienRut.add(txtTongTienRut);
+		pnBaoCaoTH.add(pnTongTienRut);
+		
+		return pnBaoCaoTH;
+				
 	}
 	
 	/**
