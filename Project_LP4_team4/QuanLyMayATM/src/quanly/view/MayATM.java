@@ -184,7 +184,9 @@ public class MayATM extends JFrame {
 		pnButton2.add(btRut);
 		pnRutTien.add(pnLabel3);pnRutTien.add(pnButton2);
 		
-		
+//		pnAllCenter = new JPanel();
+//		pnAllCenter.setBorder(BorderFactory.createTitledBorder("ProGram"));
+//		JScrollPane pane2 = new JScrollPane(pnAllCenter);
 		
 		
 		
