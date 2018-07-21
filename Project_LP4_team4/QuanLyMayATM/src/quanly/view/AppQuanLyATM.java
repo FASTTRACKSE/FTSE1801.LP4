@@ -5,11 +5,14 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
-import java.awt.GridLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -134,7 +137,7 @@ public class AppQuanLyATM extends JFrame {
 		title.setForeground(Color.RED);
 		pnQuanLyGD.add(title);
 		pnMayATM = new JPanel();
-		pnMayATM.setLayout(new GridLayout(2, 5));
+		pnMayATM.setLayout(new GridBagLayout());
 		btMay1 = new JButton("May001");
 		btMay2 = new JButton("May002");
 		btMay3 = new JButton("May003");
@@ -145,17 +148,18 @@ public class AppQuanLyATM extends JFrame {
 		btMay8 = new JButton("May008");
 		btMay9 = new JButton("May009");
 		btMay10 = new JButton("May010");
-
-		pnMayATM.add(btMay1);
-		pnMayATM.add(btMay2);
-		pnMayATM.add(btMay3);
-		pnMayATM.add(btMay4);
-		pnMayATM.add(btMay5);
-		pnMayATM.add(btMay6);
-		pnMayATM.add(btMay7);
-		pnMayATM.add(btMay8);
-		pnMayATM.add(btMay9);
-		pnMayATM.add(btMay10);
+		
+		addItem(pnMayATM, btMay1, 0, 0, 1, 1, GridBagConstraints.CENTER);
+		addItem(pnMayATM, btMay2, 0, 1, 1, 1, GridBagConstraints.CENTER);
+		addItem(pnMayATM, btMay3, 0, 2, 1, 1, GridBagConstraints.CENTER);
+		addItem(pnMayATM, btMay4, 0, 3, 1, 1, GridBagConstraints.CENTER);
+		addItem(pnMayATM, btMay5, 0, 4, 1, 1, GridBagConstraints.CENTER);
+		addItem(pnMayATM, btMay6, 1, 0, 1, 1, GridBagConstraints.CENTER);
+		addItem(pnMayATM, btMay7, 1, 1, 1, 1, GridBagConstraints.CENTER);
+		addItem(pnMayATM, btMay8, 1, 2, 1, 1, GridBagConstraints.CENTER);
+		addItem(pnMayATM, btMay9, 1, 3, 1, 1, GridBagConstraints.CENTER);
+		addItem(pnMayATM, btMay10, 1, 4, 1, 1, GridBagConstraints.CENTER);
+		
 		pnQuanLyGD.add(pnMayATM);
 		pnAllCenter.add(pnQuanLyGD, "quanLyGD");
 		
@@ -163,6 +167,20 @@ public class AppQuanLyATM extends JFrame {
 		tree.addTreeSelectionListener(treeSelectionListener);
 		con.add(pnSouth, "South");
 		con.add(pane, "Center");
+	}
+	
+	public void addItem(JPanel p, JComponent c, int x, int y, int width, int height, int align) {
+		GridBagConstraints gc = new GridBagConstraints();
+		gc.gridx = x;
+		gc.gridy = y;
+		gc.gridwidth = width;
+		gc.gridheight = height;
+		gc.weightx = 100.0;
+		gc.weighty = 100.0;
+		gc.insets = new Insets(5, 5, 5, 5);
+		gc.anchor = align;
+		gc.fill = GridBagConstraints.NONE;
+		p.add(c, gc);
 	}
 
 	public void display() {

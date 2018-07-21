@@ -2,11 +2,16 @@ package quanly.view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,7 +30,7 @@ public class QuanLyMayATM extends JFrame {
 	JPanel pnLabel1, pnTextField1, pnLabel2, pnTextField2, pnLabel3, pnTextField3;
 	JLabel title, maMayATM, viTri, tongTien, quan, phuong;
 	JTextField txtMaMayATM, txtViTri, txtTongTien;
-	JButton them, sua, xoa;
+	JButton them, sua, xoa, tim;
 	DefaultTableModel tableModel;
 	JTable table;
 	Border border;
@@ -42,50 +47,56 @@ public class QuanLyMayATM extends JFrame {
 		pnQuanLyATM.add(title);
 		
 		pnNhap = new JPanel();
-		
+		pnNhap.setLayout(new GridLayout(1, 3));
 		pnLabel1 = new JPanel();
-		pnLabel1.setLayout(new BoxLayout(pnLabel1, BoxLayout.Y_AXIS));
+		pnLabel1.setLayout(new GridBagLayout());
 		maMayATM = new JLabel("Mã máy ATM");
 		viTri = new JLabel("Vị trí đặt máy");
-		pnLabel1.add(maMayATM);pnLabel1.add(viTri);
-		pnNhap.add(pnLabel1);
 		
-		pnTextField1 = new JPanel();
-		pnTextField1.setLayout(new BoxLayout(pnTextField1, BoxLayout.Y_AXIS));
 		txtMaMayATM = new JTextField(10);
 		txtViTri = new JTextField(10);
-		pnTextField1.add(txtMaMayATM);pnTextField1.add(txtViTri);
-		pnNhap.add(pnTextField1);
+
 		
+		addItem(pnLabel1, maMayATM, 0, 0, 1, 1, GridBagConstraints.EAST);
+		addItem(pnLabel1, viTri, 0, 1, 1, 1, GridBagConstraints.EAST);
+
+		addItem(pnLabel1, txtMaMayATM, 1, 0, 2, 1, GridBagConstraints.WEST);
+		addItem(pnLabel1, txtViTri, 1, 1, 2, 1, GridBagConstraints.WEST);
+		pnNhap.add(pnLabel1);
+		
+				
 		pnLabel2 = new JPanel();
-		pnLabel2.setLayout(new BoxLayout(pnLabel2, BoxLayout.Y_AXIS));
+		pnLabel2.setLayout(new GridBagLayout());
 		quan = new JLabel("Quận");
 		phuong = new JLabel("Phường");
-		pnLabel2.add(quan);pnLabel2.add(phuong);
-		pnNhap.add(pnLabel2);
-		
-		pnTextField2 = new JPanel();
-		pnTextField2.setLayout(new BoxLayout(pnTextField2, BoxLayout.Y_AXIS));
 		String strQuan[] = {" "};
 		boxQuan = new JComboBox<>(strQuan);
 		String strPhuong[] = {" "};
 		boxPhuong = new JComboBox<>(strPhuong);
-		pnTextField2.add(boxQuan);pnTextField2.add(boxPhuong);
-		pnNhap.add(pnTextField2);
+		
+		addItem(pnLabel2, quan, 0, 0, 1, 1, GridBagConstraints.EAST);
+		addItem(pnLabel2, phuong, 0, 1, 1, 1, GridBagConstraints.EAST);
+
+		addItem(pnLabel2, boxQuan, 1, 0, 2, 1, GridBagConstraints.WEST);
+		addItem(pnLabel2, boxPhuong, 1, 1, 2, 1, GridBagConstraints.WEST);
+		pnNhap.add(pnLabel2);
+		
+		
 		
 		pnLabel3 = new JPanel();
-		pnLabel3.setLayout(new BoxLayout(pnLabel3, BoxLayout.X_AXIS));
 		tongTien = new JLabel("Tổng tiền trong máy");
 		txtTongTien = new JTextField(10);
-		pnLabel3.add(tongTien);pnLabel3.add(txtTongTien);
+		addItem(pnLabel3, tongTien, 0, 0, 1, 1, GridBagConstraints.EAST);
+		addItem(pnLabel3, txtTongTien, 1, 0, 2, 1, GridBagConstraints.WEST);
 		pnNhap.add(pnLabel3);
 		
 		pnbutton = new JPanel();
 		pnbutton.setLayout(new BoxLayout(pnbutton, BoxLayout.X_AXIS));
 		them = new JButton("Thêm máy ATM");
 		sua = new JButton("Sửa thông tin máy ATM");
+		tim = new JButton("Tìm kiếm");
 		xoa = new JButton("Xóa thông tin máy ATM");
-		pnbutton.add(them);pnbutton.add(sua);pnbutton.add(xoa);
+		pnbutton.add(them);pnbutton.add(sua);pnbutton.add(tim);pnbutton.add(xoa);
 		
 		
 		
@@ -108,6 +119,30 @@ public class QuanLyMayATM extends JFrame {
 		pnQuanLyATM.setLayout(new BoxLayout(pnQuanLyATM, BoxLayout.Y_AXIS));
 		
 		return pnQuanLyATM;
+	}
+	
+	/**
+	 * Sắp xếp các lable nhập
+	 * @param p
+	 * @param c
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 * @param align
+	 */
+	public void addItem(JPanel p, JComponent c, int x, int y, int width, int height, int align) {
+		GridBagConstraints gc = new GridBagConstraints();
+		gc.gridx = x;
+		gc.gridy = y;
+		gc.gridwidth = width;
+		gc.gridheight = height;
+		gc.weightx = 100.0;
+		gc.weighty = 100.0;
+		gc.insets = new Insets(5, 5, 5, 5);
+		gc.anchor = align;
+		gc.fill = GridBagConstraints.NONE;
+		p.add(c, gc);
 	}
 	
 	
