@@ -158,6 +158,7 @@ public class AppQuanLyATM extends JFrame {
 		pnMayATM.add(btMay10);
 		pnQuanLyGD.add(pnMayATM);
 		pnAllCenter.add(pnQuanLyGD, "quanLyGD");
+		
 
 		tree.addTreeSelectionListener(treeSelectionListener);
 		con.add(pnSouth, "South");
