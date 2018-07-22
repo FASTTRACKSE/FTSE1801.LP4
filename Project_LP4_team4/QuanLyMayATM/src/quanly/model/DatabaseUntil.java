@@ -17,7 +17,7 @@ public class DatabaseUntil {
 			Properties pro = new Properties();
 			pro.setProperty("user", USER);
 			pro.setProperty("password", PASS);
-			pro.put("characterEncoding", "UTF-8");
+			pro.setProperty("characterEncoding", "UTF-8");
 
 			Driver driver = new Driver();
 			conn = driver.connect(URL, pro);
