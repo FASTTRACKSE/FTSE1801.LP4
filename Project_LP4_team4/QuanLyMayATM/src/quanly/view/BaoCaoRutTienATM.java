@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.time.LocalDate;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -21,6 +22,10 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import javafx.scene.control.DatePicker;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+
 public class BaoCaoRutTienATM extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -33,7 +38,7 @@ public class BaoCaoRutTienATM extends JFrame {
 	JTable table;
 	Border border;
 	TitledBorder titledBorder;
-	
+	DatePicker datePicker;
 	public void baoCaoTinhHinhRutTienATM() {
 		pnBaoCaoTinhHinh = new JPanel();
 		pnBaoCaoTinhHinh.setLayout(new BoxLayout(pnBaoCaoTinhHinh, BoxLayout.Y_AXIS));
@@ -107,6 +112,12 @@ public class BaoCaoRutTienATM extends JFrame {
 		jScrollPane.setBorder(titledBorder);
 		pnBaoCaoTinhHinh.add(jScrollPane);
 		
+		DatePicker datePicker = new DatePicker(LocalDate.now());
+		GridPane gridPane = new GridPane();
+		gridPane.add(datePicker, 0,0);
+		
+		VBox box = new VBox();
+		box.getChildren().add(gridPane);
 		Container container = getContentPane();
 		container.add(pnBaoCaoTinhHinh);
 	}
