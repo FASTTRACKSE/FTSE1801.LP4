@@ -146,8 +146,7 @@ public class KhachHangDAO {
 	 */
 	public boolean updateSoTien(String maKH,String maSoThe, String soTien) {
 		boolean kiemTra = false;
-		double allTien = 0.0;
-		allTien = Double.parseDouble(layThongTinSoTien(maSoThe)) +Double.parseDouble(soTien);
+		Integer allTien = Integer.parseInt(layThongTinSoTien(maSoThe)) + Integer.parseInt(soTien);
 		String sql = "UPDATE khach_hang SET soTienTrongTK=? WHERE soTheATM = ? AND maKhachHang = ?";
 		conn = DatabaseUntil.getConnect();
 		PreparedStatement statement = null;

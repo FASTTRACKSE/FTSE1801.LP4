@@ -52,8 +52,8 @@ public class QuanLyKhachHang extends JFrame {
 	ArrayList<String> listPhuong;
 	String tenQuan;
 	String tenPhuong;
-	private static final String UNICODE_HOA = "ÀÁẠÃẢĂẮẰẶẴẲÂẤẦẨẪẬĐÈÉẺẼẸÊẾỀỂỄỆỊÍÌỈĨỌÓÒỎÕỘỐỒỔỖÔƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰ"; 
-	private static final String UNICODE_THUONG = "àáạãảăắằặẵẳâẩấầẫậđèéẻẽẹêếềểễệịíìỉĩọóòỏõộốồổỗôơớờởỡợúùủũụưứừửữự"; 
+	private static final String UNICODE_HOA = "ÀÁẠÃẢĂẮẰẶẴẲÂẤẦẨẪẬĐÈÉẺẼẸÊẾỀỂỄỆỊÍÌỈĨỌÓÒỎÕỘỐỒỔỖÔƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰ";
+	private static final String UNICODE_THUONG = "àáạãảăắằặẵẳâẩấầẫậđèéẻẽẹêếềểễệịíìỉĩọóòỏõộốồổỗôơớờởỡợúùủũụưứừửữự";
 	/**
 	 * Sự kiện cho chọn phường và quận
 	 */
@@ -106,7 +106,7 @@ public class QuanLyKhachHang extends JFrame {
 							JOptionPane.showMessageDialog(null, "Thêm khách hàng thành công");
 							tableModel.setRowCount(0);
 							showTable();
-						}else {
+						} else {
 							JOptionPane.showMessageDialog(null, "Trùng số thẻ ATM, vui lòng kiểm tra lại");
 						}
 					} else {
@@ -118,13 +118,16 @@ public class QuanLyKhachHang extends JFrame {
 			if (button == sua) {
 				if (txtDienThoai.getText().equals("") && txtDiaChi.getText().equals("")
 						&& txtEmail.getText().equals("")) {
-					if (khachHangDAO.updateSoTien(txtMaKH.getText(), txtSoTheATM.getText(), txtSoTien.getText())) {
-						JOptionPane.showMessageDialog(null, "Cập nhập số tiền thành công");
-						tableModel.setRowCount(0);
-						showTable();
-					} else {
-						JOptionPane.showMessageDialog(null, "Sai mã khách hàng hoặc số thẻ ATM không tồn tại");
+					if (kiemTraNhapDuLieuUpdateSoTienKhachHang()) {
+						if (khachHangDAO.updateSoTien(txtMaKH.getText(), txtSoTheATM.getText(), txtSoTien.getText())) {
+							JOptionPane.showMessageDialog(null, "Cập nhập số tiền thành công");
+							tableModel.setRowCount(0);
+							showTable();
+						} else {
+							JOptionPane.showMessageDialog(null, "Sai mã khách hàng hoặc số thẻ ATM không tồn tại");
+						}
 					}
+
 				} else {
 					if (kiemTraNhapDuLieuUpdateKhachHang()) {
 						KhachHang khachHang = layGiaTriKhachHang();
@@ -379,7 +382,7 @@ public class QuanLyKhachHang extends JFrame {
 		String pantterTen = "[A-Z\\ÀÁẠÃẢĂẮẰẶẴÂẤẦẨẪẬĐÈÉẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌỐỒỔỖÔỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰ][a-z\\àáạãăắằặẵâấầẩẫậđèéẻẽẹêếềểễệíìỉĩịóòỏõọốồổỗôộơớờởỡợúùủũụưứừửữự]*( [A-Z\\ÀÁẠÃĂẮẰẶẴÂẤẦẨẪẬĐÈÉẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌỐỒỔỖÔỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰ][a-z\\àáạãăắằặẵâấầẩẫậđèéẻẽẹêếềểễệíìỉĩịóòỏõọốồổỗôộơớờởỡợúùủũụưứừửữự]*)+";
 		String pantterSDT = "0[0-9]{9,10}";
 		String pantterEmail = "\\w+@\\w+(\\.\\w+){1,2}";
-		String pantterSoTien = "[1-9][0-9]+0000";
+		String pantterSoTien = "[1-9][0-9]*0000";
 		if (!txtMaKH.getText().matches(pantterMaKh)) {
 			kiemTra = false;
 			JOptionPane.showMessageDialog(null, "Nhập sai định dạng mã khách khàng (Mã khách hàng gồm 6 ký tự)");
@@ -425,7 +428,8 @@ public class QuanLyKhachHang extends JFrame {
 	public boolean kiemTraNhapDuLieuUpdateKhachHang() {
 		boolean kiemTra = true;
 		String pantterMaKh = "\\w{6}";
-		String pantterTen = "[A-Z"+UNICODE_HOA+"][a-z"+UNICODE_THUONG+"]*( [A-Z"+UNICODE_HOA+"][a-z"+UNICODE_THUONG+"]*)+";
+		String pantterTen = "[A-Z" + UNICODE_HOA + "][a-z" + UNICODE_THUONG + "]*( [A-Z" + UNICODE_HOA + "][a-z"
+				+ UNICODE_THUONG + "]*)+";
 		String pantterSDT = "0[0-9]{9,10}";
 		String pantterEmail = "\\w+@\\w+(\\.\\w+){1,2}";
 		if (!txtMaKH.getText().matches(pantterMaKh)) {
@@ -449,6 +453,35 @@ public class QuanLyKhachHang extends JFrame {
 			kiemTra = false;
 			JOptionPane.showMessageDialog(null, "Nhập sai định dạng Email");
 			txtEmail.setText("");
+		}
+
+		return kiemTra;
+	}
+
+	/**
+	 * Kiem tra dữ liệu nhập sữa thông tin số tiền khách hàng
+	 * 
+	 * @return
+	 */
+	public boolean kiemTraNhapDuLieuUpdateSoTienKhachHang() {
+		boolean kiemTra = true;
+		String pantterMaKh = "\\w{6}";
+		String pantterSoTien = "[1-9][0-9]*0000";
+		if (!txtMaKH.getText().matches(pantterMaKh)) {
+			kiemTra = false;
+			JOptionPane.showMessageDialog(null, "Nhập sai định dạng mã khách khàng (Mã khách hàng gồm 6 ký tự)");
+			txtMaKH.setText("");
+		}
+		if (txtSoTK.getText().equals("")) {
+			kiemTra = false;
+			JOptionPane.showMessageDialog(null, "Nhập sai số thẻ ATM");
+			txtSoTheATM.setText("");
+		}
+		if (!txtSoTien.getText().matches(pantterSoTien)) {
+			kiemTra = false;
+			JOptionPane.showMessageDialog(null,
+					"Nhập sai định dạng số tiền (Số tiền phải bắt đầu từ 1-10 và phải là bội số của 10000)");
+			txtSoTien.setText("");
 		}
 
 		return kiemTra;
