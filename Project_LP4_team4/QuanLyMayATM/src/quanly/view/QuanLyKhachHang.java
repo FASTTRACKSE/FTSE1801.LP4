@@ -52,7 +52,8 @@ public class QuanLyKhachHang extends JFrame {
 	ArrayList<String> listPhuong;
 	String tenQuan;
 	String tenPhuong;
-
+	private static final String UNICODE_HOA = "ÀÁẠÃẢĂẮẰẶẴẲÂẤẦẨẪẬĐÈÉẺẼẸÊẾỀỂỄỆỊÍÌỈĨỌÓÒỎÕỘỐỒỔỖÔƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰ"; 
+	private static final String UNICODE_THUONG = "àáạãảăắằặẵẳâẩấầẫậđèéẻẽẹêếềểễệịíìỉĩọóòỏõộốồổỗôơớờởỡợúùủũụưứừửữự"; 
 	/**
 	 * Sự kiện cho chọn phường và quận
 	 */
@@ -105,6 +106,8 @@ public class QuanLyKhachHang extends JFrame {
 							JOptionPane.showMessageDialog(null, "Thêm khách hàng thành công");
 							tableModel.setRowCount(0);
 							showTable();
+						}else {
+							JOptionPane.showMessageDialog(null, "Trùng số thẻ ATM, vui lòng kiểm tra lại");
 						}
 					} else {
 						JOptionPane.showMessageDialog(null, "Mã khách hàng trùng, vui lòng kiểm tra lại");
@@ -373,9 +376,7 @@ public class QuanLyKhachHang extends JFrame {
 	public boolean kiemTraNhapDuLieuAddKhachHang() {
 		boolean kiemTra = true;
 		String pantterMaKh = "\\w{6}";
-		String pantterTen = "[A-Z\\ÀÁẠÃĂẮẰẶẴÂẤẦẨẪĐÈÉẺẼÊẾỀỂỄÍÌỈĨÓÒỎÕỐỒỔỖÔƠỚỜỞỠÚÙỦŨƯỨỪỬỮ\r\n"
-				+ "][a-z\\àáạãăắằặẵâấầẩẫđèéẻẽêếềểễíìỉĩóòỏõốồổỗôơớờởỡúùủũưứừửữ]*( [A-ZÀÁẠÃĂẮẰẶẴÂẤẦẨẪĐÈÉẺẼÊẾỀỂỄÍÌỈĨÓÒỎÕỐỒỔỖÔƠỚỜỞỠÚÙỦŨƯỨỪỬỮ\r\n"
-				+ "][a-z\\\\àáạãăắằặẵâấầẩẫđèéẻẽêếềểễíìỉĩóòỏõốồổỗôơớờởỡúùủũưứừửữ]*)+";
+		String pantterTen = "[A-Z\\ÀÁẠÃẢĂẮẰẶẴÂẤẦẨẪẬĐÈÉẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌỐỒỔỖÔỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰ][a-z\\àáạãăắằặẵâấầẩẫậđèéẻẽẹêếềểễệíìỉĩịóòỏõọốồổỗôộơớờởỡợúùủũụưứừửữự]*( [A-Z\\ÀÁẠÃĂẮẰẶẴÂẤẦẨẪẬĐÈÉẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌỐỒỔỖÔỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰ][a-z\\àáạãăắằặẵâấầẩẫậđèéẻẽẹêếềểễệíìỉĩịóòỏõọốồổỗôộơớờởỡợúùủũụưứừửữự]*)+";
 		String pantterSDT = "0[0-9]{9,10}";
 		String pantterEmail = "\\w+@\\w+(\\.\\w+){1,2}";
 		String pantterSoTien = "[1-9][0-9]+0000";
@@ -424,9 +425,7 @@ public class QuanLyKhachHang extends JFrame {
 	public boolean kiemTraNhapDuLieuUpdateKhachHang() {
 		boolean kiemTra = true;
 		String pantterMaKh = "\\w{6}";
-		String pantterTen = "[A-Z\\ÀÁẠÃĂẮẰẶẴÂẤẦẨẪĐÈÉẺẼÊẾỀỂỄÍÌỈĨÓÒỎÕỐỒỔỖÔƠỚỜỞỠÚÙỦŨƯỨỪỬỮ\r\n"
-				+ "][a-z\\àáạãăắằặẵâấầẩẫđèéẻẽêếềểễíìỉĩóòỏõốồổỗôơớờởỡúùủũưứừửữ]*( [A-ZÀÁẠÃĂẮẰẶẴÂẤẦẨẪĐÈÉẺẼÊẾỀỂỄÍÌỈĨÓÒỎÕỐỒỔỖÔƠỚỜỞỠÚÙỦŨƯỨỪỬỮ\r\n"
-				+ "][a-z\\\\àáạãăắằặẵâấầẩẫđèéẻẽêếềểễíìỉĩóòỏõốồổỗôơớờởỡúùủũưứừửữ]*)+";
+		String pantterTen = "[A-Z"+UNICODE_HOA+"][a-z"+UNICODE_THUONG+"]*( [A-Z"+UNICODE_HOA+"][a-z"+UNICODE_THUONG+"]*)+";
 		String pantterSDT = "0[0-9]{9,10}";
 		String pantterEmail = "\\w+@\\w+(\\.\\w+){1,2}";
 		if (!txtMaKH.getText().matches(pantterMaKh)) {

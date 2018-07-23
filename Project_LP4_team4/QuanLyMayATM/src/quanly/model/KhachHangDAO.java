@@ -147,14 +147,15 @@ public class KhachHangDAO {
 	public boolean updateSoTien(String maKH,String maSoThe, String soTien) {
 		boolean kiemTra = false;
 		double allTien = 0.0;
-		String sql = "UPDATE khach_hang SET soTienTrongTK=? WHERE maKhachHang = ?";
+		allTien = Double.parseDouble(layThongTinSoTien(maSoThe)) +Double.parseDouble(soTien);
+		String sql = "UPDATE khach_hang SET soTienTrongTK=? WHERE soTheATM = ? AND maKhachHang = ?";
 		conn = DatabaseUntil.getConnect();
 		PreparedStatement statement = null;
-		allTien = Double.parseDouble(layThongTinSoTien(maSoThe)) +Double.parseDouble(soTien);
 		try {
 			statement = conn.prepareStatement(sql);
 			statement.setString(1, ("" + allTien));
-			statement.setString(2, maKH);
+			statement.setString(2, maSoThe);
+			statement.setString(3, maKH);
 			if (statement.executeUpdate() > 0) {
 				kiemTra = true;
 			}
