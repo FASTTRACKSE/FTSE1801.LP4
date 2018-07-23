@@ -1,20 +1,29 @@
 package quanly.view;
 
+
+
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.time.LocalDate;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -22,10 +31,13 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import javafx.scene.control.DatePicker;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
 
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
+
+  
 public class BaoCaoRutTienATM extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -38,7 +50,12 @@ public class BaoCaoRutTienATM extends JFrame {
 	JTable table;
 	Border border;
 	TitledBorder titledBorder;
-	DatePicker datePicker;
+	UtilDateModel model, model2;
+	JDatePanelImpl datePanel, datePanel2;
+	JDatePickerImpl datePicker, datePicker2;
+	Properties p;
+	Date date,date2;
+	
 	public void baoCaoTinhHinhRutTienATM() {
 		pnBaoCaoTinhHinh = new JPanel();
 		pnBaoCaoTinhHinh.setLayout(new BoxLayout(pnBaoCaoTinhHinh, BoxLayout.Y_AXIS));
@@ -77,22 +94,31 @@ public class BaoCaoRutTienATM extends JFrame {
 		chon2.setLayout(new GridBagLayout());
 		pnLabel2 = new JPanel();
 		ngay1 = new JLabel("Từ ngày:");
-		String strNgay1[] = { " " };
-		boxNgay1 = new JComboBox<>(strNgay1);
+		model = new UtilDateModel();
+		p = new Properties();
+		p.put("text.today", "Today");
+		p.put("text.month", "Month");
+		p.put("text.year", "Year");
+		datePanel = new JDatePanelImpl(model, p);
+		datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+		
 
+		model2 = new UtilDateModel();
 		ngay2 = new JLabel("Đến ngày:");
-		String strNgay2[] = { " " };
-		boxNgay2 = new JComboBox<>(strNgay2);
+		datePanel2 = new JDatePanelImpl(model2, p);
+		datePicker2 = new JDatePickerImpl(datePanel2, new DateLabelFormatter());
 
 		addItem(pnLabel2, ngay1, 0, 0, 1, 1, GridBagConstraints.EAST);
-		addItem(pnLabel2, boxNgay1, 1, 0, 2, 1, GridBagConstraints.WEST);
+		addItem(pnLabel2, datePicker, 1, 0, 2, 1, GridBagConstraints.WEST);
 		addItem(pnLabel2, ngay2, 0, 1, 1, 1, GridBagConstraints.EAST);
-		addItem(pnLabel2, boxNgay2, 1, 1, 2, 1, GridBagConstraints.WEST);
+		addItem(pnLabel2, datePicker2, 1, 1, 2, 1, GridBagConstraints.WEST);
 		chon2.add(pnLabel2);
 		pnBaoCaoTinhHinh.add(chon2);
 
 		pnTim = new JPanel();
 		tim = new JButton("Tìm kiếm");
+		tim.addActionListener(actionListener);
+
 		pnTim.add(tim);
 		pnBaoCaoTinhHinh.add(pnTim);
 
@@ -112,14 +138,61 @@ public class BaoCaoRutTienATM extends JFrame {
 		jScrollPane.setBorder(titledBorder);
 		pnBaoCaoTinhHinh.add(jScrollPane);
 		
-		DatePicker datePicker = new DatePicker(LocalDate.now());
-		GridPane gridPane = new GridPane();
-		gridPane.add(datePicker, 0,0);
 		
-		VBox box = new VBox();
-		box.getChildren().add(gridPane);
+		
 		Container container = getContentPane();
 		container.add(pnBaoCaoTinhHinh);
+		
+	}
+	
+	ActionListener actionListener = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource() == tim) {
+				String strdate = datePicker.getJFormattedTextField().getText();
+				String strdate2 = datePicker2.getJFormattedTextField().getText();
+				
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				java.util.Date date = null;
+				java.util.Date date1 = null;
+				try {
+					date = sdf.parse(strdate);
+					date1 = sdf.parse(strdate2);
+				} catch (java.text.ParseException e1) {
+					e1.printStackTrace();
+				}
+				long soSanh = (date1.getTime()-date.getTime()) / (24 * 3600 * 1000);;
+				if ((soSanh>30) || (soSanh<0)) {
+					JOptionPane.showMessageDialog(null, "Sai tổng số ngày. Nhập lại");
+				}else {
+					JOptionPane.showMessageDialog(null, soSanh);
+				}
+			}
+		}
+	};
+	
+	public class DateLabelFormatter extends AbstractFormatter {
+
+		private static final long serialVersionUID = 1L;
+		private String datePattern = "yyyy-MM-dd";
+	    private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
+
+	    @Override
+	    public Object stringToValue(String text) throws ParseException, java.text.ParseException {
+	        return dateFormatter.parseObject(text);
+	    }
+
+	    @Override
+	    public String valueToString(Object value) throws ParseException {
+	        if (value != null) {
+	            Calendar cal = (Calendar) value;
+	            return dateFormatter.format(cal.getTime());
+	        }
+
+	        return "";
+	    }
+
 	}
 	
 	/**
