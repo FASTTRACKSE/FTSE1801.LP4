@@ -10,7 +10,7 @@ import quanly.entity.MayATM;
 
 public class MayAtmDAO {
 	Connection conn;
-	
+	KhachHangDAO khachHangDAO;
 	/**
 	 * Thêm máy ATM
 	 * 
@@ -19,27 +19,62 @@ public class MayAtmDAO {
 	 */
 	public boolean addMayATM(MayATM mayATM) {
 		boolean kiemTra = false;
-		String sql = "INSERT INTO the_atm VALUES (?,?,?,?,?)";
+		String sql = "INSERT INTO may_atm VALUES (?,?,?,?)";
+		khachHangDAO = new KhachHangDAO();
+		int maPhuong = khachHangDAO.layThongTinMaPhuong(mayATM.getPhuong());
 		conn = DatabaseUntil.getConnect();
 		PreparedStatement statement = null;
+		
 		try {
 			statement = conn.prepareStatement(sql);
 			statement.setString(1, mayATM.getMaMay());
 			statement.setString(2, mayATM.getViTri());
-			statement.setString(3, mayATM.getPhuong());
-			statement.setString(4, mayATM.getQuan());
-			statement.setString(5, mayATM.getTongTien());
+			statement.setInt(3, maPhuong);
+			statement.setString(4, mayATM.getTongTien());
 			if (statement.executeUpdate() > 0) {
 				kiemTra = true;
 			}
 		} catch (SQLException e) {
-			System.out.println("loi");
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
 					System.out.println("Đóng lỗi");
+				}
+			}
+		}
+		DatabaseUntil.closeConnection(conn);
+		return kiemTra;
+	}
+	
+	/**
+	 * Update thông tin tiền trong máy ATM
+	 * 
+	 * @param myList, soTien
+	 * @return
+	 */
+	public boolean updateMayATM(ArrayList<MayATM> myList,String soTien) {
+		boolean kiemTra = false;
+		String sql = "UPDATE may_atm SET tongTien=? WHERE maMayATM = ?";
+		Integer allTien = Integer.parseInt(myList.get(0).getTongTien()) + Integer.parseInt(soTien);
+		conn = DatabaseUntil.getConnect();
+		PreparedStatement statement = null;
+		try {
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, (String.valueOf(allTien)));
+			statement.setString(2, myList.get(0).getMaMay());
+			if (statement.executeUpdate() > 0) {
+				kiemTra = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
 				}
 			}
 		}
@@ -58,7 +93,7 @@ public class MayAtmDAO {
 		PreparedStatement statement = null;
 		MayATM mayATM;
 		conn = DatabaseUntil.getConnect();
-		String sql = "SELECT * FROM may_atm WHERE maMayATM  = ?";
+		String sql = "SELECT*FROM may_atm JOIN phuong ON may_atm.maPhuong = phuong.maPhuong JOIN quan ON phuong.maQuan = quan.maQuan WHERE maMayATM  = ?";
 		try {
 			statement = conn.prepareStatement(sql);
 			statement.setString(1, maMay);
@@ -66,11 +101,11 @@ public class MayAtmDAO {
 
 			mayATM = new MayATM();
 			while (resultSet.next()) {
-				mayATM.setMaMay(resultSet.getString("maMayATM"));
-				mayATM.setViTri(resultSet.getString("viTri"));
-				mayATM.setPhuong(resultSet.getString("phuong"));
-				mayATM.setQuan(resultSet.getString("quan"));
-				mayATM.setTongTien(resultSet.getString("tongTien"));
+				mayATM.setMaMay(resultSet.getString("may_atm.maMayATM"));
+				mayATM.setViTri(resultSet.getString("may_atm.viTri"));
+				mayATM.setPhuong(resultSet.getString("phuong.tenPhuong"));
+				mayATM.setQuan(resultSet.getString("quan.tenQuan"));
+				mayATM.setTongTien(resultSet.getString("may_atm.tongTien"));
 				myList.add(mayATM);
 			}
 		} catch (SQLException e) {
@@ -90,39 +125,7 @@ public class MayAtmDAO {
 	}
 
 	
-	/**
-	 * Update thông tin tiền trong máy ATM
-	 * 
-	 * @param myList, soTien
-	 * @return
-	 */
-	public boolean updateMayATM(ArrayList<MayATM> myList,String soTien) {
-		boolean kiemTra = false;
-		String sql = "UPDATE may_atm SET tongTien=? WHERE maMayATM = ?";
-		conn = DatabaseUntil.getConnect();
-		PreparedStatement statement = null;
-		Double allTien = Double.parseDouble(myList.get(0).getTongTien()) - Double.parseDouble(soTien);
-		try {
-			statement = conn.prepareStatement(sql);
-			statement.setString(1, (""+allTien));
-			statement.setString(2, myList.get(0).getMaMay());
-			if (statement.executeUpdate() > 0) {
-				kiemTra = true;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			if (statement != null) {
-				try {
-					statement.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		DatabaseUntil.closeConnection(conn);
-		return kiemTra;
-	}
+	
 
 	/**
 	 * Xóa máy ATM theo mã máy
@@ -167,18 +170,18 @@ public class MayAtmDAO {
 		PreparedStatement statement = null;
 		MayATM mayATM;
 		conn = DatabaseUntil.getConnect();
-		String sql = "SELECT * FROM may_atm";
+		String sql = "SELECT*FROM may_atm JOIN phuong ON may_atm.maPhuong = phuong.maPhuong JOIN quan ON phuong.maQuan = quan.maQuan ORDER BY maMayATM ASC";
 		try {
 			statement = conn.prepareStatement(sql);
 			ResultSet resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
 				mayATM = new MayATM();
-				mayATM.setMaMay(resultSet.getString("maMayATM"));
-				mayATM.setViTri(resultSet.getString("viTri"));
-				mayATM.setPhuong(resultSet.getString("phuong"));
-				mayATM.setQuan(resultSet.getString("quan"));
-				mayATM.setTongTien(resultSet.getString("tongTien"));
+				mayATM.setMaMay(resultSet.getString("may_atm.maMayATM"));
+				mayATM.setViTri(resultSet.getString("may_atm.viTri"));
+				mayATM.setPhuong(resultSet.getString("phuong.tenPhuong"));
+				mayATM.setQuan(resultSet.getString("quan.tenQuan"));
+				mayATM.setTongTien(resultSet.getString("may_atm.tongTien"));
 				myList.add(mayATM);
 			}
 
@@ -204,26 +207,23 @@ public class MayAtmDAO {
 	 * @param maMay
 	 * @return
 	 */
-	public ArrayList<MayATM> showMayATMTheoDiaChi(String diaChi, String phuong, String quan) {
+	public ArrayList<MayATM> showMayATMTheoDiaChi(String phuong) {
 		ArrayList<MayATM> myList = new ArrayList<>();
 		PreparedStatement statement = null;
 		MayATM mayATM;
 		conn = DatabaseUntil.getConnect();
-		String sql = "SELECT * FROM may_atm WHERE viTri= ? AND phuong = ? AND quan = ?";
+		String sql = "SELECT*FROM may_atm JOIN phuong ON may_atm.maPhuong = phuong.maPhuong JOIN quan ON phuong.maQuan = quan.maQuan WHERE phuong.tenPhuong = ?";
 		try {
 			statement = conn.prepareStatement(sql);
-			statement.setString(1, diaChi);
-			statement.setString(2, phuong);
-			statement.setString(3, quan);
+			statement.setString(1, phuong);
 			ResultSet resultSet = statement.executeQuery();
-
-			mayATM = new MayATM();
 			while (resultSet.next()) {
-				mayATM.setMaMay(resultSet.getString("maMayATM"));
-				mayATM.setViTri(resultSet.getString("viTri"));
-				mayATM.setPhuong(resultSet.getString("phuong"));
-				mayATM.setQuan(resultSet.getString("quan"));
-				mayATM.setTongTien(resultSet.getString("tongTien"));
+				mayATM = new MayATM();
+				mayATM.setMaMay(resultSet.getString("may_atm.maMayATM"));
+				mayATM.setViTri(resultSet.getString("may_atm.viTri"));
+				mayATM.setPhuong(resultSet.getString("phuong.tenPhuong"));
+				mayATM.setQuan(resultSet.getString("quan.tenQuan"));
+				mayATM.setTongTien(resultSet.getString("may_atm.tongTien"));
 				myList.add(mayATM);
 			}
 		} catch (SQLException e) {
