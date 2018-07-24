@@ -163,7 +163,7 @@ public class QuanLyKhachHang extends JFrame {
 			}
 
 			if (button == tim) {
-				ArrayList<KhachHang> myList = khachHangDAO.timKiemThongTinTheoTen(txtTenKH.getText());
+				ArrayList<KhachHang> myList = khachHangDAO.timKiemThongTinTheoTen(txtTenKH.getText(),txtMaKH.getText());
 				tableModel.setRowCount(0);
 				for (int i = 0; i < myList.size(); i++) {
 					if (myList.get(i).getDiaChi().equals(txtDiaChi.getText())

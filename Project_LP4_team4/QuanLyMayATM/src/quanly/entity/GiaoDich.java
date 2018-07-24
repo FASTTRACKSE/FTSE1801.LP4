@@ -1,17 +1,17 @@
 package quanly.entity;
 
 public class GiaoDich {
-	private String maGiaoDich;
+	private int maGiaoDich;
 	private String thoiGian;
 	private String soTien;
 	private KhachHang khachHang;
 	private MayATM mayATM;
 
-	public String getMaGiaoDich() {
+	public int getMaGiaoDich() {
 		return maGiaoDich;
 	}
 
-	public void setMaGiaoDich(String maGiaoDich) {
+	public void setMaGiaoDich(int maGiaoDich) {
 		this.maGiaoDich = maGiaoDich;
 	}
 

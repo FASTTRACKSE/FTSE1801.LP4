@@ -10,6 +10,7 @@ import java.util.Date;
 
 import quanly.entity.GiaoDich;
 import quanly.entity.KhachHang;
+import quanly.entity.MayATM;
 
 public class GiaoDichDAO {
 	Connection conn;
@@ -55,7 +56,7 @@ public class GiaoDichDAO {
 						khachHang.setSoTK(resultSet.getString("soTK"));
 
 						giaoDich.setKhachHang(khachHang);
-						giaoDich.setMaGiaoDich(resultSet.getString("maGiaoDich"));
+						giaoDich.setMaGiaoDich(resultSet.getInt("maGiaoDich"));
 
 						giaoDich.setSoTien("" + allTien);
 
@@ -80,7 +81,7 @@ public class GiaoDichDAO {
 					khachHang.setSoTK(resultSet.getString("soTK"));
 
 					giaoDich.setKhachHang(khachHang);
-					giaoDich.setMaGiaoDich(resultSet.getString("maGiaoDich"));
+					giaoDich.setMaGiaoDich(resultSet.getInt("maGiaoDich"));
 
 					giaoDich.setSoTien(resultSet.getString("soTien"));
 					myList.add(giaoDich);
@@ -143,28 +144,101 @@ public class GiaoDichDAO {
 		return kiemTra;
 	}
 
-	public static void main(String[] args) {
-		GiaoDichDAO dao = new GiaoDichDAO();
-
-//		if (dao.addThongTinGiaoDich("100000", "2583691477896546", "May005")) {
-//			System.out.println("add Thành công");
-//		}else {
-//			System.out.println("thất bại");
-//		}
-		 ArrayList<GiaoDich> myList = dao.showBaoCaoKhachHang("Hòa An", "Cẩm Lệ");
-
-		 for (int i = 0; i < myList.size(); i++) {
-		 System.out.println(myList.get(i).getKhachHang().getMaKH());
-		 System.out.println(myList.get(i).getKhachHang().getTenKH());
-		 System.out.println(myList.get(i).getKhachHang().getDiaChi());
-		 System.out.println(myList.get(i).getKhachHang().getPhuong());
-		 System.out.println(myList.get(i).getKhachHang().getQuan());
-		 System.out.println(myList.get(i).getKhachHang().getSoDT());
-		 System.out.println(myList.get(i).getKhachHang().getEmail());
-		 System.out.println(myList.get(i).getKhachHang().getSoTheATM());
-		 System.out.println(myList.get(i).getKhachHang().getSoTK());
-		 System.out.println(myList.get(i).getSoTien());
-		 System.out.println("");
-		 }
+	/**
+	 * Lấy mã thẻ theo số tài khoản
+	 * @param soTK
+	 * @return
+	 */
+	public String layThongTinMaThe(String soTK) {
+		String maThe = null;
+		conn = DatabaseUntil.getConnect();
+		String sql = "SELECT * FROM the_atm WHERE soTK = ?";
+		PreparedStatement statement = null;
+		try {
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, soTK);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				maThe = resultSet.getString("soTheATM");				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		DatabaseUntil.getConnect();
+		return maThe;
+	}
+	
+	/**
+	 * Update thông tin tiền trong máy ATM khi rút tiền
+	 * 
+	 * @param myList, soTien
+	 * @return
+	 */
+	public boolean updateMayATM(MayATM mayATM,String soTien) {
+		boolean kiemTra = false;
+		String sql = "UPDATE may_atm SET tongTien=? WHERE maMayATM = ?";
+		Integer allTien = Integer.parseInt(mayATM.getTongTien()) - Integer.parseInt(soTien);
+		conn = DatabaseUntil.getConnect();
+		PreparedStatement statement = null;
+		try {
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, (String.valueOf(allTien)));
+			statement.setString(2, mayATM.getMaMay());
+			if (statement.executeUpdate() > 0) {
+				kiemTra = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		DatabaseUntil.closeConnection(conn);
+		return kiemTra;
+	}
+	
+	/**
+	 * Lấy mã giao dịch
+	 * @return
+	 */
+	public GiaoDich layMaGiaoDich() {
+		GiaoDich giaoDich = null;
+		conn = DatabaseUntil.getConnect();
+		String sql = "SELECT * FROM `giao_dich` ORDER BY `giao_dich`.`thoiGian` DESC LIMIT 1";
+		PreparedStatement statement = null;
+		try {
+			statement = conn.prepareStatement(sql);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				giaoDich = new GiaoDich();
+				giaoDich.setMaGiaoDich(resultSet.getInt("maGiaoDich"));
+				giaoDich.setThoiGian(resultSet.getString("thoiGian"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		DatabaseUntil.getConnect();
+		return giaoDich;
 	}
 }

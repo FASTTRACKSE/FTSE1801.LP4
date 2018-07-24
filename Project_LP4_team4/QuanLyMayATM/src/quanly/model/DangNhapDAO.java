@@ -4,9 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import quanly.entity.KhachHang;
+import quanly.entity.MayATM;
 
 public class DangNhapDAO {
 	Connection conn;
@@ -100,17 +100,17 @@ public class DangNhapDAO {
 	 * @param soTienRut
 	 * @return
 	 */
-	public boolean rutTien(ArrayList<KhachHang> myList, String soTienRut) {
+	public boolean rutTien(KhachHang khachHang, String soTienRut) {
 		boolean kiemTra = false;
 		String sql = "UPDATE khach_hang SET soTienTrongTK=? WHERE soTK= ?";
 		conn = DatabaseUntil.getConnect();
 		PreparedStatement statement = null;
-		if (Double.parseDouble(myList.get(0).getSoTienTrongTK()) > Double.parseDouble(soTienRut)) {
-			Double soTienConLai = Double.parseDouble(myList.get(0).getSoTienTrongTK()) - Double.parseDouble(soTienRut);
+		if (Integer.parseInt(khachHang.getSoTienTrongTK()) > Integer.parseInt(soTienRut)) {
+			Integer soTienConLai = Integer.parseInt(khachHang.getSoTienTrongTK()) - Integer.parseInt(soTienRut);
 			try {
 				statement = conn.prepareStatement(sql);
 				statement.setString(1, ("" + soTienConLai));
-				statement.setString(2, myList.get(0).getSoTK());
+				statement.setString(2, khachHang.getSoTK());
 				if (statement.executeUpdate() > 0) {
 					kiemTra = true;
 				}
@@ -130,6 +130,20 @@ public class DangNhapDAO {
 		}
 
 		DatabaseUntil.closeConnection(conn);
+		return kiemTra;
+	}
+	
+	/**
+	 * Kiểm tra máy ATM có đủ tiền để rút không
+	 * @param mayATM
+	 * @param soTien
+	 * @return
+	 */
+	public boolean kiemTraTienMayATM(MayATM mayATM, String soTien) {
+		boolean kiemTra = false;
+		if (Integer.parseInt(mayATM.getTongTien())>Integer.parseInt(soTien)) {
+			kiemTra = true;
+		}
 		return kiemTra;
 	}
 }

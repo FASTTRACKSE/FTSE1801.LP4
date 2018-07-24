@@ -94,8 +94,8 @@ public class QuanLyMayATM extends JFrame {
 			if (button == sua) {
 				if (kiemTraAddMayATM()) {
 					mayATM = layThongTinMay();
-					ArrayList<MayATM> myList = mayAtmDAO.showMayATMMaMay(mayATM.getMaMay());
-					if (mayAtmDAO.updateMayATM(myList, mayATM.getTongTien())) {
+					MayATM mayAtm = mayAtmDAO.showMayATMMaMay(mayATM.getMaMay());
+					if (mayAtmDAO.updateMayATM(mayAtm, mayATM.getTongTien())) {
 						JOptionPane.showMessageDialog(null, "Thêm tiền thành công");
 						tableModel.setRowCount(0);
 						showTable();
@@ -129,13 +129,11 @@ public class QuanLyMayATM extends JFrame {
 								myList.get(i).getPhuong(), myList.get(i).getQuan(), myList.get(i).getTongTien() });
 					}
 				} else {
-					ArrayList<MayATM> myList = mayAtmDAO.showMayATMMaMay(txtMaMayATM.getText());
+					MayATM mayATM = mayAtmDAO.showMayATMMaMay(txtMaMayATM.getText());
 					tableModel.setRowCount(0);
-					for (int i = 0; i < myList.size(); i++) {
-						tableModel.addRow(new String[] { myList.get(i).getMaMay(), myList.get(i).getViTri(),
-								myList.get(i).getPhuong(), myList.get(i).getQuan(), myList.get(i).getTongTien() });
+						tableModel.addRow(new String[] { mayATM.getMaMay(), mayATM.getViTri(),
+								mayATM.getPhuong(), mayATM.getQuan(), mayATM.getTongTien() });
 					}
-				}
 			}
 		}
 	};

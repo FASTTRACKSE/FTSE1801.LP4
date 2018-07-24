@@ -27,8 +27,11 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import quanly.entity.GiaoDich;
 import quanly.entity.KhachHang;
 import quanly.model.DangNhapDAO;
+import quanly.model.GiaoDichDAO;
+import quanly.model.MayAtmDAO;
 
 public class MayATMView extends JFrame {
 
@@ -49,6 +52,7 @@ public class MayATMView extends JFrame {
 	CardLayout card;
 	Container conn;
 	String maMayATM;
+	String soTheAtm;
 	DangNhapDAO dangNhapDAO;
 	KhachHang khachHang;
 	
@@ -211,6 +215,7 @@ public class MayATMView extends JFrame {
 
 		pnButton2 = new JPanel();
 		btRut = new JButton("Rút tiền");
+		btRut.addActionListener(actionListener);
 		pnButton2.add(btRut);
 		pnRutTien.add(pnLabel3);
 		pnRutTien.add(pnButton2);
@@ -282,7 +287,7 @@ public class MayATMView extends JFrame {
 	public boolean kiemTraSoTien() {
 		boolean kiemTra = true;
 		String pantter = "[1-9][0-9]*0000";
-		if (txtRutTien.getText().matches(pantter)) {
+		if (!txtRutTien.getText().matches(pantter)) {
 			kiemTra = false;
 		}
 		return kiemTra;
@@ -294,13 +299,13 @@ public class MayATMView extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 
 			if (e.getSource() == btDangNhap) {
+				soTheAtm = txtTaiKhoan.getText(); //nhẩy jputon kolays được txt
 				dangNhapDAO = new DangNhapDAO();
-				if (dangNhapDAO.dangNhap(txtTaiKhoan.getText(), txtPin.getText())) {
+				if (dangNhapDAO.dangNhap(soTheAtm, txtPin.getText())) {
 				khachHang = dangNhapDAO.showKhachHangTheoMaKH(txtTaiKhoan.getText());
 				MayATMView mayATM = new MayATMView(maMayATM);
 				mayATM.display();
 				mayATM.thongTinKH(khachHang);
-			
 				}else {
 					JOptionPane.showMessageDialog(null, "Sai số tài khoản hoặc pass");
 				}
@@ -314,8 +319,28 @@ public class MayATMView extends JFrame {
 			}
 			
 			if (e.getSource()==btRut) {
+				MayAtmDAO atmDAO = new MayAtmDAO();
+				KhachHang khachHang = new KhachHang();
+				GiaoDich giaoDich = new GiaoDich();
+				DangNhapDAO dangNhapDAO = new DangNhapDAO();
+				GiaoDichDAO giaoDichDAO = new GiaoDichDAO();
 				if (kiemTraSoTien()) {
-					
+					String soTienRut = txtRutTien.getText();
+					JOptionPane.showMessageDialog(null, soTheAtm);
+					if (dangNhapDAO.kiemTraTienMayATM(atmDAO.showMayATMMaMay(maMayATM), soTienRut)) {
+						if (dangNhapDAO.rutTien(dangNhapDAO.showKhachHangTheoMaKH(txtTaiKhoan.getText()), soTienRut)) {
+							giaoDichDAO.addThongTinGiaoDich(soTienRut, giaoDichDAO.layThongTinMaThe(txtTaiKhoan.getText()), maMayATM);
+							giaoDichDAO.updateMayATM(atmDAO.showMayATMMaMay(maMayATM), txtRutTien.getText());
+							giaoDich = giaoDichDAO.layMaGiaoDich();
+							khachHang = dangNhapDAO.showKhachHangTheoMaKH(txtTaiKhoan.getText());
+							tableModel.setRowCount(0);
+							tableModel.addRow(new String[] {(""+giaoDich.getMaGiaoDich()), giaoDich.getThoiGian(), txtRutTien.getText(),khachHang.getSoTienTrongTK()});
+						}else {
+							JOptionPane.showMessageDialog(null, "Số tiền trong thẻ không đủ để rút");
+						}
+					}else {
+						JOptionPane.showMessageDialog(null, "Số tiền trong máy không đủ để rút");
+					}
 				} else {
 					JOptionPane.showMessageDialog(null, "Số tiền phải là bội số của 10000");
 				}

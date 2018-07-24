@@ -54,16 +54,16 @@ public class MayAtmDAO {
 	 * @param myList, soTien
 	 * @return
 	 */
-	public boolean updateMayATM(ArrayList<MayATM> myList,String soTien) {
+	public boolean updateMayATM(MayATM mayATM,String soTien) {
 		boolean kiemTra = false;
 		String sql = "UPDATE may_atm SET tongTien=? WHERE maMayATM = ?";
-		Integer allTien = Integer.parseInt(myList.get(0).getTongTien()) + Integer.parseInt(soTien);
+		Integer allTien = Integer.parseInt(mayATM.getTongTien()) + Integer.parseInt(soTien);
 		conn = DatabaseUntil.getConnect();
 		PreparedStatement statement = null;
 		try {
 			statement = conn.prepareStatement(sql);
 			statement.setString(1, (String.valueOf(allTien)));
-			statement.setString(2, myList.get(0).getMaMay());
+			statement.setString(2, mayATM.getMaMay());
 			if (statement.executeUpdate() > 0) {
 				kiemTra = true;
 			}
@@ -88,10 +88,9 @@ public class MayAtmDAO {
 	 * @param maMay
 	 * @return
 	 */
-	public ArrayList<MayATM> showMayATMMaMay(String maMay) {
-		ArrayList<MayATM> myList = new ArrayList<>();
+	public MayATM showMayATMMaMay(String maMay) {
 		PreparedStatement statement = null;
-		MayATM mayATM;
+		MayATM mayATM = null;
 		conn = DatabaseUntil.getConnect();
 		String sql = "SELECT*FROM may_atm JOIN phuong ON may_atm.maPhuong = phuong.maPhuong JOIN quan ON phuong.maQuan = quan.maQuan WHERE maMayATM  = ?";
 		try {
@@ -106,7 +105,6 @@ public class MayAtmDAO {
 				mayATM.setPhuong(resultSet.getString("phuong.tenPhuong"));
 				mayATM.setQuan(resultSet.getString("quan.tenQuan"));
 				mayATM.setTongTien(resultSet.getString("may_atm.tongTien"));
-				myList.add(mayATM);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -121,7 +119,7 @@ public class MayAtmDAO {
 		}
 
 		DatabaseUntil.closeConnection(conn);
-		return myList;
+		return mayATM;
 	}
 
 	

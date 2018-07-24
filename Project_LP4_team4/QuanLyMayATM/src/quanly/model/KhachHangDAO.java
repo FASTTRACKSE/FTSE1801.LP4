@@ -144,7 +144,7 @@ public class KhachHangDAO {
 	 * @param khachHang
 	 * @return
 	 */
-	public boolean updateSoTien(String maKH,String maSoThe, String soTien) {
+	public boolean updateSoTien(String maKH, String maSoThe, String soTien) {
 		boolean kiemTra = false;
 		Integer allTien = Integer.parseInt(layThongTinSoTien(maSoThe)) + Integer.parseInt(soTien);
 		String sql = "UPDATE khach_hang SET soTienTrongTK=? WHERE soTheATM = ? AND maKhachHang = ?";
@@ -173,7 +173,6 @@ public class KhachHangDAO {
 		return kiemTra;
 	}
 
-	
 	/**
 	 * Xóa khách hàng theo maKH
 	 * 
@@ -327,17 +326,17 @@ public class KhachHangDAO {
 	}
 
 	/**
-	 * Tìm kiếm thông tin khách hàng theo tên
+	 * Tìm kiếm thông tin khách hàng theo tên và mã KH
 	 * 
 	 * @param khachHang1
 	 * @return
 	 */
-	public ArrayList<KhachHang> timKiemThongTinTheoTen(String tenKH) {
+	public ArrayList<KhachHang> timKiemThongTinTheoTen(String tenKH, String maKH) {
 		ArrayList<KhachHang> myList = new ArrayList<>();
 		PreparedStatement statement = null;
 		KhachHang khachHang;
 		conn = DatabaseUntil.getConnect();
-		String sql = "SELECT*FROM khach_hang JOIN phuong ON khach_hang.maPhuong = phuong.maPhuong JOIN quan ON phuong.maQuan = quan.maQuan JOIN the_atm ON khach_hang.soTheATM = the_atm.soTheATM WHERE tenKhachHang = ?";
+		String sql = "SELECT*FROM khach_hang JOIN phuong ON khach_hang.maPhuong = phuong.maPhuong JOIN quan ON phuong.maQuan = quan.maQuan JOIN the_atm ON khach_hang.soTheATM = the_atm.soTheATM WHERE tenKhachHang = ? OR maKhachHang LIKE '%"+maKH+"'";
 		try {
 			statement = conn.prepareStatement(sql);
 			statement.setString(1, tenKH);
@@ -477,7 +476,7 @@ public class KhachHangDAO {
 		DatabaseUntil.closeConnection(conn);
 		return soTien;
 	}
-	
+
 	/**
 	 * lấy ra all danh sách quận
 	 * 
