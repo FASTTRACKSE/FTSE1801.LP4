@@ -62,6 +62,8 @@ public class AppQuanLyATM extends JFrame {
 				card.show(pnAllCenter, "baoCaoRutTien");
 			} else if (treeNode.toString().equals("Báo cáo tình trạng máy ATM")) {
 				card.show(pnAllCenter, "tinhTrangATM");
+			} else if (treeNode.toString().equals("Báo cáo tình hình rút tiền theo máy ATM")) {
+				card.show(pnAllCenter, "baoCaoRutTienATM");
 			} else if (treeNode.toString().equals("Chương trình quản lý máy ATM của ngân hàng")) {
 				card.show(pnAllCenter, "Đây là trang chủ");
 			}
@@ -158,6 +160,10 @@ public class AppQuanLyATM extends JFrame {
 		// Báo cáo tình trạng máy ATM
 		BaoCaoTinhTrangATM tinhTrangATM = new BaoCaoTinhTrangATM();
 		pnAllCenter.add(tinhTrangATM.tinhTrangMayATM(), "tinhTrangATM");
+		
+		// Báo cáo tình hình rút tiền theo máy ATM
+		BaoCaoRutTienATM atm2 = new  BaoCaoRutTienATM();
+		pnAllCenter.add(atm2.baoCaoTinhHinhRutTienATM(), "baoCaoRutTienATM");
 		
 		tree.addTreeSelectionListener(treeSelectionListener);
 		con.add(pnSouth, "South");

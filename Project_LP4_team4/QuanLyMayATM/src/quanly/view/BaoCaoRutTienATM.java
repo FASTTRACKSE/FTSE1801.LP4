@@ -3,7 +3,6 @@ package quanly.view;
 
 
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -56,7 +55,7 @@ public class BaoCaoRutTienATM extends JFrame {
 	Properties p;
 	Date date,date2;
 	
-	public void baoCaoTinhHinhRutTienATM() {
+	public JPanel baoCaoTinhHinhRutTienATM() {
 		pnBaoCaoTinhHinh = new JPanel();
 		pnBaoCaoTinhHinh.setLayout(new BoxLayout(pnBaoCaoTinhHinh, BoxLayout.Y_AXIS));
 		// Tiêu đề
@@ -138,10 +137,7 @@ public class BaoCaoRutTienATM extends JFrame {
 		jScrollPane.setBorder(titledBorder);
 		pnBaoCaoTinhHinh.add(jScrollPane);
 		
-		
-		
-		Container container = getContentPane();
-		container.add(pnBaoCaoTinhHinh);
+		return pnBaoCaoTinhHinh;
 		
 	}
 	
@@ -220,15 +216,4 @@ public class BaoCaoRutTienATM extends JFrame {
 		p.add(c, gc);
 	}
 	
-	public void display() {
-		setSize(1200, 750);
-		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-	}
-	public static void main(String[] args) {
-		BaoCaoRutTienATM atm = new BaoCaoRutTienATM();
-		atm.baoCaoTinhHinhRutTienATM();
-		atm.display();
-		
-	}
 }
