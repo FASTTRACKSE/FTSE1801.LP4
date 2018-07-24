@@ -5,16 +5,14 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,6 +23,9 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import quanly.entity.MayATM;
+import quanly.model.MayAtmDAO;
+
 public class AppQuanLyATM extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -34,14 +35,14 @@ public class AppQuanLyATM extends JFrame {
 	JPanel pnQuanLyKH, pnQuanLyATM, pnQuanLyGD, pnMayATM;
 	JLabel logoname, title;
 	CardLayout card;
-	JButton btMay1, btMay2, btMay3, btMay4, btMay5, btMay6, btMay7, btMay8, btMay9, btMay10;
+	JButton jbmayATM;
 	JTextField txtTree;
 	JTree tree;
 	DefaultMutableTreeNode root;
 	DefaultMutableTreeNode file, file2;
 	DefaultMutableTreeNode quanLyKH, quanLyATM, quanLyGD;
 	DefaultMutableTreeNode baoCaoKH, baoCaoTinhTrangATM, baoCaoRutTienKH, BaoCaoRutTienATM;
-	MayATM mayATM;
+	MayATMView mayATMView;
 
 	TreeSelectionListener treeSelectionListener = new TreeSelectionListener() {
 		@Override
@@ -53,6 +54,7 @@ public class AppQuanLyATM extends JFrame {
 			} else if (treeNode.toString().equals("Quản lý máy ATM")) {
 				card.show(pnAllCenter, "quanLyATM");
 			} else if (treeNode.toString().equals("Quản lý giao dịch")) {
+				pnAllCenter.add(pnQuanLYGiaoDich(),"quanLyGD");
 				card.show(pnAllCenter, "quanLyGD");
 			} else if (treeNode.toString().equals("Báo cáo khách hàng")) {
 				card.show(pnAllCenter, "baoCaoKH");
@@ -63,15 +65,14 @@ public class AppQuanLyATM extends JFrame {
 			} else if (treeNode.toString().equals("Chương trình quản lý máy ATM của ngân hàng")) {
 				card.show(pnAllCenter, "Đây là trang chủ");
 			}
-
 		}
 	};
 
 	ActionListener actionListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			mayATM = new MayATM();
-			mayATM.mayATM();
+				mayATMView = new MayATMView(e.getActionCommand());
+				mayATMView.mayATM();
 		}
 	};
 
@@ -144,49 +145,7 @@ public class AppQuanLyATM extends JFrame {
 		pnAllCenter.add(atm.qLyMayATM(), "quanLyATM");
 
 		// Quản lý giao dịch
-		pnQuanLyGD = new JPanel();
-		pnQuanLyGD.setLayout(new BoxLayout(pnQuanLyGD, BoxLayout.Y_AXIS));
-		title = new JLabel("Máy ATM");
-		title.setFont(new Font("Times New Roman", Font.BOLD, 30));
-		title.setForeground(Color.RED);
-		pnQuanLyGD.add(title);
-		pnMayATM = new JPanel();
-		pnMayATM.setLayout(new GridBagLayout());
-		btMay1 = new JButton("May001");
-		btMay2 = new JButton("May002");
-		btMay3 = new JButton("May003");
-		btMay4 = new JButton("May004");
-		btMay5 = new JButton("May005");
-		btMay6 = new JButton("May006");
-		btMay7 = new JButton("May007");
-		btMay8 = new JButton("May008");
-		btMay9 = new JButton("May009");
-		btMay10 = new JButton("May010");
-
-		btMay1.addActionListener(actionListener);
-		btMay2.addActionListener(actionListener);
-		btMay3.addActionListener(actionListener);
-		btMay4.addActionListener(actionListener);
-		btMay5.addActionListener(actionListener);
-		btMay6.addActionListener(actionListener);
-		btMay7.addActionListener(actionListener);
-		btMay8.addActionListener(actionListener);
-		btMay9.addActionListener(actionListener);
-		btMay10.addActionListener(actionListener);
-
-		addItem(pnMayATM, btMay1, 0, 0, 1, 1, GridBagConstraints.CENTER);
-		addItem(pnMayATM, btMay2, 0, 1, 1, 1, GridBagConstraints.CENTER);
-		addItem(pnMayATM, btMay3, 0, 2, 1, 1, GridBagConstraints.CENTER);
-		addItem(pnMayATM, btMay4, 0, 3, 1, 1, GridBagConstraints.CENTER);
-		addItem(pnMayATM, btMay5, 0, 4, 1, 1, GridBagConstraints.CENTER);
-		addItem(pnMayATM, btMay6, 1, 0, 1, 1, GridBagConstraints.CENTER);
-		addItem(pnMayATM, btMay7, 1, 1, 1, 1, GridBagConstraints.CENTER);
-		addItem(pnMayATM, btMay8, 1, 2, 1, 1, GridBagConstraints.CENTER);
-		addItem(pnMayATM, btMay9, 1, 3, 1, 1, GridBagConstraints.CENTER);
-		addItem(pnMayATM, btMay10, 1, 4, 1, 1, GridBagConstraints.CENTER);
-
-		pnQuanLyGD.add(pnMayATM);
-		pnAllCenter.add(pnQuanLyGD, "quanLyGD");
+		pnAllCenter.add(pnQuanLYGiaoDich(), "quanLyGD");
 		
 		// Báo cáo khách hàng
 		BaoCaoKhachHang khachHang = new BaoCaoKhachHang();
@@ -206,30 +165,31 @@ public class AppQuanLyATM extends JFrame {
 	}
 
 	/**
-	 * Sắp xếp button
-	 * 
-	 * @param p
-	 * @param c
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
-	 * @param align
+	 * JPanel quản lý giao dịch
+	 * @return
 	 */
-	public void addItem(JPanel p, JComponent c, int x, int y, int width, int height, int align) {
-		GridBagConstraints gc = new GridBagConstraints();
-		gc.gridx = x;
-		gc.gridy = y;
-		gc.gridwidth = width;
-		gc.gridheight = height;
-		gc.weightx = 100.0;
-		gc.weighty = 100.0;
-		gc.insets = new Insets(5, 5, 5, 5);
-		gc.anchor = align;
-		gc.fill = GridBagConstraints.NONE;
-		p.add(c, gc);
+	public JPanel pnQuanLYGiaoDich() {
+		pnQuanLyGD = new JPanel();
+		pnQuanLyGD.setLayout(new BoxLayout(pnQuanLyGD, BoxLayout.Y_AXIS));
+		title = new JLabel("Máy ATM");
+		title.setFont(new Font("Times New Roman", Font.BOLD, 30));
+		title.setForeground(Color.RED);
+		pnQuanLyGD.add(title);
+		pnMayATM = new JPanel();
+		pnMayATM.setLayout(new GridLayout(5,10));
+		
+		MayAtmDAO mayAtmDAO = new MayAtmDAO();
+		ArrayList<MayATM> mayATMs = mayAtmDAO.showAllMayATM();
+		for (int i = 0; i < mayATMs.size(); i++) {
+			String nameButton = mayATMs.get(i).getMaMay();
+			jbmayATM = new JButton(nameButton);
+			jbmayATM.addActionListener(actionListener);
+			pnMayATM.add(jbmayATM);
+		}
+		pnQuanLyGD.add(pnMayATM);
+		return pnQuanLyGD;
 	}
-
+	
 	/**
 	 * Tạo 1 cửa sổ
 	 */

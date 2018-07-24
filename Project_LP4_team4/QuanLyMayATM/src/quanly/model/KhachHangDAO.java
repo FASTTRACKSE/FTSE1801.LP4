@@ -510,7 +510,7 @@ public class KhachHangDAO {
 		DatabaseUntil.closeConnection(conn);
 		return myList;
 	}
-
+	
 	/**
 	 * lấy ra all danh sách phường theo quận
 	 * 

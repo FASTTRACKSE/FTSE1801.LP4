@@ -21,7 +21,7 @@ public class DangNhapDAO {
 	public boolean dangNhap(String soTK, String pass) {
 		boolean kiemTra = false;
 		conn = DatabaseUntil.getConnect();
-		String sql = "SELECT * FROM the_atm WHERE soTK = ? AND passWord = ?";
+		String sql = "SELECT * FROM the_atm JOIN khach_hang ON the_atm.soTheATM = khach_hang.soTheATM WHERE the_atm.soTK = ? AND the_atm.pass = ?";
 		PreparedStatement statement = null;
 		try {
 			statement = conn.prepareStatement(sql);
@@ -54,15 +54,14 @@ public class DangNhapDAO {
 	 * @param soTK
 	 * @return
 	 */
-	public ArrayList<KhachHang> showKhachHangTheoMaKH(String soTK) {
-		ArrayList<KhachHang> myList = new ArrayList<>();
+	public KhachHang showKhachHangTheoMaKH(String soThe) {
 		PreparedStatement statement = null;
-		KhachHang khachHang;
+		KhachHang khachHang = null;
 		conn = DatabaseUntil.getConnect();
-		String sql = "SELECT*FROM khach_hang JOIN phuong ON khach_hang.maPhuong = phuong.maPhuong JOIN quan ON phuong.maQuan = quan.maQuan JOIN the_atm ON khach_hang.soTheATM = the_atm.soTheATM";
+		String sql = "SELECT*FROM khach_hang JOIN phuong ON khach_hang.maPhuong = phuong.maPhuong JOIN quan ON phuong.maQuan = quan.maQuan JOIN the_atm ON khach_hang.soTheATM = the_atm.soTheATM WHERE the_atm.soTK= ?";
 		try {
 			statement = conn.prepareStatement(sql);
-			statement.setString(1, soTK);
+			statement.setString(1, soThe);
 			ResultSet resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
@@ -70,14 +69,13 @@ public class DangNhapDAO {
 				khachHang.setMaKH(resultSet.getString("khach_hang.maKhachHang"));
 				khachHang.setTenKH(resultSet.getString("khach_hang.tenKhachHang"));
 				khachHang.setDiaChi(resultSet.getString("khach_hang.diaChi"));
-				khachHang.setPhuong(resultSet.getString("danh_sach_phuong.tenPhuong"));
-				khachHang.setQuan(resultSet.getString("danh_sach_quan.tenQuan"));
+				khachHang.setPhuong(resultSet.getString("phuong.tenPhuong"));
+				khachHang.setQuan(resultSet.getString("quan.tenQuan"));
 				khachHang.setSoDT(resultSet.getString("khach_hang.soDienThoai"));
 				khachHang.setEmail(resultSet.getString("khach_hang.email"));
 				khachHang.setSoTheATM(resultSet.getString("khach_hang.soTheATM"));
 				khachHang.setSoTK(resultSet.getString("the_atm.soTK"));
-				khachHang.setSoTienTrongTK(resultSet.getString("soTienTrongTK"));
-				myList.add(khachHang);
+				khachHang.setSoTienTrongTK(resultSet.getString("khach_hang.soTienTrongTK"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -92,7 +90,7 @@ public class DangNhapDAO {
 		}
 
 		DatabaseUntil.closeConnection(conn);
-		return myList;
+		return khachHang;
 	}
 	
 	/**

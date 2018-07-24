@@ -7,11 +7,13 @@ import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -20,7 +22,10 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-public class MayATM extends JFrame {
+import quanly.entity.KhachHang;
+import quanly.model.DangNhapDAO;
+
+public class MayATMView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
@@ -38,9 +43,13 @@ public class MayATM extends JFrame {
 	JTable table;
 	CardLayout card;
 	Container conn;
-
-	public MayATM() {
+	String maMayATM;
+	DangNhapDAO dangNhapDAO;
+	KhachHang khachHang;
+	
+	public MayATMView(String maMay) {
 		display();
+		maMayATM = maMay;
 	}
 
 	public void mayATM() {
@@ -77,11 +86,10 @@ public class MayATM extends JFrame {
 
 		conn.add(pnTitle, "North");
 		conn.add(pnCenter, "Center");
-
 	}
 
-	public void thongTinKH() {
-
+	public void thongTinKH(String tenKH) {
+		
 		conn = getContentPane();
 		conn.setLayout(new BorderLayout());
 		pnTitle = new JPanel();
@@ -142,6 +150,7 @@ public class MayATM extends JFrame {
 		diaChi = new JTextField(10);
 		quan = new JTextField(10);
 		phuong = new JTextField(10);
+		ten.setText(tenKH);
 		pnTextField1.add(maKH);
 		pnTextField1.add(ten);
 		pnTextField1.add(diaChi);
@@ -236,9 +245,16 @@ public class MayATM extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 
 			if (e.getSource() == btDangNhap) {
-				MayATM mayATM = new MayATM();
+				dangNhapDAO = new DangNhapDAO();
+				if (dangNhapDAO.dangNhap(txtTaiKhoan.getText(), txtPin.getText())) {
+				khachHang = dangNhapDAO.showKhachHangTheoMaKH(txtTaiKhoan.getText());
+				MayATMView mayATM = new MayATMView(maMayATM);
 				mayATM.display();
-				mayATM.thongTinKH();
+				mayATM.thongTinKH(khachHang.getTenKH());
+				}else {
+					JOptionPane.showMessageDialog(null, "Sai số tài khoản hoặc pass");
+				}
+				
 			} else if (e.getSource() == btThongTin) {
 				card.show(cardLayout, "thongTin");
 			} else if (e.getSource() == btRutTien) {
