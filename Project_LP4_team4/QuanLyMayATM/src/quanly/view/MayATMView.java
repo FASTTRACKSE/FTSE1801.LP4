@@ -88,7 +88,7 @@ public class MayATMView extends JFrame {
 		conn.add(pnCenter, "Center");
 	}
 
-	public void thongTinKH(String tenKH) {
+	public void thongTinKH(KhachHang khachHang) {
 		
 		conn = getContentPane();
 		conn.setLayout(new BorderLayout());
@@ -150,7 +150,13 @@ public class MayATMView extends JFrame {
 		diaChi = new JTextField(10);
 		quan = new JTextField(10);
 		phuong = new JTextField(10);
-		ten.setText(tenKH);
+		
+		maKH.setText(khachHang.getMaKH());
+		ten.setText(khachHang.getTenKH());
+		diaChi.setText(khachHang.getDiaChi());
+		phuong.setText(khachHang.getPhuong());
+		quan.setText(khachHang.getQuan());
+		
 		pnTextField1.add(maKH);
 		pnTextField1.add(ten);
 		pnTextField1.add(diaChi);
@@ -179,6 +185,13 @@ public class MayATMView extends JFrame {
 		soThe = new JTextField(10);
 		soTK = new JTextField(10);
 		soTien = new JTextField(10);
+		
+		soDT.setText(khachHang.getSoDT());
+		email.setText(khachHang.getEmail());
+		soThe.setText(khachHang.getSoTheATM());
+		soTK.setText(khachHang.getSoTK());
+		soTien.setText(khachHang.getSoTienTrongTK());
+		
 		pnTextField2.add(soDT);
 		pnTextField2.add(email);
 		pnTextField2.add(soThe);
@@ -239,6 +252,15 @@ public class MayATMView extends JFrame {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 
+	public boolean kiemTraSoTien() {
+		boolean kiemTra = true;
+		String pantter = "[1-9][0-9]*0000";
+		if (txtRutTien.getText().matches(pantter)) {
+			kiemTra = false;
+		}
+		return kiemTra;
+	}
+	
 	ActionListener actionListener = new ActionListener() {
 
 		@Override
@@ -250,7 +272,8 @@ public class MayATMView extends JFrame {
 				khachHang = dangNhapDAO.showKhachHangTheoMaKH(txtTaiKhoan.getText());
 				MayATMView mayATM = new MayATMView(maMayATM);
 				mayATM.display();
-				mayATM.thongTinKH(khachHang.getTenKH());
+				mayATM.thongTinKH(khachHang);
+			
 				}else {
 					JOptionPane.showMessageDialog(null, "Sai số tài khoản hoặc pass");
 				}
@@ -261,6 +284,16 @@ public class MayATMView extends JFrame {
 				card.show(cardLayout, "rutTien");
 			} else if (e.getSource() == btThoatGD) {
 				dispose(); // Destroy the JFrame object
+			}
+			
+			if (e.getSource()==btRut) {
+				if (kiemTraSoTien()) {
+					
+				} else {
+					JOptionPane.showMessageDialog(null, "Số tiền phải là bội số của 10000");
+				}
+			} else {
+
 			}
 		}
 	};
