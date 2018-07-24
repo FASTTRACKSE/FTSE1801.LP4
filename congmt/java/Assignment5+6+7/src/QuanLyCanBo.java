@@ -30,7 +30,7 @@ public class QuanLyCanBo {
 		System.out.println("|4.Sắp xếp Cán bộ                                   |");
 		System.out.println("|5.Ghi file cán bộ                                  |");
 		System.out.println("|6.Đọc file cán bộ                                  |");
-		System.out.println("|5.Thoát chương trình                               |");
+		System.out.println("|7.Thoát chương trình                               |");
 		System.out.println("+---------------------------------------------------+");
 		System.out.println("Mời Bạn Chọn Chức Năng");
 	}
