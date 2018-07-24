@@ -37,7 +37,7 @@ public class BaoCaoTinhTrangATM extends JFrame {
 		pnBaoCaoTinhHinh = new JPanel();
 		pnBaoCaoTinhHinh.setLayout(new BoxLayout(pnBaoCaoTinhHinh, BoxLayout.Y_AXIS));
 		// Tiêu đề
-		title = new JLabel("Báo cáo khách hàng");
+		title = new JLabel("Báo cáo tình trạng máy ATM");
 		title.setFont(new Font("Times New Roman", Font.BOLD, 30));
 		title.setForeground(Color.RED);
 		pnBaoCaoTinhHinh.add(title);
