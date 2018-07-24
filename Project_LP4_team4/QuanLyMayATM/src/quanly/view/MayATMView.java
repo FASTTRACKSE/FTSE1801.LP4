@@ -5,12 +5,17 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -30,8 +35,8 @@ public class MayATMView extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	JPanel pnCenter, pnTitle, pnNhap, pnDangNhap, pnMayATM, pnThongTin, pnRutTien, pnThoat;
-	JPanel jPanel, pnAllCenter, pnMenu, pnSouth, pnButton, pnThongtinGD, cardLayout;
-	JPanel pnLabel1, pnLabel2, pnTextField1, pnTextField2, pnLabel3, pnButton2;
+	JPanel jPanel, pnAllCenter, pnMenu, pnSouth, pnButton, cardLayout;
+	JPanel pnLabel1, pnLabel2, pnThongTinKH, pnLabel3, pnButton2;
 	JLabel title, title2, logoname, lbAccount, lbPin;
 	JLabel lbMaKH, lbTen, lbDiaChi, lbQuan, lbPhuong, lbSoDT, lbEmail, lbSoThe, lbSoTK, lbSoTien, lbRutTien;
 	JTextField txtTaiKhoan, txtPin, txtRutTien;
@@ -128,28 +133,20 @@ public class MayATMView extends JFrame {
 
 		// Phần thông tin khách hàng
 		pnThongTin = new JPanel();
+		pnThongTin.setLayout(new GridLayout(1,2));
 		pnLabel1 = new JPanel();
-		pnLabel1.setLayout(new BoxLayout(pnLabel1, BoxLayout.Y_AXIS));
+		pnLabel1.setLayout(new GridBagLayout());
 		lbMaKH = new JLabel("Mã khách hàng");
 		lbTen = new JLabel("Họ tên khách hàng");
 		lbDiaChi = new JLabel("Địa chỉ nhà");
 		lbQuan = new JLabel("Quận");
 		lbPhuong = new JLabel("Phường");
-
-		pnLabel1.add(lbMaKH);
-		pnLabel1.add(lbTen);
-		pnLabel1.add(lbDiaChi);
-		pnLabel1.add(lbQuan);
-		pnLabel1.add(lbPhuong);
-		pnThongTin.add(pnLabel1);
-
-		pnTextField1 = new JPanel();
-		pnTextField1.setLayout(new BoxLayout(pnTextField1, BoxLayout.Y_AXIS));
-		maKH = new JTextField(10);
-		ten = new JTextField(10);
-		diaChi = new JTextField(10);
-		quan = new JTextField(10);
-		phuong = new JTextField(10);
+		
+		maKH = new JTextField(15);
+		ten = new JTextField(15);
+		diaChi = new JTextField(15);
+		quan = new JTextField(15);
+		phuong = new JTextField(15);
 		
 		maKH.setText(khachHang.getMaKH());
 		ten.setText(khachHang.getTenKH());
@@ -157,47 +154,52 @@ public class MayATMView extends JFrame {
 		phuong.setText(khachHang.getPhuong());
 		quan.setText(khachHang.getQuan());
 		
-		pnTextField1.add(maKH);
-		pnTextField1.add(ten);
-		pnTextField1.add(diaChi);
-		pnTextField1.add(quan);
-		pnTextField1.add(phuong);
-		pnThongTin.add(pnTextField1);
+		addItem(pnLabel1, lbMaKH, 0, 0, 1, 1, GridBagConstraints.EAST);
+		addItem(pnLabel1, lbTen, 0, 1, 1, 1, GridBagConstraints.EAST);
+		addItem(pnLabel1, lbDiaChi, 0, 2, 1, 1, GridBagConstraints.EAST);
+		addItem(pnLabel1, lbQuan, 0, 3, 1, 1, GridBagConstraints.EAST);
+		addItem(pnLabel1, lbPhuong, 0, 4, 1, 1, GridBagConstraints.EAST);
+
+		addItem(pnLabel1, maKH, 1, 0, 2, 1, GridBagConstraints.WEST);
+		addItem(pnLabel1, ten, 1, 1, 2, 1, GridBagConstraints.WEST);
+		addItem(pnLabel1, diaChi, 1, 2, 2, 1, GridBagConstraints.WEST);
+		addItem(pnLabel1, quan, 1, 3, 2, 1, GridBagConstraints.WEST);
+		addItem(pnLabel1, phuong, 1, 4, 2, 1, GridBagConstraints.WEST);
+		pnThongTin.add(pnLabel1);
 
 		pnLabel2 = new JPanel();
-		pnLabel2.setLayout(new BoxLayout(pnLabel2, BoxLayout.Y_AXIS));
+		pnLabel2.setLayout(new GridBagLayout());
 		lbSoDT = new JLabel("Số điện thoại");
 		lbEmail = new JLabel("Email");
 		lbSoThe = new JLabel("Số thẻ");
 		lbSoTK = new JLabel("Số tài khoản ngân hàng");
 		lbSoTien = new JLabel("Số tiền trong tài khoản");
-		pnLabel2.add(lbSoDT);
-		pnLabel2.add(lbEmail);
-		pnLabel2.add(lbSoThe);
-		pnLabel2.add(lbSoTK);
-		pnLabel2.add(lbSoTien);
-		pnThongTin.add(pnLabel2);
-
-		pnTextField2 = new JPanel();
-		pnTextField2.setLayout(new BoxLayout(pnTextField2, BoxLayout.Y_AXIS));
-		soDT = new JTextField(10);
-		email = new JTextField(10);
-		soThe = new JTextField(10);
-		soTK = new JTextField(10);
-		soTien = new JTextField(10);
+		
+		soDT = new JTextField(15);
+		email = new JTextField(15);
+		soThe = new JTextField(15);
+		soTK = new JTextField(15);
+		soTien = new JTextField(15);
 		
 		soDT.setText(khachHang.getSoDT());
 		email.setText(khachHang.getEmail());
 		soThe.setText(khachHang.getSoTheATM());
 		soTK.setText(khachHang.getSoTK());
 		soTien.setText(khachHang.getSoTienTrongTK());
+
+		addItem(pnLabel2, lbSoDT, 0, 0, 1, 1, GridBagConstraints.EAST);
+		addItem(pnLabel2, lbEmail, 0, 1, 1, 1, GridBagConstraints.EAST);
+		addItem(pnLabel2, lbSoThe, 0, 2, 1, 1, GridBagConstraints.EAST);
+		addItem(pnLabel2, lbSoTK, 0, 3, 1, 1, GridBagConstraints.EAST);
+		addItem(pnLabel2, lbSoTien, 0, 4, 1, 1, GridBagConstraints.EAST);
+
+		addItem(pnLabel2, soDT, 1, 0, 2, 1, GridBagConstraints.WEST);
+		addItem(pnLabel2, email, 1, 1, 2, 1, GridBagConstraints.WEST);
+		addItem(pnLabel2, soThe, 1, 2, 2, 1, GridBagConstraints.WEST);
+		addItem(pnLabel2, soTK, 1, 3, 2, 1, GridBagConstraints.WEST);
+		addItem(pnLabel2, soTien, 1, 4, 2, 1, GridBagConstraints.WEST);
+		pnThongTin.add(pnLabel2);
 		
-		pnTextField2.add(soDT);
-		pnTextField2.add(email);
-		pnTextField2.add(soThe);
-		pnTextField2.add(soTK);
-		pnTextField2.add(soTien);
-		pnThongTin.add(pnTextField2);
 
 		// Phần rút tiền
 		pnRutTien = new JPanel();
@@ -238,6 +240,31 @@ public class MayATMView extends JFrame {
 		conn.add(pnSouth, "West");
 		conn.add(pane, "Center");
 		getAction();
+	}
+	
+	/**
+	 * Sắp xếp button
+	 * 
+	 * @param p
+	 * @param c
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 * @param align
+	 */
+	public void addItem(JPanel p, JComponent c, int x, int y, int width, int height, int align) {
+		GridBagConstraints gc = new GridBagConstraints();
+		gc.gridx = x;
+		gc.gridy = y;
+		gc.gridwidth = width;
+		gc.gridheight = height;
+		gc.weightx = 100.0;
+		gc.weighty = 100.0;
+		gc.insets = new Insets(5, 5, 5, 5);
+		gc.anchor = align;
+		gc.fill = GridBagConstraints.NONE;
+		p.add(c, gc);
 	}
 
 	public void getAction() {

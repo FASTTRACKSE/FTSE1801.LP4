@@ -5,14 +5,22 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -21,13 +29,19 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
+
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
+
 public class BaoCaoTinhHinhRutTien extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
 	JPanel pnBaoCaoTH, chon, pnTongTienRut;
 	JPanel pnLabel, pnBox, pnTim;
-	JLabel title, thoiGian, tongTienRut, maKH;
+	JLabel title, ngay, ngay1, tongTienRut, maKH;
 	JTextField txtMaKH, txtTongTienRut;
 	JComboBox<?> boxThoiGian;
 	JButton tim;
@@ -35,12 +49,45 @@ public class BaoCaoTinhHinhRutTien extends JFrame {
 	JTable table;
 	Border border;
 	TitledBorder  titledBorder;
+	UtilDateModel model, model1;
+	JDatePanelImpl datePanel, datePanel1;
+	JDatePickerImpl datePicker, datePicker1;
+	Properties p;
+	Date date, date1;
+	ActionListener actionListener = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource() == tim) {
+				String strDate = datePicker.getJFormattedTextField().getText();
+				String strDate1 = datePicker1.getJFormattedTextField().getText();
+				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+				java.util.Date date = null;
+				java.util.Date date1 = null;
+				try {
+					date = format.parse(strDate);
+					date1 = format.parse(strDate1);
+				} catch (java.text.ParseException e1) {
+					e1.printStackTrace();
+				}
+				long soSanh = (date1.getTime() - date.getTime()) / (24*3600*1000);
+				if (soSanh>90 || soSanh<0) {
+					JOptionPane.showMessageDialog(null, "Sai tổng số ngày. Mời nhập lại");
+				} else {
+					JOptionPane.showMessageDialog(null, soSanh+" ngày");
+				}
+				
+				
+				
+			} 
+		}
+	};
 	
 	public JPanel tinhHinhRutTien() {
 		pnBaoCaoTH = new JPanel();
 		pnBaoCaoTH.setLayout(new BoxLayout(pnBaoCaoTH, BoxLayout.Y_AXIS));
 		// Tiêu đề
-		title = new JLabel("Báo cáo khách hàng");
+		title = new JLabel("Báo cáo tình hình rút tiền của khách hàng");
 		title.setFont(new Font("Times New Roman", Font.BOLD, 30));
 		title.setForeground(Color.RED);
 		pnBaoCaoTH.add(title);
@@ -53,19 +100,31 @@ public class BaoCaoTinhHinhRutTien extends JFrame {
 		maKH = new JLabel("Mã khách hàng:");
 		txtMaKH = new JTextField(10);
 		
-		thoiGian = new JLabel("Chọn thời gian:");
-		String strThoiGian[] = {" "};
-		boxThoiGian = new JComboBox<>(strThoiGian);
+		ngay = new JLabel("Từ ngày:");
+		model = new UtilDateModel();
+		p = new Properties();
+		p.put("text.today", "Today");
+		p.put("text.month", "Month");
+		p.put("text.year", "Year");
+		datePanel = new JDatePanelImpl(model, p);
+		datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
 		
+		ngay1 = new JLabel("Đến ngày");
+		model1 = new UtilDateModel();
+		datePanel1 = new JDatePanelImpl(model1, p);
+		datePicker1 = new JDatePickerImpl(datePanel1, new DateLabelFormatter());
 		
 		addItem(pnLabel, maKH, 0, 0, 1, 1, GridBagConstraints.EAST);
 		addItem(pnLabel, txtMaKH, 1, 0, 2, 1, GridBagConstraints.WEST);
-		addItem(pnLabel, thoiGian, 0, 1, 1, 1, GridBagConstraints.EAST);
-		addItem(pnLabel, boxThoiGian, 1, 1, 2, 1, GridBagConstraints.WEST);
+		addItem(pnLabel, ngay, 0, 1, 1, 1, GridBagConstraints.EAST);
+		addItem(pnLabel, datePicker, 1, 1, 2, 1, GridBagConstraints.WEST);
+		addItem(pnLabel, ngay1, 0, 2, 1, 1, GridBagConstraints.EAST);
+		addItem(pnLabel, datePicker1, 1, 2, 2, 1, GridBagConstraints.WEST);
 		chon.add(pnLabel);
 		
 		pnTim = new JPanel();
 		tim = new JButton("Tìm danh sách");
+		tim.addActionListener(actionListener);
 		pnTim.add(tim);
 		chon.add(pnTim);
 		pnBaoCaoTH.add(chon);
@@ -93,6 +152,28 @@ public class BaoCaoTinhHinhRutTien extends JFrame {
 		return pnBaoCaoTH;
 				
 	}
+	public class DateLabelFormatter extends AbstractFormatter {
+
+		private static final long serialVersionUID = 1L;
+		String datePattern = "yyyy-MM-dd";
+	    SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
+
+	    @Override
+	    public Object stringToValue(String text) throws ParseException, java.text.ParseException {
+	        return dateFormatter.parseObject(text);
+	    }
+
+	    @Override
+	    public String valueToString(Object value) throws ParseException {
+	        if (value != null) {
+	            Calendar cal = (Calendar) value;
+	            return dateFormatter.format(cal.getTime());
+	        }
+
+	        return "";
+	    }
+
+	}
 	
 	/**
 	 * Sắp xếp các lable nhập
@@ -117,5 +198,6 @@ public class BaoCaoTinhHinhRutTien extends JFrame {
 		gc.fill = GridBagConstraints.NONE;
 		p.add(c, gc);
 	}
+	
 	
 }
