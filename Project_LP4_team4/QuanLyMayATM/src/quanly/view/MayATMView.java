@@ -31,7 +31,9 @@ import quanly.entity.GiaoDich;
 import quanly.entity.KhachHang;
 import quanly.model.DangNhapDAO;
 import quanly.model.GiaoDichDAO;
+import quanly.model.KhachHangDAO;
 import quanly.model.MayAtmDAO;
+import quanly.model.TheAtmDAO;
 
 public class MayATMView extends JFrame {
 
@@ -52,13 +54,24 @@ public class MayATMView extends JFrame {
 	CardLayout card;
 	Container conn;
 	String maMayATM;
-	String soTheAtm;
+	static String soTheAtm = null;
 	DangNhapDAO dangNhapDAO;
+	KhachHangDAO khachHangDAO;
+	MayAtmDAO mayAtmDAO;
+	GiaoDichDAO giaoDichDAO;
+	TheAtmDAO theAtmDAO;
 	KhachHang khachHang;
-	
+	GiaoDich giaoDich;
 	public MayATMView(String maMay) {
 		display();
 		maMayATM = maMay;
+		khachHangDAO = new KhachHangDAO();
+		dangNhapDAO = new DangNhapDAO();
+		giaoDichDAO = new GiaoDichDAO();
+		theAtmDAO = new TheAtmDAO();
+		mayAtmDAO = new MayAtmDAO();
+		khachHang = new KhachHang();
+		giaoDich = new GiaoDich();
 	}
 
 	public void mayATM() {
@@ -299,13 +312,13 @@ public class MayATMView extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 
 			if (e.getSource() == btDangNhap) {
-				soTheAtm = txtTaiKhoan.getText(); //nhẩy jputon kolays được txt
+				soTheAtm = txtTaiKhoan.getText();
 				dangNhapDAO = new DangNhapDAO();
 				if (dangNhapDAO.dangNhap(soTheAtm, txtPin.getText())) {
-				khachHang = dangNhapDAO.showKhachHangTheoMaKH(txtTaiKhoan.getText());
+				KhachHang khachHang1 = khachHangDAO.showKhachHangTheoMaKH(soTheAtm);
 				MayATMView mayATM = new MayATMView(maMayATM);
 				mayATM.display();
-				mayATM.thongTinKH(khachHang);
+				mayATM.thongTinKH(khachHang1);
 				}else {
 					JOptionPane.showMessageDialog(null, "Sai số tài khoản hoặc pass");
 				}
@@ -319,21 +332,15 @@ public class MayATMView extends JFrame {
 			}
 			
 			if (e.getSource()==btRut) {
-				MayAtmDAO atmDAO = new MayAtmDAO();
-				KhachHang khachHang = new KhachHang();
-				GiaoDich giaoDich = new GiaoDich();
-				DangNhapDAO dangNhapDAO = new DangNhapDAO();
-				GiaoDichDAO giaoDichDAO = new GiaoDichDAO();
 				if (kiemTraSoTien()) {
 					String soTienRut = txtRutTien.getText();
-					JOptionPane.showMessageDialog(null, soTheAtm);
-					if (dangNhapDAO.kiemTraTienMayATM(atmDAO.showMayATMMaMay(maMayATM), soTienRut)) {
-						if (dangNhapDAO.rutTien(dangNhapDAO.showKhachHangTheoMaKH(txtTaiKhoan.getText()), soTienRut)) {
-							giaoDichDAO.addThongTinGiaoDich(soTienRut, giaoDichDAO.layThongTinMaThe(txtTaiKhoan.getText()), maMayATM);
-							giaoDichDAO.updateMayATM(atmDAO.showMayATMMaMay(maMayATM), txtRutTien.getText());
+					if (dangNhapDAO.kiemTraTienMayATM(mayAtmDAO.showMayATMMaMay(maMayATM), soTienRut)) {
+						if (khachHangDAO.rutTien(khachHangDAO.showKhachHangTheoMaKH(soTheAtm), soTienRut)) {
+							giaoDichDAO.addThongTinGiaoDich(soTienRut, theAtmDAO.layThongTinMaThe(soTheAtm), maMayATM);
+							mayAtmDAO.updateMayAtmRutTien(mayAtmDAO.showMayATMMaMay(maMayATM), soTienRut);
 							giaoDich = giaoDichDAO.layMaGiaoDich();
-							khachHang = dangNhapDAO.showKhachHangTheoMaKH(txtTaiKhoan.getText());
-							tableModel.setRowCount(0);
+							khachHang = khachHangDAO.showKhachHangTheoMaKH(soTheAtm);
+							soTien.setText(khachHang.getSoTienTrongTK());
 							tableModel.addRow(new String[] {(""+giaoDich.getMaGiaoDich()), giaoDich.getThoiGian(), txtRutTien.getText(),khachHang.getSoTienTrongTK()});
 						}else {
 							JOptionPane.showMessageDialog(null, "Số tiền trong thẻ không đủ để rút");

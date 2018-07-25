@@ -32,6 +32,8 @@ import javax.swing.table.DefaultTableModel;
 
 import quanly.entity.KhachHang;
 import quanly.model.KhachHangDAO;
+import quanly.model.PhuongQuanDAO;
+import quanly.model.TheAtmDAO;
 
 public class QuanLyKhachHang extends JFrame {
 
@@ -47,11 +49,12 @@ public class QuanLyKhachHang extends JFrame {
 	Border border;
 	TitledBorder titledBorder;
 	KhachHangDAO khachHangDAO;
+	PhuongQuanDAO phuongQuanDAO;
+	TheAtmDAO theAtmDAO;
+	
 	KhachHang khachHang;
 	ArrayList<String> listQuan;
 	ArrayList<String> listPhuong;
-	String tenQuan;
-	String tenPhuong;
 	private static final String UNICODE_HOA = "ÀÁẠÃẢĂẮẰẶẴẲÂẤẦẨẪẬĐÈÉẺẼẸÊẾỀỂỄỆỊÍÌỈĨỌÓÒỎÕỘỐỒỔỖÔƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰ";
 	private static final String UNICODE_THUONG = "àáạãảăắằặẵẳâẩấầẫậđèéẻẽẹêếềểễệịíìỉĩọóòỏõộốồổỗôơớờởỡợúùủũụưứừửữự";
 	/**
@@ -60,16 +63,12 @@ public class QuanLyKhachHang extends JFrame {
 	ItemListener itemListener = new ItemListener() {
 		public void itemStateChanged(ItemEvent e) {
 			if (e.getStateChange() == ItemEvent.SELECTED) {
-				tenQuan = boxQuan.getSelectedItem().toString();
+				String	tenQuan = boxQuan.getSelectedItem().toString();
 				boxPhuong.removeAllItems();
-				listPhuong = khachHangDAO.showDanhSachPhuong(tenQuan);
+				listPhuong = phuongQuanDAO.showDanhSachPhuong(tenQuan);
 				for (int i = 0; i < listPhuong.size(); i++) {
 					boxPhuong.addItem(listPhuong.get(i));
 				}
-			}
-
-			if (e.getStateChange() == ItemEvent.SELECTED) {
-				tenPhuong = boxPhuong.getSelectedItem().toString();
 			}
 		}
 	};
@@ -80,11 +79,11 @@ public class QuanLyKhachHang extends JFrame {
 	DocumentListener documentListener = new DocumentListener() {
 
 		public void removeUpdate(DocumentEvent e) {
-			txtSoTK.setText(khachHangDAO.layThongTinMaTK(txtSoTheATM.getText()));
+			txtSoTK.setText(theAtmDAO.layThongTinMaTK(txtSoTheATM.getText()));
 		}
 
 		public void insertUpdate(DocumentEvent e) {
-			txtSoTK.setText(khachHangDAO.layThongTinMaTK(txtSoTheATM.getText()));
+			txtSoTK.setText(theAtmDAO.layThongTinMaTK(txtSoTheATM.getText()));
 		}
 
 		public void changedUpdate(DocumentEvent e) {
@@ -100,9 +99,9 @@ public class QuanLyKhachHang extends JFrame {
 
 			if (button == them) {
 				if (kiemTraNhapDuLieuAddKhachHang()) {
-					KhachHang khachHang = layGiaTriKhachHang();
-					if (khachHangDAO.kiemTraMaKhachHang(khachHangDAO.showAllKhachHang(), khachHang.getMaKH())) {
-						if (khachHangDAO.addKhachHang(khachHang)) {
+					KhachHang khachHang1 = layGiaTriKhachHang();
+					if (khachHangDAO.kiemTraMaKhachHang(khachHangDAO.showAllKhachHang(), khachHang1.getMaKH())) {
+						if (khachHangDAO.addKhachHang(khachHang1, phuongQuanDAO.layThongTinMaPhuong(khachHang1.getPhuong()))) {
 							JOptionPane.showMessageDialog(null, "Thêm khách hàng thành công");
 							tableModel.setRowCount(0);
 							showTable();
@@ -131,7 +130,7 @@ public class QuanLyKhachHang extends JFrame {
 				} else {
 					if (kiemTraNhapDuLieuUpdateKhachHang()) {
 						KhachHang khachHang = layGiaTriKhachHang();
-						if (khachHangDAO.updateKhachHang(khachHang)) {
+						if (khachHangDAO.updateKhachHang(khachHang, phuongQuanDAO.layThongTinMaPhuong(boxPhuong.getSelectedItem().toString()))) {
 							JOptionPane.showMessageDialog(null, "Sửa thành công");
 							tableModel.setRowCount(0);
 							showTable();
@@ -163,13 +162,13 @@ public class QuanLyKhachHang extends JFrame {
 			}
 
 			if (button == tim) {
-				ArrayList<KhachHang> myList = khachHangDAO.timKiemThongTinTheoTen(txtTenKH.getText(),txtMaKH.getText());
+				ArrayList<KhachHang> myList = khachHangDAO.timKiemThongTinTheoTen(layGiaTriKhachHang().getTenKH());
 				tableModel.setRowCount(0);
 				for (int i = 0; i < myList.size(); i++) {
-					if (myList.get(i).getDiaChi().equals(txtDiaChi.getText())
-							|| myList.get(i).getSoDT().equals(txtDienThoai.getText())
-							|| myList.get(i).getEmail().equals(txtEmail.getText())
-							|| myList.get(i).getSoTheATM().equals(txtSoTheATM.getText())) {
+					if (myList.get(i).getDiaChi().equals(layGiaTriKhachHang().getDiaChi())
+							|| myList.get(i).getSoDT().equals(layGiaTriKhachHang().getSoDT())
+							|| myList.get(i).getEmail().equals(layGiaTriKhachHang().getEmail())
+							|| myList.get(i).getSoTheATM().equals(layGiaTriKhachHang().getSoTheATM())) {
 						tableModel.addRow(new String[] { myList.get(i).getMaKH(), myList.get(i).getTenKH(),
 								myList.get(i).getDiaChi(), myList.get(i).getPhuong(), myList.get(i).getQuan(),
 								myList.get(i).getSoDT(), myList.get(i).getEmail(), myList.get(i).getSoTheATM(),
@@ -187,7 +186,7 @@ public class QuanLyKhachHang extends JFrame {
 			}
 
 			if (button == themThe) {
-				if (khachHangDAO.themTheATMChoKhachHang(layGiaTriKhachHang(), khachHangDAO.showAllKhachHang())) {
+				if (khachHangDAO.themTheATMChoKhachHang(layGiaTriKhachHang(), khachHangDAO.showAllKhachHang(), phuongQuanDAO.layThongTinMaPhuong(boxPhuong.getSelectedItem().toString()))) {
 					JOptionPane.showMessageDialog(null, "Thêm thẻ thành công");
 					tableModel.setRowCount(0);
 					showTable();
@@ -207,7 +206,9 @@ public class QuanLyKhachHang extends JFrame {
 	public JPanel quanLyKH() {
 		pnQuanLyKH = new JPanel();
 		khachHangDAO = new KhachHangDAO();
-
+		phuongQuanDAO = new PhuongQuanDAO();
+		theAtmDAO = new TheAtmDAO();
+		
 		title = new JLabel("Quản lý khách hàng");
 		title.setFont(new Font("Times New Roman", Font.BOLD, 30));
 		title.setForeground(Color.RED);
@@ -228,13 +229,13 @@ public class QuanLyKhachHang extends JFrame {
 		txtDiaChi = new JTextField(10);
 
 		boxQuan = new JComboBox<String>();
-		listQuan = khachHangDAO.showAllDanhSachQuan();
+		listQuan = phuongQuanDAO.showAllDanhSachQuan();
 		for (int i = 0; i < listQuan.size(); i++) {
 			boxQuan.addItem(listQuan.get(i).toString());
 		}
 		boxQuan.addItemListener(itemListener);
 		boxPhuong = new JComboBox<String>();
-		listPhuong = khachHangDAO.showDanhSachPhuong(listQuan.get(0).toString());
+		listPhuong = phuongQuanDAO.showDanhSachPhuong(listQuan.get(0).toString());
 		for (int i = 0; i < listPhuong.size(); i++) {
 			boxPhuong.addItem(listPhuong.get(i).toString());
 		}

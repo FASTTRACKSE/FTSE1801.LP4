@@ -30,7 +30,8 @@ import javax.swing.table.DefaultTableModel;
 
 import quanly.entity.MayATM;
 import quanly.model.KhachHangDAO;
-import quanly.model.MayAtmDAO;;
+import quanly.model.MayAtmDAO;
+import quanly.model.PhuongQuanDAO;;
 
 public class QuanLyMayATM extends JFrame {
 
@@ -48,6 +49,7 @@ public class QuanLyMayATM extends JFrame {
 	JComboBox<String> boxPhuong, boxQuan;
 	KhachHangDAO khachHangDAO;
 	MayAtmDAO mayAtmDAO;
+	PhuongQuanDAO phuongQuanDAO;
 	ArrayList<String> listQuan;
 	ArrayList<String> listPhuong;
 	MayATM mayATM;
@@ -62,7 +64,7 @@ public class QuanLyMayATM extends JFrame {
 			if (e.getStateChange() == ItemEvent.SELECTED) {
 				tenQuan = boxQuan.getSelectedItem().toString();
 				boxPhuong.removeAllItems();
-				listPhuong = khachHangDAO.showDanhSachPhuong(tenQuan);
+				listPhuong = phuongQuanDAO.showDanhSachPhuong(tenQuan);
 				for (int i = 0; i < listPhuong.size(); i++) {
 					boxPhuong.addItem(listPhuong.get(i));
 				}
@@ -95,7 +97,7 @@ public class QuanLyMayATM extends JFrame {
 				if (kiemTraAddMayATM()) {
 					mayATM = layThongTinMay();
 					MayATM mayAtm = mayAtmDAO.showMayATMMaMay(mayATM.getMaMay());
-					if (mayAtmDAO.updateMayATM(mayAtm, mayATM.getTongTien())) {
+					if (mayAtmDAO.updateMayATMThemTien(mayAtm, mayATM.getTongTien())) {
 						JOptionPane.showMessageDialog(null, "Thêm tiền thành công");
 						tableModel.setRowCount(0);
 						showTable();
@@ -142,7 +144,8 @@ public class QuanLyMayATM extends JFrame {
 		pnQuanLyATM = new JPanel();
 		khachHangDAO = new KhachHangDAO();
 		mayAtmDAO = new MayAtmDAO();
-
+		phuongQuanDAO = new PhuongQuanDAO();
+		
 		title = new JLabel("Quản lý máy ATM");
 		title.setFont(new Font("Times New Roman", Font.BOLD, 30));
 		title.setForeground(Color.RED);
@@ -170,13 +173,13 @@ public class QuanLyMayATM extends JFrame {
 		quan = new JLabel("Quận:");
 		phuong = new JLabel("Phường:");
 		boxQuan = new JComboBox<String>();
-		listQuan = khachHangDAO.showAllDanhSachQuan();
+		listQuan = phuongQuanDAO.showAllDanhSachQuan();
 		for (int i = 0; i < listQuan.size(); i++) {
 			boxQuan.addItem(listQuan.get(i).toString());
 		}
 		boxQuan.addItemListener(itemListener);
 		boxPhuong = new JComboBox<String>();
-		listPhuong = khachHangDAO.showDanhSachPhuong(listQuan.get(0).toString());
+		listPhuong = phuongQuanDAO.showDanhSachPhuong(listQuan.get(0).toString());
 		for (int i = 0; i < listPhuong.size(); i++) {
 			boxPhuong.addItem(listPhuong.get(i).toString());
 		}

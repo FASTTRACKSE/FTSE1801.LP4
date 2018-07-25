@@ -148,5 +148,71 @@ public class TheAtmDAO {
 		DatabaseUntil.closeConnection(conn);
 		return myList;
 	}
+	
+	/**
+	 * Lấy mã thẻ theo số tài khoản
+	 * @param soTK
+	 * @return
+	 */
+	public String layThongTinMaThe(String soTK) {
+		String maThe = null;
+		conn = DatabaseUntil.getConnect();
+		String sql = "SELECT * FROM the_atm WHERE soTK = ?";
+		PreparedStatement statement = null;
+		try {
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, soTK);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				maThe = resultSet.getString("soTheATM");				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		DatabaseUntil.getConnect();
+		return maThe;
+	}
+	
+	/**
+	 * Lấy thông tin số tài khoản
+	 * 
+	 * @param maSoThe
+	 * @return
+	 */
+	public String layThongTinMaTK(String maSoThe) {
+		String soTK = null;
+		PreparedStatement statement = null;
+		conn = DatabaseUntil.getConnect();
+		String sql = "SELECT soTK FROM the_atm WHERE soTheATM = ?";
+		try {
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, maSoThe);
+			ResultSet resultSet = statement.executeQuery();
 
+			while (resultSet.next()) {
+				soTK = resultSet.getString("soTK");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		DatabaseUntil.closeConnection(conn);
+		return soTK;
+	}
 }

@@ -205,12 +205,9 @@ public class AppQuanLyATM extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 
-	// ________________________________________________________________________________________
-	/* MAIN CLASS */
-	// ----------------------------------------------------------------------------------------
-	public static void main(String args[]) {
-		AppQuanLyATM quanLyATM = new AppQuanLyATM();
-		quanLyATM.display();
+	public static void main(String[] args) {
+		AppQuanLyATM appQuanLyATM = new AppQuanLyATM();
+		appQuanLyATM.display();
 	}
-
+	
 }

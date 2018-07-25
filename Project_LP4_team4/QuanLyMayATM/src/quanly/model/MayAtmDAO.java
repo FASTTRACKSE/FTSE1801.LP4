@@ -10,7 +10,7 @@ import quanly.entity.MayATM;
 
 public class MayAtmDAO {
 	Connection conn;
-	KhachHangDAO khachHangDAO;
+	PhuongQuanDAO phuongQuanDAO;
 	/**
 	 * Thêm máy ATM
 	 * 
@@ -20,8 +20,8 @@ public class MayAtmDAO {
 	public boolean addMayATM(MayATM mayATM) {
 		boolean kiemTra = false;
 		String sql = "INSERT INTO may_atm VALUES (?,?,?,?)";
-		khachHangDAO = new KhachHangDAO();
-		int maPhuong = khachHangDAO.layThongTinMaPhuong(mayATM.getPhuong());
+		phuongQuanDAO = new PhuongQuanDAO();
+		int maPhuong = phuongQuanDAO.layThongTinMaPhuong(mayATM.getPhuong());
 		conn = DatabaseUntil.getConnect();
 		PreparedStatement statement = null;
 		
@@ -54,7 +54,7 @@ public class MayAtmDAO {
 	 * @param myList, soTien
 	 * @return
 	 */
-	public boolean updateMayATM(MayATM mayATM,String soTien) {
+	public boolean updateMayATMThemTien(MayATM mayATM,String soTien) {
 		boolean kiemTra = false;
 		String sql = "UPDATE may_atm SET tongTien=? WHERE maMayATM = ?";
 		Integer allTien = Integer.parseInt(mayATM.getTongTien()) + Integer.parseInt(soTien);
@@ -240,4 +240,37 @@ public class MayAtmDAO {
 	}
 	
 
+	/**
+	 * Update thông tin tiền trong máy ATM khi rút tiền
+	 * 
+	 * @param myList, soTien
+	 * @return
+	 */
+	public boolean updateMayAtmRutTien(MayATM mayATM,String soTien) {
+		boolean kiemTra = false;
+		String sql = "UPDATE may_atm SET tongTien=? WHERE maMayATM = ?";
+		Integer allTien = Integer.parseInt(mayATM.getTongTien()) - Integer.parseInt(soTien);
+		conn = DatabaseUntil.getConnect();
+		PreparedStatement statement = null;
+		try {
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, (String.valueOf(allTien)));
+			statement.setString(2, mayATM.getMaMay());
+			if (statement.executeUpdate() > 0) {
+				kiemTra = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		DatabaseUntil.closeConnection(conn);
+		return kiemTra;
+	}
 }
