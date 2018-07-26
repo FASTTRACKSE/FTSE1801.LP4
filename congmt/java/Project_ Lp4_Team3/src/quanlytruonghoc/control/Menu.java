@@ -66,13 +66,13 @@ public class Menu extends JFrame implements ActionListener {
 	JTable svTable;
 	DefaultTableModel svDtm;
 	LopDao lopDao;
-	ArrayList<Lop> listLop, listLop1;
+	ArrayList<Lop> listSvTheoLop, listLop, listDsLop;
 	JTextField maLopField, tenLopField, namHocField;
 	JButton themLopButton, suaLopButton, xoaLopButton, xemDsButton,xemDsButton1, lamMoiLopButton,timkiemLopButton;
-	JTable lopTable;
+	JTable lopTable, lopTable1;
 	JPanel lopBang;
-	DefaultTableModel lopDtm;
-	JComboBox locTheoNam, locTheoLop;
+	DefaultTableModel lopDtm, lopDtm1;
+	JComboBox locTheoNam, locTheoLop, comb3,comb1,comb2;
 	MonDao monDao;
 	ArrayList<MonHoc> listMonHoc;
 	JTextField maMonField, tenMonField, soTinChiField, thoiLuongField;
@@ -494,7 +494,8 @@ public class Menu extends JFrame implements ActionListener {
 				}
 			}
 		});
-
+		
+		
 		JPanel lopNhap = new JPanel();
 		lopKhu2.add(lopNhap);
 		lopNhap.setLayout(new BoxLayout(lopNhap, BoxLayout.Y_AXIS));
@@ -564,30 +565,6 @@ public class Menu extends JFrame implements ActionListener {
 		JScrollPane scLop = new JScrollPane(lopTable, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scLop.setPreferredSize(new Dimension(1400, 500));
-		lopTable.addMouseListener(new MouseListener() {
-			public void mouseReleased(MouseEvent e) {
-			}
-
-			public void mousePressed(MouseEvent e) {
-			}
-
-			public void mouseExited(MouseEvent e) {
-			}
-
-			public void mouseEntered(MouseEvent e) {
-			}
-
-			public void mouseClicked(MouseEvent e) {
-				int row = lopTable.getSelectedRow();
-				int col = lopTable.getSelectedColumn();
-				String s = (String) lopTable.getValueAt(row, 0);
-				maLopField.setText(s);
-				String s1 = (String) lopTable.getValueAt(row,1);
-				tenLopField.setText(s1);
-				String s2 = (String) lopTable.getValueAt(row, 2);
-				namHocField.setText(s2);
-			}
-		});
 
 		Border borderLop = BorderFactory.createLineBorder(Color.RED, 2);
 		TitledBorder borderTitleLop = BorderFactory.createTitledBorder(borderLop, "Danh sách sinh viên");
@@ -595,20 +572,20 @@ public class Menu extends JFrame implements ActionListener {
 		lopSv.add(scLop);
 		
 		JPanel lopLop = new JPanel();
-		lopDtm = new DefaultTableModel();
-		lopDtm.addColumn("Mã lớp");
-		lopDtm.addColumn("Tên lớp");
-		lopDtm.addColumn("Năm học");
+		lopDtm1 = new DefaultTableModel();
+		lopDtm1.addColumn("Mã lớp");
+		lopDtm1.addColumn("Tên lớp");
+		lopDtm1.addColumn("Năm học");
 	
-		lopTable = new JTable(lopDtm);
-		lopTable.getTableHeader().setReorderingAllowed(false);
-		lopTable.setDefaultEditor(Object.class, null);
-		lopTable.setFont(font);
-		lopTable.getTableHeader().setFont(font);
-		JScrollPane scLop1 = new JScrollPane(lopTable, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+		lopTable1 = new JTable(lopDtm1);
+		lopTable1.getTableHeader().setReorderingAllowed(false);
+		lopTable1.setDefaultEditor(Object.class, null);
+		lopTable1.setFont(font);
+		lopTable1.getTableHeader().setFont(font);
+		JScrollPane scLop1 = new JScrollPane(lopTable1, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scLop.setPreferredSize(new Dimension(1400, 500));
-		lopTable.addMouseListener(new MouseListener() {
+		lopTable1.addMouseListener(new MouseListener() {
 			public void mouseReleased(MouseEvent e) {
 			}
 
@@ -622,13 +599,13 @@ public class Menu extends JFrame implements ActionListener {
 			}
 
 			public void mouseClicked(MouseEvent e) {
-				int row = lopTable.getSelectedRow();
-				int col = lopTable.getSelectedColumn();
-				String s = (String) lopTable.getValueAt(row, 0);
+				int row = lopTable1.getSelectedRow();
+				int col = lopTable1.getSelectedColumn();
+				String s = (String) lopTable1.getValueAt(row, 0);
 				maLopField.setText(s);
-				String s1 = (String) lopTable.getValueAt(row,1);
+				String s1 = (String) lopTable1.getValueAt(row,1);
 				tenLopField.setText(s1);
-				String s2 = (String) lopTable.getValueAt(row, 2);
+				String s2 = (String) lopTable1.getValueAt(row, 2);
 				namHocField.setText(s2);
 			}
 		});
@@ -787,17 +764,17 @@ public class Menu extends JFrame implements ActionListener {
 		JPanel thongKeNhap2 = new JPanel();
 		Font fontTit = new Font("Arial", Font.BOLD | Font.ITALIC, 20);
 
-		JComboBox comb1 = new JComboBox();
+		comb1 = new JComboBox();
 		comb1.setPreferredSize(new Dimension(150, 30));
 		comb1.addItem("Năm học");
-		JComboBox comb2 = new JComboBox();
+		 comb2 = new JComboBox();
 		comb2.addItem("Lớp");
 		comb2.setPreferredSize(new Dimension(150, 30));
 		show1 = new JButton("Xem danh sách");
 		show1.setFont(font);
 		JLabel dsLopLabel = new JLabel("Báo cáo danh sách lớp học");
 		dsLopLabel.setFont(fontTit);
-		JComboBox comb3 = new JComboBox();
+		 comb3 = new JComboBox();
 		comb3.addItem("Năm học");
 		comb3.setPreferredSize(new Dimension(150, 30));
 		JLabel dssvLabel = new JLabel("Báo cáo danh sách sinh viên");
@@ -1053,7 +1030,7 @@ public class Menu extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Số điện thoại phải là 9 hoặc 11 số !");
 			} else if (diaChi.length() == 0) {
 				JOptionPane.showMessageDialog(null, "Địa chỉ không được để trống !");
-			} else if (tenTP == null || tenQuan == null || tenPhuong == null || maLop == null) {
+			} else if (tenTP == null || tenQuan == null || tenPhuong == null || lopComb.getSelectedItem().toString() == null) {
 				JOptionPane.showMessageDialog(null, "Hộp chọn không đươc để trống !");
 			} else {
 				if (sinhVienDao.addNewSinhVien(sinhvien)) {
@@ -1117,18 +1094,18 @@ public class Menu extends JFrame implements ActionListener {
 		}
 
 		// Ket noi database cua bang quan ly lop
-		Lop lop = new Lop();
-		// Tao gia tri moi cho bang quan ly lop
+				Lop lop = new Lop();
+				// Tao gia tri moi cho bang quan ly lop
 
-		String idLop1 = maLopField.getText();
-		String tenLop1 = tenLopField.getText();
-		String namHoc1 = namHocField.getText();
+				String idLop1 = maLopField.getText();
+				String tenLop1 = tenLopField.getText();
+				String namHoc1 = namHocField.getText();
 
-		// Gan gia tri cho bang quan ly lop
+				// Gan gia tri cho bang quan ly lop
 
-		lop.setIdLop(idLop1);
-		lop.setTenLop(tenLop1);
-		lop.setNamHoc(namHoc1);
+				lop.setIdLop(idLop1);
+				lop.setTenLop(tenLop1);
+				lop.setNamHoc(namHoc1);
 		
 		// Thực hiện lệnh gọi đến nút button
 		
@@ -1231,7 +1208,7 @@ public class Menu extends JFrame implements ActionListener {
 			soTinChiField.setText("");
 			thoiLuongField.setText("");
 		}
-		// Hien thi danh sach cho bang thong ke lien ket voi database
+		// Hien thi danh sach cho bang lop lien ket voi database
 
 		// Gan gia tri cho bang lop va sinh vien trong hien thi
 
@@ -1243,12 +1220,22 @@ public class Menu extends JFrame implements ActionListener {
 		lop.setNamHoc(theoNam);
 		
 		// Thực hiện lệnh gọi đến nút button
-		
+		// Bang lop
 		if (e.getSource() == xemDsButton) {
-			lopDao.getAllSinhVienTheoNam(lop);
-			listLop1 = new ArrayList<Lop>();
-			listLop1 = lopDao.getAllSinhVienTheoNam(lop);
-			displayAllSvTheoNam(listLop1);
+			listSvTheoLop = new ArrayList<Lop>();
+			listSvTheoLop = lopDao.getAllSinhVienTheoNam(lop);
+			displayAllSvTheoNam(listSvTheoLop);
+
+		}
+		
+		if (e.getSource() == xemDsButton1) {
+			displayAllLop(listLop);
+
+		}
+		// Bang thong ke ds lop
+		if (e.getSource() == show2) {
+			
+			baoCaoDsLop(listDsLop);
 
 		}
 	}
@@ -1271,7 +1258,7 @@ public class Menu extends JFrame implements ActionListener {
 		listLop = new ArrayList<Lop>();
 		listLop = lopDao.getAllLop();
 		for (Lop lop : listLop) {
-			lopDtm.addRow(new String[] { lop.getIdLop(), lop.getTenLop(), lop.getNamHoc() });
+			lopDtm1.addRow(new String[] { lop.getIdLop(), lop.getTenLop(), lop.getNamHoc() });
 		}
 
 	}
@@ -1288,11 +1275,25 @@ public class Menu extends JFrame implements ActionListener {
 	}
 	// Hiển thị danh sách sinh viên theo năm học và lớp học
 	
-	public void displayAllSvTheoNam(ArrayList<Lop> listLop) {
-		for (Lop lop1 : listLop1) {
+	public void displayAllSvTheoNam(ArrayList<Lop> listSvTheoLop) {
+		for (Lop lop1 : listSvTheoLop) {
 			lopDtm.addRow(new String[] { lop1.getIdLop(), lop1.getTenLop(), lop1.getSinhVien().getIdSinhVien(),
 					lop1.getSinhVien().getHoTen(), lop1.getNamHoc() });
 		}
 	}
+	
+	//Bảng thống kê
+	
+	public void baoCaoDsLop(ArrayList<Lop> listDsLop) {
+		listDsLop = new ArrayList<Lop>();
+		listDsLop = lopDao.getAllLopTheoNam(comb3.getSelectedItem().toString());
+		int soSV = listDsLop.size();
+		for (Lop lop : listDsLop) {
+			lopDtm1.addRow(new String[] { lop.getIdLop(), lop.getTenLop(), lop.getNamHoc(), String.valueOf(soSV)});
+		}
+
+	}
+	
+	
 
 }

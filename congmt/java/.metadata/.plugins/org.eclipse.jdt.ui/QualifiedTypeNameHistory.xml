@@ -53,11 +53,11 @@
 <fullyQualifiedTypeName name="quanlytruonghoc.entity.Lop"/>
 <fullyQualifiedTypeName name="quanlytruonghoc.model.TimkiemDAO"/>
 <fullyQualifiedTypeName name="quanlytruonghoc.model.TimKiemDao"/>
-<fullyQualifiedTypeName name="java.lang.String"/>
 <fullyQualifiedTypeName name="quanlytruonghoc.entity.Phuong"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="quanlytruonghoc.entity.SinhVien"/>
 <fullyQualifiedTypeName name="javax.swing.JPanel"/>
 <fullyQualifiedTypeName name="java.awt.CardLayout"/>
 <fullyQualifiedTypeName name="javax.swing.BoxLayout"/>
+<fullyQualifiedTypeName name="java.lang.String"/>
 </qualifiedTypeNameHistroy>

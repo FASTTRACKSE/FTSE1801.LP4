@@ -239,4 +239,31 @@ public class LopDao {
 		DatabasaUltil.closeConnection(conn);
 		return listLop;
 	}
+	// Hiển thị danh sách lớp theo năm học
+	
+	public  ArrayList<Lop> getAllLopTheoNam(String namHoc){
+		String sql = "SELECT lop.* FROM `lop` INNER JOIN sinhvien ON lop.idlop=sinhvien.idlop WHERE namhoc=?";
+		conn = DatabasaUltil.getConnect();
+		ArrayList<Lop> listDsLop = new ArrayList<Lop>();
+		try {
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, namHoc);
+			ResultSet result = statement.executeQuery();
+			Lop lop;
+			while (result.next()) {
+				lop = new Lop();
+
+				lop.setIdLop(result.getString("idlop"));
+				lop.setTenLop(result.getString("tenlop"));
+				lop.setNamHoc(result.getString("namhoc"));
+
+				listDsLop.add(lop);
+			}
+	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DatabasaUltil.closeConnection(conn);
+		return listDsLop;
+	}
 }
