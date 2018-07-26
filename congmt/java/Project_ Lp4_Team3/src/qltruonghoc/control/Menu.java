@@ -43,7 +43,6 @@ import javax.swing.table.DefaultTableModel;
 import quanlytruonghoc.model.LopDao;
 import quanlytruonghoc.model.MonDao;
 import quanlytruonghoc.model.SinhVienDao;
-import quanlytruonghoc.model.TimKiemDao;
 import quanlytruonghoc.entity.Lop;
 import quanlytruonghoc.entity.MonHoc;
 import quanlytruonghoc.entity.Phuong;
@@ -89,14 +88,12 @@ public class Menu extends JFrame implements ActionListener {
 
 	JButton show1, show2;
 	JPanel thongKeBang, dssvBang, dsLopBang;
-	TimKiemDao timKiemDao;
 	public Menu() {
 		super("Quản lý trường học");
 
 		sinhVienDao = new SinhVienDao();
 		lopDao = new LopDao();
 		monDao = new MonDao();
-		timKiemDao = new TimKiemDao();
 		JPanel jPanel = new JPanel();
 		jPanel.setLayout(new BorderLayout());
 
@@ -144,10 +141,10 @@ public class Menu extends JFrame implements ActionListener {
 		trangChuButton = new JButton("Trang chủ");
 		trangChuButton.setFont(font);
 		trangChuButton.setPreferredSize(new Dimension(240, 50));
-		ImageIcon img10 = new ImageIcon("C:\\Users\\Administrator\\Desktop\\ab.jpg");
+		ImageIcon img10 = new ImageIcon("img\\ab.jpg");
 		menuPanel.setPreferredSize(new Dimension(240, 50));
 		JLabel lblImg10 = new JLabel(img10);
-		ImageIcon img11 = new ImageIcon("C:\\Users\\Administrator\\Desktop\\ft1.jpg");
+		ImageIcon img11 = new ImageIcon("img\\ft1.jpg");
 		menuPanel.setPreferredSize(new Dimension(240, 50));
 		JLabel lblImg11 = new JLabel(img11);
 		menuPanel.add(jPanel2);
@@ -186,14 +183,14 @@ public class Menu extends JFrame implements ActionListener {
 
 		JPanel pnImg = new JPanel();
 		pnImg.setLayout(new BoxLayout(pnImg, BoxLayout.X_AXIS));
-		ImageIcon img1 = new ImageIcon("C:\\Users\\Administrator\\Desktop\\ab1.jpg");
+		ImageIcon img1 = new ImageIcon("img\\ab1.jpg");
 		JLabel lblImg1 = new JLabel(img1);
 
 		JPanel pnImg1 = new JPanel();
 		pnImg1.setLayout(new BoxLayout(pnImg1, BoxLayout.Y_AXIS));
-		ImageIcon img2 = new ImageIcon("C:\\Users\\Administrator\\Desktop\\ab2.jpg");
+		ImageIcon img2 = new ImageIcon("img\\ab2.jpg");
 		JLabel lblImg2 = new JLabel(img2);
-		ImageIcon img3 = new ImageIcon("C:\\Users\\Administrator\\Desktop\\ab.jpg");
+		ImageIcon img3 = new ImageIcon("img\\ab.jpg");
 		JLabel lblImg3 = new JLabel(img3);
 		pnImg.add(lblImg1);
 		pnImg1.add(lblImg2);
