@@ -1,4 +1,4 @@
-package qltruonghoc.control;
+package quanlytruonghoc.control;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
