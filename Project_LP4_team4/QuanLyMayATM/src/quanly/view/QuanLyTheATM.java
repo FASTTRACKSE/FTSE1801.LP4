@@ -5,6 +5,9 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -12,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -20,34 +24,123 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import quanly.entity.TheATM;
+import quanly.model.TheAtmDAO;
 
-public class QuanLyTheATM extends JFrame{
+public class QuanLyTheATM extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	JPanel pnQuanLyTheATM, pnNhap, pnButton;
 	JLabel title, soTheATM, soTK;
 	JTextField txtSoThe, txtSoTK;
-	JButton them, xoa, hienThi;
+	JButton them, xoa, hienThi, tim;
 	Border border;
 	TitledBorder titledBorder;
 	DefaultTableModel tableModel;
 	JTable table;
-	
-	
+	TheAtmDAO theAtmDAO;
+	ActionListener actionListener = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource() == them) {
+				if (kiemTra()) {
+					if (theAtmDAO.addTheATM(txtSoThe.getText(), txtSoTK.getText())) {
+						JOptionPane.showMessageDialog(null, "Thêm thành công");
+						tableModel.setRowCount(0);
+						showALL();
+					} else {
+						JOptionPane.showMessageDialog(null, "Trùng số thẻ hoặc số tài khoản");
+					}
+
+				} else {
+					JOptionPane.showMessageDialog(null, "Nhập sai định dạng số thẻ hoặc số tài khoản.");
+				}
+			}
+
+			if (e.getSource() == hienThi) {
+				tableModel.setRowCount(0);
+				showALL();
+			}
+
+			if (e.getSource() == tim) {
+				tableModel.setRowCount(0);
+				if (!txtSoThe.getText().equals("") && !txtSoTK.getText().equals("")) {
+					ArrayList<TheATM> listThe = theAtmDAO.layThongTinTheoSoTKVaSoThe(txtSoTK.getText(),
+							txtSoThe.getText());
+					if (listThe.isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Nhập sai số thẻ hoặc số tài khoản");
+					} else {
+						for (int i = 0; i < listThe.size(); i++) {
+							tableModel.addRow(new String[] { listThe.get(i).getSoTheATM(), listThe.get(i).getSoTK(),
+									listThe.get(i).getPass() });
+						}
+					}
+				} else if (!txtSoThe.getText().equals("") && txtSoTK.getText().equals("")) {
+					ArrayList<TheATM> listThe = theAtmDAO.layThongTinTheoSoTheATM(txtSoThe.getText());
+					if (listThe.isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Không tồn tại số thẻ ATM này");
+					} else {
+						for (int i = 0; i < listThe.size(); i++) {
+							tableModel.addRow(new String[] { listThe.get(i).getSoTheATM(), listThe.get(i).getSoTK(),
+									listThe.get(i).getPass() });
+						}
+					}
+				} else if (txtSoThe.getText().equals("") && !txtSoTK.getText().equals("")) {
+					ArrayList<TheATM> listThe = theAtmDAO.layThongTinTheoSoTheATM(txtSoThe.getText());
+					if (listThe.isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Không tồn tại số tài khoản này");
+					} else {
+						for (int i = 0; i < listThe.size(); i++) {
+							tableModel.addRow(new String[] { listThe.get(i).getSoTheATM(), listThe.get(i).getSoTK(),
+									listThe.get(i).getPass() });
+						}
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Vui lòng nhập số tài khoản hoặc số thẻ");
+				}
+			}
+
+			if (e.getSource() == xoa) {
+				if (!txtSoThe.getText().equals("") && txtSoTK.getText().equals("")) {
+					if (theAtmDAO.deleteTheATMTheoSoThe(txtSoThe.getText())) {
+						JOptionPane.showMessageDialog(null, "Xóa thành công");
+						tableModel.setRowCount(0);
+						showALL();
+					}else {
+						JOptionPane.showMessageDialog(null, "Nhập sai số thẻ ATM");
+					}
+				} else if (txtSoThe.getText().equals("") && !txtSoTK.getText().equals("")) {
+					if (theAtmDAO.deleteTheATMTheoSoTK(txtSoTK.getText())) {
+						JOptionPane.showMessageDialog(null, "Xóa thành công");
+						tableModel.setRowCount(0);
+						showALL();
+					}else {
+						JOptionPane.showMessageDialog(null, "Nhập sai số tài khoản");
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Không để trống 2 ô hoặc nhập cả 2 ô");
+				}
+			}
+		}
+	};
+
 	public JPanel quanLyThe() {
+		theAtmDAO = new TheAtmDAO();
+
 		pnQuanLyTheATM = new JPanel();
 		pnQuanLyTheATM.setLayout(new BoxLayout(pnQuanLyTheATM, BoxLayout.Y_AXIS));
-		
+
 		// Tiêu đề
 		title = new JLabel("Quản lý thẻ ATM");
 		title.setFont(new Font("Times New Roman", Font.BOLD, 30));
 		title.setForeground(Color.RED);
 		pnQuanLyTheATM.add(title);
-		
+
 		// Phần thân
 		pnNhap = new JPanel();
 		pnNhap.setLayout(new GridBagLayout());
-		
+
 		soTheATM = new JLabel("Số thẻ ATM");
 		soTK = new JLabel("Số tài khoản");
 		txtSoThe = new JTextField(15);
@@ -57,35 +150,69 @@ public class QuanLyTheATM extends JFrame{
 		addItem(pnNhap, soTK, 0, 1, 1, 1, GridBagConstraints.EAST);
 		addItem(pnNhap, txtSoTK, 1, 1, 2, 1, GridBagConstraints.WEST);
 		pnQuanLyTheATM.add(pnNhap);
-		
+
 		pnButton = new JPanel();
 		them = new JButton("Thêm thẻ ATM");
 		hienThi = new JButton("Hiển thị danh sách thẻ ATM");
+		tim = new JButton("Tìm thẻ");
 		xoa = new JButton("Xóa thẻ ATM");
-		pnButton.add(them);pnButton.add(hienThi);pnButton.add(xoa);
-		pnQuanLyTheATM.add(pnButton);
+		them.addActionListener(actionListener);
+		hienThi.addActionListener(actionListener);
+		tim.addActionListener(actionListener);
+		xoa.addActionListener(actionListener);
 		
+		pnButton.add(them);
+		pnButton.add(hienThi);
+		pnButton.add(tim);
+		pnButton.add(xoa);
+		pnQuanLyTheATM.add(pnButton);
+
 		// Bảng danh sách thẻ ATM
 		border = BorderFactory.createLineBorder(Color.BLUE, 3, true);
-		titledBorder = new TitledBorder(border,"Danh sách thông tin khách hàng");
+		titledBorder = new TitledBorder(border, "Danh sách thông tin khách hàng");
 		tableModel = new DefaultTableModel();
 		tableModel.addColumn("Số thẻ ATM");
 		tableModel.addColumn("Số tài khoản");
-		
+		tableModel.addColumn("Mật khẩu");
+
 		table = new JTable(tableModel);
 		table.getTableHeader().setReorderingAllowed(false);
 		table.setDefaultEditor(Object.class, null);
-		
+		showALL();
+
 		JScrollPane jScrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		jScrollPane.setBorder(titledBorder);
 		pnQuanLyTheATM.add(jScrollPane);
 		return pnQuanLyTheATM;
-		
+
 	}
-	
+
+	public void showALL() {
+		ArrayList<TheATM> myList = new ArrayList<>();
+		myList = theAtmDAO.showAllTheATM();
+		for (int i = 0; i < myList.size(); i++) {
+			tableModel.addRow(
+					new String[] { myList.get(i).getSoTheATM(), myList.get(i).getSoTK(), myList.get(i).getPass() });
+		}
+	}
+
+	public boolean kiemTra() {
+		boolean kiemTra = true;
+		String pantterSoThe = "[0-9]{16}";
+		String pantterSoTK = "[0-9]{13}";
+		if (!txtSoThe.getText().matches(pantterSoThe)) {
+			kiemTra = false;
+		}
+		if (!txtSoTK.getText().matches(pantterSoTK)) {
+			kiemTra = false;
+		}
+		return kiemTra;
+	}
+
 	/**
 	 * Sắp xếp các lable nhập
+	 * 
 	 * @param p
 	 * @param c
 	 * @param x
@@ -107,6 +234,5 @@ public class QuanLyTheATM extends JFrame{
 		gc.fill = GridBagConstraints.NONE;
 		p.add(c, gc);
 	}
-	
-	
+
 }
