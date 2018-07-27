@@ -71,6 +71,7 @@ public class QuanLyTheATM extends JFrame{
 		tableModel = new DefaultTableModel();
 		tableModel.addColumn("Số thẻ ATM");
 		tableModel.addColumn("Số tài khoản");
+		
 		table = new JTable(tableModel);
 		table.getTableHeader().setReorderingAllowed(false);
 		table.setDefaultEditor(Object.class, null);
