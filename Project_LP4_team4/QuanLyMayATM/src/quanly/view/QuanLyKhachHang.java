@@ -51,7 +51,7 @@ public class QuanLyKhachHang extends JFrame {
 	KhachHangDAO khachHangDAO;
 	PhuongQuanDAO phuongQuanDAO;
 	TheAtmDAO theAtmDAO;
-	
+
 	KhachHang khachHang;
 	ArrayList<String> listQuan;
 	ArrayList<String> listPhuong;
@@ -63,7 +63,7 @@ public class QuanLyKhachHang extends JFrame {
 	ItemListener itemListener = new ItemListener() {
 		public void itemStateChanged(ItemEvent e) {
 			if (e.getStateChange() == ItemEvent.SELECTED) {
-				String	tenQuan = boxQuan.getSelectedItem().toString();
+				String tenQuan = boxQuan.getSelectedItem().toString();
 				boxPhuong.removeAllItems();
 				listPhuong = phuongQuanDAO.showDanhSachPhuong(tenQuan);
 				for (int i = 0; i < listPhuong.size(); i++) {
@@ -101,7 +101,8 @@ public class QuanLyKhachHang extends JFrame {
 				if (kiemTraNhapDuLieuAddKhachHang()) {
 					KhachHang khachHang1 = layGiaTriKhachHang();
 					if (khachHangDAO.kiemTraMaKhachHang(khachHangDAO.showAllKhachHang(), khachHang1.getMaKH())) {
-						if (khachHangDAO.addKhachHang(khachHang1, phuongQuanDAO.layThongTinMaPhuong(khachHang1.getPhuong()))) {
+						if (khachHangDAO.addKhachHang(khachHang1,
+								phuongQuanDAO.layThongTinMaPhuong(khachHang1.getPhuong()))) {
 							JOptionPane.showMessageDialog(null, "Thêm khách hàng thành công");
 							tableModel.setRowCount(0);
 							showTable();
@@ -130,7 +131,8 @@ public class QuanLyKhachHang extends JFrame {
 				} else {
 					if (kiemTraNhapDuLieuUpdateKhachHang()) {
 						KhachHang khachHang = layGiaTriKhachHang();
-						if (khachHangDAO.updateKhachHang(khachHang, phuongQuanDAO.layThongTinMaPhuong(boxPhuong.getSelectedItem().toString()))) {
+						if (khachHangDAO.updateKhachHang(khachHang,
+								phuongQuanDAO.layThongTinMaPhuong(boxPhuong.getSelectedItem().toString()))) {
 							JOptionPane.showMessageDialog(null, "Sửa thành công");
 							tableModel.setRowCount(0);
 							showTable();
@@ -163,30 +165,38 @@ public class QuanLyKhachHang extends JFrame {
 
 			if (button == tim) {
 				ArrayList<KhachHang> myList = khachHangDAO.timKiemThongTinTheoTen(layGiaTriKhachHang().getTenKH());
+				ArrayList<KhachHang> listKH = new ArrayList<>();
 				tableModel.setRowCount(0);
 				for (int i = 0; i < myList.size(); i++) {
 					if (myList.get(i).getDiaChi().equals(layGiaTriKhachHang().getDiaChi())
+							|| myList.get(i).getMaKH().equals(layGiaTriKhachHang().getMaKH())
 							|| myList.get(i).getSoDT().equals(layGiaTriKhachHang().getSoDT())
 							|| myList.get(i).getEmail().equals(layGiaTriKhachHang().getEmail())
 							|| myList.get(i).getSoTheATM().equals(layGiaTriKhachHang().getSoTheATM())) {
-						tableModel.addRow(new String[] { myList.get(i).getMaKH(), myList.get(i).getTenKH(),
-								myList.get(i).getDiaChi(), myList.get(i).getPhuong(), myList.get(i).getQuan(),
-								myList.get(i).getSoDT(), myList.get(i).getEmail(), myList.get(i).getSoTheATM(),
-								myList.get(i).getSoTK(), myList.get(i).getSoTienTrongTK() });
-					} else if (i == 0) {
-						for (int j = 0; j < myList.size(); j++) {
-							tableModel.addRow(new String[] { myList.get(j).getMaKH(), myList.get(j).getTenKH(),
-									myList.get(j).getDiaChi(), myList.get(j).getPhuong(), myList.get(j).getQuan(),
-									myList.get(j).getSoDT(), myList.get(j).getEmail(), myList.get(j).getSoTheATM(),
-									myList.get(j).getSoTK(), myList.get(j).getSoTienTrongTK() });
-						}
+						listKH.add(myList.get(i));
+					}
+				}
 
+				if (listKH.isEmpty()) {
+					for (int j = 0; j < myList.size(); j++) {
+						tableModel.addRow(new String[] { myList.get(j).getMaKH(), myList.get(j).getTenKH(),
+								myList.get(j).getDiaChi(), myList.get(j).getPhuong(), myList.get(j).getQuan(),
+								myList.get(j).getSoDT(), myList.get(j).getEmail(), myList.get(j).getSoTheATM(),
+								myList.get(j).getSoTK(), myList.get(j).getSoTienTrongTK() });
+					}
+				} else {
+					for (int i = 0; i < listKH.size(); i++) {
+						tableModel.addRow(new String[] { listKH.get(i).getMaKH(), listKH.get(i).getTenKH(),
+								listKH.get(i).getDiaChi(), listKH.get(i).getPhuong(), listKH.get(i).getQuan(),
+								myList.get(i).getSoDT(), myList.get(i).getEmail(), myList.get(i).getSoTheATM(),
+								listKH.get(i).getSoTK(), listKH.get(i).getSoTienTrongTK() });
 					}
 				}
 			}
 
 			if (button == themThe) {
-				if (khachHangDAO.themTheATMChoKhachHang(layGiaTriKhachHang(), khachHangDAO.showAllKhachHang(), phuongQuanDAO.layThongTinMaPhuong(boxPhuong.getSelectedItem().toString()))) {
+				if (khachHangDAO.themTheATMChoKhachHang(layGiaTriKhachHang(), khachHangDAO.showAllKhachHang(),
+						phuongQuanDAO.layThongTinMaPhuong(boxPhuong.getSelectedItem().toString()))) {
 					JOptionPane.showMessageDialog(null, "Thêm thẻ thành công");
 					tableModel.setRowCount(0);
 					showTable();
@@ -208,7 +218,7 @@ public class QuanLyKhachHang extends JFrame {
 		khachHangDAO = new KhachHangDAO();
 		phuongQuanDAO = new PhuongQuanDAO();
 		theAtmDAO = new TheAtmDAO();
-		
+
 		title = new JLabel("Quản lý khách hàng");
 		title.setFont(new Font("Times New Roman", Font.BOLD, 30));
 		title.setForeground(Color.RED);
@@ -322,6 +332,9 @@ public class QuanLyKhachHang extends JFrame {
 		showTable();
 
 		table = new JTable(tableModel);
+		table.getTableHeader().setReorderingAllowed(false);
+		table.setDefaultEditor(Object.class, null);
+		
 		JScrollPane jScrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		jScrollPane.setBorder(titledBorder);
@@ -383,7 +396,7 @@ public class QuanLyKhachHang extends JFrame {
 		String pantterTen = "[A-Z\\ÀÁẠÃẢĂẮẰẶẴÂẤẦẨẪẬĐÈÉẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌỐỒỔỖÔỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰ][a-z\\àáạãăắằặẵâấầẩẫậđèéẻẽẹêếềểễệíìỉĩịóòỏõọốồổỗôộơớờởỡợúùủũụưứừửữự]*( [A-Z\\ÀÁẠÃĂẮẰẶẴÂẤẦẨẪẬĐÈÉẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌỐỒỔỖÔỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰ][a-z\\àáạãăắằặẵâấầẩẫậđèéẻẽẹêếềểễệíìỉĩịóòỏõọốồổỗôộơớờởỡợúùủũụưứừửữự]*)+";
 		String pantterSDT = "0[0-9]{9,10}";
 		String pantterEmail = "\\w+@\\w+(\\.\\w+){1,2}";
-		String pantterSoTien = "[1-9][0-9]*0000";
+		String pantterSoTien = "[1-9][0-9]{0,3}0000";
 		if (!txtMaKH.getText().matches(pantterMaKh)) {
 			kiemTra = false;
 			JOptionPane.showMessageDialog(null, "Nhập sai định dạng mã khách khàng (Mã khách hàng gồm 6 ký tự)");
@@ -414,7 +427,7 @@ public class QuanLyKhachHang extends JFrame {
 		if (!txtSoTien.getText().matches(pantterSoTien)) {
 			kiemTra = false;
 			JOptionPane.showMessageDialog(null,
-					"Nhập sai định dạng số tiền (Số tiền phải bắt đầu từ 1-10 và phải là bội số của 10000)");
+					"Nhập sai định dạng số tiền (Số tiền phải bắt đầu từ 1-10 và phải là bội số của 10000 và không quá 99990000)");
 			txtSoTien.setText("");
 		}
 
@@ -467,7 +480,7 @@ public class QuanLyKhachHang extends JFrame {
 	public boolean kiemTraNhapDuLieuUpdateSoTienKhachHang() {
 		boolean kiemTra = true;
 		String pantterMaKh = "\\w{6}";
-		String pantterSoTien = "[1-9][0-9]*0000";
+		String pantterSoTien = "[1-9][0-9]{0,3}0000";
 		if (!txtMaKH.getText().matches(pantterMaKh)) {
 			kiemTra = false;
 			JOptionPane.showMessageDialog(null, "Nhập sai định dạng mã khách khàng (Mã khách hàng gồm 6 ký tự)");
@@ -481,7 +494,7 @@ public class QuanLyKhachHang extends JFrame {
 		if (!txtSoTien.getText().matches(pantterSoTien)) {
 			kiemTra = false;
 			JOptionPane.showMessageDialog(null,
-					"Nhập sai định dạng số tiền (Số tiền phải bắt đầu từ 1-10 và phải là bội số của 10000)");
+					"Nhập sai định dạng số tiền (Số tiền phải bắt đầu từ 1-10 và phải là bội số của 10000 và không quá 99990000)");
 			txtSoTien.setText("");
 		}
 

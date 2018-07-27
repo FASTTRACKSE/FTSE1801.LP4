@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -32,7 +33,7 @@ public class AppQuanLyATM extends JFrame {
 
 	Container con;
 	JPanel pnTitle, pnMenu, pnAllCenter, pnSouth, pnCenter;
-	JPanel pnQuanLyKH, pnQuanLyATM, pnQuanLyGD, pnMayATM;
+	JPanel pnQuanLyKH, pnQuanLyATM, pnQuanLyGD, pnMayATM, pnQuanLyTheATM;
 	JLabel logoname, title;
 	CardLayout card;
 	JButton jbmayATM;
@@ -40,7 +41,7 @@ public class AppQuanLyATM extends JFrame {
 	JTree tree;
 	DefaultMutableTreeNode root;
 	DefaultMutableTreeNode file, file2;
-	DefaultMutableTreeNode quanLyKH, quanLyATM, quanLyGD;
+	DefaultMutableTreeNode quanLyKH, quanLyATM, quanLyGD, quanLyTheATM;
 	DefaultMutableTreeNode baoCaoKH, baoCaoTinhTrangATM, baoCaoRutTienKH, BaoCaoRutTienATM;
 	MayATMView mayATMView;
 
@@ -51,6 +52,8 @@ public class AppQuanLyATM extends JFrame {
 			DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
 			if (treeNode.toString().equals("Quản lý khách hàng")) {
 				card.show(pnAllCenter, "quanLyKH");
+			} else if (treeNode.toString().equals("Quản lý thẻ ATM")) {
+				card.show(pnAllCenter, "quanLyTheATM");
 			} else if (treeNode.toString().equals("Quản lý máy ATM")) {
 				card.show(pnAllCenter, "quanLyATM");
 			} else if (treeNode.toString().equals("Quản lý giao dịch")) {
@@ -65,7 +68,7 @@ public class AppQuanLyATM extends JFrame {
 			} else if (treeNode.toString().equals("Báo cáo tình hình rút tiền theo máy ATM")) {
 				card.show(pnAllCenter, "baoCaoRutTienATM");
 			} else if (treeNode.toString().equals("Chương trình quản lý máy ATM của ngân hàng")) {
-				card.show(pnAllCenter, "Đây là trang chủ");
+				card.show(pnAllCenter, "trangChu");
 			}
 		}
 	};
@@ -104,9 +107,11 @@ public class AppQuanLyATM extends JFrame {
 		root = new DefaultMutableTreeNode("Chương trình quản lý máy ATM của ngân hàng");
 		file = new DefaultMutableTreeNode(" Quản Lý ");
 		quanLyKH = new DefaultMutableTreeNode("Quản lý khách hàng");
+		quanLyTheATM = new DefaultMutableTreeNode("Quản lý thẻ ATM");
 		quanLyATM = new DefaultMutableTreeNode("Quản lý máy ATM");
 		quanLyGD = new DefaultMutableTreeNode("Quản lý giao dịch");
 		file.add(quanLyKH);
+		file.add(quanLyTheATM);
 		file.add(quanLyATM);
 		file.add(quanLyGD);
 		root.add(file);
@@ -132,16 +137,24 @@ public class AppQuanLyATM extends JFrame {
 		JScrollPane pane = new JScrollPane(pnAllCenter);
 		card = new CardLayout();
 		pnAllCenter.setLayout(card);
+		
 		// Trang chủ
 		JPanel jPanel = new JPanel();
-		JLabel jLabel = new JLabel("Đây là trang chủ");
+		
+		JLabel jLabel = new JLabel();
+		jLabel.setIcon(new ImageIcon("http://static.tapchitaichinh.vn/Uploaded/nguyenthuhuyen/2013_12_11/4491.jpg"));
 		jPanel.add(jLabel);
-		pnAllCenter.add(jPanel, "Đây là trang chủ");
+		pnAllCenter.add(jPanel, "trangChu");
 
 		// Quản lý khách hàng
 		QuanLyKhachHang quanLyKhachHang = new QuanLyKhachHang();
 		pnAllCenter.add(quanLyKhachHang.quanLyKH(), "quanLyKH");
 
+		// Quản lý thẻ ATM
+		QuanLyTheATM quanLyTheATM =  new QuanLyTheATM();
+		pnAllCenter.add(quanLyTheATM.quanLyThe(), "quanLyTheATM");
+		
+		
 		// Quản lý máy ATM
 		QuanLyMayATM atm = new QuanLyMayATM();
 		pnAllCenter.add(atm.qLyMayATM(), "quanLyATM");

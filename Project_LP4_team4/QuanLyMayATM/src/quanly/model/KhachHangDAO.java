@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import quanly.entity.GiaoDich;
 import quanly.entity.KhachHang;
 
 public class KhachHangDAO {
@@ -475,36 +474,24 @@ public class KhachHangDAO {
 	}
 	
 	/**
-	 * Tìm kiếm thông tin khách hàng theo mã khách hàng
+	 * Lấy ra maKH khách hàng theo số thẻ
 	 * 
-	 * @param khachHang1
+	 * @param soTK
 	 * @return
 	 */
-	public ArrayList<KhachHang> timKiemThongTinTheoMaKH(String maKH) {
-		ArrayList<KhachHang> myList = new ArrayList<>();
+	public String layMaKH(String soTheATM) {
 		PreparedStatement statement = null;
-		KhachHang khachHang;
+		String maKH = null;
 		conn = DatabaseUntil.getConnect();
-		String sql = "SELECT*FROM khach_hang JOIN phuong ON khach_hang.maPhuong = phuong.maPhuong JOIN quan ON phuong.maQuan = quan.maQuan JOIN the_atm ON khach_hang.soTheATM = the_atm.soTheATM WHERE maKhachHang LIKE '"+maKH+"'";
+		String sql = "SELECT*FROM khach_hang WHERE soTheATM= ?";
 		try {
 			statement = conn.prepareStatement(sql);
+			statement.setString(1, soTheATM);
 			ResultSet resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
-				khachHang = new KhachHang();
-				khachHang.setMaKH(resultSet.getString("khach_hang.maKhachHang"));
-				khachHang.setTenKH(resultSet.getString("khach_hang.tenKhachHang"));
-				khachHang.setDiaChi(resultSet.getString("khach_hang.diaChi"));
-				khachHang.setPhuong(resultSet.getString("phuong.tenPhuong"));
-				khachHang.setQuan(resultSet.getString("quan.tenQuan"));
-				khachHang.setSoDT(resultSet.getString("khach_hang.soDienThoai"));
-				khachHang.setEmail(resultSet.getString("khach_hang.email"));
-				khachHang.setSoTheATM(resultSet.getString("khach_hang.soTheATM"));
-				khachHang.setSoTK(resultSet.getString("the_atm.soTK"));
-				khachHang.setSoTienTrongTK(resultSet.getString("soTienTrongTK"));
-				myList.add(khachHang);
+				maKH = resultSet.getString("maKhachHang");
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -518,7 +505,7 @@ public class KhachHangDAO {
 		}
 
 		DatabaseUntil.closeConnection(conn);
-		return myList;
+		return maKH;
 	}
 	
 	/**
@@ -539,77 +526,57 @@ public class KhachHangDAO {
 	}
 	
 	/**
-	 * Hiển thị báo cáo khách hàng
+	 * Lấy ra thông tin khách hàng theo phường và quận
 	 * 
-	 * @param phuong
-	 * @param quan
+	 * @param soTK
 	 * @return
 	 */
-	public ArrayList<GiaoDich> showBaoCaoKhachHang(String phuong, String quan) {
-		ArrayList<GiaoDich> myList = new ArrayList<GiaoDich>();
-		boolean kiemTra = false;
-		Integer allTien = 0;
-		String sql = "SELECT * FROM khach_hang LEFT JOIN giao_dich ON khach_hang.soTheATM = giao_dich.soTheATM WHERE phuong = ? AND quan = ?";
-		conn = DatabaseUntil.getConnect();
+	public ArrayList<KhachHang> showKhachHangTheoPhuongVaQuan(String phuong, String quan) {
+		ArrayList<KhachHang> myList = new ArrayList<>();
 		PreparedStatement statement = null;
+		boolean kiemTra = false;
+		KhachHang khachHang;
+		conn = DatabaseUntil.getConnect();
+		String sql = "SELECT*FROM khach_hang JOIN phuong ON khach_hang.maPhuong = phuong.maPhuong JOIN quan ON phuong.maQuan = quan.maQuan JOIN the_atm ON khach_hang.soTheATM = the_atm.soTheATM  WHERE phuong.tenPhuong = ? AND quan.tenQuan = ? ORDER BY khach_hang.maKhachHang ASC";
 		try {
 			statement = conn.prepareStatement(sql);
 			statement.setString(1, phuong);
 			statement.setString(2, quan);
+			
 			ResultSet resultSet = statement.executeQuery();
-			GiaoDich giaoDich;
-			KhachHang khachHang;
+
 			while (resultSet.next()) {
-				giaoDich = new GiaoDich();
-
 				for (int i = 0; i < myList.size(); i++) {
-					if (myList.get(i).getKhachHang().getSoTheATM().equals(resultSet.getString("giao_dich.soTheATM"))) {
-						allTien = Integer.parseInt(myList.get(i).getSoTien());
-						allTien = allTien + Integer.parseInt(resultSet.getString("soTien"));
+					if (myList.get(i).getMaKH().equals(resultSet.getString("khach_hang.maKhachHang"))) {
 						kiemTra = true;
-						khachHang = new KhachHang();
-						khachHang.setMaKH(resultSet.getString("maKhachHang"));
-						khachHang.setTenKH(resultSet.getString("tenKhachHang"));
-						khachHang.setDiaChi(resultSet.getString("diaChi"));
-						khachHang.setPhuong(resultSet.getString("phuong"));
-						khachHang.setQuan(resultSet.getString("quan"));
-						khachHang.setSoDT(resultSet.getString("soDienThoai"));
-						khachHang.setEmail(resultSet.getString("email"));
-						khachHang.setSoTheATM(resultSet.getString("soTheATM"));
-						khachHang.setSoTK(resultSet.getString("soTK"));
-
-						giaoDich.setKhachHang(khachHang);
-						giaoDich.setMaGiaoDich(resultSet.getInt("maGiaoDich"));
-
-						giaoDich.setSoTien("" + allTien);
-
-						myList.set(i, giaoDich);
-						break;
 					} else {
 						kiemTra = false;
 					}
 				}
-
-				if (!kiemTra) {
-
+				if (kiemTra) {
 					khachHang = new KhachHang();
-					khachHang.setMaKH(resultSet.getString("maKhachHang"));
-					khachHang.setTenKH(resultSet.getString("tenKhachHang"));
-					khachHang.setDiaChi(resultSet.getString("diaChi"));
-					khachHang.setPhuong(resultSet.getString("phuong"));
-					khachHang.setQuan(resultSet.getString("quan"));
-					khachHang.setSoDT(resultSet.getString("soDienThoai"));
-					khachHang.setEmail(resultSet.getString("email"));
-					khachHang.setSoTheATM(resultSet.getString("soTheATM"));
-					khachHang.setSoTK(resultSet.getString("soTK"));
-
-					giaoDich.setKhachHang(khachHang);
-					giaoDich.setMaGiaoDich(resultSet.getInt("maGiaoDich"));
-
-					giaoDich.setSoTien(resultSet.getString("soTien"));
-					myList.add(giaoDich);
+					khachHang.setMaKH("");
+					khachHang.setTenKH("");
+					khachHang.setDiaChi("");
+					khachHang.setPhuong("");
+					khachHang.setQuan("");
+					khachHang.setSoDT("");
+					khachHang.setEmail("");
+					khachHang.setSoTheATM(resultSet.getString("khach_hang.soTheATM"));
+					khachHang.setSoTienTrongTK(resultSet.getString("khach_hang.soTienTrongTK"));
+				} else {
+					khachHang = new KhachHang();
+					khachHang.setMaKH(resultSet.getString("khach_hang.maKhachHang"));
+					khachHang.setTenKH(resultSet.getString("khach_hang.tenKhachHang"));
+					khachHang.setDiaChi(resultSet.getString("khach_hang.diaChi"));
+					khachHang.setPhuong(resultSet.getString("phuong.tenPhuong"));
+					khachHang.setQuan(resultSet.getString("quan.tenQuan"));
+					khachHang.setSoDT(resultSet.getString("khach_hang.soDienThoai"));
+					khachHang.setEmail(resultSet.getString("khach_hang.email"));
+					khachHang.setSoTheATM(resultSet.getString("khach_hang.soTheATM"));
+					khachHang.setSoTienTrongTK(resultSet.getString("khach_hang.soTienTrongTK"));
 				}
-
+				myList.add(khachHang);
 			}
 
 		} catch (SQLException e) {
@@ -627,5 +594,39 @@ public class KhachHangDAO {
 		DatabaseUntil.closeConnection(conn);
 		return myList;
 	}
+	
+	/**
+	 * Kiểm tra khách hàng có sở hữu thẻ ATM không
+	 * @param soTheATM
+	 * @param soTK
+	 * @return
+	 */
+	public boolean kiemTraKhachHangCoSoHuuThe(String soTheATM, String soTK) {
+		boolean kiemTra = false;
+		PreparedStatement statement = null;
+		conn = DatabaseUntil.getConnect();
+		String sql = "SELECT * FROM `khach_hang` LEFT JOIN the_atm ON khach_hang.soTheATM = the_atm.soTheATM WHERE the_atm.soTheATM = ? OR the_atm.soTK =?";
+		try {
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, soTheATM);
+			statement.setString(2, soTK);
+			ResultSet resultSet = statement.executeQuery();
 
+			while (resultSet.next()) {
+				kiemTra = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		DatabaseUntil.closeConnection(conn);
+		return kiemTra;
+	}
 }

@@ -230,6 +230,9 @@ public class QuanLyMayATM extends JFrame {
 		showTable();
 
 		table = new JTable(tableModel);
+		table.getTableHeader().setReorderingAllowed(false);
+		table.setDefaultEditor(Object.class, null);
+		
 		JScrollPane jScrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		jScrollPane.setBorder(titledBorder);
@@ -281,7 +284,7 @@ public class QuanLyMayATM extends JFrame {
 	public boolean kiemTraAddMayATM() {
 		boolean kiemTra = true;
 		String pantterMaMay = "\\w{6}";
-		String pantterSoTien = "[1-9][0-9]*0000";
+		String pantterSoTien = "[1-9][0-9]{0,4}0000";
 		if (!txtMaMayATM.getText().matches(pantterMaMay)) {
 			kiemTra = false;
 			JOptionPane.showMessageDialog(null, "Nhập sai định dạng mã máy (Mã máy gồm 6 ký tự)");
@@ -290,7 +293,7 @@ public class QuanLyMayATM extends JFrame {
 
 		if (!txtTongTien.getText().matches(pantterSoTien)) {
 			kiemTra = false;
-			JOptionPane.showMessageDialog(null, "Nhập sai định dạng số tiền (Số tiền phải bắt đầu từ 1-10 và phải là bội số của 10000)");
+			JOptionPane.showMessageDialog(null, "Nhập sai định dạng số tiền (Số tiền phải bắt đầu từ 1-10 và phải là bội số của 10000 và không quá 999990000)");
 			txtTongTien.setText("");
 		}
 
