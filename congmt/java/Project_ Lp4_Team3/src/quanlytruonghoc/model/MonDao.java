@@ -156,5 +156,24 @@ public class MonDao {
 		return listMonHoc;
 	}
 	
+	public ArrayList<String> getAllTenMonHoc(){
+		String sql = "SELECT `monhoc` FROM `monhoc`";
+		conn = DatabasaUltil.getConnect();
+		ArrayList<String> listTenMonHoc = new ArrayList<String>();
+		try {
+			PreparedStatement statement = conn.prepareStatement(sql);
+			ResultSet result = statement.executeQuery();
+			while (result.next()) {
+				listTenMonHoc.add(result.getString("monhoc"));
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DatabasaUltil.closeConnection(conn);
+		
+		return listTenMonHoc;
+		
+	}
 
 }

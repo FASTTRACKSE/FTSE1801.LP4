@@ -242,7 +242,7 @@ public class LopDao {
 	// Hiển thị danh sách lớp theo năm học
 	
 	public  ArrayList<Lop> getAllLopTheoNam(String namHoc){
-		String sql = "SELECT lop.* FROM `lop` INNER JOIN sinhvien ON lop.idlop=sinhvien.idlop WHERE namhoc=?";
+		String sql = "SELECT * FROM `lop` WHERE `namhoc` = ?";
 		conn = DatabasaUltil.getConnect();
 		ArrayList<Lop> listDsLop = new ArrayList<Lop>();
 		try {
@@ -265,5 +265,34 @@ public class LopDao {
 		}
 		DatabasaUltil.closeConnection(conn);
 		return listDsLop;
+	}
+	
+	public int getAllSinhVienTheoLop(String idLop) {
+		String sql = "SELECT lop.*, sinhvien.idsv FROM `lop` INNER JOIN sinhvien ON lop.idlop=sinhvien.idlop WHERE lop.idlop=?";
+		conn = DatabasaUltil.getConnect();
+		ArrayList<Lop> listLop = new ArrayList<Lop>();
+		try {
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, idLop);
+			
+			ResultSet result = statement.executeQuery();
+			SinhVien sinhvien;
+			Lop lop;
+			while (result.next()) {
+				
+				lop = new Lop();
+				lop.setIdLop(result.getString("idlop"));
+				lop.setTenLop(result.getString("tenlop"));
+				lop.setNamHoc(result.getString("namhoc"));
+				sinhvien = new SinhVien();
+				sinhvien.setIdSinhVien(result.getString("idsv"));
+				lop.setSinhVien(sinhvien);
+				listLop.add(lop);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DatabasaUltil.closeConnection(conn);
+		return listLop.size();
 	}
 }

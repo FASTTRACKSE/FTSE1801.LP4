@@ -313,4 +313,44 @@ public class SinhVienDao {
 		DatabasaUltil.closeConnection(conn);
 		return xaid;
 	}
+	
+	public String getLopId(String tenLop) {
+		String sql = "SELECT `idlop` FROM `lop` WHERE `tenlop` = ?";
+		conn = DatabasaUltil.getConnect();
+		String idLop = new String();
+		try {
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, tenLop);
+			result = statement.executeQuery();
+			while (result.next()) {
+				idLop = result.getString("idlop");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DatabasaUltil.closeConnection(conn);
+		return idLop;
+	}
+	
+	public ArrayList<SinhVien> getAllTenSinhVien(String idlop) {
+		String sql = "SELECT `idsv`,`hoten` FROM `sinhvien` WHERE `idlop` = ?";
+		conn = DatabasaUltil.getConnect();
+		ArrayList<SinhVien> listDSSV = new ArrayList<SinhVien>();
+		SinhVien sinhVien;
+		try {
+			sinhVien= new SinhVien();
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, "idlop");
+			ResultSet result = statement.executeQuery();
+			while (result.next()) {
+				sinhVien.setIdSinhVien(result.getString("idsv"));
+				sinhVien.setHoTen(result.getString("hoten"));
+				listDSSV.add(sinhVien);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DatabasaUltil.closeConnection(conn);
+		return listDSSV;
+	}
 }

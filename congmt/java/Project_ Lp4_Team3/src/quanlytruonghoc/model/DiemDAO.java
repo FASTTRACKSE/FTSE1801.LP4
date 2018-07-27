@@ -4,6 +4,8 @@ package quanlytruonghoc.model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import quanlytruonghoc.entity.Diem;
 
@@ -121,5 +123,23 @@ public class DiemDAO {
 		DatabasaUltil.closeConnection(conn);
 		return statusExecute;
 	}
-
+	
+	public ArrayList<String> getAllDiemThi(String idsv) {
+		String sql = "SELECT `diemthi` FROM `diem` WHERE `idsv` = ?";
+		conn = DatabasaUltil.getConnect();
+		ArrayList<String> listDiem = new ArrayList<String>();
+		try {
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, "idsv");
+			ResultSet result = statement.executeQuery();
+			while (result.next()) {
+				listDiem.add(result.getString("diemthi"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DatabasaUltil.closeConnection(conn);
+		return listDiem;
+	}
+	
 }
