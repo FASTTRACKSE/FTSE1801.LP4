@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -67,7 +68,7 @@ public class AppQuanLyATM extends JFrame {
 			} else if (treeNode.toString().equals("Báo cáo tình hình rút tiền theo máy ATM")) {
 				card.show(pnAllCenter, "baoCaoRutTienATM");
 			} else if (treeNode.toString().equals("Chương trình quản lý máy ATM của ngân hàng")) {
-				card.show(pnAllCenter, "Đây là trang chủ");
+				card.show(pnAllCenter, "trangChu");
 			}
 		}
 	};
@@ -136,11 +137,14 @@ public class AppQuanLyATM extends JFrame {
 		JScrollPane pane = new JScrollPane(pnAllCenter);
 		card = new CardLayout();
 		pnAllCenter.setLayout(card);
+		
 		// Trang chủ
 		JPanel jPanel = new JPanel();
-		JLabel jLabel = new JLabel("Đây là trang chủ");
+		
+		JLabel jLabel = new JLabel();
+		jLabel.setIcon(new ImageIcon("http://static.tapchitaichinh.vn/Uploaded/nguyenthuhuyen/2013_12_11/4491.jpg"));
 		jPanel.add(jLabel);
-		pnAllCenter.add(jPanel, "Đây là trang chủ");
+		pnAllCenter.add(jPanel, "trangChu");
 
 		// Quản lý khách hàng
 		QuanLyKhachHang quanLyKhachHang = new QuanLyKhachHang();

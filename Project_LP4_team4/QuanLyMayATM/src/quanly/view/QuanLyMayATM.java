@@ -230,6 +230,9 @@ public class QuanLyMayATM extends JFrame {
 		showTable();
 
 		table = new JTable(tableModel);
+		table.getTableHeader().setReorderingAllowed(false);
+		table.setDefaultEditor(Object.class, null);
+		
 		JScrollPane jScrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		jScrollPane.setBorder(titledBorder);
