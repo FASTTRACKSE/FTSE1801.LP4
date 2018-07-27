@@ -25,6 +25,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import quanly.entity.TheATM;
+import quanly.model.KhachHangDAO;
 import quanly.model.TheAtmDAO;
 
 public class QuanLyTheATM extends JFrame {
@@ -39,6 +40,7 @@ public class QuanLyTheATM extends JFrame {
 	DefaultTableModel tableModel;
 	JTable table;
 	TheAtmDAO theAtmDAO;
+	KhachHangDAO khachHangDAO;
 	ActionListener actionListener = new ActionListener() {
 
 		@Override
@@ -87,7 +89,7 @@ public class QuanLyTheATM extends JFrame {
 						}
 					}
 				} else if (txtSoThe.getText().equals("") && !txtSoTK.getText().equals("")) {
-					ArrayList<TheATM> listThe = theAtmDAO.layThongTinTheoSoTheATM(txtSoThe.getText());
+					ArrayList<TheATM> listThe = theAtmDAO.layThongTinTheoSoTK(txtSoTK.getText());
 					if (listThe.isEmpty()) {
 						JOptionPane.showMessageDialog(null, "Không tồn tại số tài khoản này");
 					} else {
@@ -102,32 +104,37 @@ public class QuanLyTheATM extends JFrame {
 			}
 
 			if (e.getSource() == xoa) {
-				if (!txtSoThe.getText().equals("") && txtSoTK.getText().equals("")) {
-					if (theAtmDAO.deleteTheATMTheoSoThe(txtSoThe.getText())) {
-						JOptionPane.showMessageDialog(null, "Xóa thành công");
-						tableModel.setRowCount(0);
-						showALL();
-					}else {
-						JOptionPane.showMessageDialog(null, "Nhập sai số thẻ ATM");
-					}
-				} else if (txtSoThe.getText().equals("") && !txtSoTK.getText().equals("")) {
-					if (theAtmDAO.deleteTheATMTheoSoTK(txtSoTK.getText())) {
-						JOptionPane.showMessageDialog(null, "Xóa thành công");
-						tableModel.setRowCount(0);
-						showALL();
-					}else {
-						JOptionPane.showMessageDialog(null, "Nhập sai số tài khoản");
-					}
+				if (khachHangDAO.kiemTraKhachHangCoSoHuuThe(txtSoThe.getText(), txtSoTK.getText())) {
+					JOptionPane.showMessageDialog(null, "Thẻ ATM hiện đang có khách hàng sở hữu, vui lòng xóa thẻ trong khách hàng trước khi xóa thẻ");
 				} else {
-					JOptionPane.showMessageDialog(null, "Không để trống 2 ô hoặc nhập cả 2 ô");
+					if (!txtSoThe.getText().equals("") && txtSoTK.getText().equals("")) {
+						if (theAtmDAO.deleteTheATMTheoSoThe(txtSoThe.getText())) {
+							JOptionPane.showMessageDialog(null, "Xóa thành công");
+							tableModel.setRowCount(0);
+							showALL();
+						} else {
+							JOptionPane.showMessageDialog(null, "Nhập sai số thẻ ATM");
+						}
+					} else if (txtSoThe.getText().equals("") && !txtSoTK.getText().equals("")) {
+						if (theAtmDAO.deleteTheATMTheoSoTK(txtSoTK.getText())) {
+							JOptionPane.showMessageDialog(null, "Xóa thành công");
+							tableModel.setRowCount(0);
+							showALL();
+						} else {
+							JOptionPane.showMessageDialog(null, "Nhập sai số tài khoản");
+						}
+					} else {
+						JOptionPane.showMessageDialog(null, "Không để trống 2 ô hoặc nhập cả 2 ô");
+					}
 				}
+
 			}
 		}
 	};
 
 	public JPanel quanLyThe() {
 		theAtmDAO = new TheAtmDAO();
-
+		khachHangDAO = new KhachHangDAO();
 		pnQuanLyTheATM = new JPanel();
 		pnQuanLyTheATM.setLayout(new BoxLayout(pnQuanLyTheATM, BoxLayout.Y_AXIS));
 
@@ -160,7 +167,7 @@ public class QuanLyTheATM extends JFrame {
 		hienThi.addActionListener(actionListener);
 		tim.addActionListener(actionListener);
 		xoa.addActionListener(actionListener);
-		
+
 		pnButton.add(them);
 		pnButton.add(hienThi);
 		pnButton.add(tim);

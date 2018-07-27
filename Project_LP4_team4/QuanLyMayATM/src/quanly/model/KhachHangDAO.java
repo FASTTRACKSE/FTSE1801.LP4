@@ -594,4 +594,39 @@ public class KhachHangDAO {
 		DatabaseUntil.closeConnection(conn);
 		return myList;
 	}
+	
+	/**
+	 * Kiểm tra khách hàng có sở hữu thẻ ATM không
+	 * @param soTheATM
+	 * @param soTK
+	 * @return
+	 */
+	public boolean kiemTraKhachHangCoSoHuuThe(String soTheATM, String soTK) {
+		boolean kiemTra = false;
+		PreparedStatement statement = null;
+		conn = DatabaseUntil.getConnect();
+		String sql = "SELECT * FROM `khach_hang` LEFT JOIN the_atm ON khach_hang.soTheATM = the_atm.soTheATM WHERE the_atm.soTheATM = ? OR the_atm.soTK =?";
+		try {
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, soTheATM);
+			statement.setString(2, soTK);
+			ResultSet resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				kiemTra = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		DatabaseUntil.closeConnection(conn);
+		return kiemTra;
+	}
 }
