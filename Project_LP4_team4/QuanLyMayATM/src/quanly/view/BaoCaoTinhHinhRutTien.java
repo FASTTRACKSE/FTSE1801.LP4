@@ -65,45 +65,49 @@ public class BaoCaoTinhHinhRutTien extends JFrame {
 			if (e.getSource() == tim) {
 				String strDate = datePicker.getJFormattedTextField().getText();
 				String strDate1 = datePicker1.getJFormattedTextField().getText();
-				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-				java.util.Date date = null;
-				java.util.Date date1 = null;
-				try {
-					date = format.parse(strDate);
-					date1 = format.parse(strDate1);
-				} catch (java.text.ParseException e1) {
-					e1.printStackTrace();
-				}
-				long soSanh = (date1.getTime() - date.getTime()) / (24 * 3600 * 1000);
-				if (soSanh > 90 || soSanh < 0) {
-					JOptionPane.showMessageDialog(null, "Sai tổng số ngày. Mời nhập lại");
+				if (strDate.equals("") || strDate1.equals("")) {
+					JOptionPane.showMessageDialog(null, "Yêu cầu chọn ngày");
 				} else {
-					GiaoDichDAO giaoDichDAO = new GiaoDichDAO();
-					txtTongTienRut.setText("");
-					tableModel.setRowCount(0);
-					if (giaoDichDAO.kiemTraMaKHDaGiaoDichChua(txtMaKH.getText())) {
-						ArrayList<GiaoDich> listGD = new ArrayList<>();
-						listGD = giaoDichDAO.showGiaoDichTheoMaKHAnDate(txtMaKH.getText(), strDate, strDate1);
-						if (listGD.isEmpty()) {
-							JOptionPane.showMessageDialog(null,
-									"Khách hàng không thực hiện giao dịch trong khoảng thời gian đã chọn");
-						} else {
-							Integer allTien = 0;
-							for (int i = 0; i < listGD.size(); i++) {
-								tableModel.addRow(new String[] { listGD.get(i).getMayATM().getMaMay(),
-										listGD.get(i).getKhachHang().getSoTheATM(), listGD.get(i).getThoiGian(),
-										listGD.get(i).getSoTien() });
-								allTien = allTien + Integer.parseInt(listGD.get(i).getSoTien());
-							}
-							txtTongTienRut.setText(""+allTien);
-						}
+					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+					java.util.Date date = null;
+					java.util.Date date1 = null;
+					try {
+						date = format.parse(strDate);
+						date1 = format.parse(strDate1);
+					} catch (java.text.ParseException e1) {
+						e1.printStackTrace();
+					}
+					long soSanh = (date1.getTime() - date.getTime()) / (24 * 3600 * 1000);
+					if (soSanh > 90 || soSanh < 0) {
+						JOptionPane.showMessageDialog(null, "Sai tổng số ngày. Mời nhập lại");
 					} else {
-						JOptionPane.showMessageDialog(null,
-								"Mã khách hàng không tồn tại hoặc khách hàng chưa thực hiện giao dịch");
+						GiaoDichDAO giaoDichDAO = new GiaoDichDAO();
+						txtTongTienRut.setText("");
+						tableModel.setRowCount(0);
+						if (giaoDichDAO.kiemTraMaKHDaGiaoDichChua(txtMaKH.getText())) {
+							ArrayList<GiaoDich> listGD = new ArrayList<>();
+							listGD = giaoDichDAO.showGiaoDichTheoMaKHAnDate(txtMaKH.getText(), strDate, strDate1);
+							if (listGD.isEmpty()) {
+								JOptionPane.showMessageDialog(null,
+										"Khách hàng không thực hiện giao dịch trong khoảng thời gian đã chọn");
+							} else {
+								Integer allTien = 0;
+								for (int i = 0; i < listGD.size(); i++) {
+									tableModel.addRow(new String[] { listGD.get(i).getMayATM().getMaMay(),
+											listGD.get(i).getKhachHang().getSoTheATM(), listGD.get(i).getThoiGian(),
+											listGD.get(i).getSoTien() });
+									allTien = allTien + Integer.parseInt(listGD.get(i).getSoTien());
+								}
+								txtTongTienRut.setText("" + allTien);
+							}
+						} else {
+							JOptionPane.showMessageDialog(null,
+									"Mã khách hàng không tồn tại hoặc khách hàng chưa thực hiện giao dịch");
+						}
+
 					}
 
 				}
-
 			}
 		}
 	};
@@ -166,7 +170,7 @@ public class BaoCaoTinhHinhRutTien extends JFrame {
 		table = new JTable(tableModel);
 		table.getTableHeader().setReorderingAllowed(false);
 		table.setDefaultEditor(Object.class, null);
-		
+
 		JScrollPane jScrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		jScrollPane.setBorder(titledBorder);
