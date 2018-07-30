@@ -91,79 +91,94 @@ public class QuanLyKhachHang extends JFrame {
 	};
 
 	/**
-	 * Sự kiện cho button
+	 * Sự kiện cho các button
 	 */
 	ActionListener actionListener = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			JButton button = (JButton) e.getSource();
-
+			int output = JOptionPane.showConfirmDialog(null, "" + button.getActionCommand(), "TPBank Đà Nẵng",
+					JOptionPane.YES_NO_OPTION);
 			if (button == them) {
-				if (kiemTraNhapDuLieuAddKhachHang()) {
-					KhachHang khachHang1 = layGiaTriKhachHang();
-					if (khachHangDAO.kiemTraMaKhachHang(khachHangDAO.showAllKhachHang(), khachHang1.getMaKH())) {
-						if (khachHangDAO.addKhachHang(khachHang1,
-								phuongQuanDAO.layThongTinMaPhuong(khachHang1.getPhuong()))) {
-							JOptionPane.showMessageDialog(null, "Thêm khách hàng thành công");
-							tableModel.setRowCount(0);
-							showTable();
+				if (output == JOptionPane.YES_OPTION) {
+					if (kiemTraNhapDuLieuAddKhachHang()) {
+						KhachHang khachHang1 = layGiaTriKhachHang();
+						if (khachHangDAO.kiemTraMaKhachHang(khachHangDAO.showAllKhachHang(), khachHang1.getMaKH())) {
+							if (khachHangDAO.addKhachHang(khachHang1,
+									phuongQuanDAO.layThongTinMaPhuong(khachHang1.getPhuong()))) {
+								JOptionPane.showMessageDialog(null, "Thêm khách hàng thành công");
+								tableModel.setRowCount(0);
+								showTable();
+							} else {
+								JOptionPane.showMessageDialog(null, "Trùng số thẻ ATM, vui lòng kiểm tra lại");
+							}
 						} else {
-							JOptionPane.showMessageDialog(null, "Trùng số thẻ ATM, vui lòng kiểm tra lại");
+							JOptionPane.showMessageDialog(null, "Mã khách hàng trùng, vui lòng kiểm tra lại");
 						}
-					} else {
-						JOptionPane.showMessageDialog(null, "Mã khách hàng trùng, vui lòng kiểm tra lại");
 					}
+				} else if (output == JOptionPane.NO_OPTION) {
+
 				}
+
 			}
 
 			if (button == sua) {
-				if (txtDienThoai.getText().equals("") && txtDiaChi.getText().equals("")
-						&& txtEmail.getText().equals("")) {
-					if (kiemTraNhapDuLieuUpdateSoTienKhachHang()) {
-						if (khachHangDAO.updateSoTien(txtMaKH.getText(), txtSoTheATM.getText(), txtSoTien.getText())) {
-							JOptionPane.showMessageDialog(null, "Cập nhập số tiền thành công");
-							tableModel.setRowCount(0);
-							showTable();
-						} else {
-							JOptionPane.showMessageDialog(null, "Sai mã khách hàng hoặc số thẻ ATM không tồn tại");
+				if (output == JOptionPane.YES_OPTION) {
+					if (txtDienThoai.getText().equals("") && txtDiaChi.getText().equals("")
+							&& txtEmail.getText().equals("")) {
+						if (kiemTraNhapDuLieuUpdateSoTienKhachHang()) {
+							if (khachHangDAO.updateSoTien(txtMaKH.getText(), txtSoTheATM.getText(),
+									txtSoTien.getText())) {
+								JOptionPane.showMessageDialog(null, "Cập nhập số tiền thành công");
+								tableModel.setRowCount(0);
+								showTable();
+							} else {
+								JOptionPane.showMessageDialog(null, "Sai mã khách hàng hoặc số thẻ ATM không tồn tại");
+							}
 						}
-					}
 
-				} else {
-					if (kiemTraNhapDuLieuUpdateKhachHang()) {
-						KhachHang khachHang = layGiaTriKhachHang();
-						if (khachHangDAO.updateKhachHang(khachHang,
-								phuongQuanDAO.layThongTinMaPhuong(boxPhuong.getSelectedItem().toString()))) {
-							JOptionPane.showMessageDialog(null, "Sửa thành công");
-							tableModel.setRowCount(0);
-							showTable();
-						} else {
-							JOptionPane.showMessageDialog(null, "Sai mã khách hàng hoặc số thẻ ATM không tồn tại");
+					} else {
+						if (kiemTraNhapDuLieuUpdateKhachHang()) {
+							KhachHang khachHang = layGiaTriKhachHang();
+							if (khachHangDAO.updateKhachHang(khachHang,
+									phuongQuanDAO.layThongTinMaPhuong(boxPhuong.getSelectedItem().toString()))) {
+								JOptionPane.showMessageDialog(null, "Sửa thành công");
+								tableModel.setRowCount(0);
+								showTable();
+							} else {
+								JOptionPane.showMessageDialog(null, "Sai mã khách hàng hoặc số thẻ ATM không tồn tại");
+							}
 						}
 					}
+				} else if (output == JOptionPane.NO_OPTION) {
 				}
+
 			}
 
 			if (button == xoa) {
-				if (!txtMaKH.getText().equals("")) {
-					if (khachHangDAO.deleteKhachHangTheoMaKH(layGiaTriKhachHang().getMaKH())) {
-						JOptionPane.showMessageDialog(null, "Xóa khách hàng thành công");
-						tableModel.setRowCount(0);
-						showTable();
+				if (output == JOptionPane.YES_OPTION) {
+					if (!txtMaKH.getText().equals("")) {
+						if (khachHangDAO.deleteKhachHangTheoMaKH(layGiaTriKhachHang().getMaKH())) {
+							JOptionPane.showMessageDialog(null, "Xóa khách hàng thành công");
+							tableModel.setRowCount(0);
+							showTable();
+						} else {
+							JOptionPane.showMessageDialog(null, "Mã khách hàng không tồn tại");
+						}
 					} else {
-						JOptionPane.showMessageDialog(null, "Mã khách hàng không tồn tại");
+						if (khachHangDAO.deleteKhachHangTheoSoThe(layGiaTriKhachHang().getSoTheATM())) {
+							JOptionPane.showMessageDialog(null, "Xóa thẻ thành công thành công");
+							tableModel.setRowCount(0);
+							showTable();
+						} else {
+							JOptionPane.showMessageDialog(null, "Sai số thẻ");
+						}
 					}
-				} else {
-					if (khachHangDAO.deleteKhachHangTheoSoThe(layGiaTriKhachHang().getSoTheATM())) {
-						JOptionPane.showMessageDialog(null, "Xóa thẻ thành công thành công");
-						tableModel.setRowCount(0);
-						showTable();
-					} else {
-						JOptionPane.showMessageDialog(null, "Sai số thẻ");
-					}
+				} else if (output == JOptionPane.NO_OPTION) {
 				}
 			}
 
 			if (button == tim) {
+
 				ArrayList<KhachHang> myList = khachHangDAO.timKiemThongTinTheoTen(layGiaTriKhachHang().getTenKH());
 				ArrayList<KhachHang> listKH = new ArrayList<>();
 				tableModel.setRowCount(0);
@@ -195,19 +210,26 @@ public class QuanLyKhachHang extends JFrame {
 			}
 
 			if (button == themThe) {
-				if (khachHangDAO.themTheATMChoKhachHang(layGiaTriKhachHang(), khachHangDAO.showAllKhachHang(),
-						phuongQuanDAO.layThongTinMaPhuong(boxPhuong.getSelectedItem().toString()))) {
-					JOptionPane.showMessageDialog(null, "Thêm thẻ thành công");
-					tableModel.setRowCount(0);
-					showTable();
-				} else {
-					JOptionPane.showMessageDialog(null, "Sai số thẻ hoặc mã khách hàng vui lòng kiểm tra lại");
+				if (output == JOptionPane.YES_OPTION) {
+					if (khachHangDAO.themTheATMChoKhachHang(layGiaTriKhachHang(), khachHangDAO.showAllKhachHang(),
+							phuongQuanDAO.layThongTinMaPhuong(boxPhuong.getSelectedItem().toString()))) {
+						JOptionPane.showMessageDialog(null, "Thêm thẻ thành công");
+						tableModel.setRowCount(0);
+						showTable();
+					} else {
+						JOptionPane.showMessageDialog(null, "Sai số thẻ hoặc mã khách hàng vui lòng kiểm tra lại");
+					}
+				} else if (output == JOptionPane.NO_OPTION) {
 				}
+
 			}
 
 			if (button == hienthi) {
-				tableModel.setRowCount(0);
-				showTable();
+				if (output == JOptionPane.YES_OPTION) {
+					tableModel.setRowCount(0);
+					showTable();
+				} else if (output == JOptionPane.NO_OPTION) {
+				}
 			}
 		}
 
@@ -334,7 +356,7 @@ public class QuanLyKhachHang extends JFrame {
 		table = new JTable(tableModel);
 		table.getTableHeader().setReorderingAllowed(false);
 		table.setDefaultEditor(Object.class, null);
-		
+
 		JScrollPane jScrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		jScrollPane.setBorder(titledBorder);

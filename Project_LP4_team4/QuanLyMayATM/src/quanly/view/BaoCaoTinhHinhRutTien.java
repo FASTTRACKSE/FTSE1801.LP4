@@ -58,8 +58,11 @@ public class BaoCaoTinhHinhRutTien extends JFrame {
 	JDatePickerImpl datePicker, datePicker1;
 	Properties p;
 	Date date, date1;
+	
+	/**
+	 * Sự kiện cho các JButton
+	 */
 	ActionListener actionListener = new ActionListener() {
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == tim) {
@@ -188,7 +191,6 @@ public class BaoCaoTinhHinhRutTien extends JFrame {
 	}
 
 	public class DateLabelFormatter extends AbstractFormatter {
-
 		private static final long serialVersionUID = 1L;
 		String datePattern = "yyyy-MM-dd";
 		SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);

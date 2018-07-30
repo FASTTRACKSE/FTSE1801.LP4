@@ -91,7 +91,6 @@ public class BaoCaoTinhTrangATM extends JFrame {
 	 * Sự kiên cho hiển thị máy ATM
 	 */
 	ActionListener actionListener = new ActionListener() {
-
 		public void actionPerformed(ActionEvent e) {
 			JButton button = (JButton) e.getSource();
 
@@ -210,7 +209,7 @@ public class BaoCaoTinhTrangATM extends JFrame {
 	}
 
 	/**
-	 * Sắp xếp button
+	 * Sắp xếp Label
 	 * 
 	 * @param p
 	 * @param c

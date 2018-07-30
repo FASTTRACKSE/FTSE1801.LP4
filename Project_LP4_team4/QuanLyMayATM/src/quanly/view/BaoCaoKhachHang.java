@@ -65,8 +65,10 @@ public class BaoCaoKhachHang extends JFrame {
 		}
 	};
 	
+	/**
+	 * Sự kiện cho các JButton
+	 */
 	ActionListener actionListener = new ActionListener() {
-		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			tableModel.setRowCount(0);
@@ -113,7 +115,6 @@ public class BaoCaoKhachHang extends JFrame {
 			boxQuan.addItem(listQuan.get(i).toString());
 		}
 		boxQuan.addItemListener(itemListener);
-		
 		phuong = new JLabel("Chọn phường:");
 		boxPhuong = new JComboBox<>();
 		listPhuong = phuongQuanDAO.showDanhSachPhuong(listQuan.get(0).toString());

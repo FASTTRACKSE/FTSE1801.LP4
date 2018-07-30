@@ -76,66 +76,88 @@ public class QuanLyMayATM extends JFrame {
 		}
 	};
 
+	/**
+	 * Sự kiện cho các Jbutton
+	 */
 	ActionListener actionListener = new ActionListener() {
 
 		public void actionPerformed(ActionEvent e) {
 			JButton button = (JButton) e.getSource();
+			int output = JOptionPane.showConfirmDialog(null, "" + button.getActionCommand(), "TPBank Đà Nẵng",
+					JOptionPane.YES_NO_OPTION);
 			if (button == them) {
-				if (kiemTraAddMayATM()) {
-					MayATM mayATM = layThongTinMay();
-					if (mayAtmDAO.addMayATM(mayATM)) {
-						JOptionPane.showMessageDialog(null, "Thêm máy atm thành công");
-						tableModel.setRowCount(0);
-						showTable();
-					} else {
-						JOptionPane.showMessageDialog(null, "Kiểm tra lại mã máy");
+				if (output == JOptionPane.YES_OPTION) {
+					if (kiemTraAddMayATM()) {
+						MayATM mayATM = layThongTinMay();
+						if (mayAtmDAO.addMayATM(mayATM)) {
+							JOptionPane.showMessageDialog(null, "Thêm máy atm thành công");
+							tableModel.setRowCount(0);
+							showTable();
+						} else {
+							JOptionPane.showMessageDialog(null, "Kiểm tra lại mã máy");
+						}
 					}
+				} else if (output == JOptionPane.NO_OPTION) {
 				}
 			}
 
 			if (button == sua) {
-				if (kiemTraAddMayATM()) {
-					mayATM = layThongTinMay();
-					MayATM mayAtm = mayAtmDAO.showMayATMMaMay(mayATM.getMaMay());
-					if (mayAtmDAO.updateMayATMThemTien(mayAtm, mayATM.getTongTien())) {
-						JOptionPane.showMessageDialog(null, "Thêm tiền thành công");
+				if (output == JOptionPane.YES_OPTION) {
+					if (kiemTraAddMayATM()) {
+						mayATM = layThongTinMay();
+						MayATM mayAtm = mayAtmDAO.showMayATMMaMay(mayATM.getMaMay());
+						if (mayAtmDAO.updateMayATMThemTien(mayAtm, mayATM.getTongTien())) {
+							JOptionPane.showMessageDialog(null, "Thêm tiền thành công");
+							tableModel.setRowCount(0);
+							showTable();
+						} else {
+							JOptionPane.showMessageDialog(null, "Kiểm tra lại mã máy");
+						}
+					}
+				} else if (output == JOptionPane.NO_OPTION) {
+				}
+			}
+
+			if (button == xoa) {
+				if (output == JOptionPane.YES_OPTION) {
+					if (mayAtmDAO.deleteMayATM(txtMaMayATM.getText())) {
+						JOptionPane.showMessageDialog(null, "Xóa thành công");
 						tableModel.setRowCount(0);
 						showTable();
 					} else {
 						JOptionPane.showMessageDialog(null, "Kiểm tra lại mã máy");
 					}
-				}
-			}
-
-			if (button == xoa) {
-				if (mayAtmDAO.deleteMayATM(txtMaMayATM.getText())) {
-					JOptionPane.showMessageDialog(null, "Xóa thành công");
-					tableModel.setRowCount(0);
-					showTable();
-				} else {
-					JOptionPane.showMessageDialog(null, "Kiểm tra lại mã máy");
+				} else if (output == JOptionPane.NO_OPTION) {
 				}
 			}
 
 			if (button == hienThi) {
-				tableModel.setRowCount(0);
-				showTable();
+				if (output == JOptionPane.YES_OPTION) {
+					tableModel.setRowCount(0);
+					showTable();
+				} else if (output == JOptionPane.NO_OPTION) {
+				}
 			}
 
 			if (button == tim) {
-				if (txtMaMayATM.getText().equals("")) {
-					ArrayList<MayATM> myList = mayAtmDAO.showMayATMTheoDiaChi(boxPhuong.getSelectedItem().toString());
-					tableModel.setRowCount(0);
-					for (int i = 0; i < myList.size(); i++) {
-						tableModel.addRow(new String[] { myList.get(i).getMaMay(), myList.get(i).getViTri(),
-								myList.get(i).getPhuong(), myList.get(i).getQuan(), myList.get(i).getTongTien() });
+				if (output == JOptionPane.YES_OPTION) {
+					if (txtMaMayATM.getText().equals("")) {
+						ArrayList<MayATM> myList = mayAtmDAO
+								.showMayATMTheoDiaChi(boxPhuong.getSelectedItem().toString());
+						tableModel.setRowCount(0);
+						for (int i = 0; i < myList.size(); i++) {
+							tableModel.addRow(new String[] { myList.get(i).getMaMay(), myList.get(i).getViTri(),
+									myList.get(i).getPhuong(), myList.get(i).getQuan(), myList.get(i).getTongTien() });
+						}
+					} else {
+						MayATM mayATM = mayAtmDAO.showMayATMMaMay(txtMaMayATM.getText());
+						tableModel.setRowCount(0);
+						tableModel.addRow(new String[] { mayATM.getMaMay(), mayATM.getViTri(), mayATM.getPhuong(),
+								mayATM.getQuan(), mayATM.getTongTien() });
 					}
-				} else {
-					MayATM mayATM = mayAtmDAO.showMayATMMaMay(txtMaMayATM.getText());
-					tableModel.setRowCount(0);
-						tableModel.addRow(new String[] { mayATM.getMaMay(), mayATM.getViTri(),
-								mayATM.getPhuong(), mayATM.getQuan(), mayATM.getTongTien() });
-					}
+				} else if (output == JOptionPane.NO_OPTION) {
+				}
+
 			}
 		}
 	};
@@ -145,7 +167,7 @@ public class QuanLyMayATM extends JFrame {
 		khachHangDAO = new KhachHangDAO();
 		mayAtmDAO = new MayAtmDAO();
 		phuongQuanDAO = new PhuongQuanDAO();
-		
+
 		title = new JLabel("Quản lý máy ATM");
 		title.setFont(new Font("Times New Roman", Font.BOLD, 30));
 		title.setForeground(Color.RED);
@@ -232,7 +254,7 @@ public class QuanLyMayATM extends JFrame {
 		table = new JTable(tableModel);
 		table.getTableHeader().setReorderingAllowed(false);
 		table.setDefaultEditor(Object.class, null);
-		
+
 		JScrollPane jScrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		jScrollPane.setBorder(titledBorder);
@@ -280,7 +302,11 @@ public class QuanLyMayATM extends JFrame {
 					myList.get(i).getPhuong(), myList.get(i).getQuan(), myList.get(i).getTongTien() });
 		}
 	}
-
+	
+	/**
+	 * Kiểm tra nhập vào các JTextField
+	 * @return
+	 */
 	public boolean kiemTraAddMayATM() {
 		boolean kiemTra = true;
 		String pantterMaMay = "\\w{6}";
@@ -293,13 +319,18 @@ public class QuanLyMayATM extends JFrame {
 
 		if (!txtTongTien.getText().matches(pantterSoTien)) {
 			kiemTra = false;
-			JOptionPane.showMessageDialog(null, "Nhập sai định dạng số tiền (Số tiền phải bắt đầu từ 1-10 và phải là bội số của 10000 và không quá 999990000)");
+			JOptionPane.showMessageDialog(null,
+					"Nhập sai định dạng số tiền (Số tiền phải bắt đầu từ 1-10 và phải là bội số của 10000 và không quá 999990000)");
 			txtTongTien.setText("");
 		}
 
 		return kiemTra;
 	}
 
+	/**
+	 * Lấy thông tin máy
+	 * @return
+	 */
 	public MayATM layThongTinMay() {
 		mayATM = new MayATM();
 		mayATM.setMaMay(txtMaMayATM.getText());

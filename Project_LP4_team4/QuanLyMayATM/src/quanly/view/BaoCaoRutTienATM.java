@@ -284,8 +284,10 @@ public class BaoCaoRutTienATM extends JFrame {
 
 	}
 
+	/**
+	 *   Chuyển kiểu Date về kiểu String
+	 */
 	public class DateLabelFormatter extends AbstractFormatter {
-
 		private static final long serialVersionUID = 1L;
 		private String datePattern = "yyyy-MM-dd";
 		private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);

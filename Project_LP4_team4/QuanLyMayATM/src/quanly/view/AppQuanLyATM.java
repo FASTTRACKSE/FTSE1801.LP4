@@ -142,7 +142,7 @@ public class AppQuanLyATM extends JFrame {
 		JPanel jPanel = new JPanel();
 		
 		JLabel jLabel = new JLabel();
-		jLabel.setIcon(new ImageIcon("http://static.tapchitaichinh.vn/Uploaded/nguyenthuhuyen/2013_12_11/4491.jpg"));
+		jLabel.setIcon(new ImageIcon("img\\bank.jpg"));
 		jPanel.add(jLabel);
 		pnAllCenter.add(jPanel, "trangChu");
 

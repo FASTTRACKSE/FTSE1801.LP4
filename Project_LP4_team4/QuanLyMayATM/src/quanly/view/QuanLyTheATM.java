@@ -41,91 +41,111 @@ public class QuanLyTheATM extends JFrame {
 	JTable table;
 	TheAtmDAO theAtmDAO;
 	KhachHangDAO khachHangDAO;
+	
+	/**
+	 * Sự kiện cho các Jbutton
+	 */
 	ActionListener actionListener = new ActionListener() {
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			JButton button = (JButton) e.getSource();
+			int output = JOptionPane.showConfirmDialog(null, "" + button.getActionCommand(), "TPBank Đà Nẵng",
+					JOptionPane.YES_NO_OPTION);
 			if (e.getSource() == them) {
-				if (kiemTra()) {
-					if (theAtmDAO.addTheATM(txtSoThe.getText(), txtSoTK.getText())) {
-						JOptionPane.showMessageDialog(null, "Thêm thành công");
-						tableModel.setRowCount(0);
-						showALL();
-					} else {
-						JOptionPane.showMessageDialog(null, "Trùng số thẻ hoặc số tài khoản");
-					}
+				if (output == JOptionPane.YES_OPTION) {
+					if (kiemTra()) {
+						if (theAtmDAO.addTheATM(txtSoThe.getText(), txtSoTK.getText())) {
+							JOptionPane.showMessageDialog(null, "Thêm thành công");
+							tableModel.setRowCount(0);
+							showALL();
+						} else {
+							JOptionPane.showMessageDialog(null, "Trùng số thẻ hoặc số tài khoản");
+						}
 
-				} else {
-					JOptionPane.showMessageDialog(null, "Nhập sai định dạng số thẻ hoặc số tài khoản.");
+					} else {
+						JOptionPane.showMessageDialog(null, "Nhập sai định dạng số thẻ hoặc số tài khoản.");
+					}
+				} else if (output == JOptionPane.NO_OPTION) {
 				}
 			}
 
 			if (e.getSource() == hienThi) {
-				tableModel.setRowCount(0);
-				showALL();
-			}
-
-			if (e.getSource() == tim) {
-				tableModel.setRowCount(0);
-				if (!txtSoThe.getText().equals("") && !txtSoTK.getText().equals("")) {
-					ArrayList<TheATM> listThe = theAtmDAO.layThongTinTheoSoTKVaSoThe(txtSoTK.getText(),
-							txtSoThe.getText());
-					if (listThe.isEmpty()) {
-						JOptionPane.showMessageDialog(null, "Nhập sai số thẻ hoặc số tài khoản");
-					} else {
-						for (int i = 0; i < listThe.size(); i++) {
-							tableModel.addRow(new String[] { listThe.get(i).getSoTheATM(), listThe.get(i).getSoTK(),
-									listThe.get(i).getPass() });
-						}
-					}
-				} else if (!txtSoThe.getText().equals("") && txtSoTK.getText().equals("")) {
-					ArrayList<TheATM> listThe = theAtmDAO.layThongTinTheoSoTheATM(txtSoThe.getText());
-					if (listThe.isEmpty()) {
-						JOptionPane.showMessageDialog(null, "Không tồn tại số thẻ ATM này");
-					} else {
-						for (int i = 0; i < listThe.size(); i++) {
-							tableModel.addRow(new String[] { listThe.get(i).getSoTheATM(), listThe.get(i).getSoTK(),
-									listThe.get(i).getPass() });
-						}
-					}
-				} else if (txtSoThe.getText().equals("") && !txtSoTK.getText().equals("")) {
-					ArrayList<TheATM> listThe = theAtmDAO.layThongTinTheoSoTK(txtSoTK.getText());
-					if (listThe.isEmpty()) {
-						JOptionPane.showMessageDialog(null, "Không tồn tại số tài khoản này");
-					} else {
-						for (int i = 0; i < listThe.size(); i++) {
-							tableModel.addRow(new String[] { listThe.get(i).getSoTheATM(), listThe.get(i).getSoTK(),
-									listThe.get(i).getPass() });
-						}
-					}
-				} else {
-					JOptionPane.showMessageDialog(null, "Vui lòng nhập số tài khoản hoặc số thẻ");
+				if (output == JOptionPane.YES_OPTION) {
+					tableModel.setRowCount(0);
+					showALL();
+				} else if (output == JOptionPane.NO_OPTION) {
 				}
 			}
 
-			if (e.getSource() == xoa) {
-				if (khachHangDAO.kiemTraKhachHangCoSoHuuThe(txtSoThe.getText(), txtSoTK.getText())) {
-					JOptionPane.showMessageDialog(null, "Thẻ ATM hiện đang có khách hàng sở hữu, vui lòng xóa thẻ trong khách hàng trước khi xóa thẻ");
-				} else {
-					if (!txtSoThe.getText().equals("") && txtSoTK.getText().equals("")) {
-						if (theAtmDAO.deleteTheATMTheoSoThe(txtSoThe.getText())) {
-							JOptionPane.showMessageDialog(null, "Xóa thành công");
-							tableModel.setRowCount(0);
-							showALL();
+			if (e.getSource() == tim) {
+				if (output == JOptionPane.YES_OPTION) {
+					tableModel.setRowCount(0);
+					if (!txtSoThe.getText().equals("") && !txtSoTK.getText().equals("")) {
+						ArrayList<TheATM> listThe = theAtmDAO.layThongTinTheoSoTKVaSoThe(txtSoTK.getText(),
+								txtSoThe.getText());
+						if (listThe.isEmpty()) {
+							JOptionPane.showMessageDialog(null, "Nhập sai số thẻ hoặc số tài khoản");
 						} else {
-							JOptionPane.showMessageDialog(null, "Nhập sai số thẻ ATM");
+							for (int i = 0; i < listThe.size(); i++) {
+								tableModel.addRow(new String[] { listThe.get(i).getSoTheATM(), listThe.get(i).getSoTK(),
+										listThe.get(i).getPass() });
+							}
+						}
+					} else if (!txtSoThe.getText().equals("") && txtSoTK.getText().equals("")) {
+						ArrayList<TheATM> listThe = theAtmDAO.layThongTinTheoSoTheATM(txtSoThe.getText());
+						if (listThe.isEmpty()) {
+							JOptionPane.showMessageDialog(null, "Không tồn tại số thẻ ATM này");
+						} else {
+							for (int i = 0; i < listThe.size(); i++) {
+								tableModel.addRow(new String[] { listThe.get(i).getSoTheATM(), listThe.get(i).getSoTK(),
+										listThe.get(i).getPass() });
+							}
 						}
 					} else if (txtSoThe.getText().equals("") && !txtSoTK.getText().equals("")) {
-						if (theAtmDAO.deleteTheATMTheoSoTK(txtSoTK.getText())) {
-							JOptionPane.showMessageDialog(null, "Xóa thành công");
-							tableModel.setRowCount(0);
-							showALL();
+						ArrayList<TheATM> listThe = theAtmDAO.layThongTinTheoSoTK(txtSoTK.getText());
+						if (listThe.isEmpty()) {
+							JOptionPane.showMessageDialog(null, "Không tồn tại số tài khoản này");
 						} else {
-							JOptionPane.showMessageDialog(null, "Nhập sai số tài khoản");
+							for (int i = 0; i < listThe.size(); i++) {
+								tableModel.addRow(new String[] { listThe.get(i).getSoTheATM(), listThe.get(i).getSoTK(),
+										listThe.get(i).getPass() });
+							}
 						}
 					} else {
-						JOptionPane.showMessageDialog(null, "Không để trống 2 ô hoặc nhập cả 2 ô");
+						JOptionPane.showMessageDialog(null, "Vui lòng nhập số tài khoản hoặc số thẻ");
 					}
+				} else if (output == JOptionPane.NO_OPTION) {
+				}
+
+			}
+
+			if (e.getSource() == xoa) {
+				if (output == JOptionPane.YES_OPTION) {
+					if (khachHangDAO.kiemTraKhachHangCoSoHuuThe(txtSoThe.getText(), txtSoTK.getText())) {
+						JOptionPane.showMessageDialog(null,
+								"Thẻ ATM hiện đang có khách hàng sở hữu, vui lòng xóa thẻ trong khách hàng trước khi xóa thẻ");
+					} else {
+						if (!txtSoThe.getText().equals("") && txtSoTK.getText().equals("")) {
+							if (theAtmDAO.deleteTheATMTheoSoThe(txtSoThe.getText())) {
+								JOptionPane.showMessageDialog(null, "Xóa thành công");
+								tableModel.setRowCount(0);
+								showALL();
+							} else {
+								JOptionPane.showMessageDialog(null, "Nhập sai số thẻ ATM");
+							}
+						} else if (txtSoThe.getText().equals("") && !txtSoTK.getText().equals("")) {
+							if (theAtmDAO.deleteTheATMTheoSoTK(txtSoTK.getText())) {
+								JOptionPane.showMessageDialog(null, "Xóa thành công");
+								tableModel.setRowCount(0);
+								showALL();
+							} else {
+								JOptionPane.showMessageDialog(null, "Nhập sai số tài khoản");
+							}
+						} else {
+							JOptionPane.showMessageDialog(null, "Không để trống 2 ô hoặc nhập cả 2 ô");
+						}
+					}
+				} else if (output == JOptionPane.NO_OPTION) {
 				}
 
 			}
@@ -194,7 +214,10 @@ public class QuanLyTheATM extends JFrame {
 		return pnQuanLyTheATM;
 
 	}
-
+	
+	/**
+	 * hiển thị table
+	 */
 	public void showALL() {
 		ArrayList<TheATM> myList = new ArrayList<>();
 		myList = theAtmDAO.showAllTheATM();
@@ -204,6 +227,10 @@ public class QuanLyTheATM extends JFrame {
 		}
 	}
 
+	/**
+	 * kiểm tra nhập các JTextField
+	 * @return
+	 */
 	public boolean kiemTra() {
 		boolean kiemTra = true;
 		String pantterSoThe = "[0-9]{16}";
@@ -218,7 +245,7 @@ public class QuanLyTheATM extends JFrame {
 	}
 
 	/**
-	 * Sắp xếp các lable nhập
+	 * Sắp xếp các lable
 	 * 
 	 * @param p
 	 * @param c
