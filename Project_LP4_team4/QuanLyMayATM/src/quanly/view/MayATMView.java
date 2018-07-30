@@ -75,6 +75,8 @@ public class MayATMView extends JFrame {
 					MayATMView mayATM = new MayATMView(maMayATM);
 					mayATM.display();
 					mayATM.thongTinKH(khachHang1);
+					txtTaiKhoan.setText("");
+					txtPin.setText("");
 				} else {
 					JOptionPane.showMessageDialog(null, "Sai số tài khoản hoặc pass");
 				}
@@ -84,7 +86,7 @@ public class MayATMView extends JFrame {
 			} else if (e.getSource() == btRutTien) {
 				card.show(cardLayout, "rutTien");
 			} else if (e.getSource() == btThoatGD) {
-				int output = JOptionPane.showConfirmDialog(null, "Rút tiền", "TPBank Đà Nẵng",
+				int output = JOptionPane.showConfirmDialog(null, "Bạn có muốn thoát giao dịch", "TPBank Đà Nẵng",
 						JOptionPane.YES_NO_OPTION);
 				if (output == JOptionPane.YES_OPTION) {
 					dispose(); // Destroy the JFrame object
