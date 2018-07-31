@@ -203,7 +203,7 @@ public class QuanLyTheATM extends JFrame {
 		tableModel.addColumn("Mật khẩu");
 
 		table = new JTable(tableModel);
-		table.getTableHeader().setReorderingAllowed(false);
+//		table.getTableHeader().setReorderingAllowed(false);
 		table.setDefaultEditor(Object.class, null);
 		showALL();
 
