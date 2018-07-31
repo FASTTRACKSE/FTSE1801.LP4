@@ -149,15 +149,31 @@ public class SinhVienDAO {
 		try {
 			PreparedStatement statement = conn.prepareStatement(sql);
 			ResultSet result = statement.executeQuery();
-
-//			String maSihVien = null;
-
 			while (result.next()) {
-//				maSihVien = new String();
-//				maSinhVien = result.getString("masv");
-				
-
 				listMSV.add(result.getString("masv"));
+
+			}
+
+		} catch (Exception e) {
+			e.getStackTrace();
+		} finally {
+			DatabaseUltil.closeConnect(conn);
+		}
+
+		return listMSV;
+	}
+	
+	public ArrayList<String> getSinhVienTheoMa(String maSv) {
+		String sql = "SELECT `tensv` FROM `sinh_vien` WHERE masv = ?";
+		conn = DatabaseUltil.getConnect();
+		ArrayList<String> listMSV = new ArrayList<String>();
+
+		try {
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, "masv");
+			ResultSet result = statement.executeQuery();
+			while (result.next()) {
+				listMSV.add(result.getString("tensv"));
 
 			}
 
