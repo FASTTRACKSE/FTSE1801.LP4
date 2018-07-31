@@ -94,7 +94,7 @@ public class QuanLyMayATM extends JFrame {
 							tableModel.setRowCount(0);
 							showTable();
 						} else {
-							JOptionPane.showMessageDialog(null, "Kiểm tra lại mã máy");
+							JOptionPane.showMessageDialog(null, "Máy đã tồn tại vui lòng kiểm tra lại.");
 						}
 					}
 				} else if (output == JOptionPane.NO_OPTION) {
@@ -152,8 +152,13 @@ public class QuanLyMayATM extends JFrame {
 					} else {
 						MayATM mayATM = mayAtmDAO.showMayATMMaMay(txtMaMayATM.getText());
 						tableModel.setRowCount(0);
-						tableModel.addRow(new String[] { mayATM.getMaMay(), mayATM.getViTri(), mayATM.getPhuong(),
-								mayATM.getQuan(), mayATM.getTongTien() });
+						if (mayATM.getMaMay().equals("")) {
+							JOptionPane.showMessageDialog(null, "Sai mã máy, vui lòng nhập lại");
+						} else {
+							tableModel.addRow(new String[] { mayATM.getMaMay(), mayATM.getViTri(), mayATM.getPhuong(),
+									mayATM.getQuan(), mayATM.getTongTien() });
+						}
+
 					}
 				} else if (output == JOptionPane.NO_OPTION) {
 				}
@@ -302,9 +307,10 @@ public class QuanLyMayATM extends JFrame {
 					myList.get(i).getPhuong(), myList.get(i).getQuan(), myList.get(i).getTongTien() });
 		}
 	}
-	
+
 	/**
 	 * Kiểm tra nhập vào các JTextField
+	 * 
 	 * @return
 	 */
 	public boolean kiemTraAddMayATM() {
@@ -329,6 +335,7 @@ public class QuanLyMayATM extends JFrame {
 
 	/**
 	 * Lấy thông tin máy
+	 * 
 	 * @return
 	 */
 	public MayATM layThongTinMay() {

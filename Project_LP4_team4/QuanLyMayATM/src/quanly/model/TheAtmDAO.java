@@ -31,13 +31,11 @@ public class TheAtmDAO {
 				kiemTra = true;
 			}
 		} catch (SQLException e) {
-			System.out.println("loi");
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					System.out.println("Đóng lỗi");
 				}
 			}
 		}
@@ -63,13 +61,11 @@ public class TheAtmDAO {
 				kiemTra = true;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -95,13 +91,11 @@ public class TheAtmDAO {
 				kiemTra = true;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -133,13 +127,11 @@ public class TheAtmDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -170,13 +162,11 @@ public class TheAtmDAO {
 				listTheATM.add(theATM);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -207,13 +197,11 @@ public class TheAtmDAO {
 				listTheATM.add(theATM);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -243,13 +231,11 @@ public class TheAtmDAO {
 				listTheATM.add(theATM);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -275,13 +261,11 @@ public class TheAtmDAO {
 				maThe = resultSet.getString("soTheATM");				
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -309,13 +293,11 @@ public class TheAtmDAO {
 				soTK = resultSet.getString("soTK");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}

@@ -40,7 +40,6 @@ public class MayAtmDAO {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					System.out.println("Đóng lỗi");
 				}
 			}
 		}
@@ -68,13 +67,11 @@ public class MayAtmDAO {
 				kiemTra = true;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -107,13 +104,11 @@ public class MayAtmDAO {
 				mayATM.setTongTien(resultSet.getString("may_atm.tongTien"));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -143,13 +138,11 @@ public class MayAtmDAO {
 				kiemTra = true;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -184,13 +177,11 @@ public class MayAtmDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -225,13 +216,11 @@ public class MayAtmDAO {
 				myList.add(mayATM);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -260,13 +249,11 @@ public class MayAtmDAO {
 				kiemTra = true;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}

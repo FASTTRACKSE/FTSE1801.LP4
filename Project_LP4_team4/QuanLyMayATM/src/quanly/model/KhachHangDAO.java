@@ -91,7 +91,6 @@ public class KhachHangDAO {
 					try {
 						statement.close();
 					} catch (SQLException e) {
-						System.out.println("Đóng lỗi");
 					}
 				}
 			}
@@ -124,13 +123,11 @@ public class KhachHangDAO {
 				kiemTra = true;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -159,13 +156,11 @@ public class KhachHangDAO {
 				kiemTra = true;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -191,13 +186,11 @@ public class KhachHangDAO {
 				kiemTra = true;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -223,13 +216,11 @@ public class KhachHangDAO {
 				kiemTra = true;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -291,13 +282,11 @@ public class KhachHangDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -339,13 +328,11 @@ public class KhachHangDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -373,13 +360,11 @@ public class KhachHangDAO {
 				soTien = resultSet.getString("soTienTrongTK");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -418,13 +403,11 @@ public class KhachHangDAO {
 				khachHang.setSoTienTrongTK(resultSet.getString("khach_hang.soTienTrongTK"));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -455,13 +438,11 @@ public class KhachHangDAO {
 					kiemTra = true;
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
 			} finally {
 				if (statement != null) {
 					try {
 						statement.close();
 					} catch (SQLException e) {
-						e.printStackTrace();
 					}
 				}
 			}
@@ -493,13 +474,11 @@ public class KhachHangDAO {
 				maKH = resultSet.getString("maKhachHang");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -580,13 +559,11 @@ public class KhachHangDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -616,13 +593,11 @@ public class KhachHangDAO {
 				kiemTra = true;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}
