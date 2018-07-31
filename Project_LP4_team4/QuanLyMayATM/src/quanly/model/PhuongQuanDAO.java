@@ -27,13 +27,11 @@ public class PhuongQuanDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -61,13 +59,11 @@ public class PhuongQuanDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -95,13 +91,11 @@ public class PhuongQuanDAO {
 				maPhuong = resultSet.getInt("maPhuong");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}

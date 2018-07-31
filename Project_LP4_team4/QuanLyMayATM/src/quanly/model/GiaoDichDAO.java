@@ -41,13 +41,11 @@ public class GiaoDichDAO {
 				kiemTra = true;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -75,13 +73,11 @@ public class GiaoDichDAO {
 				giaoDich.setThoiGian(resultSet.getString("thoiGian"));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -124,13 +120,11 @@ public class GiaoDichDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -158,13 +152,11 @@ public class GiaoDichDAO {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -211,13 +203,11 @@ public class GiaoDichDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -267,13 +257,11 @@ public class GiaoDichDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -323,13 +311,11 @@ public class GiaoDichDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 			}
 		}
