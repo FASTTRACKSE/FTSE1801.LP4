@@ -178,35 +178,16 @@ public class QuanLyKhachHang extends JFrame {
 			}
 
 			if (button == tim) {
-
-				ArrayList<KhachHang> myList = khachHangDAO.timKiemThongTinTheoTen(layGiaTriKhachHang().getTenKH());
-				ArrayList<KhachHang> listKH = new ArrayList<>();
+				KhachHang khachHang = layGiaTriKhachHang();
+				ArrayList<KhachHang> myList = khachHangDAO.timKiem(khachHang);
 				tableModel.setRowCount(0);
-				for (int i = 0; i < myList.size(); i++) {
-					if (myList.get(i).getDiaChi().equals(layGiaTriKhachHang().getDiaChi())
-							|| myList.get(i).getMaKH().equals(layGiaTriKhachHang().getMaKH())
-							|| myList.get(i).getSoDT().equals(layGiaTriKhachHang().getSoDT())
-							|| myList.get(i).getEmail().equals(layGiaTriKhachHang().getEmail())
-							|| myList.get(i).getSoTheATM().equals(layGiaTriKhachHang().getSoTheATM())) {
-						listKH.add(myList.get(i));
-					}
+				for (int j = 0; j < myList.size(); j++) {
+					tableModel.addRow(new String[] { myList.get(j).getMaKH(), myList.get(j).getTenKH(),
+							myList.get(j).getDiaChi(), myList.get(j).getPhuong(), myList.get(j).getQuan(),
+							myList.get(j).getSoDT(), myList.get(j).getEmail(), myList.get(j).getSoTheATM(),
+							myList.get(j).getSoTK(), myList.get(j).getSoTienTrongTK() });
 				}
 
-				if (listKH.isEmpty()) {
-					for (int j = 0; j < myList.size(); j++) {
-						tableModel.addRow(new String[] { myList.get(j).getMaKH(), myList.get(j).getTenKH(),
-								myList.get(j).getDiaChi(), myList.get(j).getPhuong(), myList.get(j).getQuan(),
-								myList.get(j).getSoDT(), myList.get(j).getEmail(), myList.get(j).getSoTheATM(),
-								myList.get(j).getSoTK(), myList.get(j).getSoTienTrongTK() });
-					}
-				} else {
-					for (int i = 0; i < listKH.size(); i++) {
-						tableModel.addRow(new String[] { listKH.get(i).getMaKH(), listKH.get(i).getTenKH(),
-								listKH.get(i).getDiaChi(), listKH.get(i).getPhuong(), listKH.get(i).getQuan(),
-								myList.get(i).getSoDT(), myList.get(i).getEmail(), myList.get(i).getSoTheATM(),
-								listKH.get(i).getSoTK(), listKH.get(i).getSoTienTrongTK() });
-					}
-				}
 			}
 
 			if (button == themThe) {
@@ -354,7 +335,7 @@ public class QuanLyKhachHang extends JFrame {
 		showTable();
 
 		table = new JTable(tableModel);
-		table.getTableHeader().setReorderingAllowed(false);
+//		table.getTableHeader().setReorderingAllowed(false);
 		table.setDefaultEditor(Object.class, null);
 
 		JScrollPane jScrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,

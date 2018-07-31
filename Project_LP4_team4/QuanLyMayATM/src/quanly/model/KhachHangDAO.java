@@ -298,18 +298,40 @@ public class KhachHangDAO {
 	/**
 	 * Tìm kiếm thông tin khách hàng theo tên
 	 * 
-	 * @param khachHang1
+	 * @param khachHangInput
 	 * @return
 	 */
-	public ArrayList<KhachHang> timKiemThongTinTheoTen(String tenKH) {
+	public ArrayList<KhachHang> timKiem(KhachHang khachHangInPut) {
 		ArrayList<KhachHang> myList = new ArrayList<>();
 		PreparedStatement statement = null;
+		String SelectQuery= "SELECT * ";
+		String FromQuery= "FROM khach_hang JOIN phuong ON khach_hang.maPhuong = phuong.maPhuong JOIN quan ON phuong.maQuan = quan.maQuan JOIN the_atm ON khach_hang.soTheATM = the_atm.soTheATM WHERE " ;
+		if(!khachHangInPut.getPhuong().equals("")) {
+		       FromQuery= FromQuery + "phuong.tenPhuong ='" + khachHangInPut.getPhuong()+"'";
+		}
+		if(!khachHangInPut.getMaKH().equals("")) {
+		      FromQuery=FromQuery  + " AND " + "khach_hang.maKhachHang LIKE '%" + khachHangInPut.getMaKH()+"'";
+		}
+		if(!khachHangInPut.getTenKH().equals("")) {
+		       FromQuery= FromQuery + " AND " + "khach_hang.tenKhachHang LIKE '%" + khachHangInPut.getTenKH()+"'";
+		}
+		if(!khachHangInPut.getDiaChi().equals("")) {
+		       FromQuery= FromQuery + " AND " + "khach_hang.diaChi LIKE '%" + khachHangInPut.getDiaChi()+"'";
+		}
+		if(!khachHangInPut.getSoDT().equals("")) {
+		       FromQuery= FromQuery + " AND " + "khach_hang.soDienThoai LIKE '%" + khachHangInPut.getSoDT()+"'";
+		}
+		if(!khachHangInPut.getEmail().equals("")) {
+		       FromQuery= FromQuery + " AND " + "khach_hang.email LIKE '%" + khachHangInPut.getEmail()+"'";
+		}
+		if(!khachHangInPut.getSoTheATM().equals("")) {
+		       FromQuery= FromQuery + " AND " + "khach_hang.soTheATM LIKE '%" + khachHangInPut.getSoTheATM()+"'";
+		}
+		String Query=SelectQuery+FromQuery;
 		KhachHang khachHang;
 		conn = DatabaseUntil.getConnect();
-		String sql = "SELECT*FROM khach_hang JOIN phuong ON khach_hang.maPhuong = phuong.maPhuong JOIN quan ON phuong.maQuan = quan.maQuan JOIN the_atm ON khach_hang.soTheATM = the_atm.soTheATM WHERE tenKhachHang = ?";
 		try {
-			statement = conn.prepareStatement(sql);
-			statement.setString(1, tenKH);
+			statement = conn.prepareStatement(Query);
 			ResultSet resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {

@@ -171,7 +171,7 @@ public class BaoCaoTinhHinhRutTien extends JFrame {
 		tableModel.addColumn("Số tiền giao dịch");
 
 		table = new JTable(tableModel);
-		table.getTableHeader().setReorderingAllowed(false);
+//		table.getTableHeader().setReorderingAllowed(false);
 		table.setDefaultEditor(Object.class, null);
 
 		JScrollPane jScrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,

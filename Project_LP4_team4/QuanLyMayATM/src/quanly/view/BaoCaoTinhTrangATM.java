@@ -197,7 +197,7 @@ public class BaoCaoTinhTrangATM extends JFrame {
 		tableModel.addColumn("Số tiền còn lại trong máy");
 
 		table = new JTable(tableModel);
-		table.getTableHeader().setReorderingAllowed(false);
+//		table.getTableHeader().setReorderingAllowed(false);
 		table.setDefaultEditor(Object.class, null);
 
 		JScrollPane jScrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
