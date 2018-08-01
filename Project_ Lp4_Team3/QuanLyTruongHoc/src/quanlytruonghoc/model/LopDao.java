@@ -239,4 +239,27 @@ public class LopDao {
 		DatabasaUltil.closeConnection(conn);
 		return listLop;
 	}
+	/**
+	 * Hiển thị tất cả mã lớp trong bảng lớp trong database
+	 * @return
+	 */
+	public ArrayList<String> getAllMaLop() {
+		String sql = "SELECT `idlop` FROM `lop`";
+		conn = DatabasaUltil.getConnect();
+		ArrayList<String> listMaLop = new ArrayList<String>();
+		try {
+			PreparedStatement statement = conn.prepareStatement(sql);
+			ResultSet result = statement.executeQuery();
+			while (result.next()) {
+				listMaLop.add(result.getString("idlop"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DatabasaUltil.closeConnection(conn);
+		return listMaLop;
+	}
+
+	
+
 }

@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import quanlytruonghoc.entity.Diem;
 import quanlytruonghoc.entity.Lop;
 import quanlytruonghoc.entity.Phuong;
 import quanlytruonghoc.entity.SinhVien;
@@ -24,12 +23,14 @@ public class SinhVienDao {
 	private PreparedStatement statement;
 	private ResultSet result;
 
+	
 	/**
 	 * Them moi 1 sinh vien
 	 * 
 	 * @param sinhvien
 	 * @return
 	 */
+	
 	public boolean addNewSinhVien(SinhVien sinhvien) {
 		boolean statusExecute = false;
 		conn = DatabasaUltil.getConnect();
@@ -149,6 +150,7 @@ public class SinhVienDao {
 				sinhvien1 = new SinhVien();
 				sinhvien1.setIdSinhVien(result.getString("idsv"));
 				sinhvien1.setHoTen(result.getString("hoten"));
+				sinhvien1.setIdLop(result.getString("idlop"));
 				sinhvien1.setDiaChi(result.getString("diachi"));
 				sinhvien1.setSdt(result.getString("sdt"));
 				phuong = new Phuong();
@@ -275,26 +277,7 @@ public class SinhVienDao {
 		DatabasaUltil.closeConnection(conn);
 		return listXaPhuong;
 	}
-	/**
-	 * Hiển thị tất cả mã lớp trong bảng lớp trong database
-	 * @return
-	 */
-	public ArrayList<String> getAllMaLop() {
-		String sql = "SELECT `idlop` FROM `lop`";
-		conn = DatabasaUltil.getConnect();
-		ArrayList<String> listMaLop = new ArrayList<String>();
-		try {
-			PreparedStatement statement = conn.prepareStatement(sql);
-			ResultSet result = statement.executeQuery();
-			while (result.next()) {
-				listMaLop.add(result.getString("idlop"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		DatabasaUltil.closeConnection(conn);
-		return listMaLop;
-	}
+	
 	
 	public String getXaId(String tenXa) {
 		String sql = "SELECT `xaid` FROM `xaphuongthitran` WHERE `name` = ?";
@@ -313,4 +296,6 @@ public class SinhVienDao {
 		DatabasaUltil.closeConnection(conn);
 		return xaid;
 	}
+	
+	
 }

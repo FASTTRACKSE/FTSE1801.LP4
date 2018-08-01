@@ -239,60 +239,27 @@ public class LopDao {
 		DatabasaUltil.closeConnection(conn);
 		return listLop;
 	}
-	// Hiển thị danh sách lớp theo năm học
-	
-	public  ArrayList<Lop> getAllLopTheoNam(String namHoc){
-		String sql = "SELECT * FROM `lop` WHERE `namhoc` = ?";
+	/**
+	 * Hiển thị tất cả mã lớp trong bảng lớp trong database
+	 * @return
+	 */
+	public ArrayList<String> getAllMaLop() {
+		String sql = "SELECT `idlop` FROM `lop`";
 		conn = DatabasaUltil.getConnect();
-		ArrayList<Lop> listDsLop = new ArrayList<Lop>();
+		ArrayList<String> listMaLop = new ArrayList<String>();
 		try {
 			PreparedStatement statement = conn.prepareStatement(sql);
-			statement.setString(1, namHoc);
 			ResultSet result = statement.executeQuery();
-			Lop lop;
 			while (result.next()) {
-				lop = new Lop();
-
-				lop.setIdLop(result.getString("idlop"));
-				lop.setTenLop(result.getString("tenlop"));
-				lop.setNamHoc(result.getString("namhoc"));
-
-				listDsLop.add(lop);
-			}
-	
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		DatabasaUltil.closeConnection(conn);
-		return listDsLop;
-	}
-	
-	public int getAllSinhVienTheoLop(String idLop) {
-		String sql = "SELECT lop.*, sinhvien.idsv FROM `lop` INNER JOIN sinhvien ON lop.idlop=sinhvien.idlop WHERE lop.idlop=?";
-		conn = DatabasaUltil.getConnect();
-		ArrayList<Lop> listLop = new ArrayList<Lop>();
-		try {
-			PreparedStatement statement = conn.prepareStatement(sql);
-			statement.setString(1, idLop);
-			
-			ResultSet result = statement.executeQuery();
-			SinhVien sinhvien;
-			Lop lop;
-			while (result.next()) {
-				
-				lop = new Lop();
-				lop.setIdLop(result.getString("idlop"));
-				lop.setTenLop(result.getString("tenlop"));
-				lop.setNamHoc(result.getString("namhoc"));
-				sinhvien = new SinhVien();
-				sinhvien.setIdSinhVien(result.getString("idsv"));
-				lop.setSinhVien(sinhvien);
-				listLop.add(lop);
+				listMaLop.add(result.getString("idlop"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		DatabasaUltil.closeConnection(conn);
-		return listLop.size();
+		return listMaLop;
 	}
+
+	
+
 }

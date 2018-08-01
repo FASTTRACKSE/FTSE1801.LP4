@@ -18,11 +18,34 @@ public class MonDao {
 	private Connection conn;
 	private PreparedStatement statement;
 
+	
+	
+public String tuDongTangMaMon(String maMon1) {
+		
+		conn = DatabasaUltil.getConnect();
+		String sql ="(SELECT IFNULL (CONCAT('MH',LPAD( (SUBSTRING_INDEX (MAX(`idmon`), 'MH',-1) + 1), 5, '0')), 'MH001') AS 'IDNUMBER' FROM monhoc ORDER BY `idmon` ASC)";
+		conn = DatabasaUltil.getConnect();
+		String maMon = new String();
+		try {
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, maMon1);
+			 ResultSet result = statement.executeQuery();
+			while (result.next()) {
+				maMon = result.getString("IFNULL");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DatabasaUltil.closeConnection(conn);
+		return maMon;
+	}
 	/**
 	 * Them moi mon hoc
 	 * @param mon
 	 * @return
 	 */
+	
+	
 	public boolean addMoṇ(MonHoc monHoc){
 		boolean test = false;
 		conn = DatabasaUltil.getConnect();
@@ -36,17 +59,17 @@ public class MonDao {
 			
 			int cont = statement.executeUpdate();
 			if(cont>0) {
-				System.out.println(" Them thanh cong!!");
+				System.out.println("Thêm thành công !!");
 				test=true;
 			}
 		} catch (Exception e2) {
-			System.out.println(" Them that bai!!");
+			System.out.println("Thêm thất bại!!");
 		}
 		DatabasaUltil.closeConnection(conn);
 		return test;
 	}
 	/**
-	 * Sua ten mon hoc theo  idmonhoc
+	 * Sửa tên môn học theo  idmonhoc
 	 * 
 	 * @param monhoc
 	 * @return
@@ -64,18 +87,18 @@ public class MonDao {
 
 			int count = statement.executeUpdate();
 			if (count > 0) {
-				System.out.println("Cap nhap thanh cong");
+				System.out.println("Cập nhập thành công");
 				test = true;
 			}
 		} catch (Exception e) {
-			System.out.println("Cap nhap that bai!!");
+			System.out.println("Cập nhập thất bại!!");
 		}
 		DatabasaUltil.closeConnection(conn);
 		return test;
 	}
 
 	/**
-	 * Xoa 1 mon hoc theo  idmonhoc
+	 * Xóa một môn học theo  idmonhoc
 	 * 
 	 * @param monhoc
 	 * @return
