@@ -1,4 +1,8 @@
-
+/**
+ * SinhVien Class
+ * @author CongMT
+ *
+ */
 public class SinhVien {
 	private String id;
 	private String name;

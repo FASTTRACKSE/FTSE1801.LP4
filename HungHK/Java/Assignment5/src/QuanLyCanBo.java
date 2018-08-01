@@ -13,6 +13,43 @@ public class QuanLyCanBo {
 		listCanBo = new ArrayList<CanBo>();
 	}
 	
+	/**
+	 * Hien thi danh sach can bo theo tung don vi
+	 * @param donVi
+	 */
+	public void xuatTheoDonVi(String donVi) {
+		try {
+			for (int i=0; i<listCanBo.size(); i++) {
+				if (listCanBo.get(i).getDonVi().equals(donVi)) {
+					throw new Exception();
+				}
+			}
+			System.out.println("Nhập sai");
+		} catch (Exception e) {
+			System.out.printf("%-14s %-14s %-17s %-20s %-22s %-13s\n", "Họ tên", "Hệ số lương", "Khoa/Phòng ban", "Trình độ/Chức vụ", "Số tiết/Số ngày công", "Tổng lương");
+			for (int i=0; i<listCanBo.size(); i++) {
+				if (listCanBo.get(i).getDonVi().equals(donVi)) {
+					System.out.printf("%-14s %-14s %-17s %-20s %-22s %-13s\n", listCanBo.get(i).getHoTen(), listCanBo.get(i).getHeSoLuong(), listCanBo.get(i).getDonVi(), listCanBo.get(i).getCapBac(), listCanBo.get(i).getThoiGianLamViec(), listCanBo.get(i).getLuong());
+				}
+			}
+		}
+		
+	}
+	
+	/**
+	 * Tinh tong luong truong phai tra cho can bo
+	 */
+	public void tongLuong() {
+		double tongLuong = 0;
+		for (int i=0; i<listCanBo.size(); i++) {
+			tongLuong = listCanBo.get(i).getLuong() + tongLuong;
+		}
+		System.out.println("Tổng lương trường phải trả: " + tongLuong);
+	}
+	
+	/**
+	 * Menu chuc nang chuong trinh
+	 */
 	public void menu() {
 		int chooseMenu;
 		int soCanBo;
@@ -23,7 +60,9 @@ public class QuanLyCanBo {
 		while (true) {
 			System.out.println("1. Nhập thông tin cán bộ");
 			System.out.println("2. Hiển thị thông tin cán bộ");
-			System.out.println("3. Chương trình kết thúc");
+			System.out.println("3. Hiển thị danh sách cán bộ theo đơn vị");
+			System.out.println("4. Hiển thị tổng lương trường phải trả cho cán bộ");
+			System.out.println("6. Chương trình kết thúc");
 			
 			chooseMenu = sc.nextInt();
 			switch (chooseMenu) {
@@ -44,6 +83,8 @@ public class QuanLyCanBo {
 						canBo = new NhanVien();
 						((NhanVien)canBo).nhapNhanVien(sc);
 						listCanBo.add(canBo);
+					} else if (cb!=1 || cb!=2) {
+						System.out.println("Chọn sai");
 					}
 				}
 				break;
@@ -60,8 +101,19 @@ public class QuanLyCanBo {
 					}
 				}
 				break;
-				
+			
 			case 3:
+				System.out.print("Nhập đơn vị muốn hiển thị: ");
+				sc.nextLine();
+				String donVi = sc.nextLine();
+				xuatTheoDonVi(donVi);
+				break;
+				
+			case 4:
+				tongLuong();
+				break;
+				
+			case 5:
 				sc.close();
 				System.out.println("***Bye bye***");
 				System.exit(0);

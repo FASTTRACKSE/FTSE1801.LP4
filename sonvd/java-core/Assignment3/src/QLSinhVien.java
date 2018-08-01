@@ -3,13 +3,25 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
 
+/**
+ * Quản lý sinh viên
+ * 
+ * @author SonVD
+ *
+ */
 public class QLSinhVien {
 	private ArrayList<quanLySinhVien> listSinhVien;
 
+	/**
+	 * Tao mang listSinhVien
+	 */
 	public QLSinhVien() {
 		listSinhVien = new ArrayList<quanLySinhVien>();
 	}
 
+	/**
+	 * display menu
+	 */
 	public void menu() {
 		int chooseMenu;
 		Scanner input = new Scanner(System.in);
@@ -78,11 +90,22 @@ public class QLSinhVien {
 
 	}
 
+	/**
+	 * Add sinhVien in list
+	 * 
+	 * @param Sv
+	 *            sinh vien
+	 */
 	public void addSV(quanLySinhVien Sv) {
 		listSinhVien.add(Sv);
 		System.out.println("Thêm sinh viên thành công!");
 	}
 
+	/**
+	 * Update sinhVien by id
+	 * 
+	 * @param id
+	 */
 	public void updateSVById(int id) {
 		for (int i = 0; i < listSinhVien.size(); i++) {
 			if (listSinhVien.get(i).getId() == id) {
@@ -107,6 +130,11 @@ public class QLSinhVien {
 		}
 	}
 
+	/**
+	 * Delete sinhVien by Id
+	 * 
+	 * @param id
+	 */
 	public void deleteSVById(int id) {
 		for (int i = 0; i < listSinhVien.size(); i++) {
 			if (listSinhVien.get(i).getId() == id) {
@@ -115,6 +143,9 @@ public class QLSinhVien {
 		}
 	}
 
+	/**
+	 * Sort sinhVien by Name
+	 */
 	public void sortSVByName() {
 		Collections.sort(listSinhVien, new Comparator<quanLySinhVien>() {
 
@@ -126,6 +157,9 @@ public class QLSinhVien {
 		});
 	}
 
+	/**
+	 * Display list sinhVien
+	 */
 	public void displaySV() {
 		System.out.format("%3s|%-30s|%9s|%-30s|%9s%n", "Id", "Tên sinh viên", "Tuổi", "Địa chỉ", "Trung bình");
 		for (int i = 0; i < listSinhVien.size(); i++) {
@@ -134,6 +168,11 @@ public class QLSinhVien {
 		}
 	}
 
+	/**
+	 * Ham main
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		QLSinhVien qlsv = new QLSinhVien();
 

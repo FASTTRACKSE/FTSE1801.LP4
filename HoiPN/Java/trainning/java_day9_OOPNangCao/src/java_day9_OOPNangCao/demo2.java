@@ -1,14 +1,14 @@
 package java_day9_OOPNangCao;
 
 public class demo2 {
-	static int x;
+	static int x; //field, thuộc tính, ....
 	static String s = "Hello";
 	
 	static {
 		x += 100;
 	}
 	
-	public int sum(int...x) {
+	public int sum(int...x) {// method
 		int sum = 0;
 		for(int i : x)
 			sum +=i;

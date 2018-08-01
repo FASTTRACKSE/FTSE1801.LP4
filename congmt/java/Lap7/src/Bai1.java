@@ -9,7 +9,7 @@ public class Bai1 {
 		while (kiemTra) {
 			System.out.println("moi nhap so:");
 			String nuberPhone = sc.nextLine();
-			String pattern = "0[0-9]{9,10}";
+			String pattern = "\\w{5}";
 			// String pattern= "0\\9{9,10}";
 			if (nuberPhone.matches(pattern)) {
 				System.out.println(nuberPhone + ": So dien thoai nay co the dung.");

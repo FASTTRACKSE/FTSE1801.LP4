@@ -3,7 +3,7 @@ package Assignment5;
 import java.util.Scanner;
 
 /**
- * Thong tin nhan vien
+ * Thông tin nhân viên
  * 
  * @author SonVD
  *
@@ -16,8 +16,11 @@ public class nhanVien extends CanBo {
 	public nhanVien() {
 	}
 
-	public nhanVien(String hoTen, String loaiCanBo, double phuCap, double heSoLuong) {
-		super(hoTen, loaiCanBo, phuCap, heSoLuong);
+	public nhanVien(String phongBan, int soNgayCong, String chucVu) {
+		super();
+		this.phongBan = phongBan;
+		this.soNgayCong = soNgayCong;
+		this.chucVu = chucVu;
 	}
 
 	public String getPhongBan() {

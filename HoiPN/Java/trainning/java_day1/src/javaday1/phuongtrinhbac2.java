@@ -15,7 +15,8 @@ public class phuongtrinhbac2 {
 		if(a==0) {
 			if(b==0) {
 				if(c==0) {
-					System.out.println("Phương trình có vô số nghiệm");
+					System.out.println("Phương trình có vô số "
+							+ "nghiệm");
 				}else {
 					System.out.println("Phương trình vô nghiệm");
 				}
