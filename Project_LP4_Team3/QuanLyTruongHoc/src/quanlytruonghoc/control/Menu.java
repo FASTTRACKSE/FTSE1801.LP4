@@ -1187,7 +1187,7 @@ public class Menu extends JFrame implements ActionListener {
 				}
 			}
 		} else if (e.getSource() == suaLopButton) {
-			// Bắt lỗi các trư�?ng hợp trong nhập văn bản
+			// Bắt lỗi các trường hợp trong nhập văn bản
 			if (tenLop1.length() == 0) {
 				JOptionPane.showMessageDialog(null, "Tên lớp không đươc để trống !");
 			} else if (!tenLop1.matches("\\d{4}")) {
@@ -1244,10 +1244,10 @@ public class Menu extends JFrame implements ActionListener {
 
 		}
 
-		// Ket noi database của bảng môn h�?c
+		// Ket noi database của bảng môn học
 
 		MonHoc monHoc = new MonHoc();
-		// Tao gia tri moi cho bảng môn h�?c
+		// Tao gia tri moi cho bảng môn học
 
 		String idMonHoc1 = maMonField.getText();
 		String tenMonHoc1 = tenMonField.getText();
