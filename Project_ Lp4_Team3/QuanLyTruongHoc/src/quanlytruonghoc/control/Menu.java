@@ -3,28 +3,21 @@ package quanlytruonghoc.control;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.Insets;
-import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -43,16 +36,17 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import quanlytruonghoc.model.ThongKeDao;
-import quanlytruonghoc.model.LopDao;
-import quanlytruonghoc.model.MonDao;
-import quanlytruonghoc.model.SinhVienDao;
 import quanlytruonghoc.entity.Lop;
 import quanlytruonghoc.entity.MonHoc;
 import quanlytruonghoc.entity.Phuong;
 import quanlytruonghoc.entity.SinhVien;
+import quanlytruonghoc.model.LopDao;
+import quanlytruonghoc.model.MonDao;
+import quanlytruonghoc.model.SinhVienDao;
+import quanlytruonghoc.model.ThongKeDao;
 
 public class Menu extends JFrame implements ActionListener {
+	private static final long serialVersionUID = 1L;
 	JPanel headerPanel, menuPanel, centerPanel, trangChuPanel, sinhVienPanel, lopPanel, monHocPanel, thongKePanel,
 			cardPanel;
 	JButton sinhVienButton, monHocButton, lopButton, thongKeButton, trangChuButton;
@@ -66,7 +60,7 @@ public class Menu extends JFrame implements ActionListener {
 	Font font;
 	Border border;
 	JTextField maSvField, tenSvField, diaChiField, sdtField, emailField, timKiemField;
-	JComboBox tpComb, quanComb, phuongComb, lopComb;
+	JComboBox<String> tpComb, quanComb, phuongComb, lopComb;
 	JButton themSvButton, suaSvButton, xoaSvButton, taoMoiSvButton, timkiemSvButton;
 	JTable svTable;
 	DefaultTableModel svDtm;
@@ -77,9 +71,11 @@ public class Menu extends JFrame implements ActionListener {
 	JTable lopTable, lopTable1;
 	JPanel lopBang;
 	DefaultTableModel lopDtm, lopDtm1;
-	JComboBox locTheoNam, locTheoLop, comb3, comb1, comb2;
+	JComboBox<String> locTheoNam, locTheoLop, namcomb2, namcomb1, lopcomb;
 	MonDao monDao;
 	ArrayList<MonHoc> listMonHoc;
+	JLabel tieuDeMon, labelMon1,labelMon2,labelMon3,labelMon4;
+	JPanel monNhap,monPn1,monPn2,monPn3,monMenu,monBang;
 	JTextField maMonField, tenMonField, soTinChiField, thoiLuongField;
 	JButton themMonButton, suaMonButton, xoaMonButton, lamMoiMonButton, timkiemMonButton;
 	JTable monTable;
@@ -276,7 +272,7 @@ public class Menu extends JFrame implements ActionListener {
 		JPanel svPn4 = new JPanel();
 		svNhap.add(svPn4);
 		svPn4.setLayout(new BoxLayout(svPn4, BoxLayout.Y_AXIS));
-		tpComb = new JComboBox();
+		tpComb = new JComboBox<>();
 		tpComb.addItem("Chọn thành phố");
 		svPn4.add(tpComb);
 		// Thành phố combox
@@ -287,15 +283,15 @@ public class Menu extends JFrame implements ActionListener {
 			tpComb.addItem(listTp.get(i));
 		}
 
-		quanComb = new JComboBox();
+		quanComb = new JComboBox<>();
 		quanComb.addItem("Chọn quận/huyện");
 		svPn4.add(quanComb);
 		quanComb.setPreferredSize(new Dimension(150, 30));
-		phuongComb = new JComboBox();
+		phuongComb = new JComboBox<>();
 		phuongComb.addItem("Chọn phường/xã");
 		svPn4.add(phuongComb);
 		phuongComb.setPreferredSize(new Dimension(150, 30));
-		lopComb = new JComboBox();
+		lopComb = new JComboBox<>();
 		lopComb.addItem("Mã lớp");
 		svPn4.add(lopComb);
 		// Mã Lớp combox
@@ -399,7 +395,7 @@ public class Menu extends JFrame implements ActionListener {
 
 			public void mouseClicked(MouseEvent e) {
 				int row = svTable.getSelectedRow();
-				int col = svTable.getSelectedColumn();
+		
 				String s = (String) svTable.getValueAt(row, 0);
 				maSvField.setText(s);
 
@@ -456,7 +452,7 @@ public class Menu extends JFrame implements ActionListener {
 		JLabel label2 = new JLabel("Lọc theo năm học");
 		panel.add(label2);
 		label2.setFont(lbfont1);
-		locTheoNam = new JComboBox();
+		locTheoNam = new JComboBox<>();
 		panel.add(locTheoNam);
 		locTheoNam.setPreferredSize(new Dimension(150, 25));
 		locTheoNam.addItem("Năm học");
@@ -465,7 +461,7 @@ public class Menu extends JFrame implements ActionListener {
 		JLabel label3 = new JLabel("Lọc theo lớp học  ");
 		panel1.add(label3);
 		label3.setFont(lbfont1);
-		locTheoLop = new JComboBox();
+		locTheoLop = new JComboBox<>();
 		panel1.add(locTheoLop);
 		locTheoLop.setPreferredSize(new Dimension(150, 25));
 		locTheoLop.addItem("Lớp");
@@ -617,7 +613,7 @@ public class Menu extends JFrame implements ActionListener {
 
 			public void mouseClicked(MouseEvent e) {
 				int row = lopTable1.getSelectedRow();
-				int col = lopTable1.getSelectedColumn();
+			
 				String s = (String) lopTable1.getValueAt(row, 0);
 				maLopField.setText(s);
 				String s1 = (String) lopTable1.getValueAt(row, 1);
@@ -651,32 +647,39 @@ public class Menu extends JFrame implements ActionListener {
 
 		monHocPanel = new JPanel();
 		monHocPanel.setLayout(new BoxLayout(monHocPanel, BoxLayout.Y_AXIS));
-		JLabel monLabel = new JLabel("Quản lý môn học");
-		monLabel.setLayout(new BoxLayout(monLabel, BoxLayout.Y_AXIS));
+		// Tiêu đề môn
+		tieuDeMon = new JLabel("Quản lý môn học");
+		tieuDeMon.setLayout(new BoxLayout(tieuDeMon, BoxLayout.Y_AXIS));
 		Font font2 = new Font("Arial", Font.BOLD | Font.ITALIC, 40);
-		monLabel.setFont(font2);
-		monLabel.setAlignmentX(CENTER_ALIGNMENT);
-		JPanel monNhap = new JPanel();
-		JPanel monPn1 = new JPanel();
+		tieuDeMon.setFont(font2);
+		tieuDeMon.setAlignmentX(CENTER_ALIGNMENT);
+		
+		// Tạo phần nhập cho bảng trang quản lý môn
+		
+		monNhap = new JPanel();
+		monPn1 = new JPanel();
 		monNhap.add(monPn1);
+		
 		monPn1.setLayout(new BoxLayout(monPn1, BoxLayout.Y_AXIS));
 		Font font3 = new Font("Arial", Font.BOLD | Font.ITALIC, 23);
-		JLabel labelMon1 = new JLabel("Mã môn học: ");
+		
+		labelMon1 = new JLabel("Mã môn học: ");
 		labelMon1.setFont(font3);
 		monPn1.add(labelMon1);
-		JLabel labelMon2 = new JLabel("Tên môn học: ");
+		labelMon2 = new JLabel("Tên môn học: ");
 		labelMon2.setFont(font3);
 		monPn1.add(labelMon2);
-		JLabel labelMon3 = new JLabel("Số tín chỉ: ");
+		labelMon3 = new JLabel("Số tín chỉ: ");
 		labelMon3.setFont(font3);
 		monPn1.add(labelMon3);
-		JLabel labelMon4 = new JLabel("Thời lượng: ");
+		labelMon4 = new JLabel("Thời lượng: ");
 		labelMon4.setFont(font3);
 		monPn1.add(labelMon4);
 
-		JPanel monPn2 = new JPanel();
+		monPn2 = new JPanel();
 		border = BorderFactory.createLineBorder(Color.BLACK);
 		monNhap.add(monPn2);
+		
 		monPn2.setLayout(new BoxLayout(monPn2, BoxLayout.Y_AXIS));
 		maMonField = new JTextField(20);
 		maMonField.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
@@ -685,16 +688,16 @@ public class Menu extends JFrame implements ActionListener {
 		tenMonField.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 		monPn2.add(tenMonField);
 		soTinChiField = new JTextField(20);
-		soTinChiField
-				.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+		soTinChiField.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 		monPn2.add(soTinChiField);
 		thoiLuongField = new JTextField(20);
-		thoiLuongField
-				.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+		thoiLuongField.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 		monPn2.add(thoiLuongField);
-
-		JPanel monMenu = new JPanel();
-		JPanel monPn3 = new JPanel();
+		
+		// Tạo phần menu thêm sửa xóa cho bảng quản lý môn
+		
+		monMenu = new JPanel();
+		monPn3 = new JPanel();
 		font = new Font("Arial", Font.BOLD | Font.ITALIC, 18);
 		monMenu.add(monPn3);
 		themMonButton = new JButton("Thêm");
@@ -712,7 +715,10 @@ public class Menu extends JFrame implements ActionListener {
 		timkiemMonButton = new JButton("Tìm kiếm");
 		timkiemMonButton.setFont(font);
 		monPn3.add(timkiemMonButton);
-		JPanel monBang = new JPanel();
+		
+		// Tạo table cho trang quản lý môn học
+		
+		monBang = new JPanel();
 		font = new Font("Arial", Font.BOLD | Font.ITALIC, 16);
 		monDtm = new DefaultTableModel();
 		monDtm.addColumn("Mã môn học");
@@ -727,6 +733,9 @@ public class Menu extends JFrame implements ActionListener {
 		JScrollPane scMonhoc = new JScrollPane(monTable, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scMonhoc.setPreferredSize(new Dimension(1400, 500));
+		
+		// Tạo nút clip chuột trong bảng quản lý môn học
+		
 		monTable.addMouseListener(new MouseListener() {
 			public void mouseReleased(MouseEvent e) {
 			}
@@ -742,7 +751,7 @@ public class Menu extends JFrame implements ActionListener {
 
 			public void mouseClicked(MouseEvent e) {
 				int row = monTable.getSelectedRow();
-				int col = monTable.getSelectedColumn();
+				
 				String s = (String) monTable.getValueAt(row, 0);
 				maMonField.setText(s);
 				String s1 = (String) monTable.getValueAt(row, 1);
@@ -758,11 +767,15 @@ public class Menu extends JFrame implements ActionListener {
 		TitledBorder borderTitleMon = BorderFactory.createTitledBorder(borderMon, "Danh sách môn học");
 		monBang.setBorder(borderTitleMon);
 		monBang.add(scMonhoc);
-		monHocPanel.add(monLabel);
+		
+		// Add các JPanel nhỏ vào JPanel tổng
+		
+		monHocPanel.add(tieuDeMon);
 		monHocPanel.add(monNhap);
 		monHocPanel.add(monMenu);
 		monHocPanel.add(monBang);
 		monHocPanel.setLayout(new BoxLayout(monHocPanel, BoxLayout.Y_AXIS));
+		
 		displayAllMonHoc(listMonHoc);
 		// Kết thuc quản lý môn
 		// học.***************************************************************************************
@@ -780,19 +793,19 @@ public class Menu extends JFrame implements ActionListener {
 		JPanel thongKeNhap2 = new JPanel();
 		Font fontTit = new Font("Arial", Font.BOLD | Font.ITALIC, 20);
 
-		comb1 = new JComboBox();
-		comb1.setPreferredSize(new Dimension(150, 30));
-		comb1.addItem("Năm học");
-		comb2 = new JComboBox();
-		comb2.addItem("Lớp");
-		comb2.setPreferredSize(new Dimension(150, 30));
+		namcomb1 = new JComboBox<>();
+		namcomb1.setPreferredSize(new Dimension(150, 30));
+		namcomb1.addItem("Năm học");
+		lopcomb = new JComboBox<>();
+		lopcomb.addItem("Lớp");
+		lopcomb.setPreferredSize(new Dimension(150, 30));
 		show1 = new JButton("Xem danh sách");
 		show1.setFont(font);
 		JLabel dsLopLabel = new JLabel("Báo cáo danh sách lớp học");
 		dsLopLabel.setFont(fontTit);
-		comb3 = new JComboBox();
-		comb3.addItem("Năm học");
-		comb3.setPreferredSize(new Dimension(150, 30));
+		namcomb2 = new JComboBox<>();
+		namcomb2.addItem("Năm học");
+		namcomb2.setPreferredSize(new Dimension(150, 30));
 		JLabel dssvLabel = new JLabel("Báo cáo danh sách sinh viên");
 		dssvLabel.setFont(fontTit);
 		show2 = new JButton("Xem danh sách");
@@ -804,19 +817,19 @@ public class Menu extends JFrame implements ActionListener {
 		listNamHoc = new ArrayList<String>(set1);
 
 		for (String listNam : listNamHoc) {
-			comb1.addItem(listNam);
-			comb3.addItem(listNam);
+			namcomb1.addItem(listNam);
+			namcomb2.addItem(listNam);
 		}
 
-		comb1.addItemListener(new ItemListener() {
+		namcomb1.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
-					theoNam = comb1.getSelectedItem().toString();
-					comb2.removeAllItems();
+					theoNam = namcomb1.getSelectedItem().toString();
+					lopcomb.removeAllItems();
 					listTenLop = lopDao.getAllTenLop(theoNam);
 					for (String list : listTenLop) {
-						comb2.addItem(list);
+						lopcomb.addItem(list);
 					}
 				}
 			}
@@ -827,8 +840,8 @@ public class Menu extends JFrame implements ActionListener {
 		thongKeNhap1.setLayout(new GridBagLayout());
 
 		addItem(thongKeNhap1, dssvLabel, 0, 0, 1, 1, GridBagConstraints.EAST);
-		addItem(thongKeNhap1, comb1, 0, 1, 1, 1, GridBagConstraints.EAST);
-		addItem(thongKeNhap1, comb2, 0, 2, 1, 1, GridBagConstraints.EAST);
+		addItem(thongKeNhap1, namcomb1, 0, 1, 1, 1, GridBagConstraints.EAST);
+		addItem(thongKeNhap1, lopcomb, 0, 2, 1, 1, GridBagConstraints.EAST);
 		addItem(thongKeNhap1, show1, 0, 3, 1, 1, GridBagConstraints.EAST);
 		thongKeNhap2.setPreferredSize(new Dimension(300, 160));
 		thongKeNhap2.setBorder(borderLop1);
@@ -836,7 +849,7 @@ public class Menu extends JFrame implements ActionListener {
 		thongKeNhap2.setLayout(new GridBagLayout());
 
 		addItem(thongKeNhap2, dsLopLabel, 1, 0, 1, 1, GridBagConstraints.WEST);
-		addItem(thongKeNhap2, comb3, 1, 1, 1, 1, GridBagConstraints.WEST);
+		addItem(thongKeNhap2, namcomb2, 1, 1, 1, 1, GridBagConstraints.WEST);
 		addItem(thongKeNhap2, new JLabel(""), 1, 2, 1, 1, GridBagConstraints.WEST);
 		addItem(thongKeNhap2, show2, 1, 3, 1, 1, GridBagConstraints.WEST);
 		thongKeNhap.add(thongKeNhap1);
@@ -1382,7 +1395,7 @@ public class Menu extends JFrame implements ActionListener {
 		if (e.getSource() == show1) {
 			listSinhVien2 = new ArrayList<SinhVien>();
 			dssvDtm.setRowCount(0);
-			listSinhVien2 = thongKeDao.getAllTenSinhVien(thongKeDao.getLopId(comb2.getSelectedItem().toString()));
+			listSinhVien2 = thongKeDao.getAllTenSinhVien(thongKeDao.getLopId(lopcomb.getSelectedItem().toString()));
 			double dtb = 0;
 			String xepLoai = null;
 			
@@ -1459,7 +1472,7 @@ public class Menu extends JFrame implements ActionListener {
 	public void baoCaoDsLop(ArrayList<Lop> listDsLop) {
 		listDsLop = new ArrayList<Lop>();
 		dsLopDtm.setRowCount(0);
-		listDsLop = thongKeDao.getAllLopTheoNam(comb3.getSelectedItem().toString());
+		listDsLop = thongKeDao.getAllLopTheoNam(namcomb2.getSelectedItem().toString());
 		for (Lop lop11 : listDsLop) {
 			dsLopDtm.addRow(new String[] { lop11.getIdLop(), lop11.getTenLop(), lop11.getNamHoc(),
 					String.valueOf(thongKeDao.getAllSinhVienTheoLop(lop11.getIdLop())) });
@@ -1472,6 +1485,7 @@ public class Menu extends JFrame implements ActionListener {
 
 	public static void main(String[] args) {
 		Menu menu = new Menu();
+		menu.display();
 	}
 
 }

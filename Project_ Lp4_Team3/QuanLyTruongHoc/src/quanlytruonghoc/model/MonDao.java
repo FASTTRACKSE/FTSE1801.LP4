@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import quanlytruonghoc.entity.MonHoc;
-import quanlytruonghoc.entity.SinhVien;
 
 /**
  * MonDao Class

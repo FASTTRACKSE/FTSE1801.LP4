@@ -6,10 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import quanlytruonghoc.entity.Lop;
 import quanlytruonghoc.entity.Phuong;
 import quanlytruonghoc.entity.SinhVien;
-import quanlytruonghoc.model.DatabasaUltil;
 
 /**
  * SinhVienDao Class
