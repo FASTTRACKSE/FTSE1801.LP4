@@ -23,12 +23,14 @@ public class SinhVienDao {
 	private PreparedStatement statement;
 	private ResultSet result;
 
+	
 	/**
 	 * Them moi 1 sinh vien
 	 * 
 	 * @param sinhvien
 	 * @return
 	 */
+	
 	public boolean addNewSinhVien(SinhVien sinhvien) {
 		boolean statusExecute = false;
 		conn = DatabasaUltil.getConnect();
@@ -148,6 +150,7 @@ public class SinhVienDao {
 				sinhvien1 = new SinhVien();
 				sinhvien1.setIdSinhVien(result.getString("idsv"));
 				sinhvien1.setHoTen(result.getString("hoten"));
+				sinhvien1.setIdLop(result.getString("idlop"));
 				sinhvien1.setDiaChi(result.getString("diachi"));
 				sinhvien1.setSdt(result.getString("sdt"));
 				phuong = new Phuong();
@@ -274,26 +277,7 @@ public class SinhVienDao {
 		DatabasaUltil.closeConnection(conn);
 		return listXaPhuong;
 	}
-	/**
-	 * Hiển thị tất cả mã lớp trong bảng lớp trong database
-	 * @return
-	 */
-	public ArrayList<String> getAllMaLop() {
-		String sql = "SELECT `idlop` FROM `lop`";
-		conn = DatabasaUltil.getConnect();
-		ArrayList<String> listMaLop = new ArrayList<String>();
-		try {
-			PreparedStatement statement = conn.prepareStatement(sql);
-			ResultSet result = statement.executeQuery();
-			while (result.next()) {
-				listMaLop.add(result.getString("idlop"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		DatabasaUltil.closeConnection(conn);
-		return listMaLop;
-	}
+	
 	
 	public String getXaId(String tenXa) {
 		String sql = "SELECT `xaid` FROM `xaphuongthitran` WHERE `name` = ?";
@@ -313,43 +297,5 @@ public class SinhVienDao {
 		return xaid;
 	}
 	
-	public String getLopId(String tenLop) {
-		String sql = "SELECT `idlop` FROM `lop` WHERE `tenlop` = ?";
-		conn = DatabasaUltil.getConnect();
-		String idLop = new String();
-		try {
-			statement = conn.prepareStatement(sql);
-			statement.setString(1, tenLop);
-			result = statement.executeQuery();
-			while (result.next()) {
-				idLop = result.getString("idlop");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		DatabasaUltil.closeConnection(conn);
-		return idLop;
-	}
 	
-	public ArrayList<SinhVien> getAllTenSinhVien(String idlop) {
-		String sql = "SELECT `idsv`,`hoten` FROM `sinhvien` WHERE `idlop` = ?";
-		conn = DatabasaUltil.getConnect();
-		ArrayList<SinhVien> listDSSV = new ArrayList<SinhVien>();
-		SinhVien sinhVien;
-		try {
-			PreparedStatement statement = conn.prepareStatement(sql);
-			statement.setString(1, idlop);
-			ResultSet result = statement.executeQuery();
-			while (result.next()) {
-				sinhVien= new SinhVien();
-				sinhVien.setIdSinhVien(result.getString("idsv"));
-				sinhVien.setHoTen(result.getString("hoten"));
-				listDSSV.add(sinhVien);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		DatabasaUltil.closeConnection(conn);
-		return listDSSV;
-	}
 }
