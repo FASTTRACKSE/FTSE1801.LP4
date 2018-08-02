@@ -1253,13 +1253,17 @@ public class Menu extends JFrame implements ActionListener {
 			listSinhVien2 = new ArrayList<SinhVien>();
 			dssvDtm.setRowCount(0);
 			listSinhVien2 = sinhVienDao.getAllTenSinhVien(sinhVienDao.getLopId(comb2.getSelectedItem().toString()));
+			double dtb = 0;
+			String xepLoai = null;
 			
-
 			for (SinhVien sinhVien : listSinhVien2) {
-				listDiem = diemDao.getAllDiemThi(sinhVien.getIdSinhVien());
-				double dtb;
-				String xepLoai;
-				dtb = (listDiem.get(0)+listDiem.get(1)+listDiem.get(2)+listDiem.get(3))/4;
+				
+				double diemJava = diemDao.getDiemThiJava(sinhVien.getIdSinhVien());
+				double diemHTML = diemDao.getDiemThiHTML(sinhVien.getIdSinhVien());
+				double diemSQL = diemDao.getDiemThiSQL(sinhVien.getIdSinhVien());
+				double diemEnglish = diemDao.getDiemThiEnligh(sinhVien.getIdSinhVien());
+				
+				dtb = (diemJava + diemHTML + diemSQL + diemEnglish)/4;
 				if(dtb>=8) {
 					xepLoai = "Giỏi";
 				}else if(dtb>=6.5) {
@@ -1270,11 +1274,11 @@ public class Menu extends JFrame implements ActionListener {
 					xepLoai = "Yếu";
 				}
 				
-				dssvDtm.addRow(new String[] { sinhVien.getIdSinhVien(), sinhVien.getHoTen(), String.valueOf(listDiem.get(0)), 
-						String.valueOf(listDiem.get(1)), String.valueOf(listDiem.get(2)), String.valueOf(listDiem.get(3)), String.valueOf(dtb), xepLoai});
+				dssvDtm.addRow(new String[] { sinhVien.getIdSinhVien(), sinhVien.getHoTen(), String.valueOf(diemJava),
+						String.valueOf(diemHTML), String.valueOf(diemSQL), String.valueOf(diemEnglish), String.valueOf(dtb), xepLoai});
+				
+				
 			}
-			
-			
 		}
 		
 		if (e.getSource() == show2) {
@@ -1341,5 +1345,12 @@ public class Menu extends JFrame implements ActionListener {
 //		}
 //		return diem;
 //	}
-
+	
+	public double sum(ArrayList<Double> listDiem) {
+		double sum = 0;
+	    for (double i: listDiem) {
+	        sum += i;
+	    }
+	    return sum;
+	}
 }
