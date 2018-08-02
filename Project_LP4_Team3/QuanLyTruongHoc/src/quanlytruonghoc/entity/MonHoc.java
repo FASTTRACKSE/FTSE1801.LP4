@@ -1,5 +1,9 @@
 package quanlytruonghoc.entity;
-
+/**
+ * MonHoc Class
+ * @author CongMT
+ *
+ */
 public class MonHoc {
 
 	private String idMonHoc;

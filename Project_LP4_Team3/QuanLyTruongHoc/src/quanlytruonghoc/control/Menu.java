@@ -428,8 +428,7 @@ public class Menu extends JFrame implements ActionListener {
 		// Kết thúc trang quản lý sinh
 		// viên.********************************************************************************
 
-		// Trang quản lý lớp
-		// h�?c.*******************************************************************************************
+		// Trang quản lý lớp học.*******************************************************************************************
 
 		lopPanel = new JPanel();
 		JLabel lopLabel = new JLabel("Quản lý lớp học");
@@ -455,7 +454,7 @@ public class Menu extends JFrame implements ActionListener {
 		locTheoNam = new JComboBox<>();
 		panel.add(locTheoNam);
 		locTheoNam.setPreferredSize(new Dimension(150, 25));
-		locTheoNam.addItem("Năm h�?c");
+		locTheoNam.addItem("Năm học");
 		JPanel panel1 = new JPanel();
 		lopXemDS.add(panel1);
 		JLabel label3 = new JLabel("Lọc theo lớp học  ");
@@ -639,15 +638,13 @@ public class Menu extends JFrame implements ActionListener {
 		lopPanel.setLayout(new BoxLayout(lopPanel, BoxLayout.Y_AXIS));
 		displayAllLop(listLop);
 
-		// Kết thuc quản lý lớp
-		// h�?c.***************************************************************************************
+		// Kết thúc quản lý lớp học.***************************************************************************************
 
-		// Trang quản lý môn
-		// h�?c.*******************************************************************************************
+		// Trang quản lý môn học.*******************************************************************************************
 
 		monHocPanel = new JPanel();
 		monHocPanel.setLayout(new BoxLayout(monHocPanel, BoxLayout.Y_AXIS));
-		// Tiêu đ�? môn
+		// Tiêu đề môn
 		tieuDeMon = new JLabel("Quản lý môn học");
 		tieuDeMon.setLayout(new BoxLayout(tieuDeMon, BoxLayout.Y_AXIS));
 		Font font2 = new Font("Arial", Font.BOLD | Font.ITALIC, 40);
@@ -672,7 +669,7 @@ public class Menu extends JFrame implements ActionListener {
 		labelMon3 = new JLabel("Số tín chỉ: ");
 		labelMon3.setFont(font3);
 		monPn1.add(labelMon3);
-		labelMon4 = new JLabel("Th�?i lượng: ");
+		labelMon4 = new JLabel("Thời lượng: ");
 		labelMon4.setFont(font3);
 		monPn1.add(labelMon4);
 
@@ -716,7 +713,7 @@ public class Menu extends JFrame implements ActionListener {
 		timkiemMonButton.setFont(font);
 		monPn3.add(timkiemMonButton);
 		
-		// Tạo table cho trang quản lý môn h�?c
+		// Tạo table cho trang quản lý môn học
 		
 		monBang = new JPanel();
 		font = new Font("Arial", Font.BOLD | Font.ITALIC, 16);
@@ -734,7 +731,7 @@ public class Menu extends JFrame implements ActionListener {
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scMonhoc.setPreferredSize(new Dimension(1400, 500));
 		
-		// Tạo nút clip chuột trong bảng quản lý môn h�?c
+		// Tạo nút clip chuột trong bảng quản lý môn học
 		
 		monTable.addMouseListener(new MouseListener() {
 			public void mouseReleased(MouseEvent e) {
@@ -768,7 +765,7 @@ public class Menu extends JFrame implements ActionListener {
 		monBang.setBorder(borderTitleMon);
 		monBang.add(scMonhoc);
 		
-		// Add các JPanel nh�? vào JPanel tổng
+		// Add các JPanel nhỏ vào JPanel tổng
 		
 		monHocPanel.add(tieuDeMon);
 		monHocPanel.add(monNhap);
@@ -778,7 +775,7 @@ public class Menu extends JFrame implements ActionListener {
 		
 		displayAllMonHoc(listMonHoc);
 		// Kết thuc quản lý môn
-		// h�?c.***************************************************************************************
+		// học.***************************************************************************************
 
 		// Trang thống
 		// kê.***************************************************************************************
@@ -988,7 +985,7 @@ public class Menu extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// Thực hiện lệnh g�?i button đến các trang của menu
+		// Thực hiện lệnh gọi button đến các trang của menu
 		if (e.getSource() == sinhVienButton) {
 			card.show(cardPanel, "sinhVienPanel");
 
@@ -1011,9 +1008,7 @@ public class Menu extends JFrame implements ActionListener {
 			card2.show(lopBang, "bang 2");
 		}
 
-		/**
-		 * Bảng sinh viên
-		 */
+		
 
 		// Ket noi database cua quan li sinh vien.
 		SinhVien sinhvien = new SinhVien();
@@ -1039,10 +1034,10 @@ public class Menu extends JFrame implements ActionListener {
 		sinhvien.setDiaChi(diaChi);
 		sinhvien.setIdLop(lopComb.getSelectedItem().toString());
 
-		// Thực hiện lệnh g�?i đến nút button
+		// Thực hiện lệnh gọi đến nút button
 
 		if (e.getSource() == themSvButton) {
-			// Bắt lỗi các trư�?ng hợp trong nhập văn bản
+			// Bắt lỗi các trường hợp trong nhập văn bản
 			// Tao gia tri moi cho bang sinhvien
 
 			if (idSv.length() == 0) {
@@ -1192,7 +1187,7 @@ public class Menu extends JFrame implements ActionListener {
 				}
 			}
 		} else if (e.getSource() == suaLopButton) {
-			// Bắt lỗi các trư�?ng hợp trong nhập văn bản
+			// Bắt lỗi các trường hợp trong nhập văn bản
 			if (tenLop1.length() == 0) {
 				JOptionPane.showMessageDialog(null, "Tên lớp không đươc để trống !");
 			} else if (!tenLop1.matches("\\d{4}")) {
@@ -1249,10 +1244,10 @@ public class Menu extends JFrame implements ActionListener {
 
 		}
 
-		// Ket noi database của bảng môn h�?c
+		// Ket noi database của bảng môn học
 
 		MonHoc monHoc = new MonHoc();
-		// Tao gia tri moi cho bảng môn h�?c
+		// Tao gia tri moi cho bảng môn học
 
 		String idMonHoc1 = maMonField.getText();
 		String tenMonHoc1 = tenMonField.getText();
@@ -1328,7 +1323,7 @@ public class Menu extends JFrame implements ActionListener {
 					JOptionPane.showMessageDialog(null, " Mời bạn chọn lại!!");
 				}
 			}
-		} else if (e.getSource() == xoaMonButton) { // Nút xóa môn họcc
+		} else if (e.getSource() == xoaMonButton) { // Nút xóa môn học
 			int output = JOptionPane.showConfirmDialog(null, "Bạn có muốn xóa", "Xóa Môn", JOptionPane.YES_NO_OPTION);
 
 			if (output == JOptionPane.YES_OPTION) {
