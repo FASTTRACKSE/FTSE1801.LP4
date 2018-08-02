@@ -337,11 +337,11 @@ public class SinhVienDao {
 		ArrayList<SinhVien> listDSSV = new ArrayList<SinhVien>();
 		SinhVien sinhVien;
 		try {
-			sinhVien= new SinhVien();
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setString(1, idlop);
 			ResultSet result = statement.executeQuery();
 			while (result.next()) {
+				sinhVien= new SinhVien();
 				sinhVien.setIdSinhVien(result.getString("idsv"));
 				sinhVien.setHoTen(result.getString("hoten"));
 				listDSSV.add(sinhVien);
