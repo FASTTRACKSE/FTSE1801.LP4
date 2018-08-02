@@ -107,7 +107,7 @@ public class Menu extends JFrame implements ActionListener {
 		headerPanel.setBackground(Color.GREEN);
 		jPanel.add(headerPanel, BorderLayout.NORTH);
 		headerPanel.setPreferredSize(new Dimension(1000, 150));
-		ImageIcon img = new ImageIcon("C:\\Users\\Administrator\\Desktop\\ft.png");
+		ImageIcon img = new ImageIcon("img\\ft.png");
 		JLabel lblImg = new JLabel(img);
 
 		lblImg.setPreferredSize(new Dimension(300, 140));
@@ -483,7 +483,8 @@ public class Menu extends JFrame implements ActionListener {
 		listNamHoc = lopDao.getAllNamHoc();
 		Set<String> set = new HashSet<String>(listNamHoc);
 		listNamHoc = new ArrayList<String>(set);
-
+		
+		// Chạy sự kiện theo để lấy ra tất cả năm học và lấy lớp học từ năm học
 		for (String listNam : listNamHoc) {
 			locTheoNam.addItem(listNam);
 		}
@@ -540,7 +541,7 @@ public class Menu extends JFrame implements ActionListener {
 		namHocField = new JTextField(20);
 		lopPn2.add(namHocField);
 		
-		// Tạo phần JPanel thêm, sửa ,xóa, tìm kiếm cho bảng quản lý lớp học
+		// Tạo phần menu cho nút button thêm, sửa ,xóa, tìm kiếm cho bảng quản lý lớp học
 		lopMenu = new JPanel();
 		lopNhap.add(lopMenu);
 		JPanel lopPn3 = new JPanel();
