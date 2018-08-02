@@ -74,8 +74,8 @@ public class Menu extends JFrame implements ActionListener {
 	JComboBox<String> locTheoNam, locTheoLop, namcomb2, namcomb1, lopcomb;
 	MonDao monDao;
 	ArrayList<MonHoc> listMonHoc;
-	JLabel tieuDeMon, labelMon1,labelMon2,labelMon3,labelMon4;
-	JPanel monNhap,monPn1,monPn2,monPn3,monMenu,monBang;
+	JLabel tieuDeMon, labelMon1, labelMon2, labelMon3, labelMon4;
+	JPanel monNhap, monPn1, monPn2, monPn3, monMenu, monBang;
 	JTextField maMonField, tenMonField, soTinChiField, thoiLuongField;
 	JButton themMonButton, suaMonButton, xoaMonButton, lamMoiMonButton, timkiemMonButton;
 	JTable monTable;
@@ -395,7 +395,7 @@ public class Menu extends JFrame implements ActionListener {
 
 			public void mouseClicked(MouseEvent e) {
 				int row = svTable.getSelectedRow();
-		
+
 				String s = (String) svTable.getValueAt(row, 0);
 				maSvField.setText(s);
 
@@ -428,7 +428,8 @@ public class Menu extends JFrame implements ActionListener {
 		// Kết thúc trang quản lý sinh
 		// viên.********************************************************************************
 
-		// Trang quản lý lớp học.*******************************************************************************************
+		// Trang quản lý lớp
+		// học.*******************************************************************************************
 
 		lopPanel = new JPanel();
 		JLabel lopLabel = new JLabel("Quản lý lớp học");
@@ -612,7 +613,7 @@ public class Menu extends JFrame implements ActionListener {
 
 			public void mouseClicked(MouseEvent e) {
 				int row = lopTable1.getSelectedRow();
-			
+
 				String s = (String) lopTable1.getValueAt(row, 0);
 				maLopField.setText(s);
 				String s1 = (String) lopTable1.getValueAt(row, 1);
@@ -638,9 +639,11 @@ public class Menu extends JFrame implements ActionListener {
 		lopPanel.setLayout(new BoxLayout(lopPanel, BoxLayout.Y_AXIS));
 		displayAllLop(listLop);
 
-		// Kết thúc quản lý lớp học.***************************************************************************************
+		// Kết thúc quản lý lớp
+		// học.***************************************************************************************
 
-		// Trang quản lý môn học.*******************************************************************************************
+		// Trang quản lý môn
+		// học.*******************************************************************************************
 
 		monHocPanel = new JPanel();
 		monHocPanel.setLayout(new BoxLayout(monHocPanel, BoxLayout.Y_AXIS));
@@ -650,16 +653,16 @@ public class Menu extends JFrame implements ActionListener {
 		Font font2 = new Font("Arial", Font.BOLD | Font.ITALIC, 40);
 		tieuDeMon.setFont(font2);
 		tieuDeMon.setAlignmentX(CENTER_ALIGNMENT);
-		
+
 		// Tạo phần nhập cho bảng trang quản lý môn
-		
+
 		monNhap = new JPanel();
 		monPn1 = new JPanel();
 		monNhap.add(monPn1);
-		
+
 		monPn1.setLayout(new BoxLayout(monPn1, BoxLayout.Y_AXIS));
 		Font font3 = new Font("Arial", Font.BOLD | Font.ITALIC, 23);
-		
+
 		labelMon1 = new JLabel("Mã môn học: ");
 		labelMon1.setFont(font3);
 		monPn1.add(labelMon1);
@@ -676,7 +679,7 @@ public class Menu extends JFrame implements ActionListener {
 		monPn2 = new JPanel();
 		border = BorderFactory.createLineBorder(Color.BLACK);
 		monNhap.add(monPn2);
-		
+
 		monPn2.setLayout(new BoxLayout(monPn2, BoxLayout.Y_AXIS));
 		maMonField = new JTextField(20);
 		maMonField.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
@@ -685,14 +688,16 @@ public class Menu extends JFrame implements ActionListener {
 		tenMonField.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 		monPn2.add(tenMonField);
 		soTinChiField = new JTextField(20);
-		soTinChiField.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+		soTinChiField
+				.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 		monPn2.add(soTinChiField);
 		thoiLuongField = new JTextField(20);
-		thoiLuongField.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+		thoiLuongField
+				.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 		monPn2.add(thoiLuongField);
-		
+
 		// Tạo phần menu thêm sửa xóa cho bảng quản lý môn
-		
+
 		monMenu = new JPanel();
 		monPn3 = new JPanel();
 		font = new Font("Arial", Font.BOLD | Font.ITALIC, 18);
@@ -712,9 +717,9 @@ public class Menu extends JFrame implements ActionListener {
 		timkiemMonButton = new JButton("Tìm kiếm");
 		timkiemMonButton.setFont(font);
 		monPn3.add(timkiemMonButton);
-		
+
 		// Tạo table cho trang quản lý môn học
-		
+
 		monBang = new JPanel();
 		font = new Font("Arial", Font.BOLD | Font.ITALIC, 16);
 		monDtm = new DefaultTableModel();
@@ -730,9 +735,9 @@ public class Menu extends JFrame implements ActionListener {
 		JScrollPane scMonhoc = new JScrollPane(monTable, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scMonhoc.setPreferredSize(new Dimension(1400, 500));
-		
+
 		// Tạo nút clip chuột trong bảng quản lý môn học
-		
+
 		monTable.addMouseListener(new MouseListener() {
 			public void mouseReleased(MouseEvent e) {
 			}
@@ -748,7 +753,7 @@ public class Menu extends JFrame implements ActionListener {
 
 			public void mouseClicked(MouseEvent e) {
 				int row = monTable.getSelectedRow();
-				
+
 				String s = (String) monTable.getValueAt(row, 0);
 				maMonField.setText(s);
 				String s1 = (String) monTable.getValueAt(row, 1);
@@ -764,15 +769,15 @@ public class Menu extends JFrame implements ActionListener {
 		TitledBorder borderTitleMon = BorderFactory.createTitledBorder(borderMon, "Danh sách môn học");
 		monBang.setBorder(borderTitleMon);
 		monBang.add(scMonhoc);
-		
+
 		// Add các JPanel nhỏ vào JPanel tổng
-		
+
 		monHocPanel.add(tieuDeMon);
 		monHocPanel.add(monNhap);
 		monHocPanel.add(monMenu);
 		monHocPanel.add(monBang);
 		monHocPanel.setLayout(new BoxLayout(monHocPanel, BoxLayout.Y_AXIS));
-		
+
 		displayAllMonHoc(listMonHoc);
 		// Kết thuc quản lý môn
 		// học.***************************************************************************************
@@ -1008,8 +1013,6 @@ public class Menu extends JFrame implements ActionListener {
 			card2.show(lopBang, "bang 2");
 		}
 
-		
-
 		// Ket noi database cua quan li sinh vien.
 		SinhVien sinhvien = new SinhVien();
 		Phuong phuong = new Phuong();
@@ -1149,13 +1152,13 @@ public class Menu extends JFrame implements ActionListener {
 		String tenLop1 = tenLopField.getText();
 		String namHoc1 = namHocField.getText();
 
-		// Gan gia tri cho bang quan ly lop
+		// Gán giá trị cho bảng quản lý lớp
 
 		lop.setIdLop(idLop1);
 		lop.setTenLop(tenLop1);
 		lop.setNamHoc(namHoc1);
 
-		// Thực hiện lệnh g�?i đến nút button
+		// Thực hiện lệnh gọi đến nút button
 
 		if (e.getSource() == themLopButton) {
 			// Bắt lỗi các trường hợp trong nhập văn bản
@@ -1261,7 +1264,8 @@ public class Menu extends JFrame implements ActionListener {
 		monHoc.setTinChi(tinChi1);
 		monHoc.setThoiLuongHoc(thoiLuong1);
 
-		// Thực hiện lệnh gọi đến nút button thêm , sửa , xóa, tìm kiếm đến trang quản lý môn học
+		// Thực hiện lệnh gọi đến nút button thêm , sửa , xóa, tìm kiếm đến trang quản
+		// lý môn học
 
 		if (e.getSource() == themMonButton) {// Nút thêm môn học
 			// Bắt lỗi các trường hợp trong nhập văn bản
@@ -1392,29 +1396,29 @@ public class Menu extends JFrame implements ActionListener {
 			listSinhVien2 = thongKeDao.getAllTenSinhVien(thongKeDao.getLopId(lopcomb.getSelectedItem().toString()));
 			double dtb = 0;
 			String xepLoai = null;
-			
+
 			for (SinhVien sinhVien : listSinhVien2) {
-				
+
 				double diemJava = thongKeDao.getDiemThiJava(sinhVien.getIdSinhVien());
 				double diemHTML = thongKeDao.getDiemThiHTML(sinhVien.getIdSinhVien());
 				double diemCSS = thongKeDao.getDiemThiCSS(sinhVien.getIdSinhVien());
 				double diemEnglish = thongKeDao.getDiemThiEnligh(sinhVien.getIdSinhVien());
-				
-				dtb = (diemJava + diemHTML + diemCSS + diemEnglish)/4;
-				if(dtb>=8) {
+
+				dtb = (diemJava + diemHTML + diemCSS + diemEnglish) / 4;
+				if (dtb >= 8) {
 					xepLoai = "Gi�?i";
-				}else if(dtb>=6.5) {
+				} else if (dtb >= 6.5) {
 					xepLoai = "Khá";
-				}else if(dtb>=5) {
+				} else if (dtb >= 5) {
 					xepLoai = "TB";
-				}else {
+				} else {
 					xepLoai = "Yếu";
 				}
-				
-				dssvDtm.addRow(new String[] { sinhVien.getIdSinhVien(), sinhVien.getHoTen(), String.valueOf(diemJava), String.valueOf(diemEnglish),
-						String.valueOf(diemCSS), String.valueOf(diemHTML),  String.valueOf(dtb), xepLoai});
-				
-				
+
+				dssvDtm.addRow(new String[] { sinhVien.getIdSinhVien(), sinhVien.getHoTen(), String.valueOf(diemJava),
+						String.valueOf(diemEnglish), String.valueOf(diemCSS), String.valueOf(diemHTML),
+						String.valueOf(dtb), xepLoai });
+
 			}
 		}
 	}

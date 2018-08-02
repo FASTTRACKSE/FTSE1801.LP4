@@ -3,28 +3,21 @@ package quanlytruonghoc.control;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.Insets;
-import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -43,16 +36,17 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import quanlytruonghoc.model.ThongKeDao;
-import quanlytruonghoc.model.LopDao;
-import quanlytruonghoc.model.MonDao;
-import quanlytruonghoc.model.SinhVienDao;
 import quanlytruonghoc.entity.Lop;
 import quanlytruonghoc.entity.MonHoc;
 import quanlytruonghoc.entity.Phuong;
 import quanlytruonghoc.entity.SinhVien;
+import quanlytruonghoc.model.LopDao;
+import quanlytruonghoc.model.MonDao;
+import quanlytruonghoc.model.SinhVienDao;
+import quanlytruonghoc.model.ThongKeDao;
 
 public class Menu extends JFrame implements ActionListener {
+	private static final long serialVersionUID = 1L;
 	JPanel headerPanel, menuPanel, centerPanel, trangChuPanel, sinhVienPanel, lopPanel, monHocPanel, thongKePanel,
 			cardPanel;
 	JButton sinhVienButton, monHocButton, lopButton, thongKeButton, trangChuButton;
@@ -66,7 +60,7 @@ public class Menu extends JFrame implements ActionListener {
 	Font font;
 	Border border;
 	JTextField maSvField, tenSvField, diaChiField, sdtField, emailField, timKiemField;
-	JComboBox tpComb, quanComb, phuongComb, lopComb;
+	JComboBox<String> tpComb, quanComb, phuongComb, lopComb;
 	JButton themSvButton, suaSvButton, xoaSvButton, taoMoiSvButton, timkiemSvButton;
 	JTable svTable;
 	DefaultTableModel svDtm;
@@ -75,9 +69,9 @@ public class Menu extends JFrame implements ActionListener {
 	JTextField maLopField, tenLopField, namHocField;
 	JButton themLopButton, suaLopButton, xoaLopButton, xemDsButton, xemDsButton1, lamMoiLopButton, timkiemLopButton;
 	JTable lopTable, lopTable1;
-	JPanel lopBang;
+	JPanel lopBang, lopMenu, lopNhap, lopLop ;
 	DefaultTableModel lopDtm, lopDtm1;
-	JComboBox locTheoNam, locTheoLop, comb3, comb1, comb2;
+	JComboBox<String> locTheoNam, locTheoLop, comb3, comb1, comb2;
 	MonDao monDao;
 	ArrayList<MonHoc> listMonHoc;
 	JTextField maMonField, tenMonField, soTinChiField, thoiLuongField;
@@ -113,17 +107,17 @@ public class Menu extends JFrame implements ActionListener {
 		headerPanel.setBackground(Color.GREEN);
 		jPanel.add(headerPanel, BorderLayout.NORTH);
 		headerPanel.setPreferredSize(new Dimension(1000, 150));
-		ImageIcon img = new ImageIcon("C:\\Users\\Administrator\\Desktop\\ft.png");
+		ImageIcon img = new ImageIcon("img\\ft.png");
 		JLabel lblImg = new JLabel(img);
 
 		lblImg.setPreferredSize(new Dimension(300, 140));
 		JLabel tieuDe = new JLabel("Chương trình quản lý trường học");
 		Font fontTieuDe = new Font("Arial", Font.BOLD | Font.ITALIC, 50);
 		tieuDe.setFont(fontTieuDe);
-		//
+
 		headerPanel.add(lblImg);
 		headerPanel.add(tieuDe);
-		// headerPanel.add(lblImg11);
+	
 		/**
 		 * Tạo phần menu
 		 */
@@ -183,7 +177,6 @@ public class Menu extends JFrame implements ActionListener {
 		trangChuPanel.setLayout(new BoxLayout(trangChuPanel, BoxLayout.Y_AXIS));
 		tieudePanel.setLayout(new BoxLayout(tieudePanel, BoxLayout.Y_AXIS));
 		jLabel = new JLabel("Trang chủ");
-		// jLabel.setBounds(80, -100, 1191, 715);
 		Font fontTieuDe1 = new Font("Arial", Font.BOLD | Font.ITALIC, 40);
 		jLabel.setFont(fontTieuDe1);
 		tieudePanel.add(jLabel);
@@ -206,10 +199,9 @@ public class Menu extends JFrame implements ActionListener {
 		pnImg.add(pnImg1);
 		trangChuPanel.add(tieudePanel);
 		trangChuPanel.add(pnImg);
-		// cardPanel.add(tieudePanel);
 		cardPanel.add(trangChuPanel);
-		// Trang quản lý sinh
-		// viên.*****************************************************************************
+		
+		// Trang quản lý sinh viên.*****************************************************************************
 		sinhVienPanel = new JPanel();
 
 		JLabel svLabel = new JLabel("Quản lý sinh viên");
@@ -276,7 +268,7 @@ public class Menu extends JFrame implements ActionListener {
 		JPanel svPn4 = new JPanel();
 		svNhap.add(svPn4);
 		svPn4.setLayout(new BoxLayout(svPn4, BoxLayout.Y_AXIS));
-		tpComb = new JComboBox();
+		tpComb = new JComboBox<>();
 		tpComb.addItem("Chọn thành phố");
 		svPn4.add(tpComb);
 		// Thành phố combox
@@ -287,15 +279,15 @@ public class Menu extends JFrame implements ActionListener {
 			tpComb.addItem(listTp.get(i));
 		}
 
-		quanComb = new JComboBox();
+		quanComb = new JComboBox<>();
 		quanComb.addItem("Chọn quận/huyện");
 		svPn4.add(quanComb);
 		quanComb.setPreferredSize(new Dimension(150, 30));
-		phuongComb = new JComboBox();
+		phuongComb = new JComboBox<>();
 		phuongComb.addItem("Chọn phường/xã");
 		svPn4.add(phuongComb);
 		phuongComb.setPreferredSize(new Dimension(150, 30));
-		lopComb = new JComboBox();
+		lopComb = new JComboBox<>();
 		lopComb.addItem("Mã lớp");
 		svPn4.add(lopComb);
 		// Mã Lớp combox
@@ -399,7 +391,6 @@ public class Menu extends JFrame implements ActionListener {
 
 			public void mouseClicked(MouseEvent e) {
 				int row = svTable.getSelectedRow();
-				int col = svTable.getSelectedColumn();
 				String s = (String) svTable.getValueAt(row, 0);
 				maSvField.setText(s);
 
@@ -432,16 +423,18 @@ public class Menu extends JFrame implements ActionListener {
 		// Kết thúc trang quản lý sinh
 		// viên.********************************************************************************
 
-		// Trang quản lý lớp
-		// học.*******************************************************************************************
+		// Trang quản lý lớp học.*******************************************************************************************
 
 		lopPanel = new JPanel();
+		
+		// Tiêu đề trang quản lý lớp
 		JLabel lopLabel = new JLabel("Quản lý lớp học");
 		Font font4 = new Font("Arial", Font.BOLD | Font.ITALIC, 40);
 		lopLabel.setFont(font4);
 		lopLabel.setAlignmentX(CENTER_ALIGNMENT);
+		
+		// Phần nhập bảng danh sách sinh viên
 		JPanel lopKhu2 = new JPanel();
-
 		JPanel lopXemDS = new JPanel();
 		lopKhu2.add(lopXemDS);
 		lopXemDS.setLayout(new BoxLayout(lopXemDS, BoxLayout.Y_AXIS));
@@ -449,26 +442,34 @@ public class Menu extends JFrame implements ActionListener {
 		lopXemDS.add(label);
 		Font lbfont = new Font("Arial", Font.BOLD | Font.ITALIC, 16);
 		label.setFont(lbfont);
+		
+		// Thực hiện nút chọn đến combox năm học
 		JPanel panel = new JPanel();
 		lopXemDS.add(panel);
 		Font lbfont1 = new Font("Arial", Font.BOLD | Font.ITALIC, 14);
 		label.setFont(lbfont1);
-		JLabel label2 = new JLabel("Lọc theo năm học");
+		JLabel label2 = new JLabel("Lọc theo năm học:");
 		panel.add(label2);
 		label2.setFont(lbfont1);
-		locTheoNam = new JComboBox();
+	
+		locTheoNam = new JComboBox<>();
 		panel.add(locTheoNam);
 		locTheoNam.setPreferredSize(new Dimension(150, 25));
 		locTheoNam.addItem("Năm học");
+		
+		// Thực hiện nút chọn đến combox lớp học
 		JPanel panel1 = new JPanel();
 		lopXemDS.add(panel1);
-		JLabel label3 = new JLabel("Lọc theo lớp học  ");
+		JLabel label3 = new JLabel("Lọc theo lớp học: ");
 		panel1.add(label3);
 		label3.setFont(lbfont1);
-		locTheoLop = new JComboBox();
+		
+		locTheoLop = new JComboBox<>();
 		panel1.add(locTheoLop);
 		locTheoLop.setPreferredSize(new Dimension(150, 25));
 		locTheoLop.addItem("Lớp");
+		
+		// Thực hiện nút xem danh sách
 		xemDsButton = new JButton("Xem danh sách");
 		font = new Font("Arial", Font.BOLD | Font.ITALIC, 18);
 		xemDsButton.setFont(font);
@@ -476,18 +477,17 @@ public class Menu extends JFrame implements ActionListener {
 		Border borderLop1 = BorderFactory.createLineBorder(Color.BLACK);
 		lopXemDS.setPreferredSize(new Dimension(400, 160));
 		lopXemDS.setBorder(borderLop1);
-
+		
+		// Lọc các năm học trùng nhau
 		listNamHoc = new ArrayList<String>();
 		listNamHoc = lopDao.getAllNamHoc();
-
 		Set<String> set = new HashSet<String>(listNamHoc);
 		listNamHoc = new ArrayList<String>(set);
-
+		
+		// Chạy sự kiện theo để lấy ra tất cả năm học và lấy lớp học từ năm học
 		for (String listNam : listNamHoc) {
 			locTheoNam.addItem(listNam);
-
 		}
-
 		locTheoNam.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -509,8 +509,9 @@ public class Menu extends JFrame implements ActionListener {
 				}
 			}
 		});
-
-		JPanel lopNhap = new JPanel();
+		
+		// Tạo phần nhập cho bảng quản lý lớp hoc(bảng 2)
+		lopNhap = new JPanel();
 		lopKhu2.add(lopNhap);
 		lopNhap.setLayout(new BoxLayout(lopNhap, BoxLayout.Y_AXIS));
 		JPanel panel2 = new JPanel();
@@ -539,8 +540,9 @@ public class Menu extends JFrame implements ActionListener {
 		lopPn2.add(tenLopField);
 		namHocField = new JTextField(20);
 		lopPn2.add(namHocField);
-
-		JPanel lopMenu = new JPanel();
+		
+		// Tạo phần menu cho nút button thêm, sửa ,xóa, tìm kiếm cho bảng quản lý lớp học
+		lopMenu = new JPanel();
 		lopNhap.add(lopMenu);
 		JPanel lopPn3 = new JPanel();
 		lopPn3.setLayout(new BoxLayout(lopPn3, BoxLayout.Y_AXIS));
@@ -563,9 +565,9 @@ public class Menu extends JFrame implements ActionListener {
 		lopPn5.add(xemDsButton1);
 		lopNhap.setPreferredSize(new Dimension(400, 160));
 		lopNhap.setBorder(borderLop1);
-
+		
+		// Tạo bảng table cho phần hiển thị cho phần xem danh sách sinh viên của trang quản lý lớp học
 		lopBang = new JPanel();
-
 		JPanel lopSv = new JPanel();
 
 		lopDtm = new DefaultTableModel();
@@ -587,8 +589,9 @@ public class Menu extends JFrame implements ActionListener {
 		TitledBorder borderTitleLop = BorderFactory.createTitledBorder(borderLop, "Danh sách sinh viên");
 		lopSv.setBorder(borderTitleLop);
 		lopSv.add(scLop);
-
-		JPanel lopLop = new JPanel();
+		
+		// Tạo bảng table cho phần hiển thị cho phần hiển thị lớp học của trang quản lý lớp học
+		lopLop = new JPanel();
 		lopDtm1 = new DefaultTableModel();
 		lopDtm1.addColumn("Mã lớp");
 		lopDtm1.addColumn("Tên lớp");
@@ -602,6 +605,8 @@ public class Menu extends JFrame implements ActionListener {
 		JScrollPane scLop1 = new JScrollPane(lopTable1, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scLop1.setPreferredSize(new Dimension(1400, 500));
+		
+		// Thực hiện nút  chọn trên phần hiển thị 
 		lopTable1.addMouseListener(new MouseListener() {
 			public void mouseReleased(MouseEvent e) {
 			}
@@ -617,7 +622,6 @@ public class Menu extends JFrame implements ActionListener {
 
 			public void mouseClicked(MouseEvent e) {
 				int row = lopTable1.getSelectedRow();
-				int col = lopTable1.getSelectedColumn();
 				String s = (String) lopTable1.getValueAt(row, 0);
 				maLopField.setText(s);
 				String s1 = (String) lopTable1.getValueAt(row, 1);
@@ -643,11 +647,9 @@ public class Menu extends JFrame implements ActionListener {
 		lopPanel.setLayout(new BoxLayout(lopPanel, BoxLayout.Y_AXIS));
 		displayAllLop(listLop);
 
-		// Kết thuc quản lý lớp
-		// học.***************************************************************************************
+		// Kết thuc quản lý lớp học.***************************************************************************************
 
-		// Trang quản lý môn
-		// học.*******************************************************************************************
+		// Trang quản lý môn học.*******************************************************************************************
 
 		monHocPanel = new JPanel();
 		monHocPanel.setLayout(new BoxLayout(monHocPanel, BoxLayout.Y_AXIS));
@@ -742,7 +744,6 @@ public class Menu extends JFrame implements ActionListener {
 
 			public void mouseClicked(MouseEvent e) {
 				int row = monTable.getSelectedRow();
-				int col = monTable.getSelectedColumn();
 				String s = (String) monTable.getValueAt(row, 0);
 				maMonField.setText(s);
 				String s1 = (String) monTable.getValueAt(row, 1);
@@ -780,17 +781,17 @@ public class Menu extends JFrame implements ActionListener {
 		JPanel thongKeNhap2 = new JPanel();
 		Font fontTit = new Font("Arial", Font.BOLD | Font.ITALIC, 20);
 
-		comb1 = new JComboBox();
+		comb1 = new JComboBox<>();
 		comb1.setPreferredSize(new Dimension(150, 30));
 		comb1.addItem("Năm học");
-		comb2 = new JComboBox();
+		comb2 = new JComboBox<>();
 		comb2.addItem("Lớp");
 		comb2.setPreferredSize(new Dimension(150, 30));
 		show1 = new JButton("Xem danh sách");
 		show1.setFont(font);
 		JLabel dsLopLabel = new JLabel("Báo cáo danh sách lớp học");
 		dsLopLabel.setFont(fontTit);
-		comb3 = new JComboBox();
+		comb3 = new JComboBox<>();
 		comb3.addItem("Năm học");
 		comb3.setPreferredSize(new Dimension(150, 30));
 		JLabel dssvLabel = new JLabel("Báo cáo danh sách sinh viên");
@@ -903,8 +904,7 @@ public class Menu extends JFrame implements ActionListener {
 		thongKePanel.add(thongKeBang);
 		thongKePanel.setLayout(new BoxLayout(thongKePanel, BoxLayout.Y_AXIS));
 
-		// Kết thuc thống
-		// kê.***************************************************************************************
+		// Kết thuc thống kê.***************************************************************************************
 
 		card = new CardLayout();
 		cardPanel.setLayout(card);
@@ -1149,7 +1149,7 @@ public class Menu extends JFrame implements ActionListener {
 
 		// Thực hiện lệnh gọi đến nút button
 
-		if (e.getSource() == themLopButton) {
+		if (e.getSource() == themLopButton) { // Nút thêm mới lớp học
 			// Bắt lỗi các trường hợp trong nhập văn bản
 			if (idLop1.length() == 0) {
 				JOptionPane.showMessageDialog(null, "Mã lớp không đươc để trống !");
@@ -1178,7 +1178,7 @@ public class Menu extends JFrame implements ActionListener {
 					JOptionPane.showMessageDialog(null, " Thêm thất bại!!");
 				}
 			}
-		} else if (e.getSource() == suaLopButton) {
+		} else if (e.getSource() == suaLopButton) { // Nút sửa lớp học
 			// Bắt lỗi các trường hợp trong nhập văn bản
 			if (tenLop1.length() == 0) {
 				JOptionPane.showMessageDialog(null, "Tên lớp không đươc để trống !");
@@ -1202,7 +1202,7 @@ public class Menu extends JFrame implements ActionListener {
 					JOptionPane.showMessageDialog(null, "Sửa thất bại!!");
 				}
 			}
-		} else if (e.getSource() == xoaLopButton) {
+		} else if (e.getSource() == xoaLopButton) { // Nút xóa lớp học
 			int output = JOptionPane.showConfirmDialog(null, "Bạn có muốn xóa", "Xóa Lớp", JOptionPane.YES_NO_OPTION);
 
 			if (output == JOptionPane.YES_OPTION) {
@@ -1214,7 +1214,7 @@ public class Menu extends JFrame implements ActionListener {
 			} else if (output == JOptionPane.NO_OPTION) {
 				JOptionPane.showMessageDialog(null, "Xóa thất bại!!");
 			}
-		} else if (e.getSource() == timkiemLopButton) {
+		} else if (e.getSource() == timkiemLopButton) { // Nút tìm kiếm lớp học
 			int output = JOptionPane.showConfirmDialog(null, "Bạn có muốn tìm", "Tìm Lớp", JOptionPane.YES_NO_OPTION);
 
 			if (output == JOptionPane.YES_OPTION) {
@@ -1229,7 +1229,7 @@ public class Menu extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Tìm thất bại!!");
 			}
 
-		} else {
+		} else { // Nút làm mới
 			maLopField.setText("");
 			tenLopField.setText("");
 			namHocField.setText("");
@@ -1253,8 +1253,7 @@ public class Menu extends JFrame implements ActionListener {
 		monHoc.setTinChi(tinChi1);
 		monHoc.setThoiLuongHoc(thoiLuong1);
 
-		// Thực hiện lệnh gọi đến nút button thêm , sửa , xóa, tìm kiếm đến trang quản
-		// lý môn học
+		// Thực hiện lệnh gọi đến nút button thêm , sửa , xóa, tìm kiếm đến trang quản lý môn học
 
 		if (e.getSource() == themMonButton) {// Nút thêm môn học
 			// Bắt lỗi các trường hợp trong nhập văn bản
@@ -1472,6 +1471,7 @@ public class Menu extends JFrame implements ActionListener {
 
 	public static void main(String[] args) {
 		Menu menu = new Menu();
+		menu.display();
 	}
 
 }
