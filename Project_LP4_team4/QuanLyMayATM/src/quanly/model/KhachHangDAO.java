@@ -306,15 +306,17 @@ public class KhachHangDAO {
 		PreparedStatement statement = null;
 		String SelectQuery= "SELECT * ";
 		String FromQuery= "FROM khach_hang JOIN phuong ON khach_hang.maPhuong = phuong.maPhuong JOIN quan ON phuong.maQuan = quan.maQuan JOIN the_atm ON khach_hang.soTheATM = the_atm.soTheATM WHERE " ;
+	
+		if(!khachHangInPut.getTenKH().equals("")) {
+		       FromQuery= FromQuery + "khach_hang.tenKhachHang LIKE '%" + khachHangInPut.getTenKH()+"'";
+		}
 		if(!khachHangInPut.getPhuong().equals("")) {
-		       FromQuery= FromQuery + "phuong.tenPhuong ='" + khachHangInPut.getPhuong()+"'";
+		       FromQuery= FromQuery  + " AND " + "phuong.tenPhuong ='" + khachHangInPut.getPhuong()+"'";
 		}
 		if(!khachHangInPut.getMaKH().equals("")) {
 		      FromQuery=FromQuery  + " AND " + "khach_hang.maKhachHang LIKE '%" + khachHangInPut.getMaKH()+"'";
 		}
-		if(!khachHangInPut.getTenKH().equals("")) {
-		       FromQuery= FromQuery + " AND " + "khach_hang.tenKhachHang LIKE '%" + khachHangInPut.getTenKH()+"'";
-		}
+		
 		if(!khachHangInPut.getDiaChi().equals("")) {
 		       FromQuery= FromQuery + " AND " + "khach_hang.diaChi LIKE '%" + khachHangInPut.getDiaChi()+"'";
 		}
