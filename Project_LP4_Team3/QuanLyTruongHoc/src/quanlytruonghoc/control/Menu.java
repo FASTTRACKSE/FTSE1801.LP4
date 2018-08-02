@@ -568,7 +568,7 @@ public class Menu extends JFrame implements ActionListener {
 		lopDtm.addColumn("Tên lớp");
 		lopDtm.addColumn("Mã sinh viên");
 		lopDtm.addColumn("Tên sinh viên");
-		lopDtm.addColumn("Năm h�?c");
+		lopDtm.addColumn("Năm học");
 		lopTable = new JTable(lopDtm);
 		lopTable.getTableHeader().setReorderingAllowed(false);
 		lopTable.setDefaultEditor(Object.class, null);
