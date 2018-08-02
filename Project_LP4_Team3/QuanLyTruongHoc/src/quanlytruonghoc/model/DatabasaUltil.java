@@ -31,12 +31,12 @@ public class DatabasaUltil {
 			conn = driver.connect(URL, pro);
 			System.out.println(" Bạn đăng nhập thành công!!");
 		} catch (SQLException ex) {
-			System.out.println("�?ăng nhập bị lỗi!!");
+			System.out.println("Đăng nhập bị lỗi!!");
 		}
 		return conn;
 	}
 	/**
-	 *  �?óng kết nối với database
+	 *  �?óng kết nối với database
 	 * @param conn
 	 */
 	public static void closeConnection(Connection conn) {
@@ -44,7 +44,7 @@ public class DatabasaUltil {
 		try {
 			if (conn != null) {
 				conn.close();
-				System.out.println(" �?óng thành công Database.");
+				System.out.println(" Đóng thành công Database.");
 			}
 		} catch (SQLException ex) {
 			System.out.println("Lỗi đóng kết nối!!!");
