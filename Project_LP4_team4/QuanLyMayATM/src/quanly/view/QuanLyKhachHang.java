@@ -43,7 +43,7 @@ public class QuanLyKhachHang extends JFrame {
 	JLabel title, maKH, tenKH, diaChi, phuong, quan, dienThoai, email, soTheATM, soTK, soTien;
 	JTextField txtMaKH, txtTenKH, txtDiaChi, txtDienThoai, txtEmail, txtSoTheATM, txtSoTK, txtSoTien;
 	JComboBox<String> boxPhuong, boxQuan;
-	JButton them, themThe, sua, xoa, tim, hienthi;
+	JButton them, themThe, sua, xoa, hienthi;
 	DefaultTableModel tableModel;
 	JTable table;
 	Border border;
@@ -177,19 +177,6 @@ public class QuanLyKhachHang extends JFrame {
 				}
 			}
 
-			if (button == tim) {
-				KhachHang khachHang = layGiaTriKhachHang();
-				ArrayList<KhachHang> myList = khachHangDAO.timKiem(khachHang);
-				tableModel.setRowCount(0);
-				for (int j = 0; j < myList.size(); j++) {
-					tableModel.addRow(new String[] { myList.get(j).getMaKH(), myList.get(j).getTenKH(),
-							myList.get(j).getDiaChi(), myList.get(j).getPhuong(), myList.get(j).getQuan(),
-							myList.get(j).getSoDT(), myList.get(j).getEmail(), myList.get(j).getSoTheATM(),
-							myList.get(j).getSoTK(), myList.get(j).getSoTienTrongTK() });
-				}
-
-			}
-
 			if (button == themThe) {
 				if (output == JOptionPane.YES_OPTION) {
 					if (khachHangDAO.themTheATMChoKhachHang(layGiaTriKhachHang(), khachHangDAO.showAllKhachHang(),
@@ -304,19 +291,16 @@ public class QuanLyKhachHang extends JFrame {
 		them = new JButton("Thêm khách hàng");
 		themThe = new JButton("Thêm thẻ");
 		sua = new JButton("Sửa thông tin");
-		tim = new JButton("Tìm kiếm");
 		hienthi = new JButton("Hiển thị danh sách");
 		xoa = new JButton("Xóa thông tin");
 		them.addActionListener(actionListener);
 		sua.addActionListener(actionListener);
 		xoa.addActionListener(actionListener);
 		hienthi.addActionListener(actionListener);
-		tim.addActionListener(actionListener);
 		themThe.addActionListener(actionListener);
 		pnbutton.add(them);
 		pnbutton.add(themThe);
 		pnbutton.add(sua);
-		pnbutton.add(tim);
 		pnbutton.add(hienthi);
 		pnbutton.add(xoa);
 		pnQuanLyKH.add(pnbutton);
