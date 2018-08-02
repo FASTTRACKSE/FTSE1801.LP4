@@ -46,6 +46,7 @@ public class QuanLySinhVien extends JFrame implements ActionListener {
 	JTable tbl;
 	int row, col;
 	String maSV, tenSV, tuoiSV;
+	String msv = null;
 
 	public QuanLySinhVien() {
 		super("Quản lí sinh viên");
@@ -73,11 +74,28 @@ public class QuanLySinhVien extends JFrame implements ActionListener {
 		listMSV = sinhVienDao.getAllMaSinhVien();
 		System.out.println(listMSV);
 		JComboBox comboBox = new JComboBox();
-		comboBox.addItem("");
 		for(int i = 0; i< listMSV.size(); i++) {
 			comboBox.addItem(listMSV.get(i));
+			
 		}
+		JComboBox comboBox1 = new JComboBox();
+		comboBox.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				msv = comboBox.getSelectedItem().toString();
+//				JOptionPane.showMessageDialog(null,"ma la" + msv);
+				comboBox1.removeAllItems();
+				comboBox1.addItem(msv);
+				
+			}
+		});
+		
+		
+		
+	
 		jPanel.add(comboBox);
+		jPanel.add(comboBox1);
 
 		JPanel chucNang = new JPanel();
 		luu = new JButton("Lưu");
@@ -102,15 +120,19 @@ public class QuanLySinhVien extends JFrame implements ActionListener {
 
 		tbl.addMouseListener(new MouseListener() {
 			public void mouseReleased(MouseEvent e) {
+			
 			}
 
 			public void mousePressed(MouseEvent e) {
+				
 			}
 
 			public void mouseExited(MouseEvent e) {
+				
 			}
 
 			public void mouseEntered(MouseEvent e) {
+				
 			}
 
 			public void mouseClicked(MouseEvent e) {
