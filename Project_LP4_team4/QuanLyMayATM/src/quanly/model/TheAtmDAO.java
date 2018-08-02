@@ -12,9 +12,9 @@ public class TheAtmDAO {
 	Connection conn;
 	
 	/**
-	 * Thêm thẻ atm
-	 * 
-	 * @param theATM
+	 * Thêm thẻ ATM
+	 * @param soThe
+	 * @param soTK
 	 * @return
 	 */
 	public boolean addTheATM(String soThe, String soTK) {
@@ -45,7 +45,6 @@ public class TheAtmDAO {
 	
 	/**
 	 * Xóa thẻ ATM theo mã số thẻ
-	 * 
 	 * @param maSoThe
 	 * @return
 	 */
@@ -75,7 +74,6 @@ public class TheAtmDAO {
 	
 	/**
 	 * Xóa thẻ ATM theo số tài khoản
-	 * 
 	 * @param soTK
 	 * @return
 	 */
@@ -105,7 +103,6 @@ public class TheAtmDAO {
 	
 	/**
 	 * Lấy ra all thông tin thẻ ATM
-	 * 
 	 * @return
 	 */
 	public ArrayList<TheATM> showAllTheATM() {
@@ -176,7 +173,6 @@ public class TheAtmDAO {
 	
 	/**
 	 * Lấy tất cả thông tin theo số thẻ
-	 * 
 	 * @param soTheATM
 	 * @return
 	 */
@@ -275,7 +271,6 @@ public class TheAtmDAO {
 	
 	/**
 	 * Lấy thông tin số tài khoản
-	 * 
 	 * @param maSoThe
 	 * @return
 	 */

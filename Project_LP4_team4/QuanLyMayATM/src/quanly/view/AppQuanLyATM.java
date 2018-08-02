@@ -45,6 +45,9 @@ public class AppQuanLyATM extends JFrame {
 	DefaultMutableTreeNode baoCaoKH, baoCaoTinhTrangATM, baoCaoRutTienKH, BaoCaoRutTienATM;
 	MayATMView mayATMView;
 
+	/**
+	 * Sự kiện cho cây
+	 */
 	TreeSelectionListener treeSelectionListener = new TreeSelectionListener() {
 		@Override
 		public void valueChanged(TreeSelectionEvent e) {
@@ -57,7 +60,7 @@ public class AppQuanLyATM extends JFrame {
 			} else if (treeNode.toString().equals("Quản lý máy ATM")) {
 				card.show(pnAllCenter, "quanLyATM");
 			} else if (treeNode.toString().equals("Quản lý giao dịch")) {
-				pnAllCenter.add(pnQuanLYGiaoDich(),"quanLyGD");
+				pnAllCenter.add(pnQuanLyGiaoDich(),"quanLyGD");
 				card.show(pnAllCenter, "quanLyGD");
 			} else if (treeNode.toString().equals("Báo cáo khách hàng")) {
 				card.show(pnAllCenter, "baoCaoKH");
@@ -73,6 +76,9 @@ public class AppQuanLyATM extends JFrame {
 		}
 	};
 
+	/**
+	 * Sự kiện cho Demo máy ATM
+	 */
 	ActionListener actionListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -131,7 +137,8 @@ public class AppQuanLyATM extends JFrame {
 		pnMenu.add(new JScrollPane(tree), BorderLayout.CENTER);
 		pnMenu.setBorder(BorderFactory.createTitledBorder("Menu"));
 		con.add(pnMenu, "West");
-		//
+		
+		// Phần giao diện chương trình
 		pnAllCenter = new JPanel();
 		pnAllCenter.setBorder(BorderFactory.createTitledBorder("ProGram"));
 		JScrollPane pane = new JScrollPane(pnAllCenter);
@@ -140,7 +147,6 @@ public class AppQuanLyATM extends JFrame {
 		
 		// Trang chủ
 		JPanel jPanel = new JPanel();
-		
 		JLabel jLabel = new JLabel();
 		jLabel.setIcon(new ImageIcon("img\\bank.jpg"));
 		jPanel.add(jLabel);
@@ -160,7 +166,7 @@ public class AppQuanLyATM extends JFrame {
 		pnAllCenter.add(atm.qLyMayATM(), "quanLyATM");
 
 		// Quản lý giao dịch
-		pnAllCenter.add(pnQuanLYGiaoDich(), "quanLyGD");
+		pnAllCenter.add(pnQuanLyGiaoDich(), "quanLyGD");
 		
 		// Báo cáo khách hàng
 		BaoCaoKhachHang khachHang = new BaoCaoKhachHang();
@@ -187,7 +193,7 @@ public class AppQuanLyATM extends JFrame {
 	 * JPanel quản lý giao dịch
 	 * @return
 	 */
-	public JPanel pnQuanLYGiaoDich() {
+	public JPanel pnQuanLyGiaoDich() {
 		pnQuanLyGD = new JPanel();
 		pnQuanLyGD.setLayout(new BoxLayout(pnQuanLyGD, BoxLayout.Y_AXIS));
 		title = new JLabel("Máy ATM");

@@ -190,6 +190,11 @@ public class BaoCaoTinhHinhRutTien extends JFrame {
 
 	}
 
+	/**
+	 * Chuyển kiểu String thành kiểu Date
+	 * @author ADMIN
+	 *
+	 */
 	public class DateLabelFormatter extends AbstractFormatter {
 		private static final long serialVersionUID = 1L;
 		String datePattern = "yyyy-MM-dd";

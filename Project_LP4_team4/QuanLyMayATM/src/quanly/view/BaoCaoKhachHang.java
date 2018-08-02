@@ -36,7 +36,7 @@ public class BaoCaoKhachHang extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	JPanel pnBaoCaoKH, chon;
-	JPanel pnLabel, pnBox, pnTim;
+	JPanel pnLabel, pnBox, pnChon;
 	JLabel title, phuong, quan;
 	JComboBox<String> boxPhuong, boxQuan;
 	JButton tim;
@@ -97,13 +97,13 @@ public class BaoCaoKhachHang extends JFrame {
 		giaoDichDAO = new GiaoDichDAO();
 		pnBaoCaoKH = new JPanel();
 		pnBaoCaoKH.setLayout(new BoxLayout(pnBaoCaoKH, BoxLayout.Y_AXIS));
-		// Tiêu đề
+		//Phần tiêu đề
 		title = new JLabel("Báo cáo khách hàng");
 		title.setFont(new Font("Times New Roman", Font.BOLD, 30));
 		title.setForeground(Color.RED);
 		pnBaoCaoKH.add(title);
 		
-		// Chọn tiêu chí
+		// Phần chọn tiêu chí
 		chon = new JPanel();
 		chon.setLayout(new GridBagLayout());
 		pnLabel = new JPanel();
@@ -127,11 +127,12 @@ public class BaoCaoKhachHang extends JFrame {
 		addItem(pnLabel, boxPhuong, 1, 1, 2, 1, GridBagConstraints.WEST);
 		chon.add(pnLabel);
 		
-		pnTim = new JPanel();
+		//Các nút chức năng
+		pnChon = new JPanel();
 		tim = new JButton("Tìm danh sách");
 		tim.addActionListener(actionListener);
-		pnTim.add(tim);
-		chon.add(pnTim);
+		pnChon.add(tim);
+		chon.add(pnChon);
 		pnBaoCaoKH.add(chon);
 		
 		// Bảng báo cáo

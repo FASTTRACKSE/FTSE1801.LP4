@@ -62,6 +62,10 @@ public class MayATMView extends JFrame {
 	TheAtmDAO theAtmDAO;
 	KhachHang khachHang;
 	GiaoDich giaoDich;
+	
+	/**
+	 * Sự kiện cho các button
+	 */
 	ActionListener actionListener = new ActionListener() {
 
 		@Override
@@ -71,7 +75,7 @@ public class MayATMView extends JFrame {
 				soTaiKhoan = txtTaiKhoan.getText();
 				dangNhapDAO = new DangNhapDAO();
 				if (dangNhapDAO.dangNhap(soTaiKhoan, txtPin.getText())) {
-					KhachHang khachHang1 = khachHangDAO.showKhachHangTheoMaKH(soTaiKhoan);
+					KhachHang khachHang1 = khachHangDAO.showKhachHangTheoSoTK(soTaiKhoan);
 					MayATMView mayATM = new MayATMView(maMayATM);
 					mayATM.display();
 					mayATM.thongTinKH(khachHang1);
@@ -102,12 +106,12 @@ public class MayATMView extends JFrame {
 					if (kiemTraSoTien()) {
 						String soTienRut = txtRutTien.getText();
 						if (dangNhapDAO.kiemTraTienMayATM(mayAtmDAO.showMayATMMaMay(maMayATM), soTienRut)) {
-							if (khachHangDAO.rutTien(khachHangDAO.showKhachHangTheoMaKH(soTaiKhoan), soTienRut)) {
+							if (khachHangDAO.rutTien(khachHangDAO.showKhachHangTheoSoTK(soTaiKhoan), soTienRut)) {
 								giaoDichDAO.addThongTinGiaoDich(soTienRut, theAtmDAO.layThongTinMaThe(soTaiKhoan),
 										maMayATM, khachHangDAO.layMaKH(theAtmDAO.layThongTinMaThe(soTaiKhoan)));
 								mayAtmDAO.updateMayAtmRutTien(mayAtmDAO.showMayATMMaMay(maMayATM), soTienRut);
 								giaoDich = giaoDichDAO.layMaGiaoDich();
-								khachHang = khachHangDAO.showKhachHangTheoMaKH(soTaiKhoan);
+								khachHang = khachHangDAO.showKhachHangTheoSoTK(soTaiKhoan);
 								soTien.setText(khachHang.getSoTienTrongTK());
 								tableModel.addRow(new String[] { ("" + giaoDich.getMaGiaoDich()),
 										giaoDich.getThoiGian(), txtRutTien.getText(), khachHang.getSoTienTrongTK() });
@@ -146,17 +150,21 @@ public class MayATMView extends JFrame {
 	public void mayATM() {
 		conn = getContentPane();
 		conn.setLayout(new BorderLayout());
+		
+		//Phần tiêu đề
 		pnTitle = new JPanel();
-		title = new JLabel("MÁY ATM");
+		title = new JLabel("TP-BANK MÁY ATM");
 		title.setFont(new Font("Times New Roman", Font.BOLD, 30));
 		title.setForeground(Color.RED);
 		pnTitle.add(title);
 
+		//Phần thân chương trình
 		pnCenter = new JPanel();
 		border = BorderFactory.createLineBorder(Color.BLUE, 3, true);
 		titledBorder = new TitledBorder(border, "Program");
 		pnCenter.setBorder(titledBorder);
 
+		//Phần đăng nhập
 		pnMayATM = new JPanel();
 		pnMayATM.setLayout(new BoxLayout(pnMayATM, BoxLayout.Y_AXIS));
 		pnDangNhap = new JPanel();
@@ -198,7 +206,8 @@ public class MayATMView extends JFrame {
 		pnSouth.setBackground(Color.LIGHT_GRAY);
 		pnCenter.setBackground(Color.LIGHT_GRAY);
 
-		logoname = new JLabel("Máy ATM");
+		// Phần tiêu đề
+		logoname = new JLabel("TP-BANK MÁY ATM");
 		logoname.setFont(new Font("Times New Roman", Font.BOLD, 45));
 		logoname.setForeground(Color.BLUE);
 		pnTitle.add(logoname);

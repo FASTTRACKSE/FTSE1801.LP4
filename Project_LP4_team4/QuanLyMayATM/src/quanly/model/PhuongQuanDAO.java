@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 public class PhuongQuanDAO {
 	Connection conn;
+	
 	/**
 	 * lấy ra all danh sách quận
-	 * 
 	 * @return
 	 */
 	public ArrayList<String> showAllDanhSachQuan() {
@@ -40,8 +40,8 @@ public class PhuongQuanDAO {
 	}
 
 	/**
-	 * lấy ra all danh sách phường theo quận
-	 * 
+	 * Lấy ra all danh sách phường theo quận
+	 * @param tenQuan
 	 * @return
 	 */
 	public ArrayList<String> showDanhSachPhuong(String tenQuan) {
@@ -73,7 +73,6 @@ public class PhuongQuanDAO {
 	
 	/**
 	 * Lấy mã phường
-	 * 
 	 * @param tenPhuong
 	 * @return
 	 */

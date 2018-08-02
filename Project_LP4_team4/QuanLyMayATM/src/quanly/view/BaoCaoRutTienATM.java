@@ -310,7 +310,7 @@ public class BaoCaoRutTienATM extends JFrame {
 	}
 
 	/**
-	 * Sắp xếp button
+	 * Sắp xếp label
 	 * 
 	 * @param p
 	 * @param c

@@ -173,11 +173,13 @@ public class QuanLyMayATM extends JFrame {
 		mayAtmDAO = new MayAtmDAO();
 		phuongQuanDAO = new PhuongQuanDAO();
 
+		// Phần tiêu đề
 		title = new JLabel("Quản lý máy ATM");
 		title.setFont(new Font("Times New Roman", Font.BOLD, 30));
 		title.setForeground(Color.RED);
 		pnQuanLyATM.add(title);
 
+		// Phần nhập thông tin máy ATM
 		pnNhap = new JPanel();
 		pnNhap.setLayout(new GridLayout(1, 3));
 		pnLabel1 = new JPanel();
@@ -225,6 +227,7 @@ public class QuanLyMayATM extends JFrame {
 		addItem(pnLabel3, txtTongTien, 1, 0, 2, 1, GridBagConstraints.WEST);
 		pnNhap.add(pnLabel3);
 
+		// Các nút chức năng
 		pnbutton = new JPanel();
 		pnbutton.setLayout(new BoxLayout(pnbutton, BoxLayout.X_AXIS));
 		them = new JButton("Thêm máy ATM");
@@ -245,6 +248,7 @@ public class QuanLyMayATM extends JFrame {
 		pnbutton.add(hienThi);
 		pnbutton.add(xoa);
 
+		// Phần bảng danh sách máy ATM
 		border = BorderFactory.createLineBorder(Color.BLUE, 3, true);
 		titledBorder = new TitledBorder(border, "Danh sách thông tin khách hàng");
 		tableModel = new DefaultTableModel();
@@ -263,6 +267,7 @@ public class QuanLyMayATM extends JFrame {
 		JScrollPane jScrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		jScrollPane.setBorder(titledBorder);
+		
 		pnQuanLyATM.add(pnNhap);
 		pnQuanLyATM.add(pnbutton);
 		pnQuanLyATM.add(jScrollPane);
@@ -273,7 +278,6 @@ public class QuanLyMayATM extends JFrame {
 
 	/**
 	 * Sắp xếp các lable nhập
-	 * 
 	 * @param p
 	 * @param c
 	 * @param x
@@ -310,7 +314,6 @@ public class QuanLyMayATM extends JFrame {
 
 	/**
 	 * Kiểm tra nhập vào các JTextField
-	 * 
 	 * @return
 	 */
 	public boolean kiemTraAddMayATM() {
@@ -335,7 +338,6 @@ public class QuanLyMayATM extends JFrame {
 
 	/**
 	 * Lấy thông tin máy
-	 * 
 	 * @return
 	 */
 	public MayATM layThongTinMay() {

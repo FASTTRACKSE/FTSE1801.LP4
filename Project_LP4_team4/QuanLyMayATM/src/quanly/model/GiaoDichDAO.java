@@ -17,10 +17,10 @@ public class GiaoDichDAO {
 
 	/**
 	 * Thêm thông tin giao dịch
-	 * 
 	 * @param soTienRut
-	 * @param myList
+	 * @param soTheATM
 	 * @param mayATM
+	 * @param maKH
 	 * @return
 	 */
 	public boolean addThongTinGiaoDich(String soTienRut, String soTheATM, String mayATM, String maKH) {
@@ -165,7 +165,7 @@ public class GiaoDichDAO {
 	}
 
 	/**
-	 * báo cáo giao dịch khách hàng theo mã khách hàng va date
+	 * báo cáo giao dịch khách hàng theo mã khách hàng và ngày giao dịch
 	 * 
 	 * @param maKH
 	 * @param ngayBatDau
@@ -217,7 +217,7 @@ public class GiaoDichDAO {
 	}
 	
 	/**
-	 * báo cáo giao dịch khách hàng theo địa chỉ va date
+	 * báo cáo giao dịch khách hàng theo địa chỉ và ngày giao dịch
 	 * 
 	 * @param phuong
 	 * @param ngayBatDau
@@ -271,7 +271,7 @@ public class GiaoDichDAO {
 	}
 	
 	/**
-	 * báo cáo giao dịch khách hàng theo mã máy va date
+	 * báo cáo giao dịch khách hàng theo mã máy và ngày giao dịch
 	 * 
 	 * @param maMay
 	 * @param ngayBatDau

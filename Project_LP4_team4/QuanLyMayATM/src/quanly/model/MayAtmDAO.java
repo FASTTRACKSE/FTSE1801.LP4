@@ -49,8 +49,8 @@ public class MayAtmDAO {
 	
 	/**
 	 * Update thông tin tiền trong máy ATM
-	 * 
-	 * @param myList, soTien
+	 * @param mayATM
+	 * @param soTien
 	 * @return
 	 */
 	public boolean updateMayATMThemTien(MayATM mayATM,String soTien) {
@@ -152,8 +152,6 @@ public class MayAtmDAO {
 	
 	/**
 	 * Lấy ra all thông tin máy ATM
-	 * 
-	 * @param soTK
 	 * @return
 	 */
 	public ArrayList<MayATM> showAllMayATM() {
@@ -193,7 +191,7 @@ public class MayAtmDAO {
 	/**
 	 * Lấy ra thông tin máy ATM theo địa chỉ
 	 * 
-	 * @param maMay
+	 * @param phuong
 	 * @return
 	 */
 	public ArrayList<MayATM> showMayATMTheoDiaChi(String phuong) {
@@ -231,8 +229,8 @@ public class MayAtmDAO {
 
 	/**
 	 * Update thông tin tiền trong máy ATM khi rút tiền
-	 * 
-	 * @param myList, soTien
+	 * @param mayATM
+	 * @param soTien
 	 * @return
 	 */
 	public boolean updateMayAtmRutTien(MayATM mayATM,String soTien) {
