@@ -164,7 +164,7 @@ public class QuanLyTheATM extends JFrame {
 		title.setForeground(Color.RED);
 		pnQuanLyTheATM.add(title);
 
-		// Phần thân
+		// Phần nhập thông tin thẻ
 		pnNhap = new JPanel();
 		pnNhap.setLayout(new GridBagLayout());
 
@@ -178,6 +178,7 @@ public class QuanLyTheATM extends JFrame {
 		addItem(pnNhap, txtSoTK, 1, 1, 2, 1, GridBagConstraints.WEST);
 		pnQuanLyTheATM.add(pnNhap);
 
+		// Các nút chức năng
 		pnButton = new JPanel();
 		them = new JButton("Thêm thẻ ATM");
 		hienThi = new JButton("Hiển thị danh sách thẻ ATM");
@@ -246,7 +247,6 @@ public class QuanLyTheATM extends JFrame {
 
 	/**
 	 * Sắp xếp các lable
-	 * 
 	 * @param p
 	 * @param c
 	 * @param x

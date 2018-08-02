@@ -11,6 +11,11 @@ public class DatabaseUntil {
 	private static final String USER = "root";
 	private static final String PASS = "manh100997";
 
+	/**
+	 * 
+	 * Kết nối Database
+	 * @return
+	 */
 	public static Connection getConnect() {
 		Connection conn = null;
 		try {
@@ -27,6 +32,10 @@ public class DatabaseUntil {
 		return conn;
 	}
 
+	/**
+	 * Đóng kết nối Databases
+	 * @param conn
+	 */
 	public static void closeConnection(Connection conn) {
 		try {
 			if (conn != null) {

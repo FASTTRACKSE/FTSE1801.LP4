@@ -222,11 +222,13 @@ public class QuanLyKhachHang extends JFrame {
 		phuongQuanDAO = new PhuongQuanDAO();
 		theAtmDAO = new TheAtmDAO();
 
+		// Phần tiêu đề
 		title = new JLabel("Quản lý khách hàng");
 		title.setFont(new Font("Times New Roman", Font.BOLD, 30));
 		title.setForeground(Color.RED);
 		pnQuanLyKH.add(title);
 
+		// Phần nhập thông tin
 		pnNhap = new JPanel();
 		pnNhap.setLayout(new GridLayout(1, 2));
 		pnLabel1 = new JPanel();
@@ -297,6 +299,7 @@ public class QuanLyKhachHang extends JFrame {
 		pnNhap.add(pnLabel2);
 		pnQuanLyKH.add(pnNhap);
 
+		// Các button chức năng
 		pnbutton = new JPanel();
 		them = new JButton("Thêm khách hàng");
 		themThe = new JButton("Thêm thẻ");
@@ -318,6 +321,7 @@ public class QuanLyKhachHang extends JFrame {
 		pnbutton.add(xoa);
 		pnQuanLyKH.add(pnbutton);
 
+		// Phần bảng danh sách khách hàng
 		border = BorderFactory.createLineBorder(Color.BLUE, 3, true);
 		titledBorder = new TitledBorder(border, "Danh sách thông tin khách hàng");
 		tableModel = new DefaultTableModel();
@@ -341,9 +345,8 @@ public class QuanLyKhachHang extends JFrame {
 		JScrollPane jScrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		jScrollPane.setBorder(titledBorder);
-
+		
 		pnQuanLyKH.add(jScrollPane);
-
 		pnQuanLyKH.setLayout(new BoxLayout(pnQuanLyKH, BoxLayout.Y_AXIS));
 
 		return pnQuanLyKH;
@@ -390,7 +393,6 @@ public class QuanLyKhachHang extends JFrame {
 
 	/**
 	 * Kiem tra dữ liệu nhập thêm thông tin khách hàng
-	 * 
 	 * @return
 	 */
 	public boolean kiemTraNhapDuLieuAddKhachHang() {
@@ -439,7 +441,6 @@ public class QuanLyKhachHang extends JFrame {
 
 	/**
 	 * Kiem tra dữ liệu nhập sữa thông tin khách hàng
-	 * 
 	 * @return
 	 */
 	public boolean kiemTraNhapDuLieuUpdateKhachHang() {
@@ -477,7 +478,6 @@ public class QuanLyKhachHang extends JFrame {
 
 	/**
 	 * Kiem tra dữ liệu nhập sữa thông tin số tiền khách hàng
-	 * 
 	 * @return
 	 */
 	public boolean kiemTraNhapDuLieuUpdateSoTienKhachHang() {
@@ -506,7 +506,6 @@ public class QuanLyKhachHang extends JFrame {
 
 	/**
 	 * Lấy giá trị nhập thông tin khách hàng
-	 * 
 	 * @return
 	 */
 	public KhachHang layGiaTriKhachHang() {

@@ -34,7 +34,7 @@ public class BaoCaoTinhTrangATM extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	JPanel pnBaoCaoTinhHinh, chon, pnButton;
-	JPanel pnLabel, pnBox, pnTim;
+	JPanel pnLabel, pnBox, pnChon;
 	JLabel title, phuong, quan, may;
 	JComboBox<String> boxPhuong, boxQuan, boxMay;
 	JButton tim, hienThi;
@@ -133,13 +133,13 @@ public class BaoCaoTinhTrangATM extends JFrame {
 		mayAtmDAO = new MayAtmDAO();
 		pnBaoCaoTinhHinh = new JPanel();
 		pnBaoCaoTinhHinh.setLayout(new BoxLayout(pnBaoCaoTinhHinh, BoxLayout.Y_AXIS));
-		// Tiêu đề
+		// Phần tiêu đề
 		title = new JLabel("Báo cáo tình trạng máy ATM");
 		title.setFont(new Font("Times New Roman", Font.BOLD, 30));
 		title.setForeground(Color.RED);
 		pnBaoCaoTinhHinh.add(title);
 
-		// Chọn tiêu chí
+		//Phần chọn tiêu chí
 		chon = new JPanel();
 		chon.setLayout(new GridBagLayout());
 		pnLabel = new JPanel();
@@ -177,14 +177,15 @@ public class BaoCaoTinhTrangATM extends JFrame {
 		chon.add(pnLabel);
 		pnBaoCaoTinhHinh.add(chon);
 
-		pnTim = new JPanel();
+		// Các nút chức năng
+		pnChon = new JPanel();
 		tim = new JButton("Tìm kiếm");
 		hienThi = new JButton("Hiển thị tất cả");
 		hienThi.addActionListener(actionListener);
 		tim.addActionListener(actionListener);
-		pnTim.add(tim);
-		pnTim.add(hienThi);
-		pnBaoCaoTinhHinh.add(pnTim);
+		pnChon.add(tim);
+		pnChon.add(hienThi);
+		pnBaoCaoTinhHinh.add(pnChon);
 
 		// Bảng báo cáo
 		border = BorderFactory.createLineBorder(Color.BLUE, 3, true);
@@ -210,7 +211,6 @@ public class BaoCaoTinhTrangATM extends JFrame {
 
 	/**
 	 * Sắp xếp Label
-	 * 
 	 * @param p
 	 * @param c
 	 * @param x

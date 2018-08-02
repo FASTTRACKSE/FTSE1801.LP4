@@ -14,7 +14,7 @@ public class KhachHangDAO {
 	/**
 	 * Thêm khách hàng
 	 * 
-	 * @param khachHang
+	 * @param khachHang, maPhuong
 	 * @return
 	 */
 	public boolean addKhachHang(KhachHang khachHang, int maPhuong) {
@@ -50,10 +50,10 @@ public class KhachHangDAO {
 	}
 
 	/**
-	 * Thêm thẻ khách hàng
-	 * 
+	 *  Thêm thẻ cho khách hàng
 	 * @param khachHang
-	 * @param soTheATM
+	 * @param myList
+	 * @param maPhuong
 	 * @return
 	 */
 	public boolean themTheATMChoKhachHang(KhachHang khachHang, ArrayList<KhachHang> myList, int maPhuong) {
@@ -103,7 +103,7 @@ public class KhachHangDAO {
 	/**
 	 * Update thông tin khách hàng theo mã khách hàng
 	 * 
-	 * @param khachHang
+	 * @param khachHang, maPhuong
 	 * @return
 	 */
 	public boolean updateKhachHang(KhachHang khachHang, int maPhuong) {
@@ -398,17 +398,17 @@ public class KhachHangDAO {
 	/**
 	 * Lấy ra thông tin khách hàng theo số tài khoản
 	 * 
-	 * @param soTK
+	 * @param soTk
 	 * @return
 	 */
-	public KhachHang showKhachHangTheoMaKH(String soThe) {
+	public KhachHang showKhachHangTheoSoTK(String soTK) {
 		PreparedStatement statement = null;
 		KhachHang khachHang = null;
 		conn = DatabaseUntil.getConnect();
 		String sql = "SELECT*FROM khach_hang JOIN phuong ON khach_hang.maPhuong = phuong.maPhuong JOIN quan ON phuong.maQuan = quan.maQuan JOIN the_atm ON khach_hang.soTheATM = the_atm.soTheATM WHERE the_atm.soTK= ?";
 		try {
 			statement = conn.prepareStatement(sql);
-			statement.setString(1, soThe);
+			statement.setString(1, soTK);
 			ResultSet resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
@@ -441,7 +441,7 @@ public class KhachHangDAO {
 	/**
 	 * Rút tiền
 	 * 
-	 * @param myList
+	 * @param khachHang
 	 * @param soTienRut
 	 * @return
 	 */
@@ -479,7 +479,7 @@ public class KhachHangDAO {
 	/**
 	 * Lấy ra maKH khách hàng theo số thẻ
 	 * 
-	 * @param soTK
+	 * @param sotheATM
 	 * @return
 	 */
 	public String layMaKH(String soTheATM) {
@@ -529,7 +529,8 @@ public class KhachHangDAO {
 	/**
 	 * Lấy ra thông tin khách hàng theo phường và quận
 	 * 
-	 * @param soTK
+	 * @param phuong
+	 * @param quan
 	 * @return
 	 */
 	public ArrayList<KhachHang> showKhachHangTheoPhuongVaQuan(String phuong, String quan) {
