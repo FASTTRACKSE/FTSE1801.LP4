@@ -145,9 +145,24 @@ public class QuanLyMayATM extends JFrame {
 						ArrayList<MayATM> myList = mayAtmDAO
 								.showMayATMTheoDiaChi(boxPhuong.getSelectedItem().toString());
 						tableModel.setRowCount(0);
-						for (int i = 0; i < myList.size(); i++) {
-							tableModel.addRow(new String[] { myList.get(i).getMaMay(), myList.get(i).getViTri(),
-									myList.get(i).getPhuong(), myList.get(i).getQuan(), myList.get(i).getTongTien() });
+						if (myList.isEmpty()) {
+							JOptionPane.showMessageDialog(null, "Không có máy ATM trong địa chỉ bạn chọn");
+						}else {
+							if (txtViTri.getText().equals("")) {
+								for (int i = 0; i < myList.size(); i++) {
+									tableModel.addRow(new String[] { myList.get(i).getMaMay(), myList.get(i).getViTri(),
+											myList.get(i).getPhuong(), myList.get(i).getQuan(),
+											myList.get(i).getTongTien() });
+								}
+							} else {
+								for (int i = 0; i < myList.size(); i++) {
+									if (txtViTri.getText().equals(myList.get(i).getViTri())) {
+										tableModel.addRow(new String[] { myList.get(i).getMaMay(), myList.get(i).getViTri(),
+												myList.get(i).getPhuong(), myList.get(i).getQuan(),
+												myList.get(i).getTongTien() });
+									}
+								}
+							}
 						}
 					} else {
 						MayATM mayATM = mayAtmDAO.showMayATMMaMay(txtMaMayATM.getText());
@@ -261,13 +276,13 @@ public class QuanLyMayATM extends JFrame {
 		showTable();
 
 		table = new JTable(tableModel);
-//		table.getTableHeader().setReorderingAllowed(false);
+		// table.getTableHeader().setReorderingAllowed(false);
 		table.setDefaultEditor(Object.class, null);
 
 		JScrollPane jScrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		jScrollPane.setBorder(titledBorder);
-		
+
 		pnQuanLyATM.add(pnNhap);
 		pnQuanLyATM.add(pnbutton);
 		pnQuanLyATM.add(jScrollPane);
@@ -278,6 +293,7 @@ public class QuanLyMayATM extends JFrame {
 
 	/**
 	 * Sắp xếp các lable nhập
+	 * 
 	 * @param p
 	 * @param c
 	 * @param x
@@ -314,6 +330,7 @@ public class QuanLyMayATM extends JFrame {
 
 	/**
 	 * Kiểm tra nhập vào các JTextField
+	 * 
 	 * @return
 	 */
 	public boolean kiemTraAddMayATM() {
@@ -338,6 +355,7 @@ public class QuanLyMayATM extends JFrame {
 
 	/**
 	 * Lấy thông tin máy
+	 * 
 	 * @return
 	 */
 	public MayATM layThongTinMay() {

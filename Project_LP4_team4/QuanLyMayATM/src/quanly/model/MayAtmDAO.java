@@ -89,10 +89,9 @@ public class MayAtmDAO {
 		PreparedStatement statement = null;
 		MayATM mayATM = null;
 		conn = DatabaseUntil.getConnect();
-		String sql = "SELECT*FROM may_atm JOIN phuong ON may_atm.maPhuong = phuong.maPhuong JOIN quan ON phuong.maQuan = quan.maQuan WHERE maMayATM  = ?";
+		String sql = "SELECT*FROM may_atm JOIN phuong ON may_atm.maPhuong = phuong.maPhuong JOIN quan ON phuong.maQuan = quan.maQuan WHERE maMayATM LIKE'%" + maMay+"'";
 		try {
 			statement = conn.prepareStatement(sql);
-			statement.setString(1, maMay);
 			ResultSet resultSet = statement.executeQuery();
 
 			mayATM = new MayATM();
