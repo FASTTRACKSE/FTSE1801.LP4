@@ -245,4 +245,29 @@ public class Tra_MuonDao {
 		return listTraMuon;
 
 	}
+	/*
+	 * Kiểm tra số lượng
+	 * trong kho
+	 * 
+	 * 
+	 */
+//	public boolean KiemTraSoluong() {
+//		boolean kiemtra = false;
+//		String sql = "";
+//		conn = DatabaseUtil.getConnect();
+//		try {
+//			PreparedStatement statement = conn.prepareStatement(sql);
+//			ResultSet result = statement.executeQuery();
+//			while (result.next()) {
+//				if () {
+//					kiemtra = true;
+//				}
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		DatabaseUtil.disConnect(conn);
+//
+//		return kiemtra;
+//	}
 }
