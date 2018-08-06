@@ -44,12 +44,6 @@ public class TheAtmDAO {
 		return theATM;
 	}
 
-	public TheATM layThongTinTheATMChuaSuDung() {
-		TheATM theATM = null;
-
-		return theATM;
-	}
-
 	/**
 	 * Thêm thẻ atm
 	 * 
@@ -76,7 +70,6 @@ public class TheAtmDAO {
 				}
 			}
 		}
-
 		DatabaseUntil.getConnect();
 	}
 
@@ -174,4 +167,5 @@ public class TheAtmDAO {
 		return listSoThe;
 
 	}
+	
 }

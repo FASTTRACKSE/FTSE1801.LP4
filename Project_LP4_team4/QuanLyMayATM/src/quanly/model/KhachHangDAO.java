@@ -20,17 +20,17 @@ public class KhachHangDAO {
 	 */
 	public boolean addKhachHang(KhachHang khachHang, int maPhuong) {
 		boolean kiemTra = false;
-		String sql = "INSERT INTO khach_hang VALUES (?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO khach_hang(tenKhachHang,diaChi,maPhuong,soDienThoai,email,soCMND,soTheATM,sotienTrongTK) VALUES (?,?,?,?,?,?,?,?)";
 		conn = DatabaseUntil.getConnect();
 		PreparedStatement statement = null;
 		try {
 			statement = conn.prepareStatement(sql);
-			statement.setString(1, khachHang.getMaKH());
-			statement.setString(2, khachHang.getTenKH());
-			statement.setString(3, khachHang.getDiaChi());
-			statement.setInt(4, maPhuong);
-			statement.setString(5, khachHang.getSoDT());
-			statement.setString(6, khachHang.getEmail());
+			statement.setString(1, khachHang.getTenKH());
+			statement.setString(2, khachHang.getDiaChi());
+			statement.setInt(3, maPhuong);
+			statement.setString(4, khachHang.getSoDT());
+			statement.setString(5,khachHang.getEmail());
+			statement.setString(6, khachHang.getSoCMND());
 			statement.setString(7, khachHang.getSoTheATM());
 			statement.setString(8, khachHang.getSoTienTrongTK());
 			if (statement.executeUpdate() > 0) {
@@ -175,6 +175,7 @@ public class KhachHangDAO {
 				khachHang.setQuan(resultSet.getString("quan.tenQuan"));
 				khachHang.setSoDT(resultSet.getString("khach_hang.soDienThoai"));
 				khachHang.setEmail(resultSet.getString("khach_hang.email"));
+				khachHang.setSoCMND(resultSet.getString("khach_hang.soCMND"));
 				khachHang.setSoTheATM(resultSet.getString("khach_hang.soTheATM"));
 				khachHang.setSoTK(resultSet.getString("the_atm.soTK"));
 				khachHang.setSoTienTrongTK(resultSet.getString("khach_hang.soTienTrongTK"));
