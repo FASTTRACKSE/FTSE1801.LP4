@@ -85,56 +85,34 @@ public class QuanLyKhachHang extends JFrame {
 				if (output == JOptionPane.YES_OPTION) {
 					if (kiemTraNhapDuLieuAddKhachHang()) {
 						KhachHang khachHang1 = layGiaTriKhachHang();
-						if (khachHangDAO.kiemTraMaKhachHang(khachHangDAO.showAllKhachHang(), khachHang1.getMaKH())) {
-							if (khachHangDAO.addKhachHang(khachHang1,
-									phuongQuanDAO.layThongTinMaPhuong(khachHang1.getPhuong()))) {
-								JOptionPane.showMessageDialog(null, "Thêm khách hàng thành công");
-								tableModel.setRowCount(0);
-								showTable();
-							} else {
-								JOptionPane.showMessageDialog(null, "Trùng số thẻ ATM, vui lòng kiểm tra lại");
-							}
+						if (khachHangDAO.addKhachHang(khachHang1,
+								phuongQuanDAO.layThongTinMaPhuong(khachHang1.getPhuong()))) {
+							JOptionPane.showMessageDialog(null, "Thêm khách hàng thành công");
+							tableModel.setRowCount(0);
+							showTable();
 						} else {
-							JOptionPane.showMessageDialog(null, "Mã khách hàng trùng, vui lòng kiểm tra lại");
+							JOptionPane.showMessageDialog(null, "Trùng số thẻ ATM, vui lòng kiểm tra lại");
 						}
 					}
-				} else if (output == JOptionPane.NO_OPTION) {
-
 				}
+			} else if (output == JOptionPane.NO_OPTION) {
 
 			}
 
 			if (button == sua) {
 				if (output == JOptionPane.YES_OPTION) {
-					if (txtDienThoai.getText().equals("") && txtDiaChi.getText().equals("")
-							&& txtEmail.getText().equals("")) {
-						if (kiemTraNhapDuLieuUpdateSoTienKhachHang()) {
-							if (khachHangDAO.updateSoTien(txtMaKH.getText(), txtSoTheATM.getText(),
-									txtSoTien.getText())) {
-								JOptionPane.showMessageDialog(null, "Cập nhập số tiền thành công");
-								tableModel.setRowCount(0);
-								showTable();
-							} else {
-								JOptionPane.showMessageDialog(null, "Sai mã khách hàng hoặc số thẻ ATM không tồn tại");
-							}
-						}
 
-					} else {
-						if (kiemTraNhapDuLieuUpdateKhachHang()) {
-							KhachHang khachHang = layGiaTriKhachHang();
-							if (khachHangDAO.updateKhachHang(khachHang,
-									phuongQuanDAO.layThongTinMaPhuong(boxPhuong.getSelectedItem().toString()))) {
-								JOptionPane.showMessageDialog(null, "Sửa thành công");
-								tableModel.setRowCount(0);
-								showTable();
-							} else {
-								JOptionPane.showMessageDialog(null, "Sai mã khách hàng hoặc số thẻ ATM không tồn tại");
-							}
+					if (kiemTraNhapDuLieuUpdateKhachHang()) {
+						KhachHang khachHang = layGiaTriKhachHang();
+						if (khachHangDAO.updateKhachHang(khachHang,
+								phuongQuanDAO.layThongTinMaPhuong(boxPhuong.getSelectedItem().toString()))) {
+							JOptionPane.showMessageDialog(null, "Sửa thành công");
+							tableModel.setRowCount(0);
+							showTable();
 						}
 					}
-				} else if (output == JOptionPane.NO_OPTION) {
 				}
-
+			} else if (output == JOptionPane.NO_OPTION) {
 			}
 
 			if (button == xoa) {
@@ -144,17 +122,7 @@ public class QuanLyKhachHang extends JFrame {
 							JOptionPane.showMessageDialog(null, "Xóa khách hàng thành công");
 							tableModel.setRowCount(0);
 							showTable();
-						} else {
-							JOptionPane.showMessageDialog(null, "Mã khách hàng không tồn tại");
-						}
-					} else {
-						if (khachHangDAO.deleteKhachHangTheoSoThe(layGiaTriKhachHang().getSoTheATM())) {
-							JOptionPane.showMessageDialog(null, "Xóa thẻ thành công thành công");
-							tableModel.setRowCount(0);
-							showTable();
-						} else {
-							JOptionPane.showMessageDialog(null, "Sai số thẻ");
-						}
+						} 
 					}
 				} else if (output == JOptionPane.NO_OPTION) {
 				}
@@ -167,11 +135,11 @@ public class QuanLyKhachHang extends JFrame {
 				} else if (output == JOptionPane.NO_OPTION) {
 				}
 			}
-			
+
 			if (button == tim) {
 				TimKiemKhachHang hang = new TimKiemKhachHang();
 				hang.TimKiem();
-			} 
+			}
 		}
 
 	};
@@ -240,7 +208,7 @@ public class QuanLyKhachHang extends JFrame {
 		txtEmail = new JTextField(10);
 		txtSoTK = new JTextField(10);
 		txtSoTien = new JTextField(10);
-		boxtheATM  = new JComboBox<String>();
+		boxtheATM = new JComboBox<String>();
 
 		txtSoTK.setEditable(false);
 
@@ -295,13 +263,13 @@ public class QuanLyKhachHang extends JFrame {
 		showTable();
 
 		table = new JTable(tableModel);
-//		table.getTableHeader().setReorderingAllowed(false);
+		// table.getTableHeader().setReorderingAllowed(false);
 		table.setDefaultEditor(Object.class, null);
 
 		JScrollPane jScrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		jScrollPane.setBorder(titledBorder);
-		
+
 		pnQuanLyKH.add(jScrollPane);
 		pnQuanLyKH.setLayout(new BoxLayout(pnQuanLyKH, BoxLayout.Y_AXIS));
 
@@ -349,6 +317,7 @@ public class QuanLyKhachHang extends JFrame {
 
 	/**
 	 * Kiem tra dữ liệu nhập thêm thông tin khách hàng
+	 * 
 	 * @return
 	 */
 	public boolean kiemTraNhapDuLieuAddKhachHang() {
@@ -383,7 +352,6 @@ public class QuanLyKhachHang extends JFrame {
 		if (txtSoTK.getText().equals("")) {
 			kiemTra = false;
 			JOptionPane.showMessageDialog(null, "Nhập sai số thẻ ATM");
-			txtSoTheATM.setText("");
 		}
 		if (!txtSoTien.getText().matches(pantterSoTien)) {
 			kiemTra = false;
@@ -397,20 +365,15 @@ public class QuanLyKhachHang extends JFrame {
 
 	/**
 	 * Kiem tra dữ liệu nhập sữa thông tin khách hàng
+	 * 
 	 * @return
 	 */
 	public boolean kiemTraNhapDuLieuUpdateKhachHang() {
 		boolean kiemTra = true;
-		String pantterMaKh = "\\w{6}";
 		String pantterTen = "[A-Z" + UNICODE_HOA + "][a-z" + UNICODE_THUONG + "]*( [A-Z" + UNICODE_HOA + "][a-z"
 				+ UNICODE_THUONG + "]*)+";
 		String pantterSDT = "0[0-9]{9,10}";
 		String pantterEmail = "\\w+@\\w+(\\.\\w+){1,2}";
-		if (!txtMaKH.getText().matches(pantterMaKh)) {
-			kiemTra = false;
-			JOptionPane.showMessageDialog(null, "Nhập sai định dạng mã khách khàng (Mã khách hàng gồm 6 ký tự)");
-			txtMaKH.setText("");
-		}
 		if (!txtTenKH.getText().matches(pantterTen)) {
 			kiemTra = false;
 			JOptionPane.showMessageDialog(null,
@@ -433,35 +396,8 @@ public class QuanLyKhachHang extends JFrame {
 	}
 
 	/**
-	 * Kiem tra dữ liệu nhập sữa thông tin số tiền khách hàng
-	 * @return
-	 */
-	public boolean kiemTraNhapDuLieuUpdateSoTienKhachHang() {
-		boolean kiemTra = true;
-		String pantterMaKh = "\\w{6}";
-		String pantterSoTien = "[1-9][0-9]{0,3}0000";
-		if (!txtMaKH.getText().matches(pantterMaKh)) {
-			kiemTra = false;
-			JOptionPane.showMessageDialog(null, "Nhập sai định dạng mã khách khàng (Mã khách hàng gồm 6 ký tự)");
-			txtMaKH.setText("");
-		}
-		if (txtSoTK.getText().equals("")) {
-			kiemTra = false;
-			JOptionPane.showMessageDialog(null, "Nhập sai số thẻ ATM");
-			txtSoTheATM.setText("");
-		}
-		if (!txtSoTien.getText().matches(pantterSoTien)) {
-			kiemTra = false;
-			JOptionPane.showMessageDialog(null,
-					"Nhập sai định dạng số tiền (Số tiền phải bắt đầu từ 1-10 và phải là bội số của 10000 và không quá 99990000)");
-			txtSoTien.setText("");
-		}
-
-		return kiemTra;
-	}
-
-	/**
 	 * Lấy giá trị nhập thông tin khách hàng
+	 * 
 	 * @return
 	 */
 	public KhachHang layGiaTriKhachHang() {
@@ -473,7 +409,7 @@ public class QuanLyKhachHang extends JFrame {
 		khachHang.setQuan(boxQuan.getSelectedItem().toString());
 		khachHang.setSoDT(txtDienThoai.getText());
 		khachHang.setEmail(txtEmail.getText());
-		khachHang.setSoTheATM(txtSoTheATM.getText());
+		khachHang.setSoTheATM(boxtheATM.getSelectedItem().toString());
 		khachHang.setSoTK(txtSoTK.getText());
 		khachHang.setSoTienTrongTK(txtSoTien.getText());
 		return khachHang;

@@ -50,7 +50,6 @@ public class KhachHangDAO {
 		return kiemTra;
 	}
 
-
 	/**
 	 * Update thông tin khách hàng theo mã khách hàng
 	 * 
@@ -210,26 +209,26 @@ public class KhachHangDAO {
 		String FromQuery = "FROM khach_hang JOIN phuong ON khach_hang.maPhuong = phuong.maPhuong JOIN quan ON phuong.maQuan = quan.maQuan JOIN the_atm ON khach_hang.soTheATM = the_atm.soTheATM WHERE ";
 
 		if (!khachHangInPut.getTenKH().equals("")) {
-			FromQuery = FromQuery + "khach_hang.tenKhachHang LIKE '%" + khachHangInPut.getTenKH() + "'";
+			FromQuery = FromQuery + "khach_hang.tenKhachHang LIKE '%" + khachHangInPut.getTenKH() + "%'";
 		}
 		if (!khachHangInPut.getPhuong().equals("")) {
 			FromQuery = FromQuery + " AND " + "phuong.tenPhuong ='" + khachHangInPut.getPhuong() + "'";
 		}
 		if (!khachHangInPut.getMaKH().equals("")) {
-			FromQuery = FromQuery + " AND " + "khach_hang.maKhachHang LIKE '%" + khachHangInPut.getMaKH() + "'";
+			FromQuery = FromQuery + " AND " + "khach_hang.maKhachHang LIKE '%" + khachHangInPut.getMaKH() + "%'";
 		}
 
 		if (!khachHangInPut.getDiaChi().equals("")) {
-			FromQuery = FromQuery + " AND " + "khach_hang.diaChi LIKE '%" + khachHangInPut.getDiaChi() + "'";
+			FromQuery = FromQuery + " AND " + "khach_hang.diaChi LIKE '%" + khachHangInPut.getDiaChi() + "%'";
 		}
 		if (!khachHangInPut.getSoDT().equals("")) {
-			FromQuery = FromQuery + " AND " + "khach_hang.soDienThoai LIKE '%" + khachHangInPut.getSoDT() + "'";
+			FromQuery = FromQuery + " AND " + "khach_hang.soDienThoai LIKE '%" + khachHangInPut.getSoDT() + "%'";
 		}
 		if (!khachHangInPut.getEmail().equals("")) {
-			FromQuery = FromQuery + " AND " + "khach_hang.email LIKE '%" + khachHangInPut.getEmail() + "'";
+			FromQuery = FromQuery + " AND " + "khach_hang.email LIKE '%" + khachHangInPut.getEmail() + "%'";
 		}
 		if (!khachHangInPut.getSoTheATM().equals("")) {
-			FromQuery = FromQuery + " AND " + "khach_hang.soTheATM LIKE '%" + khachHangInPut.getSoTheATM() + "'";
+			FromQuery = FromQuery + " AND " + "khach_hang.soTheATM LIKE '%" + khachHangInPut.getSoTheATM() + "%'";
 		}
 		String Query = SelectQuery + FromQuery;
 		KhachHang khachHang;
@@ -413,7 +412,6 @@ public class KhachHangDAO {
 		return maKH;
 	}
 
-
 	/**
 	 * Lấy ra thông tin khách hàng theo phường và quận
 	 * 
@@ -424,7 +422,6 @@ public class KhachHangDAO {
 	public ArrayList<KhachHang> showKhachHangTheoPhuongVaQuan(String phuong, String quan) {
 		ArrayList<KhachHang> myList = new ArrayList<>();
 		PreparedStatement statement = null;
-		boolean kiemTra = false;
 		KhachHang khachHang;
 		conn = DatabaseUntil.getConnect();
 		String sql = "SELECT*FROM khach_hang JOIN phuong ON khach_hang.maPhuong = phuong.maPhuong JOIN quan ON phuong.maQuan = quan.maQuan JOIN the_atm ON khach_hang.soTheATM = the_atm.soTheATM  WHERE phuong.tenPhuong = ? AND quan.tenQuan = ? ORDER BY khach_hang.maKhachHang ASC";
@@ -436,36 +433,16 @@ public class KhachHangDAO {
 			ResultSet resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
-				for (int i = 0; i < myList.size(); i++) {
-					if (myList.get(i).getMaKH().equals(resultSet.getString("khach_hang.maKhachHang"))) {
-						kiemTra = true;
-					} else {
-						kiemTra = false;
-					}
-				}
-				if (kiemTra) {
-					khachHang = new KhachHang();
-					khachHang.setMaKH("");
-					khachHang.setTenKH("");
-					khachHang.setDiaChi("");
-					khachHang.setPhuong("");
-					khachHang.setQuan("");
-					khachHang.setSoDT("");
-					khachHang.setEmail("");
-					khachHang.setSoTheATM(resultSet.getString("khach_hang.soTheATM"));
-					khachHang.setSoTienTrongTK(resultSet.getString("khach_hang.soTienTrongTK"));
-				} else {
-					khachHang = new KhachHang();
-					khachHang.setMaKH(resultSet.getString("khach_hang.maKhachHang"));
-					khachHang.setTenKH(resultSet.getString("khach_hang.tenKhachHang"));
-					khachHang.setDiaChi(resultSet.getString("khach_hang.diaChi"));
-					khachHang.setPhuong(resultSet.getString("phuong.tenPhuong"));
-					khachHang.setQuan(resultSet.getString("quan.tenQuan"));
-					khachHang.setSoDT(resultSet.getString("khach_hang.soDienThoai"));
-					khachHang.setEmail(resultSet.getString("khach_hang.email"));
-					khachHang.setSoTheATM(resultSet.getString("khach_hang.soTheATM"));
-					khachHang.setSoTienTrongTK(resultSet.getString("khach_hang.soTienTrongTK"));
-				}
+				khachHang = new KhachHang();
+				khachHang.setMaKH(resultSet.getString("khach_hang.maKhachHang"));
+				khachHang.setTenKH(resultSet.getString("khach_hang.tenKhachHang"));
+				khachHang.setDiaChi(resultSet.getString("khach_hang.diaChi"));
+				khachHang.setPhuong(resultSet.getString("phuong.tenPhuong"));
+				khachHang.setQuan(resultSet.getString("quan.tenQuan"));
+				khachHang.setSoDT(resultSet.getString("khach_hang.soDienThoai"));
+				khachHang.setEmail(resultSet.getString("khach_hang.email"));
+				khachHang.setSoTheATM(resultSet.getString("khach_hang.soTheATM"));
+				khachHang.setSoTienTrongTK(resultSet.getString("khach_hang.soTienTrongTK"));
 				myList.add(khachHang);
 			}
 
