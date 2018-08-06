@@ -180,13 +180,8 @@ public class TimKiemKhachHang extends JFrame {
 		setSize(700,500);
 		setLocationRelativeTo(null);
 		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 	
-	public static void main(String[] args) {
-		TimKiemKhachHang khacHang = new TimKiemKhachHang();
-		khacHang.TimKiem();
-		khacHang.display();
-	}
 }
 

@@ -41,7 +41,7 @@ public class AppQuanLyATM extends JFrame {
 	JTree tree;
 	DefaultMutableTreeNode root;
 	DefaultMutableTreeNode file, file2;
-	DefaultMutableTreeNode quanLyKH, quanLyATM, quanLyGD, quanLyTheATM, timKiemKH;
+	DefaultMutableTreeNode quanLyKH, quanLyATM, quanLyGD, quanLyTheATM;
 	DefaultMutableTreeNode baoCaoKH, baoCaoTinhTrangATM, baoCaoRutTienKH, BaoCaoRutTienATM;
 	MayATMView mayATMView;
 
@@ -55,8 +55,6 @@ public class AppQuanLyATM extends JFrame {
 			DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
 			if (treeNode.toString().equals("Quản lý khách hàng")) {
 				card.show(pnAllCenter, "quanLyKH");
-			} else if (treeNode.toString().equals("Tìm kiếm khách hàng")) {
-				card.show(pnAllCenter, "timKiemKH");
 			} else if (treeNode.toString().equals("Quản lý máy ATM")) {
 				card.show(pnAllCenter, "quanLyATM");
 			} else if (treeNode.toString().equals("Quản lý giao dịch")) {
@@ -113,11 +111,9 @@ public class AppQuanLyATM extends JFrame {
 		root = new DefaultMutableTreeNode("Chương trình quản lý máy ATM của ngân hàng");
 		file = new DefaultMutableTreeNode(" Quản Lý ");
 		quanLyKH = new DefaultMutableTreeNode("Quản lý khách hàng");
-		timKiemKH = new DefaultMutableTreeNode("Tìm kiếm khách hàng");
 		quanLyATM = new DefaultMutableTreeNode("Quản lý máy ATM");
 		quanLyGD = new DefaultMutableTreeNode("Quản lý giao dịch");
 		file.add(quanLyKH);
-		file.add(timKiemKH);
 		file.add(quanLyATM);
 		file.add(quanLyGD);
 		root.add(file);
@@ -156,11 +152,6 @@ public class AppQuanLyATM extends JFrame {
 		QuanLyKhachHang quanLyKhachHang = new QuanLyKhachHang();
 		pnAllCenter.add(quanLyKhachHang.quanLyKH(), "quanLyKH");
 
-		//Tìm kiếm khách hàng
-		TimKiemKH timKiemKhachHang = new TimKiemKH();
-		pnAllCenter.add(timKiemKhachHang.timKiemKH(), "timKiemKH");
-		
-		
 		// Quản lý máy ATM
 		QuanLyMayATM atm = new QuanLyMayATM();
 		pnAllCenter.add(atm.qLyMayATM(), "quanLyATM");

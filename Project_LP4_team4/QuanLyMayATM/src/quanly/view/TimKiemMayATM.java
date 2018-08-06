@@ -157,12 +157,7 @@ public class TimKiemMayATM extends JFrame {
 		setSize(700,500);
 		setLocationRelativeTo(null);
 		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 	
-	public static void main(String[] args) {
-		TimKiemMayATM atm = new TimKiemMayATM();
-		atm.timKiemMayATM();
-		atm.display();
-	}
 }

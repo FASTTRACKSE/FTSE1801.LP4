@@ -26,8 +26,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 import quanly.entity.KhachHang;
@@ -137,8 +135,13 @@ public class QuanLyKhachHang extends JFrame {
 			}
 
 			if (button == tim) {
-				TimKiemKhachHang hang = new TimKiemKhachHang();
-				hang.TimKiem();
+				if (output == JOptionPane.YES_OPTION) {
+					TimKiemKhachHang hang = new TimKiemKhachHang();
+					hang.TimKiem();
+					hang.display();
+				} else if (output == JOptionPane.NO_OPTION) {
+				}
+				
 			}
 		}
 
