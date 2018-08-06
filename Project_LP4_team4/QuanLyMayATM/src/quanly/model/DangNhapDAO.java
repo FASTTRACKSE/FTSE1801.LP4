@@ -13,18 +13,18 @@ public class DangNhapDAO {
 	/**
 	 * Đăng nhập
 	 * 
-	 * @param soTK
+	 * @param soTheATM
 	 * @param pass
 	 * @return
 	 */
-	public boolean dangNhap(String soTK, String pass) {
+	public boolean dangNhap(String soTheATM, String pass) {
 		boolean kiemTra = false;
 		conn = DatabaseUntil.getConnect();
-		String sql = "SELECT * FROM the_atm JOIN khach_hang ON the_atm.soTheATM = khach_hang.soTheATM WHERE the_atm.soTK = ? AND the_atm.pass = ?";
+		String sql = "SELECT * FROM the_atm JOIN khach_hang ON the_atm.soTheATM = khach_hang.soTheATM WHERE the_atm.soTheATM = ? AND the_atm.pass = ?";
 		PreparedStatement statement = null;
 		try {
 			statement = conn.prepareStatement(sql);
-			statement.setString(1, soTK);
+			statement.setString(1, soTheATM);
 			statement.setString(2, pass);
 			ResultSet resultSet = statement.executeQuery();
 
