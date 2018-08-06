@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -70,9 +72,9 @@ public class QuanLyMayATM extends JFrame {
 				}
 			}
 
-			if (e.getStateChange() == ItemEvent.SELECTED) {
-				tenPhuong = boxPhuong.getSelectedItem().toString();
-			}
+//			if (e.getStateChange() == ItemEvent.SELECTED) {
+//				tenPhuong = boxPhuong.getSelectedItem().toString();
+//			}
 		}
 	};
 
@@ -142,7 +144,7 @@ public class QuanLyMayATM extends JFrame {
 			if (button == tim) {
 				if (output == JOptionPane.YES_OPTION) {
 					TimKiemMayATM timKiemMayATM = new TimKiemMayATM();
-					timKiemMayATM.timKiemMayATM();
+					timKiemMayATM.timKiemMayATM(tableModel);
 					timKiemMayATM.display();
 				} else if (output == JOptionPane.NO_OPTION) {
 				}
@@ -247,6 +249,38 @@ public class QuanLyMayATM extends JFrame {
 		table = new JTable(tableModel);
 		// table.getTableHeader().setReorderingAllowed(false);
 		table.setDefaultEditor(Object.class, null);
+		table.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int row = table.getSelectedRow();
+				String s = String.valueOf(table.getValueAt(row, 0));
+				txtMaMayATM.setText(s);
+				String s1 = String.valueOf(table.getValueAt(row, 1));
+				txtViTri.setText(s1);
+				String s2 = String.valueOf(table.getValueAt(row, 3));
+				boxQuan.getModel().setSelectedItem(s2);
+				String s3 = String.valueOf(table.getValueAt(row, 2));
+				boxPhuong.getModel().setSelectedItem(s3);
+				String s4 = String.valueOf(table.getValueAt(row, 4));
+				txtTongTien.setText(s4);
+			}
+		});
 
 		JScrollPane jScrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);

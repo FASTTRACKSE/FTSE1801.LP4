@@ -19,9 +19,13 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
+import quanly.entity.MayATM;
+import quanly.model.MayAtmDAO;
 import quanly.model.PhuongQuanDAO;
 
 public class TimKiemMayATM extends JFrame {
@@ -36,6 +40,9 @@ public class TimKiemMayATM extends JFrame {
 	PhuongQuanDAO phuongQuanDAO;
 	ArrayList<String> listPhuong;
 	ArrayList<String> listQuan;
+	MayATM mayATM;
+	MayAtmDAO mayAtmDAO;
+	DefaultTableModel tableModel;
 	
 	ActionListener actionListener = new ActionListener() {
 		@Override
@@ -44,7 +51,17 @@ public class TimKiemMayATM extends JFrame {
 				dispose();
 			}
 			if (e.getSource()==tim) {
-				
+				if (txtMay.getText().equals("")) {
+					ArrayList<MayATM> listMayATM = mayAtmDAO.showMayATMTheoDiaChi(boxPhuong.getSelectedItem().toString());
+					tableModel.setRowCount(0);
+					if (listMayATM.isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Không có máy ATM tại địa chỉ này. Mời chọn lại");
+					}else {
+						
+					}
+				} else {
+
+				}
 			}
 		}
 	};
@@ -67,7 +84,8 @@ public class TimKiemMayATM extends JFrame {
 	
 	
 	
-	public void timKiemMayATM() {
+	public void timKiemMayATM(DefaultTableModel tableModel) {
+		this.tableModel = tableModel;
 		phuongQuanDAO = new PhuongQuanDAO();
 		pnTimKiem = new JPanel();
 		pnTimKiem.setLayout(new BoxLayout(pnTimKiem, BoxLayout.Y_AXIS));

@@ -257,4 +257,12 @@ public class MayAtmDAO {
 		DatabaseUntil.closeConnection(conn);
 		return kiemTra;
 	}
+	
+	public void layThongTinMayATM() {
+		conn = DatabaseUntil.getConnect();
+		
+		
+		
+		DatabaseUntil.closeConnection(conn);
+	}
 }
