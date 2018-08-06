@@ -41,9 +41,9 @@ public class QuanLyKhachHang extends JFrame {
 	JPanel pnQuanLyKH, pnNhap, pnbutton;
 	JPanel pnLabel1, pnLabel2;
 	JLabel title, maKH, tenKH, diaChi, phuong, quan, dienThoai, email, soTheATM, soTK, soTien;
-	JTextField txtMaKH, txtTenKH, txtDiaChi, txtDienThoai, txtEmail, txtSoTheATM, txtSoTK, txtSoTien;
-	JComboBox<String> boxPhuong, boxQuan;
-	JButton them, themThe, sua, xoa, hienthi, tim;
+	JTextField txtMaKH, txtTenKH, txtDiaChi, txtDienThoai, txtEmail, txtSoTK, txtSoTien;
+	JComboBox<String> boxPhuong, boxQuan, boxtheATM;
+	JButton them, sua, xoa, hienthi, tim;
 	DefaultTableModel tableModel;
 	JTable table;
 	Border border;
@@ -70,23 +70,6 @@ public class QuanLyKhachHang extends JFrame {
 					boxPhuong.addItem(listPhuong.get(i));
 				}
 			}
-		}
-	};
-
-	/**
-	 * Sự kiện cho chọn số TK và mã thẻ
-	 */
-	DocumentListener documentListener = new DocumentListener() {
-
-		public void removeUpdate(DocumentEvent e) {
-			txtSoTK.setText(theAtmDAO.layThongTinMaTK(txtSoTheATM.getText()));
-		}
-
-		public void insertUpdate(DocumentEvent e) {
-			txtSoTK.setText(theAtmDAO.layThongTinMaTK(txtSoTheATM.getText()));
-		}
-
-		public void changedUpdate(DocumentEvent e) {
 		}
 	};
 
@@ -177,21 +160,6 @@ public class QuanLyKhachHang extends JFrame {
 				}
 			}
 
-			if (button == themThe) {
-				if (output == JOptionPane.YES_OPTION) {
-					if (khachHangDAO.themTheATMChoKhachHang(layGiaTriKhachHang(), khachHangDAO.showAllKhachHang(),
-							phuongQuanDAO.layThongTinMaPhuong(boxPhuong.getSelectedItem().toString()))) {
-						JOptionPane.showMessageDialog(null, "Thêm thẻ thành công");
-						tableModel.setRowCount(0);
-						showTable();
-					} else {
-						JOptionPane.showMessageDialog(null, "Sai số thẻ hoặc mã khách hàng vui lòng kiểm tra lại");
-					}
-				} else if (output == JOptionPane.NO_OPTION) {
-				}
-
-			}
-
 			if (button == hienthi) {
 				if (output == JOptionPane.YES_OPTION) {
 					tableModel.setRowCount(0);
@@ -270,12 +238,11 @@ public class QuanLyKhachHang extends JFrame {
 
 		txtDienThoai = new JTextField(10);
 		txtEmail = new JTextField(10);
-		txtSoTheATM = new JTextField(10);
 		txtSoTK = new JTextField(10);
 		txtSoTien = new JTextField(10);
+		boxtheATM  = new JComboBox<String>();
 
 		txtSoTK.setEditable(false);
-		txtSoTheATM.getDocument().addDocumentListener(documentListener);
 
 		addItem(pnLabel2, dienThoai, 0, 0, 1, 1, GridBagConstraints.EAST);
 		addItem(pnLabel2, email, 0, 1, 1, 1, GridBagConstraints.EAST);
@@ -285,7 +252,7 @@ public class QuanLyKhachHang extends JFrame {
 
 		addItem(pnLabel2, txtDienThoai, 1, 0, 2, 1, GridBagConstraints.WEST);
 		addItem(pnLabel2, txtEmail, 1, 1, 2, 1, GridBagConstraints.WEST);
-		addItem(pnLabel2, txtSoTheATM, 1, 2, 2, 1, GridBagConstraints.WEST);
+		addItem(pnLabel2, boxtheATM, 1, 2, 2, 1, GridBagConstraints.WEST);
 		addItem(pnLabel2, txtSoTK, 1, 3, 2, 1, GridBagConstraints.WEST);
 		addItem(pnLabel2, txtSoTien, 1, 4, 2, 1, GridBagConstraints.WEST);
 		pnNhap.add(pnLabel2);
@@ -294,7 +261,6 @@ public class QuanLyKhachHang extends JFrame {
 		// Các button chức năng
 		pnbutton = new JPanel();
 		them = new JButton("Thêm khách hàng");
-		themThe = new JButton("Thêm thẻ");
 		sua = new JButton("Sửa thông tin");
 		hienthi = new JButton("Hiển thị danh sách");
 		xoa = new JButton("Xóa thông tin");
@@ -304,9 +270,7 @@ public class QuanLyKhachHang extends JFrame {
 		xoa.addActionListener(actionListener);
 		tim.addActionListener(actionListener);
 		hienthi.addActionListener(actionListener);
-		themThe.addActionListener(actionListener);
 		pnbutton.add(them);
-		pnbutton.add(themThe);
 		pnbutton.add(sua);
 		pnbutton.add(hienthi);
 		pnbutton.add(tim);
