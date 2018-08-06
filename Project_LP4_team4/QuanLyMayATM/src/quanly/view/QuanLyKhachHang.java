@@ -43,7 +43,7 @@ public class QuanLyKhachHang extends JFrame {
 	JLabel title, maKH, tenKH, diaChi, phuong, quan, dienThoai, email, soTheATM, soTK, soTien;
 	JTextField txtMaKH, txtTenKH, txtDiaChi, txtDienThoai, txtEmail, txtSoTheATM, txtSoTK, txtSoTien;
 	JComboBox<String> boxPhuong, boxQuan;
-	JButton them, themThe, sua, xoa, hienthi;
+	JButton them, themThe, sua, xoa, hienthi, tim;
 	DefaultTableModel tableModel;
 	JTable table;
 	Border border;
@@ -199,6 +199,11 @@ public class QuanLyKhachHang extends JFrame {
 				} else if (output == JOptionPane.NO_OPTION) {
 				}
 			}
+			
+			if (button == tim) {
+				TimKiemKhachHang hang = new TimKiemKhachHang();
+				hang.TimKiem();
+			} 
 		}
 
 	};
@@ -293,15 +298,18 @@ public class QuanLyKhachHang extends JFrame {
 		sua = new JButton("Sửa thông tin");
 		hienthi = new JButton("Hiển thị danh sách");
 		xoa = new JButton("Xóa thông tin");
+		tim = new JButton("Tìm kiếm");
 		them.addActionListener(actionListener);
 		sua.addActionListener(actionListener);
 		xoa.addActionListener(actionListener);
+		tim.addActionListener(actionListener);
 		hienthi.addActionListener(actionListener);
 		themThe.addActionListener(actionListener);
 		pnbutton.add(them);
 		pnbutton.add(themThe);
 		pnbutton.add(sua);
 		pnbutton.add(hienthi);
+		pnbutton.add(tim);
 		pnbutton.add(xoa);
 		pnQuanLyKH.add(pnbutton);
 

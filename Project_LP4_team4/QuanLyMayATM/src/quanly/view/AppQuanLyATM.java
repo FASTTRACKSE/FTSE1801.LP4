@@ -161,7 +161,7 @@ public class AppQuanLyATM extends JFrame {
 		pnAllCenter.add(quanLyKhachHang.quanLyKH(), "quanLyKH");
 
 		//Tìm kiếm khách hàng
-		TimKiemKhachHang timKiemKhachHang = new TimKiemKhachHang();
+		TimKiemKH timKiemKhachHang = new TimKiemKH();
 		pnAllCenter.add(timKiemKhachHang.timKiemKH(), "timKiemKH");
 		
 		
