@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -288,10 +290,52 @@ public class QuanLyKhachHang extends JFrame {
 		tableModel.addColumn("Số tiền trong tài khoản");
 
 		showTable();
-
+		
 		table = new JTable(tableModel);
 		// table.getTableHeader().setReorderingAllowed(false);
 		table.setDefaultEditor(Object.class, null);
+		
+		table.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int row = table.getSelectedRow();
+				String s = String.valueOf(table.getValueAt(row, 1));
+				txtTenKH.setText(s);
+				String s1 = String.valueOf(table.getValueAt(row, 2));
+				txtDiaChi.setText(s1);
+				String s2 = String.valueOf(table.getValueAt(row, 4));
+				boxQuan.getModel().setSelectedItem(s2);
+				String s3 = String.valueOf(table.getValueAt(row, 3));
+				boxPhuong.getModel().setSelectedItem(s3);
+				String s4 = String.valueOf(table.getValueAt(row, 5));
+				txtDienThoai.setText(s4);
+				String s5 = String.valueOf(table.getValueAt(row, 6));
+				txtEmail.setText(s5);
+				String s6 = String.valueOf(table.getValueAt(row, 7));
+				txtSoCMND.setText(s6);
+				String s7 = String.valueOf(table.getValueAt(row, 8));
+				boxtheATM.getModel().setSelectedItem(s7);
+				String s8 = String.valueOf(table.getValueAt(row, 10));
+				txtSoTien.setText(s8);
+				
+			}
+		});
 
 		JScrollPane jScrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
