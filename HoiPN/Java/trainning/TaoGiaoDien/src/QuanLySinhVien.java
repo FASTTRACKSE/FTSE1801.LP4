@@ -7,6 +7,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -14,6 +20,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -167,6 +174,7 @@ public class QuanLySinhVien extends JFrame implements ActionListener {
 			dtm.addRow(new String[] { sinhVien.getMaSinhVien(), sinhVien.getTenSinhVien(),
 					String.valueOf(sinhVien.getTuoi()) });
 		}
+		exportExcel(tbl);
 		display();
 		setAction();
 	}
@@ -286,4 +294,38 @@ public class QuanLySinhVien extends JFrame implements ActionListener {
 			System.exit(0);
 		}
 	}
+	
+	public void exportExcel(JTable table) {
+		 JFileChooser chooser = new JFileChooser();
+		 int i = chooser.showSaveDialog(chooser);
+		 if (i == JFileChooser.APPROVE_OPTION) {
+		  File file = chooser.getSelectedFile();
+		  try {
+		   FileWriter out = new FileWriter(file + ".xls");
+		   
+		   BufferedWriter bwrite = new BufferedWriter(out);
+//		   BufferedWriter bwrite = new BufferedWriter
+//				    (new OutputStreamWriter(new FileOutputStream(file + ".xls"), StandardCharsets.UTF_8));
+		   DefaultTableModel model = (DefaultTableModel) table.getModel();
+		   // lay ten Cot
+		   for (int j = 0; j < table.getColumnCount(); j++) {
+		    bwrite.write(model.getColumnName(j).toString() + "\t");
+		   }
+		   bwrite.write("\n");
+		   
+		   // Lay du lieu dong
+		   
+		   for (int j = 0; j < table.getRowCount(); j++) {
+		    for (int k = 0; k < table.getColumnCount(); k++) {
+		     bwrite.write(model.getValueAt(j, k).toString() + "\t");
+		    }
+		    bwrite.write("\n");
+		   }
+		   bwrite.close();
+		   JOptionPane.showMessageDialog(null, "Lưu file thành công!");
+		  } catch (Exception e2) {
+		   JOptionPane.showMessageDialog(null, "Lỗi khi lưu file!");
+		  }
+		 }
+		}
 }
