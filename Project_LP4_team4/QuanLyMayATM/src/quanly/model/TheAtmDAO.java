@@ -51,8 +51,33 @@ public class TheAtmDAO {
 	 * @param soTK
 	 */
 	public void addTheATM(String soThe, String soTK) {
-		String soTheATM = "" + (Integer.parseInt(soThe) + 1);
-		String soTaiKhoan = "" + (Integer.parseInt(soTK) + 1);
+		String soTheATM = null;
+		String[] mangSothe = soThe.split("");
+		for (int j = mangSothe.length; j > 0; j--) {
+			if (Integer.parseInt(mangSothe[j]) < 9) {
+				mangSothe[j] = "" + (Integer.parseInt(mangSothe[j]) + 1);
+			} else if (Integer.parseInt(mangSothe[j]) == 9) {
+				mangSothe[j] = "0";
+				mangSothe[j - 1] = "" + (Integer.parseInt(mangSothe[j - 1]) + 1);
+			}
+		}
+		for (int i = 0; i < mangSothe.length; i++) {
+			soTheATM = soTheATM + mangSothe[i];
+		}
+
+		String soTaiKhoan = null;
+		String[] mangSoTK = soTK.split("");
+		for (int j = mangSoTK.length; j > 0; j--) {
+			if (Integer.parseInt(mangSoTK[j]) < 9) {
+				mangSoTK[j] = "" + (Integer.parseInt(mangSoTK[j]) + 1);
+			} else if (Integer.parseInt(mangSoTK[j]) == 9) {
+				mangSoTK[j] = "0";
+				mangSoTK[j - 1] = "" + (Integer.parseInt(mangSoTK[j - 1]) + 1);
+			}
+		}
+		for (int i = 0; i < mangSoTK.length; i++) {
+			soTaiKhoan = soTaiKhoan + mangSoTK[i];
+		}
 		conn = DatabaseUntil.getConnect();
 		String sql = "INSERT INTO the_atm VALUES (?,?,?)";
 		PreparedStatement statement = null;
@@ -139,6 +164,7 @@ public class TheAtmDAO {
 
 	/**
 	 * Lấy số thẻ ATM chưa sử dụng
+	 * 
 	 * @return
 	 */
 	public ArrayList<String> laySoTheATM() {
@@ -167,5 +193,5 @@ public class TheAtmDAO {
 		return listSoThe;
 
 	}
-	
+
 }
