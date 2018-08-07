@@ -30,7 +30,7 @@ import quanly.model.PhuongQuanDAO;
 
 public class TimKiemMayATM extends JFrame {
 	private static final long serialVersionUID = 1L;
-	
+
 	JPanel pnTimKiem, pnNhap, pnbutton;
 	JPanel pnLabel1, pnLabel2;
 	JLabel title, tenMay, quan, phuong;
@@ -40,34 +40,50 @@ public class TimKiemMayATM extends JFrame {
 	PhuongQuanDAO phuongQuanDAO;
 	ArrayList<String> listPhuong;
 	ArrayList<String> listQuan;
-	MayATM mayATM;
 	MayAtmDAO mayAtmDAO;
 	DefaultTableModel tableModel;
-	
+
 	ActionListener actionListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (e.getSource()==huy) {
+			if (e.getSource() == huy) {
 				dispose();
 			}
-			if (e.getSource()==tim) {
+			if (e.getSource() == tim) {
 				if (txtMay.getText().equals("")) {
-					ArrayList<MayATM> listMayATM = mayAtmDAO.showMayATMTheoDiaChi(boxPhuong.getSelectedItem().toString());
+					ArrayList<MayATM> listMayATM = mayAtmDAO
+							.showMayATMTheoDiaChi(boxPhuong.getSelectedItem().toString());
 					tableModel.setRowCount(0);
 					if (listMayATM.isEmpty()) {
 						JOptionPane.showMessageDialog(null, "Không có máy ATM tại địa chỉ này. Mời chọn lại");
-					}else {
+					} else {
+						for (int i = 0; i < listMayATM.size(); i++) {
+							tableModel.addRow(new String[] { listMayATM.get(i).getMaMay(), listMayATM.get(i).getViTri(),
+									listMayATM.get(i).getPhuong(), listMayATM.get(i).getQuan(),
+									listMayATM.get(i).getTongTien() });
+							dispose();
+						}
 						
 					}
 				} else {
-
+					MayATM mayATM = mayAtmDAO.showMayATMMaMay(txtMay.getText());
+					tableModel.setRowCount(0);
+					if (mayATM.getMaMay() == null) {
+						JOptionPane.showMessageDialog(null, "Máy không tồn tại. Vui lòng nhập lại.");
+					} else {
+						tableModel.addRow(new String[] { mayATM.getMaMay(), mayATM.getViTri(), mayATM.getPhuong(),
+								mayATM.getQuan(), mayATM.getTongTien() });
+						dispose();
+					}
+					
 				}
+
 			}
 		}
 	};
-	
+
 	ItemListener itemListener = new ItemListener() {
-		
+
 		@Override
 		public void itemStateChanged(ItemEvent e) {
 			if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -80,13 +96,11 @@ public class TimKiemMayATM extends JFrame {
 			}
 		}
 	};
-	
-	
-	
-	
+
 	public void timKiemMayATM(DefaultTableModel tableModel) {
 		this.tableModel = tableModel;
 		phuongQuanDAO = new PhuongQuanDAO();
+		mayAtmDAO = new MayAtmDAO();
 		pnTimKiem = new JPanel();
 		pnTimKiem.setLayout(new BoxLayout(pnTimKiem, BoxLayout.Y_AXIS));
 		// Phần tiêu đề
@@ -104,7 +118,7 @@ public class TimKiemMayATM extends JFrame {
 		txtMay = new JTextField(10);
 		quan = new JLabel("Quận :");
 		phuong = new JLabel("Phường :");
-		
+
 		boxQuan = new JComboBox<String>();
 		listQuan = phuongQuanDAO.showAllDanhSachQuan();
 		boxQuan.addItem("");
@@ -126,18 +140,20 @@ public class TimKiemMayATM extends JFrame {
 		addItem(pnLabel1, txtMay, 1, 0, 2, 1, GridBagConstraints.WEST);
 		addItem(pnLabel1, boxQuan, 1, 1, 2, 1, GridBagConstraints.WEST);
 		addItem(pnLabel1, boxPhuong, 1, 2, 2, 1, GridBagConstraints.WEST);
-		
+
 		pnNhap.add(pnLabel1);
 		pnTimKiem.add(pnNhap);
 
 		// Các button chức năng
 		pnbutton = new JPanel();
 		tim = new JButton("Tìm kiếm");
+		tim.addActionListener(actionListener);
 		huy = new JButton("Hủy");
 		huy.addActionListener(actionListener);
-		pnbutton.add(tim);pnbutton.add(huy);
+		pnbutton.add(tim);
+		pnbutton.add(huy);
 		pnTimKiem.add(pnbutton);
-		
+
 		Container container = getContentPane();
 		container.add(pnTimKiem);
 
@@ -168,14 +184,11 @@ public class TimKiemMayATM extends JFrame {
 		p.add(c, gc);
 	}
 
-
-
-
 	public void display() {
-		setSize(700,500);
+		setSize(700, 500);
 		setLocationRelativeTo(null);
 		setVisible(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
-	
+
 }
