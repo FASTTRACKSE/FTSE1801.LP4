@@ -27,7 +27,7 @@ public class TheAtmDAO {
 			while (resultSet.next()) {
 				theATM = new TheATM();
 				theATM.setSoTheATM(resultSet.getString("soTheATM"));
-				theATM.setSoTheATM(resultSet.getString("soTK"));
+				theATM.setSoTK(resultSet.getString("soTK"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -51,33 +51,29 @@ public class TheAtmDAO {
 	 * @param soTK
 	 */
 	public void addTheATM(String soThe, String soTK) {
-		String soTheATM = null;
-		String[] mangSothe = soThe.split("");
-		for (int j = mangSothe.length; j > 0; j--) {
-			if (Integer.parseInt(mangSothe[j]) < 9) {
-				mangSothe[j] = "" + (Integer.parseInt(mangSothe[j]) + 1);
-			} else if (Integer.parseInt(mangSothe[j]) == 9) {
-				mangSothe[j] = "0";
-				mangSothe[j - 1] = "" + (Integer.parseInt(mangSothe[j - 1]) + 1);
-			}
+		String soTheATM = "";
+		String soTaiKhoan = "";
+		
+		String soThe1 = soThe.substring(0, 7);
+		String soThe2 = soThe.substring(7,16);
+		if (soThe2.equals("999999999")) {
+			soThe1 = "" + (Integer.parseInt(soThe1) +1);
+			soThe2 = "000000000";
+		}else {
+			soThe2 = "" + (Integer.parseInt(soThe2) +1);
 		}
-		for (int i = 0; i < mangSothe.length; i++) {
-			soTheATM = soTheATM + mangSothe[i];
+		soTheATM = soThe1 + soThe2;
+		
+		String soTK1 = soTK.substring(0, 4);
+		String soTK2 = soTK.substring(4,13);
+		if (soTK2.equals("999999999")) {
+			soTK1 = "" + (Integer.parseInt(soTK1) +1);
+			soTK2 = "000000000";
+		}else {
+			soTK2 = "" + (Integer.parseInt(soTK2) +1);
 		}
-
-		String soTaiKhoan = null;
-		String[] mangSoTK = soTK.split("");
-		for (int j = mangSoTK.length; j > 0; j--) {
-			if (Integer.parseInt(mangSoTK[j]) < 9) {
-				mangSoTK[j] = "" + (Integer.parseInt(mangSoTK[j]) + 1);
-			} else if (Integer.parseInt(mangSoTK[j]) == 9) {
-				mangSoTK[j] = "0";
-				mangSoTK[j - 1] = "" + (Integer.parseInt(mangSoTK[j - 1]) + 1);
-			}
-		}
-		for (int i = 0; i < mangSoTK.length; i++) {
-			soTaiKhoan = soTaiKhoan + mangSoTK[i];
-		}
+		soTaiKhoan = soTK1 + soTK2;
+		
 		conn = DatabaseUntil.getConnect();
 		String sql = "INSERT INTO the_atm VALUES (?,?,?)";
 		PreparedStatement statement = null;
@@ -86,6 +82,7 @@ public class TheAtmDAO {
 			statement.setString(1, soTaiKhoan);
 			statement.setString(2, "000000");
 			statement.setString(3, soTheATM);
+			statement.executeUpdate();
 		} catch (SQLException e) {
 		} finally {
 			if (statement != null) {

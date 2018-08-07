@@ -99,8 +99,21 @@ public class QuanLyKhachHang extends JFrame {
 								phuongQuanDAO.layThongTinMaPhuong(khachHang1.getPhuong()))) {
 							theAtmDAO.addTheATM(theAtmDAO.layThongTinTheATM().getSoTheATM(), theAtmDAO.layThongTinTheATM().getSoTK());
 							JOptionPane.showMessageDialog(null, "Thêm khách hàng thành công");
+							txtDiaChi.setText("");
+							txtDienThoai.setText("");
+							txtEmail.setText("");
+							txtSoCMND.setText("");
+							txtSoTien.setText("");
+							txtTenKH.setText("");
+							boxtheATM.removeAllItems();
+							ArrayList<String> listSoThe = theAtmDAO.laySoTheATM();
+							for (int i = 0; i < listSoThe.size(); i++) {
+								boxtheATM.addItem(listSoThe.get(i));
+							}
 							tableModel.setRowCount(0);
 							showTable();
+						}else {
+							JOptionPane.showMessageDialog(null, "Trùng số CMND");
 						}
 					}
 				}
