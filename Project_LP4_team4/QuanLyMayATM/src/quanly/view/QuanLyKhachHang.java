@@ -28,6 +28,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 import quanly.entity.KhachHang;
@@ -55,8 +57,29 @@ public class QuanLyKhachHang extends JFrame {
 	KhachHang khachHang;
 	ArrayList<String> listQuan;
 	ArrayList<String> listPhuong;
+	static String maKH = null;
+	
 	private static final String UNICODE_HOA = "ÀÁẠÃẢĂẮẰẶẴẲÂẤẦẨẪẬĐÈÉẺẼẸÊẾỀỂỄỆỊÍÌỈĨỌÓÒỎÕỘỐỒỔỖÔƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰ";
 	private static final String UNICODE_THUONG = "àáạãảăắằặẵẳâẩấầẫậđèéẻẽẹêếềểễệịíìỉĩọóòỏõộốồổỗôơớờởỡợúùủũụưứừửữự";
+	
+	DocumentListener documentListener = new DocumentListener() {
+		
+		@Override
+		public void removeUpdate(DocumentEvent e) {
+			xoa.setEnabled(false);
+		}
+		
+		@Override
+		public void insertUpdate(DocumentEvent e) {
+			xoa.setEnabled(false);
+		}
+		
+		@Override
+		public void changedUpdate(DocumentEvent e) {
+			
+		}
+	};
+	
 	/**
 	 * Sự kiện cho chọn phường và quận
 	 */
@@ -69,6 +92,7 @@ public class QuanLyKhachHang extends JFrame {
 				for (int i = 0; i < listPhuong.size(); i++) {
 					boxPhuong.addItem(listPhuong.get(i));
 				}
+				xoa.setEnabled(false);
 			}
 		}
 	};
@@ -82,6 +106,7 @@ public class QuanLyKhachHang extends JFrame {
 				String soTheATM = boxtheATM.getSelectedItem().toString();
 				txtSoTK.setText(theAtmDAO.layThongTinMaTK(soTheATM));
 			}
+			xoa.setEnabled(false);
 		}
 	};
 	
@@ -128,11 +153,27 @@ public class QuanLyKhachHang extends JFrame {
 
 					if (kiemTraNhapDuLieuUpdateKhachHang()) {
 						KhachHang khachHang = layGiaTriKhachHang();
-						if (khachHangDAO.updateKhachHang(khachHang,
+						if (khachHangDAO.updateKhachHang(maKH, khachHang,
 								phuongQuanDAO.layThongTinMaPhuong(boxPhuong.getSelectedItem().toString()))) {
 							JOptionPane.showMessageDialog(null, "Sửa thành công");
+							txtDiaChi.setText("");
+							txtDienThoai.setText("");
+							txtEmail.setText("");
+							txtSoCMND.setText("");
+							txtSoTien.setText("");
+							txtTenKH.setText("");
+							boxtheATM.removeAllItems();
+							ArrayList<String> listSoThe = theAtmDAO.laySoTheATM();
+							for (int i = 0; i < listSoThe.size(); i++) {
+								boxtheATM.addItem(listSoThe.get(i));
+							}
 							tableModel.setRowCount(0);
 							showTable();
+							sua.setEnabled(false);
+							xoa.setEnabled(false);
+							them.setEnabled(true);
+							txtSoTien.setEnabled(true);
+							boxtheATM.setEnabled(true);
 						}
 					}
 				}
@@ -141,7 +182,27 @@ public class QuanLyKhachHang extends JFrame {
 
 			if (button == xoa) {
 				if (output == JOptionPane.YES_OPTION) {
-					
+					if (khachHangDAO.deleteKhachHangTheoMaKH(maKH)) {
+						JOptionPane.showMessageDialog(null, "Xóa thành công");
+						txtDiaChi.setText("");
+						txtDienThoai.setText("");
+						txtEmail.setText("");
+						txtSoCMND.setText("");
+						txtSoTien.setText("");
+						txtTenKH.setText("");
+						boxtheATM.removeAllItems();
+						ArrayList<String> listSoThe = theAtmDAO.laySoTheATM();
+						for (int i = 0; i < listSoThe.size(); i++) {
+							boxtheATM.addItem(listSoThe.get(i));
+						}
+						tableModel.setRowCount(0);
+						showTable();
+						sua.setEnabled(false);
+						xoa.setEnabled(false);
+						them.setEnabled(true);
+						txtSoTien.setEnabled(true);
+						boxtheATM.setEnabled(true);
+					}
 				} else if (output == JOptionPane.NO_OPTION) {
 				}
 			}
@@ -193,7 +254,10 @@ public class QuanLyKhachHang extends JFrame {
 		txtSoCMND = new JTextField(10);
 		txtTenKH = new JTextField(10);
 		txtDiaChi = new JTextField(10);
-
+		txtSoCMND.getDocument().addDocumentListener(documentListener);
+		txtTenKH.getDocument().addDocumentListener(documentListener);
+		txtDiaChi.getDocument().addDocumentListener(documentListener);
+		
 		boxQuan = new JComboBox<String>();
 		listQuan = phuongQuanDAO.showAllDanhSachQuan();
 		for (int i = 0; i < listQuan.size(); i++) {
@@ -231,6 +295,10 @@ public class QuanLyKhachHang extends JFrame {
 		txtEmail = new JTextField(10);
 		txtSoTK = new JTextField(10);
 		txtSoTien = new JTextField(10);
+		txtDienThoai.getDocument().addDocumentListener(documentListener);
+		txtEmail.getDocument().addDocumentListener(documentListener);
+		txtSoTK.getDocument().addDocumentListener(documentListener);
+		
 		boxtheATM = new JComboBox<String>();
 		ArrayList<String> listSoThe = theAtmDAO.laySoTheATM();
 		for (int i = 0; i < listSoThe.size(); i++) {
@@ -266,6 +334,8 @@ public class QuanLyKhachHang extends JFrame {
 		xoa.addActionListener(actionListener);
 		tim.addActionListener(actionListener);
 		hienthi.addActionListener(actionListener);
+		sua.setEnabled(false);
+		xoa.setEnabled(false);
 		pnbutton.add(them);
 		pnbutton.add(sua);
 		pnbutton.add(hienthi);
@@ -315,6 +385,7 @@ public class QuanLyKhachHang extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int row = table.getSelectedRow();
+				maKH = String.valueOf(table.getValueAt(row, 0));
 				String s = String.valueOf(table.getValueAt(row, 1));
 				txtTenKH.setText(s);
 				String s1 = String.valueOf(table.getValueAt(row, 2));
@@ -333,6 +404,11 @@ public class QuanLyKhachHang extends JFrame {
 				boxtheATM.getModel().setSelectedItem(s7);
 				String s8 = String.valueOf(table.getValueAt(row, 10));
 				txtSoTien.setText(s8);
+				txtSoTien.setEnabled(false);
+				boxtheATM.setEnabled(false);
+				xoa.setEnabled(true);
+				sua.setEnabled(true);
+				them.setEnabled(false);
 				
 			}
 		});

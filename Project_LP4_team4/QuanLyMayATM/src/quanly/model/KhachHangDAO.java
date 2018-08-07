@@ -57,9 +57,9 @@ public class KhachHangDAO {
 	 *            maPhuong
 	 * @return
 	 */
-	public boolean updateKhachHang(KhachHang khachHang, int maPhuong) {
+	public boolean updateKhachHang(String maKh,KhachHang khachHang, int maPhuong) {
 		boolean kiemTra = false;
-		String sql = "UPDATE khach_hang SET tenKhachHang = ?, diaChi = ?, maPhuong = ?, soDienThoai = ?, email = ? WHERE maKhachHang = ?";
+		String sql = "UPDATE khach_hang SET tenKhachHang = ?, diaChi = ?, maPhuong = ?, soDienThoai = ?, email = ?, soCMND =? WHERE maKhachHang = ?";
 		conn = DatabaseUntil.getConnect();
 		PreparedStatement statement = null;
 		try {
@@ -69,7 +69,8 @@ public class KhachHangDAO {
 			statement.setInt(3, maPhuong);
 			statement.setString(4, khachHang.getSoDT());
 			statement.setString(5, khachHang.getEmail());
-			statement.setString(6, khachHang.getMaKH());
+			statement.setString(6, khachHang.getSoCMND());
+			statement.setString(7, maKh);
 			if (statement.executeUpdate() > 0) {
 				kiemTra = true;
 			}
