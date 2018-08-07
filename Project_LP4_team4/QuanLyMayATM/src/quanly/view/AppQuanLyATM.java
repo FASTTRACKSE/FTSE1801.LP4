@@ -41,7 +41,7 @@ public class AppQuanLyATM extends JFrame {
 	JTree tree;
 	DefaultMutableTreeNode root;
 	DefaultMutableTreeNode file, file2;
-	DefaultMutableTreeNode quanLyKH, quanLyATM, quanLyGD, quanLyTheATM, timKiemKH;
+	DefaultMutableTreeNode quanLyKH, quanLyATM, quanLyGD, quanLyTheATM;
 	DefaultMutableTreeNode baoCaoKH, baoCaoTinhTrangATM, baoCaoRutTienKH, BaoCaoRutTienATM;
 	MayATMView mayATMView;
 
@@ -55,10 +55,6 @@ public class AppQuanLyATM extends JFrame {
 			DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
 			if (treeNode.toString().equals("Quản lý khách hàng")) {
 				card.show(pnAllCenter, "quanLyKH");
-			} else if (treeNode.toString().equals("Tìm kiếm khách hàng")) {
-				card.show(pnAllCenter, "timKiemKH");
-			} else if (treeNode.toString().equals("Quản lý thẻ ATM")) {
-				card.show(pnAllCenter, "quanLyTheATM");
 			} else if (treeNode.toString().equals("Quản lý máy ATM")) {
 				card.show(pnAllCenter, "quanLyATM");
 			} else if (treeNode.toString().equals("Quản lý giao dịch")) {
@@ -115,13 +111,9 @@ public class AppQuanLyATM extends JFrame {
 		root = new DefaultMutableTreeNode("Chương trình quản lý máy ATM của ngân hàng");
 		file = new DefaultMutableTreeNode(" Quản Lý ");
 		quanLyKH = new DefaultMutableTreeNode("Quản lý khách hàng");
-		timKiemKH = new DefaultMutableTreeNode("Tìm kiếm khách hàng");
-		quanLyTheATM = new DefaultMutableTreeNode("Quản lý thẻ ATM");
 		quanLyATM = new DefaultMutableTreeNode("Quản lý máy ATM");
 		quanLyGD = new DefaultMutableTreeNode("Quản lý giao dịch");
 		file.add(quanLyKH);
-		file.add(timKiemKH);
-		file.add(quanLyTheATM);
 		file.add(quanLyATM);
 		file.add(quanLyGD);
 		root.add(file);
@@ -160,16 +152,6 @@ public class AppQuanLyATM extends JFrame {
 		QuanLyKhachHang quanLyKhachHang = new QuanLyKhachHang();
 		pnAllCenter.add(quanLyKhachHang.quanLyKH(), "quanLyKH");
 
-		//Tìm kiếm khách hàng
-		TimKiemKhachHang timKiemKhachHang = new TimKiemKhachHang();
-		pnAllCenter.add(timKiemKhachHang.timKiemKH(), "timKiemKH");
-		
-		
-		// Quản lý thẻ ATM
-		QuanLyTheATM quanLyTheATM =  new QuanLyTheATM();
-		pnAllCenter.add(quanLyTheATM.quanLyThe(), "quanLyTheATM");
-		
-		
 		// Quản lý máy ATM
 		QuanLyMayATM atm = new QuanLyMayATM();
 		pnAllCenter.add(atm.qLyMayATM(), "quanLyATM");

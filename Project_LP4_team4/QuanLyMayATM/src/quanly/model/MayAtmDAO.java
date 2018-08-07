@@ -48,21 +48,24 @@ public class MayAtmDAO {
 	}
 	
 	/**
-	 * Update thông tin tiền trong máy ATM
+	 * Update máy ATM
+	 * @param maPhuong
 	 * @param mayATM
 	 * @param soTien
 	 * @return
 	 */
-	public boolean updateMayATMThemTien(MayATM mayATM,String soTien) {
+	public boolean updateMayATM(MayATM mayATM,String soTien, int maPhuong) {
 		boolean kiemTra = false;
-		String sql = "UPDATE may_atm SET tongTien=? WHERE maMayATM = ?";
+		String sql = "UPDATE may_atm SET tongTien=?, viTri=?, maPhuong=? WHERE maMayATM = ?";
 		Integer allTien = Integer.parseInt(mayATM.getTongTien()) + Integer.parseInt(soTien);
 		conn = DatabaseUntil.getConnect();
 		PreparedStatement statement = null;
 		try {
 			statement = conn.prepareStatement(sql);
 			statement.setString(1, (String.valueOf(allTien)));
-			statement.setString(2, mayATM.getMaMay());
+			statement.setString(2, mayATM.getViTri());
+			statement.setInt(3, maPhuong);
+			statement.setString(4, mayATM.getMaMay());
 			if (statement.executeUpdate() > 0) {
 				kiemTra = true;
 			}
@@ -89,7 +92,7 @@ public class MayAtmDAO {
 		PreparedStatement statement = null;
 		MayATM mayATM = null;
 		conn = DatabaseUntil.getConnect();
-		String sql = "SELECT*FROM may_atm JOIN phuong ON may_atm.maPhuong = phuong.maPhuong JOIN quan ON phuong.maQuan = quan.maQuan WHERE maMayATM  = ?";
+		String sql = "SELECT*FROM may_atm JOIN phuong ON may_atm.maPhuong = phuong.maPhuong JOIN quan ON phuong.maQuan = quan.maQuan WHERE maMayATM = ?";
 		try {
 			statement = conn.prepareStatement(sql);
 			statement.setString(1, maMay);
@@ -257,5 +260,13 @@ public class MayAtmDAO {
 		}
 		DatabaseUntil.closeConnection(conn);
 		return kiemTra;
+	}
+	
+	public void layThongTinMayATM() {
+		conn = DatabaseUntil.getConnect();
+		
+		
+		
+		DatabaseUntil.closeConnection(conn);
 	}
 }

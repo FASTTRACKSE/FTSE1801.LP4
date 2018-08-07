@@ -22,27 +22,51 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
-import quanly.entity.KhachHang;
-import quanly.model.KhachHangDAO;
+import quanly.entity.MayATM;
+import quanly.model.MayAtmDAO;
 import quanly.model.PhuongQuanDAO;
 
-public class TimKiemKhachHang extends JFrame {
+public class TimKiemMayATM extends JFrame {
 	private static final long serialVersionUID = 1L;
+
 	JPanel pnTimKiem, pnNhap, pnbutton;
 	JPanel pnLabel1, pnLabel2;
-	JLabel title, tenKH, diaChi, phuong, quan, dienThoai, email, soCMND;
-	JTextField txtTenKH, txtDiaChi, txtDienThoai, txtEmail, txtSoCMND;
+	JLabel title, tenMay, quan, phuong;
+	JTextField txtMay;
 	JComboBox<String> boxPhuong, boxQuan;
 	JButton tim, huy;
 	PhuongQuanDAO phuongQuanDAO;
-	KhachHangDAO khachHangDAO;
 	ArrayList<String> listPhuong;
 	ArrayList<String> listQuan;
+	MayAtmDAO mayAtmDAO;
 	DefaultTableModel tableModel;
-	KhachHang khachHang;
 
+	DocumentListener documentListener = new DocumentListener() {
+		
+		@Override
+		public void removeUpdate(DocumentEvent e) {
+			if (txtMay.getText().equals("")) {
+				boxPhuong.setEnabled(true);
+				boxQuan.setEnabled(true);
+			}
+		}
+		
+		@Override
+		public void insertUpdate(DocumentEvent e) {
+			boxPhuong.setEnabled(false);
+			boxQuan.setEnabled(false);
+		}
+		
+		@Override
+		public void changedUpdate(DocumentEvent e) {
+			
+		}
+	};
+	
 	ActionListener actionListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -50,23 +74,34 @@ public class TimKiemKhachHang extends JFrame {
 				dispose();
 			}
 			if (e.getSource() == tim) {
-				if (txtTenKH.getText().equals("")) {
-					JOptionPane.showMessageDialog(null, "Bắt buộc nhập tên");
-				} else {
-					ArrayList<KhachHang> listKH = khachHangDAO.timKiem(layGiaTriKhachHang());
-					if (listKH.isEmpty()) {
-						JOptionPane.showMessageDialog(null, "Không có khách hàng nào theo tiêu chí đã nhập");
+				if (txtMay.getText().equals("")) {
+					ArrayList<MayATM> listMayATM = mayAtmDAO
+							.showMayATMTheoDiaChi(boxPhuong.getSelectedItem().toString());
+					tableModel.setRowCount(0);
+					if (listMayATM.isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Không có máy ATM tại địa chỉ này. Mời chọn lại");
 					} else {
-						tableModel.setRowCount(0);
-						for (int i = 0; i < listKH.size(); i++) {
-							tableModel.addRow(new String[] { listKH.get(i).getMaKH(), listKH.get(i).getTenKH(),
-									listKH.get(i).getDiaChi(), listKH.get(i).getPhuong(), listKH.get(i).getQuan(),
-									listKH.get(i).getSoDT(), listKH.get(i).getEmail(), listKH.get(i).getSoCMND(),
-									listKH.get(i).getSoTheATM(), listKH.get(i).getSoTK(),
-									listKH.get(i).getSoTienTrongTK() });
+						for (int i = 0; i < listMayATM.size(); i++) {
+							tableModel.addRow(new String[] { listMayATM.get(i).getMaMay(), listMayATM.get(i).getViTri(),
+									listMayATM.get(i).getPhuong(), listMayATM.get(i).getQuan(),
+									listMayATM.get(i).getTongTien() });
+							dispose();
 						}
+						
 					}
+				} else {
+					MayATM mayATM = mayAtmDAO.showMayATMMaMay(txtMay.getText());
+					tableModel.setRowCount(0);
+					if (mayATM.getMaMay() == null) {
+						JOptionPane.showMessageDialog(null, "Máy không tồn tại. Vui lòng nhập lại.");
+					} else {
+						tableModel.addRow(new String[] { mayATM.getMaMay(), mayATM.getViTri(), mayATM.getPhuong(),
+								mayATM.getQuan(), mayATM.getTongTien() });
+						dispose();
+					}
+					
 				}
+
 			}
 		}
 	};
@@ -82,18 +117,23 @@ public class TimKiemKhachHang extends JFrame {
 				for (int i = 0; i < listPhuong.size(); i++) {
 					boxPhuong.addItem(listPhuong.get(i));
 				}
+				if (boxQuan.getSelectedItem().toString().equals("")) {
+					txtMay.setEnabled(true);
+				}else {
+					txtMay.setEnabled(false);
+				}
 			}
 		}
 	};
 
-	public void TimKiem(DefaultTableModel tableModel) {
+	public void timKiemMayATM(DefaultTableModel tableModel) {
 		this.tableModel = tableModel;
 		phuongQuanDAO = new PhuongQuanDAO();
-		khachHangDAO = new KhachHangDAO();
+		mayAtmDAO = new MayAtmDAO();
 		pnTimKiem = new JPanel();
 		pnTimKiem.setLayout(new BoxLayout(pnTimKiem, BoxLayout.Y_AXIS));
 		// Phần tiêu đề
-		title = new JLabel("Tìm kiếm khách hàng");
+		title = new JLabel("Tìm kiếm máy ATM");
 		title.setFont(new Font("Times New Roman", Font.BOLD, 30));
 		title.setForeground(Color.RED);
 		pnTimKiem.add(title);
@@ -103,34 +143,12 @@ public class TimKiemKhachHang extends JFrame {
 		pnNhap.setLayout(new GridLayout(1, 2));
 		pnLabel1 = new JPanel();
 		pnLabel1.setLayout(new GridBagLayout());
-		tenKH = new JLabel("Họ tên khách hàng :");
-		dienThoai = new JLabel("Số điện thoại :");
-		email = new JLabel("Email :");
-		soCMND = new JLabel("Số CMND");
-
-		txtTenKH = new JTextField(10);
-		txtDienThoai = new JTextField(10);
-		txtEmail = new JTextField(10);
-		txtSoCMND = new JTextField(10);
-
-		addItem(pnLabel1, tenKH, 0, 0, 1, 1, GridBagConstraints.EAST);
-		addItem(pnLabel1, dienThoai, 0, 1, 1, 1, GridBagConstraints.EAST);
-		addItem(pnLabel1, email, 0, 2, 1, 1, GridBagConstraints.EAST);
-		addItem(pnLabel1, soCMND, 0, 3, 1, 1, GridBagConstraints.EAST);
-
-		addItem(pnLabel1, txtTenKH, 1, 0, 2, 1, GridBagConstraints.WEST);
-		addItem(pnLabel1, txtDienThoai, 1, 1, 2, 1, GridBagConstraints.WEST);
-		addItem(pnLabel1, txtEmail, 1, 2, 2, 1, GridBagConstraints.WEST);
-		addItem(pnLabel1, txtSoCMND, 1, 3, 2, 1, GridBagConstraints.WEST);
-		pnNhap.add(pnLabel1);
-
-		pnLabel2 = new JPanel();
-		pnLabel2.setLayout(new GridBagLayout());
-		diaChi = new JLabel("Địa chỉ nhà :");
+		tenMay = new JLabel("Mã máy");
+		txtMay = new JTextField(10);
+		txtMay.getDocument().addDocumentListener(documentListener);
 		quan = new JLabel("Quận :");
 		phuong = new JLabel("Phường :");
 
-		txtDiaChi = new JTextField(10);
 		boxQuan = new JComboBox<String>();
 		listQuan = phuongQuanDAO.showAllDanhSachQuan();
 		boxQuan.addItem("");
@@ -145,23 +163,23 @@ public class TimKiemKhachHang extends JFrame {
 			boxPhuong.addItem(listPhuong.get(i).toString());
 		}
 
-		addItem(pnLabel2, diaChi, 0, 0, 1, 1, GridBagConstraints.EAST);
-		addItem(pnLabel2, quan, 0, 1, 1, 1, GridBagConstraints.EAST);
-		addItem(pnLabel2, phuong, 0, 2, 1, 1, GridBagConstraints.EAST);
+		addItem(pnLabel1, tenMay, 0, 0, 1, 1, GridBagConstraints.EAST);
+		addItem(pnLabel1, quan, 0, 1, 1, 1, GridBagConstraints.EAST);
+		addItem(pnLabel1, phuong, 0, 2, 1, 1, GridBagConstraints.EAST);
 
-		addItem(pnLabel2, txtDiaChi, 1, 0, 2, 1, GridBagConstraints.WEST);
-		addItem(pnLabel2, boxQuan, 1, 1, 2, 1, GridBagConstraints.WEST);
-		addItem(pnLabel2, boxPhuong, 1, 2, 2, 1, GridBagConstraints.WEST);
+		addItem(pnLabel1, txtMay, 1, 0, 2, 1, GridBagConstraints.WEST);
+		addItem(pnLabel1, boxQuan, 1, 1, 2, 1, GridBagConstraints.WEST);
+		addItem(pnLabel1, boxPhuong, 1, 2, 2, 1, GridBagConstraints.WEST);
 
-		pnNhap.add(pnLabel2);
+		pnNhap.add(pnLabel1);
 		pnTimKiem.add(pnNhap);
 
 		// Các button chức năng
 		pnbutton = new JPanel();
 		tim = new JButton("Tìm kiếm");
+		tim.addActionListener(actionListener);
 		huy = new JButton("Hủy");
 		huy.addActionListener(actionListener);
-		tim.addActionListener(actionListener);
 		pnbutton.add(tim);
 		pnbutton.add(huy);
 		pnTimKiem.add(pnbutton);
@@ -194,22 +212,6 @@ public class TimKiemKhachHang extends JFrame {
 		gc.anchor = align;
 		gc.fill = GridBagConstraints.NONE;
 		p.add(c, gc);
-	}
-
-	/**
-	 * Lấy giá trị nhập thông tin khách hàng
-	 * 
-	 * @return
-	 */
-	public KhachHang layGiaTriKhachHang() {
-		khachHang = new KhachHang();
-		khachHang.setTenKH(txtTenKH.getText());
-		khachHang.setDiaChi(txtDiaChi.getText());
-		khachHang.setPhuong(boxPhuong.getSelectedItem().toString());
-		khachHang.setSoDT(txtDienThoai.getText());
-		khachHang.setEmail(txtEmail.getText());
-		khachHang.setSoCMND(txtSoCMND.getText());
-		return khachHang;
 	}
 
 	public void display() {
