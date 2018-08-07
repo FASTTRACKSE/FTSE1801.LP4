@@ -22,6 +22,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 import quanly.entity.MayATM;
@@ -43,6 +45,28 @@ public class TimKiemMayATM extends JFrame {
 	MayAtmDAO mayAtmDAO;
 	DefaultTableModel tableModel;
 
+	DocumentListener documentListener = new DocumentListener() {
+		
+		@Override
+		public void removeUpdate(DocumentEvent e) {
+			if (txtMay.getText().equals("")) {
+				boxPhuong.setEnabled(true);
+				boxQuan.setEnabled(true);
+			}
+		}
+		
+		@Override
+		public void insertUpdate(DocumentEvent e) {
+			boxPhuong.setEnabled(false);
+			boxQuan.setEnabled(false);
+		}
+		
+		@Override
+		public void changedUpdate(DocumentEvent e) {
+			
+		}
+	};
+	
 	ActionListener actionListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -93,6 +117,11 @@ public class TimKiemMayATM extends JFrame {
 				for (int i = 0; i < listPhuong.size(); i++) {
 					boxPhuong.addItem(listPhuong.get(i));
 				}
+				if (boxQuan.getSelectedItem().toString().equals("")) {
+					txtMay.setEnabled(true);
+				}else {
+					txtMay.setEnabled(false);
+				}
 			}
 		}
 	};
@@ -116,6 +145,7 @@ public class TimKiemMayATM extends JFrame {
 		pnLabel1.setLayout(new GridBagLayout());
 		tenMay = new JLabel("Mã máy");
 		txtMay = new JTextField(10);
+		txtMay.getDocument().addDocumentListener(documentListener);
 		quan = new JLabel("Quận :");
 		phuong = new JLabel("Phường :");
 

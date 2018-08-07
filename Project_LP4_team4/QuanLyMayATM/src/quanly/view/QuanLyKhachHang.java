@@ -67,11 +67,12 @@ public class QuanLyKhachHang extends JFrame {
 		@Override
 		public void removeUpdate(DocumentEvent e) {
 			xoa.setEnabled(false);
+			sua.setEnabled(true);
 		}
 		
 		@Override
 		public void insertUpdate(DocumentEvent e) {
-			xoa.setEnabled(false);
+			
 		}
 		
 		@Override
@@ -218,7 +219,7 @@ public class QuanLyKhachHang extends JFrame {
 			if (button == tim) {
 				if (output == JOptionPane.YES_OPTION) {
 					TimKiemKhachHang hang = new TimKiemKhachHang();
-					hang.TimKiem();
+					hang.TimKiem(tableModel);
 					hang.display();
 				} else if (output == JOptionPane.NO_OPTION) {
 				}
@@ -407,7 +408,7 @@ public class QuanLyKhachHang extends JFrame {
 				txtSoTien.setEnabled(false);
 				boxtheATM.setEnabled(false);
 				xoa.setEnabled(true);
-				sua.setEnabled(true);
+				sua.setEnabled(false);
 				them.setEnabled(false);
 				
 			}

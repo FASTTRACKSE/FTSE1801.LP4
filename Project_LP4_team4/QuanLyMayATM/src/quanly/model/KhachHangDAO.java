@@ -216,10 +216,7 @@ public class KhachHangDAO {
 		if (!khachHangInPut.getPhuong().equals("")) {
 			FromQuery = FromQuery + " AND " + "phuong.tenPhuong ='" + khachHangInPut.getPhuong() + "'";
 		}
-		if (!khachHangInPut.getMaKH().equals("")) {
-			FromQuery = FromQuery + " AND " + "khach_hang.maKhachHang LIKE '%" + khachHangInPut.getMaKH() + "%'";
-		}
-
+	
 		if (!khachHangInPut.getDiaChi().equals("")) {
 			FromQuery = FromQuery + " AND " + "khach_hang.diaChi LIKE '%" + khachHangInPut.getDiaChi() + "%'";
 		}
@@ -229,9 +226,10 @@ public class KhachHangDAO {
 		if (!khachHangInPut.getEmail().equals("")) {
 			FromQuery = FromQuery + " AND " + "khach_hang.email LIKE '%" + khachHangInPut.getEmail() + "%'";
 		}
-		if (!khachHangInPut.getSoTheATM().equals("")) {
-			FromQuery = FromQuery + " AND " + "khach_hang.soTheATM LIKE '%" + khachHangInPut.getSoTheATM() + "%'";
+		if (!khachHangInPut.getSoCMND().equals("")) {
+			FromQuery = FromQuery + " AND " + "khach_hang.email LIKE '%" + khachHangInPut.getSoCMND() + "%'";
 		}
+		
 		String Query = SelectQuery + FromQuery;
 		KhachHang khachHang;
 		conn = DatabaseUntil.getConnect();
@@ -249,6 +247,7 @@ public class KhachHangDAO {
 				khachHang.setSoDT(resultSet.getString("khach_hang.soDienThoai"));
 				khachHang.setEmail(resultSet.getString("khach_hang.email"));
 				khachHang.setSoTheATM(resultSet.getString("khach_hang.soTheATM"));
+				khachHang.setSoCMND(resultSet.getString("khach_hang.soCMND"));
 				khachHang.setSoTK(resultSet.getString("the_atm.soTK"));
 				khachHang.setSoTienTrongTK(resultSet.getString("soTienTrongTK"));
 				myList.add(khachHang);

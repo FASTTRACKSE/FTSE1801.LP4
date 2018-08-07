@@ -28,6 +28,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 import quanly.entity.MayATM;
@@ -58,6 +60,25 @@ public class QuanLyMayATM extends JFrame {
 	String tenQuan;
 	String tenPhuong;
 
+	DocumentListener documentListener = new DocumentListener() {
+		
+		@Override
+		public void removeUpdate(DocumentEvent e) {
+			xoa.setEnabled(false);
+			sua.setEnabled(true);
+		}
+		
+		@Override
+		public void insertUpdate(DocumentEvent e) {
+			
+		}
+		
+		@Override
+		public void changedUpdate(DocumentEvent e) {
+			
+		}
+	};
+	
 	/**
 	 * Sự kiện cho chọn phường và quận
 	 */
@@ -70,6 +91,7 @@ public class QuanLyMayATM extends JFrame {
 				for (int i = 0; i < listPhuong.size(); i++) {
 					boxPhuong.addItem(listPhuong.get(i));
 				}
+				xoa.setEnabled(false);
 			}
 
 //			if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -95,6 +117,9 @@ public class QuanLyMayATM extends JFrame {
 							JOptionPane.showMessageDialog(null, "Thêm máy atm thành công");
 							tableModel.setRowCount(0);
 							showTable();
+							txtMaMayATM.setText("");
+							txtTongTien.setText("");
+							txtViTri.setText("");
 						} else {
 							JOptionPane.showMessageDialog(null, "Máy đã tồn tại vui lòng kiểm tra lại.");
 						}
@@ -107,13 +132,18 @@ public class QuanLyMayATM extends JFrame {
 				if (output == JOptionPane.YES_OPTION) {
 					if (kiemTraAddMayATM()) {
 						mayATM = layThongTinMay();
-						MayATM mayAtm = mayAtmDAO.showMayATMMaMay(mayATM.getMaMay());
-						if (mayAtmDAO.updateMayATMThemTien(mayAtm, mayATM.getTongTien())) {
-							JOptionPane.showMessageDialog(null, "Thêm tiền thành công");
+						MayATM mayAtm1 = mayAtmDAO.showMayATMMaMay(mayATM.getMaMay());
+						if (mayAtmDAO.updateMayATM(mayATM, mayAtm1.getTongTien(), phuongQuanDAO.layThongTinMaPhuong(boxPhuong.getSelectedItem().toString()))) {
+							JOptionPane.showMessageDialog(null, "Sửa thành công");
 							tableModel.setRowCount(0);
 							showTable();
-						} else {
-							JOptionPane.showMessageDialog(null, "Kiểm tra lại mã máy");
+							sua.setEnabled(false);
+							xoa.setEnabled(false);
+							them.setEnabled(true);
+							txtMaMayATM.setEnabled(true);
+							txtMaMayATM.setText("");
+							txtTongTien.setText("");
+							txtViTri.setText("");
 						}
 					}
 				} else if (output == JOptionPane.NO_OPTION) {
@@ -126,6 +156,13 @@ public class QuanLyMayATM extends JFrame {
 						JOptionPane.showMessageDialog(null, "Xóa thành công");
 						tableModel.setRowCount(0);
 						showTable();
+						sua.setEnabled(false);
+						xoa.setEnabled(false);
+						them.setEnabled(true);
+						txtMaMayATM.setEnabled(true);
+						txtMaMayATM.setText("");
+						txtTongTien.setText("");
+						txtViTri.setText("");
 					} else {
 						JOptionPane.showMessageDialog(null, "Kiểm tra lại mã máy");
 					}
@@ -175,6 +212,8 @@ public class QuanLyMayATM extends JFrame {
 
 		txtMaMayATM = new JTextField(10);
 		txtViTri = new JTextField(10);
+		txtMaMayATM.getDocument().addDocumentListener(documentListener);
+		txtViTri.getDocument().addDocumentListener(documentListener);
 
 		addItem(pnLabel1, maMayATM, 0, 0, 1, 1, GridBagConstraints.EAST);
 		addItem(pnLabel1, viTri, 0, 1, 1, 1, GridBagConstraints.EAST);
@@ -209,6 +248,7 @@ public class QuanLyMayATM extends JFrame {
 		pnLabel3 = new JPanel();
 		tongTien = new JLabel("Tổng tiền trong máy:");
 		txtTongTien = new JTextField(10);
+		txtTongTien.getDocument().addDocumentListener(documentListener);
 		addItem(pnLabel3, tongTien, 0, 0, 1, 1, GridBagConstraints.EAST);
 		addItem(pnLabel3, txtTongTien, 1, 0, 2, 1, GridBagConstraints.WEST);
 		pnNhap.add(pnLabel3);
@@ -227,7 +267,9 @@ public class QuanLyMayATM extends JFrame {
 		tim.addActionListener(actionListener);
 		xoa.addActionListener(actionListener);
 		hienThi.addActionListener(actionListener);
-
+		sua.setEnabled(false);
+		xoa.setEnabled(false);
+		
 		pnbutton.add(them);
 		pnbutton.add(sua);
 		pnbutton.add(tim);
@@ -279,6 +321,10 @@ public class QuanLyMayATM extends JFrame {
 				boxPhuong.getModel().setSelectedItem(s3);
 				String s4 = String.valueOf(table.getValueAt(row, 4));
 				txtTongTien.setText(s4);
+				xoa.setEnabled(true);
+				sua.setEnabled(false);
+				them.setEnabled(false);
+				txtMaMayATM.setEnabled(false);
 			}
 		});
 
