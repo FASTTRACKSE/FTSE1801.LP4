@@ -43,10 +43,10 @@ public class BaoCaoTinhHinhRutTien extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	JPanel pnBaoCaoTH, chon, pnTongTienRut;
+	JPanel pnBaoCaoTH, chon, pnTongTien;
 	JPanel pnLabel, pnBox, pnTim;
-	JLabel title, ngay, ngay1, tongTienRut, maKH;
-	JTextField txtMaKH, txtTongTienRut;
+	JLabel title, ngay, ngay1, tongTienRut, tongtienThem, maKH;
+	JTextField txtMaKH, txtTongTienRut, txtTongTienThem;
 	JComboBox<?> boxThoiGian;
 	JButton tim;
 	DefaultTableModel tableModel;
@@ -158,8 +158,8 @@ public class BaoCaoTinhHinhRutTien extends JFrame {
 		tim = new JButton("Tìm danh sách");
 		tim.addActionListener(actionListener);
 		pnTim.add(tim);
-		chon.add(pnTim);
 		pnBaoCaoTH.add(chon);
+		pnBaoCaoTH.add(pnTim);
 
 		// Bảng báo cáo
 		border = BorderFactory.createLineBorder(Color.BLUE, 3, true);
@@ -168,7 +168,8 @@ public class BaoCaoTinhHinhRutTien extends JFrame {
 		tableModel.addColumn("Máy ATM");
 		tableModel.addColumn("Số thẻ");
 		tableModel.addColumn("Thời gian giao dịch");
-		tableModel.addColumn("Số tiền giao dịch");
+		tableModel.addColumn("Số tiền Thêm");
+		tableModel.addColumn("Số tiền rút");
 
 		table = new JTable(tableModel);
 //		table.getTableHeader().setReorderingAllowed(false);
@@ -179,12 +180,18 @@ public class BaoCaoTinhHinhRutTien extends JFrame {
 		jScrollPane.setBorder(titledBorder);
 		pnBaoCaoTH.add(jScrollPane);
 
-		pnTongTienRut = new JPanel();
-		tongTienRut = new JLabel("Tổng số tiền đã rút:");
+		pnTongTien = new JPanel();
+		tongTienRut = new JLabel("Tổng số tiền rút:");
+		tongtienThem = new JLabel("Tổng tiền thêm");
 		txtTongTienRut = new JTextField(10);
-		pnTongTienRut.add(tongTienRut);
-		pnTongTienRut.add(txtTongTienRut);
-		pnBaoCaoTH.add(pnTongTienRut);
+		txtTongTienThem = new JTextField(10);
+		pnTongTien.add(tongTienRut);
+		pnTongTien.add(txtTongTienRut);
+		addItem(pnTongTien, tongTienRut, 0, 0, 1, 1, GridBagConstraints.EAST);
+		addItem(pnTongTien, txtTongTienRut, 1, 0, 2, 1, GridBagConstraints.WEST);
+		addItem(pnTongTien, tongtienThem, 0, 1, 1, 1, GridBagConstraints.EAST);
+		addItem(pnTongTien, txtTongTienThem, 1, 1, 2, 1, GridBagConstraints.WEST);
+		pnBaoCaoTH.add(pnTongTien);
 
 		return pnBaoCaoTH;
 
