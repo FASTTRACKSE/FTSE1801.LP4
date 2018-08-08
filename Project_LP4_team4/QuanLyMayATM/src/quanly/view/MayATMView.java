@@ -132,6 +132,11 @@ public class MayATMView extends JFrame {
 			} else {
 
 			}
+			
+			if (e.getSource() == btXacNhan) {
+				
+			}
+			
 		}
 	};
 
