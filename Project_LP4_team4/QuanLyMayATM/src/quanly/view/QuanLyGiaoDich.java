@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -43,10 +44,15 @@ public class QuanLyGiaoDich extends JFrame {
 				txtCMND.setText("");
 				txtSoTien.setText("");
 			}
+			
+			if(e.getSource() == themTien) {
+				if (kiemTraNhapDuLieu()) {
+				}
+			}
 
 		}
 	};
-
+	
 	public JPanel giaoDich() {
 		pnGiaoDich = new JPanel();
 		pnGiaoDich.setLayout(new BoxLayout(pnGiaoDich, BoxLayout.Y_AXIS));
@@ -113,6 +119,33 @@ public class QuanLyGiaoDich extends JFrame {
 		return pnGiaoDich;
 
 
+	}
+	
+	/**
+	 * Kiểm tra nhập dữ liệu
+	 * @return
+	 */
+	public boolean kiemTraNhapDuLieu() {
+		boolean kiemTra = true;
+		String pantterSoTK = "[0-9]{13}";
+		String pantterSoCMND = "[0-9]{9}";
+		String pantterSoTien = "[1-9][0-9]{3}0000";
+		if (!txtTaiKhoan.getText().matches(pantterSoTK)) {
+			kiemTra = false;
+			JOptionPane.showMessageDialog(null, "Tài khoản phải nhập đủ 13 số");
+			txtTaiKhoan.setText("");
+		}
+		if (!txtCMND.getText().matches(pantterSoCMND)) {
+			kiemTra = false;
+			JOptionPane.showMessageDialog(null, "Số CMND phải nhập đủ 9 số");
+			txtCMND.setText("");
+		}
+		if (!txtSoTien.getText().matches(pantterSoTien)) {
+			kiemTra = false;
+			JOptionPane.showMessageDialog(null, "Số tiền không quá 100 triệu và phải là bội số của 10000");
+			txtSoTien.setText("");
+		}
+		return kiemTra;
 	}
 
 	/**
