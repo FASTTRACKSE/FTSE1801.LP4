@@ -93,17 +93,17 @@ public class KhachHangDAO {
 	 * @param khachHang
 	 * @return
 	 */
-	public boolean updateSoTien(String maKH, String maSoThe, String soTien) {
+	public boolean updateSoTien(String soCMND, String maSoThe, String soTien) {
 		boolean kiemTra = false;
 		Integer allTien = Integer.parseInt(layThongTinSoTien(maSoThe)) + Integer.parseInt(soTien);
-		String sql = "UPDATE khach_hang SET soTienTrongTK=? WHERE soTheATM = ? AND maKhachHang = ?";
+		String sql = "UPDATE khach_hang SET soTienTrongTK=? WHERE soCMND = ? AND soTheATM = ?";
 		conn = DatabaseUntil.getConnect();
 		PreparedStatement statement = null;
 		try {
 			statement = conn.prepareStatement(sql);
 			statement.setString(1, ("" + allTien));
-			statement.setString(2, maSoThe);
-			statement.setString(3, maKH);
+			statement.setString(2, soCMND);
+			statement.setString(3, maSoThe);
 			if (statement.executeUpdate() > 0) {
 				kiemTra = true;
 			}
@@ -457,6 +457,33 @@ public class KhachHangDAO {
 
 		DatabaseUntil.closeConnection(conn);
 		return myList;
+	}
+	
+	public boolean kiemTraSoTKvaSoCMND(String soTK, String soCMND) {
+		boolean kiemTra = false;
+		PreparedStatement statement = null;
+		conn = DatabaseUntil.getConnect();
+		String sql = "SELECT * FROM `khach_hang` JOIN the_atm ON khach_hang.soTheATM = the_atm.soTheATM WHERE the_atm.soTK = ? AND khach_hang.soCMND = ?";
+		try {
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, soTK);
+			statement.setString(2, soCMND);
+			ResultSet resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				kiemTra = true;
+			}
+		} catch (SQLException e) {
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+		DatabaseUntil.closeConnection(conn);
+		return kiemTra;
 	}
 
 	/**

@@ -23,8 +23,7 @@ public class GiaoDichDAO {
 	 * @param maKH
 	 * @return
 	 */
-	public boolean addThongTinGiaoDich(String soTienRut, String soTK, String mayATM, String maKH) {
-		boolean kiemTra = false;
+	public void addThongTinGiaoDich(String soTienRut, String soTK, String mayATM, String maKH) {
 		conn = DatabaseUntil.getConnect();
 		String sql = "INSERT INTO giao_dich(soTK,thoiGian,soTienThem,soTienRut,maMayATM,maKH) VALUES (?,?,?,?,?,?)";
 		PreparedStatement statement = null;
@@ -38,9 +37,7 @@ public class GiaoDichDAO {
 			statement.setString(4, soTienRut);
 			statement.setString(5, mayATM);
 			statement.setString(6, maKH);
-			if (statement.executeUpdate() > 0) {
-				kiemTra = true;
-			}
+			statement.executeUpdate();
 		} catch (SQLException e) {
 		} finally {
 			if (statement != null) {
@@ -52,8 +49,79 @@ public class GiaoDichDAO {
 		}
 
 		DatabaseUntil.getConnect();
-		return kiemTra;
 	}
+	
+	/**
+	 * Thêm thông tin giao dịch khi thêm tiền tại ngân hàng
+	 * @param soTienThem
+	 * @param soTheATM
+	 * @param maKH
+	 * @return
+	 */
+	public void addThongTinGiaoDichKhiThemTienTaiNganHang(String soTienThem, String soTK, String maKH) {
+		conn = DatabaseUntil.getConnect();
+		String sql = "INSERT INTO giao_dich(soTK,thoiGian,soTienThem,soTienRut,maMayATM,maKH) VALUES (?,?,?,?,?,?)";
+		PreparedStatement statement = null;
+		Date date = new Date();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		try {
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, soTK);
+			statement.setString(2, dateFormat.format(date));
+			statement.setString(3, soTienThem);
+			statement.setString(4, "0");
+			statement.setString(5, "Tại ngân hàng");
+			statement.setString(6, maKH);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+
+		DatabaseUntil.getConnect();
+	}
+	
+	/**
+	 * Thêm thông tin giao dịch khi thêm tiền rút tiền tại ngân hàng
+	 * @param soTienRut
+	 * @param soTheATM
+	 * @param maKH
+	 * @return
+	 */
+	public void addThongTinGiaoDichKhiRutTienTaiNganHang(String soTienRut, String soTK, String maKH) {
+		conn = DatabaseUntil.getConnect();
+		String sql = "INSERT INTO giao_dich(soTK,thoiGian,soTienThem,soTienRut,maMayATM,maKH) VALUES (?,?,?,?,?,?)";
+		PreparedStatement statement = null;
+		Date date = new Date();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		try {
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, soTK);
+			statement.setString(2, dateFormat.format(date));
+			statement.setString(3, "0");
+			statement.setString(4, soTienRut);
+			statement.setString(5, "Tại ngân hàng");
+			statement.setString(6, maKH);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+
+		DatabaseUntil.getConnect();
+	}
+
+	/**
 
 	/**
 	 * Lấy mã giao dịch
@@ -62,6 +130,8 @@ public class GiaoDichDAO {
 	 */
 	public GiaoDich layMaGiaoDich() {
 		GiaoDich giaoDich = null;
+		KhachHang khachHang = null;
+		MayATM mayATM = null;
 		conn = DatabaseUntil.getConnect();
 		String sql = "SELECT * FROM `giao_dich` ORDER BY `giao_dich`.`thoiGian` DESC LIMIT 1";
 		PreparedStatement statement = null;
@@ -70,9 +140,17 @@ public class GiaoDichDAO {
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				giaoDich = new GiaoDich();
+				khachHang = new KhachHang();
+				mayATM = new MayATM();
+				
+				khachHang.setSoTK(resultSet.getString("soTK"));
+				mayATM.setMaMay(resultSet.getString("maMayATM"));
 				giaoDich.setMaGiaoDich(resultSet.getInt("maGiaoDich"));
 				giaoDich.setThoiGian(resultSet.getString("thoiGian"));
 				giaoDich.setSoTienRut(resultSet.getString("soTienRut"));
+				giaoDich.setSoTienThem(resultSet.getString("soTienThem"));
+				giaoDich.setKhachHang(khachHang);
+				giaoDich.setMayATM(mayATM);
 			}
 		} catch (SQLException e) {
 		} finally {

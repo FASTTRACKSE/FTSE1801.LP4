@@ -116,7 +116,7 @@ public class QuanLyKhachHang extends JFrame {
 		public void itemStateChanged(ItemEvent e) {
 			if (e.getStateChange() == ItemEvent.SELECTED) {
 				String soTheATM = boxtheATM.getSelectedItem().toString();
-				txtSoTK.setText(theAtmDAO.layThongTinMaTK(soTheATM));
+				txtSoTK.setText(theAtmDAO.layThongTinMaThe(soTheATM));
 			}
 			if (kiemTra) {
 				xoa.setEnabled(false);
@@ -325,7 +325,7 @@ public class QuanLyKhachHang extends JFrame {
 			boxtheATM.addItem(listSoThe.get(i));
 		}
 		boxtheATM.addItemListener(itemListener1);
-		txtSoTK.setText(theAtmDAO.layThongTinMaTK(boxtheATM.getSelectedItem().toString()));
+		txtSoTK.setText(theAtmDAO.layThongTinMaThe(boxtheATM.getSelectedItem().toString()));
 		txtSoTK.setEditable(false);
 
 		addItem(pnLabel2, dienThoai, 0, 0, 1, 1, GridBagConstraints.EAST);

@@ -24,6 +24,12 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import quanly.entity.GiaoDich;
+import quanly.entity.KhachHang;
+import quanly.model.GiaoDichDAO;
+import quanly.model.KhachHangDAO;
+import quanly.model.TheAtmDAO;
+
 public class QuanLyGiaoDich extends JFrame {
 	private static final long serialVersionUID = 1L;
 	JPanel pnGiaoDich, pnNhap, pnbutton;
@@ -35,6 +41,11 @@ public class QuanLyGiaoDich extends JFrame {
 	TitledBorder titledBorder;
 	DefaultTableModel tableModel;
 	JTable table;
+	KhachHangDAO khachHangDAO;
+	TheAtmDAO theAtmDAO;
+	GiaoDichDAO giaoDichDAO;
+	GiaoDich giaoDich;
+	KhachHang khachHang;
 
 	ActionListener actionListener = new ActionListener() {
 		@Override
@@ -44,16 +55,64 @@ public class QuanLyGiaoDich extends JFrame {
 				txtCMND.setText("");
 				txtSoTien.setText("");
 			}
-			
-			if(e.getSource() == themTien) {
+
+			if (e.getSource() == themTien) {
 				if (kiemTraNhapDuLieu()) {
+					if (khachHangDAO.kiemTraSoTKvaSoCMND(txtTaiKhoan.getText(), txtCMND.getText())) {
+						khachHangDAO.updateSoTien(txtCMND.getText(),
+								theAtmDAO.layThongTinSoTheATM(txtTaiKhoan.getText()), txtSoTien.getText());
+							
+							giaoDichDAO.addThongTinGiaoDichKhiThemTienTaiNganHang(txtSoTien.getText(),
+									txtTaiKhoan.getText(),
+									khachHangDAO.layMaKH(theAtmDAO.layThongTinSoTheATM(txtTaiKhoan.getText())));
+							khachHang = khachHangDAO.showKhachHangTheoSoThe(theAtmDAO.layThongTinSoTheATM(txtTaiKhoan.getText()));
+							giaoDich = giaoDichDAO.layMaGiaoDich();
+							tableModel.setRowCount(0);
+							tableModel.addRow(new String[] {""+giaoDich.getMaGiaoDich(), giaoDich.getKhachHang().getSoTK(),giaoDich.getThoiGian(),giaoDich.getSoTienThem(),giaoDich.getSoTienRut(),khachHang.getSoTienTrongTK()});
+							txtCMND.setText("");
+							txtTaiKhoan.setText("");
+							txtSoTien.setText("");
+							JOptionPane.showMessageDialog(null, "Thêm tiền thành công");
+					} else {
+						JOptionPane.showMessageDialog(null, "Sai số tk hoặc số CMND");
+					}
+				}
+			}
+			
+			if (e.getSource() == rutTien) {
+				if (kiemTraNhapDuLieu()) {
+					if (khachHangDAO.kiemTraSoTKvaSoCMND(txtTaiKhoan.getText(), txtCMND.getText())) {
+						if (khachHangDAO.rutTien(khachHangDAO.showKhachHangTheoSoThe(theAtmDAO.layThongTinSoTheATM(txtTaiKhoan.getText())),txtSoTien.getText())) {
+							giaoDichDAO.addThongTinGiaoDichKhiRutTienTaiNganHang(txtSoTien.getText(),
+									txtTaiKhoan.getText(),
+									khachHangDAO.layMaKH(theAtmDAO.layThongTinSoTheATM(txtTaiKhoan.getText())));
+							khachHang = khachHangDAO.showKhachHangTheoSoThe(theAtmDAO.layThongTinSoTheATM(txtTaiKhoan.getText()));
+							giaoDich = giaoDichDAO.layMaGiaoDich();
+							tableModel.setRowCount(0);
+							tableModel.addRow(new String[] {""+giaoDich.getMaGiaoDich(), giaoDich.getKhachHang().getSoTK(),giaoDich.getThoiGian(),giaoDich.getSoTienThem(),giaoDich.getSoTienRut(),khachHang.getSoTienTrongTK()});
+							txtCMND.setText("");
+							txtTaiKhoan.setText("");
+							txtSoTien.setText("");
+							JOptionPane.showMessageDialog(null, "Rút tiền thành công");
+						} else {
+							JOptionPane.showMessageDialog(null, "Số tiền trong tài khoản không đủ để rút");
+						}
+					}else {
+						JOptionPane.showMessageDialog(null, "Sai số tk hoặc số CMND");
+					}
 				}
 			}
 
 		}
 	};
-	
+
 	public JPanel giaoDich() {
+		khachHangDAO = new KhachHangDAO();
+		theAtmDAO = new TheAtmDAO();
+		giaoDichDAO = new GiaoDichDAO();
+		giaoDich = new GiaoDich();
+		khachHang = new KhachHang();
+
 		pnGiaoDich = new JPanel();
 		pnGiaoDich.setLayout(new BoxLayout(pnGiaoDich, BoxLayout.Y_AXIS));
 		// Phần tiêu đề
@@ -90,12 +149,13 @@ public class QuanLyGiaoDich extends JFrame {
 		rutTien = new JButton("Rút tiền");
 		huy = new JButton("Hủy");
 		huy.addActionListener(actionListener);
+		themTien.addActionListener(actionListener);
+		rutTien.addActionListener(actionListener);
 		pnbutton.add(themTien);
 		pnbutton.add(rutTien);
 		pnbutton.add(huy);
 		pnGiaoDich.add(pnNhap);
 		pnGiaoDich.add(pnbutton);
-		
 
 		border = BorderFactory.createLineBorder(Color.BLUE, 3, true);
 		titledBorder = new TitledBorder(border, "Danh sách thông tin khách hàng");
@@ -118,18 +178,18 @@ public class QuanLyGiaoDich extends JFrame {
 		pnGiaoDich.setLayout(new BoxLayout(pnGiaoDich, BoxLayout.Y_AXIS));
 		return pnGiaoDich;
 
-
 	}
-	
+
 	/**
 	 * Kiểm tra nhập dữ liệu
+	 * 
 	 * @return
 	 */
 	public boolean kiemTraNhapDuLieu() {
 		boolean kiemTra = true;
 		String pantterSoTK = "[0-9]{13}";
 		String pantterSoCMND = "[0-9]{9}";
-		String pantterSoTien = "[1-9][0-9]{3}0000";
+		String pantterSoTien = "[1-9][0-9]{0,3}0000";
 		if (!txtTaiKhoan.getText().matches(pantterSoTK)) {
 			kiemTra = false;
 			JOptionPane.showMessageDialog(null, "Tài khoản phải nhập đủ 13 số");
