@@ -58,29 +58,35 @@ public class QuanLyKhachHang extends JFrame {
 	ArrayList<String> listQuan;
 	ArrayList<String> listPhuong;
 	static String maKH = null;
-	
+	boolean kiemTra = false;
+
 	private static final String UNICODE_HOA = "ÀÁẠÃẢĂẮẰẶẴẲÂẤẦẨẪẬĐÈÉẺẼẸÊẾỀỂỄỆỊÍÌỈĨỌÓÒỎÕỘỐỒỔỖÔƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰ";
 	private static final String UNICODE_THUONG = "àáạãảăắằặẵẳâẩấầẫậđèéẻẽẹêếềểễệịíìỉĩọóòỏõộốồổỗôơớờởỡợúùủũụưứừửữự";
-	
+
 	DocumentListener documentListener = new DocumentListener() {
-		
+
 		@Override
 		public void removeUpdate(DocumentEvent e) {
-			xoa.setEnabled(false);
-			sua.setEnabled(true);
+			if (kiemTra) {
+				xoa.setEnabled(false);
+				sua.setEnabled(true);
+			}
 		}
-		
+
 		@Override
 		public void insertUpdate(DocumentEvent e) {
-			
+			if (kiemTra) {
+				xoa.setEnabled(false);
+				sua.setEnabled(true);
+			}
 		}
-		
+
 		@Override
 		public void changedUpdate(DocumentEvent e) {
-			
+
 		}
 	};
-	
+
 	/**
 	 * Sự kiện cho chọn phường và quận
 	 */
@@ -110,7 +116,7 @@ public class QuanLyKhachHang extends JFrame {
 			xoa.setEnabled(false);
 		}
 	};
-	
+
 	/**
 	 * Sự kiện cho các button
 	 */
@@ -125,7 +131,8 @@ public class QuanLyKhachHang extends JFrame {
 						KhachHang khachHang1 = layGiaTriKhachHang();
 						if (khachHangDAO.addKhachHang(khachHang1,
 								phuongQuanDAO.layThongTinMaPhuong(khachHang1.getPhuong()))) {
-							theAtmDAO.addTheATM(theAtmDAO.layThongTinTheATM().getSoTheATM(), theAtmDAO.layThongTinTheATM().getSoTK());
+							theAtmDAO.addTheATM(theAtmDAO.layThongTinTheATM().getSoTheATM(),
+									theAtmDAO.layThongTinTheATM().getSoTK());
 							JOptionPane.showMessageDialog(null, "Thêm khách hàng thành công");
 							txtDiaChi.setText("");
 							txtDienThoai.setText("");
@@ -140,7 +147,7 @@ public class QuanLyKhachHang extends JFrame {
 							}
 							tableModel.setRowCount(0);
 							showTable();
-						}else {
+						} else {
 							JOptionPane.showMessageDialog(null, "Trùng số CMND");
 						}
 					}
@@ -175,6 +182,7 @@ public class QuanLyKhachHang extends JFrame {
 							them.setEnabled(true);
 							txtSoTien.setEnabled(true);
 							boxtheATM.setEnabled(true);
+							kiemTra = false;
 						}
 					}
 				}
@@ -203,6 +211,7 @@ public class QuanLyKhachHang extends JFrame {
 						them.setEnabled(true);
 						txtSoTien.setEnabled(true);
 						boxtheATM.setEnabled(true);
+						kiemTra = false;
 					}
 				} else if (output == JOptionPane.NO_OPTION) {
 				}
@@ -223,7 +232,7 @@ public class QuanLyKhachHang extends JFrame {
 					hang.display();
 				} else if (output == JOptionPane.NO_OPTION) {
 				}
-				
+
 			}
 		}
 
@@ -258,7 +267,7 @@ public class QuanLyKhachHang extends JFrame {
 		txtSoCMND.getDocument().addDocumentListener(documentListener);
 		txtTenKH.getDocument().addDocumentListener(documentListener);
 		txtDiaChi.getDocument().addDocumentListener(documentListener);
-		
+
 		boxQuan = new JComboBox<String>();
 		listQuan = phuongQuanDAO.showAllDanhSachQuan();
 		for (int i = 0; i < listQuan.size(); i++) {
@@ -299,7 +308,7 @@ public class QuanLyKhachHang extends JFrame {
 		txtDienThoai.getDocument().addDocumentListener(documentListener);
 		txtEmail.getDocument().addDocumentListener(documentListener);
 		txtSoTK.getDocument().addDocumentListener(documentListener);
-		
+
 		boxtheATM = new JComboBox<String>();
 		ArrayList<String> listSoThe = theAtmDAO.laySoTheATM();
 		for (int i = 0; i < listSoThe.size(); i++) {
@@ -361,11 +370,11 @@ public class QuanLyKhachHang extends JFrame {
 		tableModel.addColumn("Số tiền trong tài khoản");
 
 		showTable();
-		
+
 		table = new JTable(tableModel);
 		// table.getTableHeader().setReorderingAllowed(false);
 		table.setDefaultEditor(Object.class, null);
-		
+
 		table.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -410,7 +419,8 @@ public class QuanLyKhachHang extends JFrame {
 				xoa.setEnabled(true);
 				sua.setEnabled(false);
 				them.setEnabled(false);
-				
+				kiemTra = true;
+
 			}
 		});
 
@@ -458,8 +468,8 @@ public class QuanLyKhachHang extends JFrame {
 		for (int i = 0; i < myList.size(); i++) {
 			tableModel.addRow(new String[] { myList.get(i).getMaKH(), myList.get(i).getTenKH(),
 					myList.get(i).getDiaChi(), myList.get(i).getPhuong(), myList.get(i).getQuan(),
-					myList.get(i).getSoDT(), myList.get(i).getEmail(),myList.get(i).getSoCMND(), myList.get(i).getSoTheATM(),
-					myList.get(i).getSoTK(), myList.get(i).getSoTienTrongTK() });
+					myList.get(i).getSoDT(), myList.get(i).getEmail(), myList.get(i).getSoCMND(),
+					myList.get(i).getSoTheATM(), myList.get(i).getSoTK(), myList.get(i).getSoTienTrongTK() });
 		}
 	}
 
@@ -470,7 +480,8 @@ public class QuanLyKhachHang extends JFrame {
 	 */
 	public boolean kiemTraNhapDuLieuAddKhachHang() {
 		boolean kiemTra = true;
-		String pantterTen = "[A-Z" + UNICODE_HOA +"][a-z" + UNICODE_THUONG +"]*( [A-Z" + UNICODE_HOA + "][a-z" + UNICODE_THUONG +"]*)+";
+		String pantterTen = "[A-Z" + UNICODE_HOA + "][a-z" + UNICODE_THUONG + "]*( [A-Z" + UNICODE_HOA + "][a-z"
+				+ UNICODE_THUONG + "]*)+";
 		String pantterSDT = "0[0-9]{9,10}";
 		String pantterEmail = "\\w+@\\w+(\\.\\w+){1,2}";
 		String pantterSoCMND = "[0-9]{9}";
@@ -522,6 +533,7 @@ public class QuanLyKhachHang extends JFrame {
 				+ UNICODE_THUONG + "]*)+";
 		String pantterSDT = "0[0-9]{9,10}";
 		String pantterEmail = "\\w+@\\w+(\\.\\w+){1,2}";
+		String pantterSoCMND = "[0-9]{9}";
 		if (!txtTenKH.getText().matches(pantterTen)) {
 			kiemTra = false;
 			JOptionPane.showMessageDialog(null,
@@ -538,6 +550,11 @@ public class QuanLyKhachHang extends JFrame {
 			kiemTra = false;
 			JOptionPane.showMessageDialog(null, "Nhập sai định dạng Email");
 			txtEmail.setText("");
+		}
+		if (!txtSoCMND.getText().matches(pantterSoCMND)) {
+			kiemTra = false;
+			JOptionPane.showMessageDialog(null, "Nhập sai định dạng số CMND");
+			txtSoCMND.setText("");
 		}
 
 		return kiemTra;
