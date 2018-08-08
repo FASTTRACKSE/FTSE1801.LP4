@@ -1,7 +1,6 @@
 package quanly.view;
 
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -40,13 +39,15 @@ public class QuanLyGiaoDich extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == huy) {
-				dispose();
+				txtTaiKhoan.setText("");
+				txtCMND.setText("");
+				txtSoTien.setText("");
 			}
 
 		}
 	};
 
-	public void giaoDich() {
+	public JPanel giaoDich() {
 		pnGiaoDich = new JPanel();
 		pnGiaoDich.setLayout(new BoxLayout(pnGiaoDich, BoxLayout.Y_AXIS));
 		// Phần tiêu đề
@@ -94,6 +95,7 @@ public class QuanLyGiaoDich extends JFrame {
 		titledBorder = new TitledBorder(border, "Danh sách thông tin khách hàng");
 		tableModel = new DefaultTableModel();
 		tableModel.addColumn("Mã giao dịch");
+		tableModel.addColumn("Số tài khoản");
 		tableModel.addColumn("Thời gian");
 		tableModel.addColumn("Số tiền thêm");
 		tableModel.addColumn("Số tiền rút");
@@ -108,9 +110,8 @@ public class QuanLyGiaoDich extends JFrame {
 		jScrollPane.setBorder(titledBorder);
 		pnGiaoDich.add(jScrollPane);
 		pnGiaoDich.setLayout(new BoxLayout(pnGiaoDich, BoxLayout.Y_AXIS));
+		return pnGiaoDich;
 
-		Container container = getContentPane();
-		container.add(pnGiaoDich);
 
 	}
 
@@ -139,16 +140,4 @@ public class QuanLyGiaoDich extends JFrame {
 		p.add(c, gc);
 	}
 
-	public void display() {
-		setSize(700, 500);
-		setLocationRelativeTo(null);
-		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-	}
-
-	public static void main(String[] args) {
-		QuanLyGiaoDich giaoDich = new QuanLyGiaoDich();
-		giaoDich.giaoDich();
-		giaoDich.display();
-	}
 }

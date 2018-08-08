@@ -33,7 +33,7 @@ public class AppQuanLyATM extends JFrame {
 
 	Container con;
 	JPanel pnTitle, pnMenu, pnAllCenter, pnSouth, pnCenter;
-	JPanel pnQuanLyKH, pnQuanLyATM, pnQuanLyGD, pnMayATM, pnQuanLyTheATM;
+	JPanel pnQuanLyKH, pnQuanLyATM, pnMayATMDemo, pnMayATM, pnQuanLyTheATM;
 	JLabel logoname, title;
 	CardLayout card;
 	JButton jbmayATM;
@@ -41,7 +41,7 @@ public class AppQuanLyATM extends JFrame {
 	JTree tree;
 	DefaultMutableTreeNode root;
 	DefaultMutableTreeNode file, file2;
-	DefaultMutableTreeNode quanLyKH, quanLyATM, quanLyGD, quanLyTheATM;
+	DefaultMutableTreeNode quanLyKH, quanLyATM, quanLyGD, quanLyTheATM, mayATM;
 	DefaultMutableTreeNode baoCaoKH, baoCaoTinhTrangATM, baoCaoRutTienKH, BaoCaoRutTienATM;
 	MayATMView mayATMView;
 
@@ -58,8 +58,10 @@ public class AppQuanLyATM extends JFrame {
 			} else if (treeNode.toString().equals("Quản lý máy ATM")) {
 				card.show(pnAllCenter, "quanLyATM");
 			} else if (treeNode.toString().equals("Quản lý giao dịch")) {
-				pnAllCenter.add(pnQuanLyGiaoDich(),"quanLyGD");
 				card.show(pnAllCenter, "quanLyGD");
+			} else if (treeNode.toString().equals("Máy ATM")) {
+				pnAllCenter.add(pnQuanLyMayAtmDemo(),"quanLyMayAtmDemo");
+				card.show(pnAllCenter, "quanLyMayAtmDemo");
 			} else if (treeNode.toString().equals("Báo cáo khách hàng")) {
 				card.show(pnAllCenter, "baoCaoKH");
 			} else if (treeNode.toString().equals("Báo cáo tình hình rút tiền của khách hàng")) {
@@ -113,9 +115,11 @@ public class AppQuanLyATM extends JFrame {
 		quanLyKH = new DefaultMutableTreeNode("Quản lý khách hàng");
 		quanLyATM = new DefaultMutableTreeNode("Quản lý máy ATM");
 		quanLyGD = new DefaultMutableTreeNode("Quản lý giao dịch");
+		mayATM = new DefaultMutableTreeNode("Máy ATM");
 		file.add(quanLyKH);
 		file.add(quanLyATM);
 		file.add(quanLyGD);
+		file.add(mayATM);
 		root.add(file);
 
 		file2 = new DefaultMutableTreeNode(" Báo cáo ");
@@ -151,13 +155,17 @@ public class AppQuanLyATM extends JFrame {
 		// Quản lý khách hàng
 		QuanLyKhachHang quanLyKhachHang = new QuanLyKhachHang();
 		pnAllCenter.add(quanLyKhachHang.quanLyKH(), "quanLyKH");
+		
+		// Quản lý Giao dịch
+		QuanLyGiaoDich quanLyGiaoDich = new QuanLyGiaoDich();
+		pnAllCenter.add(quanLyGiaoDich.giaoDich(), "quanLyGD");
 
 		// Quản lý máy ATM
 		QuanLyMayATM atm = new QuanLyMayATM();
 		pnAllCenter.add(atm.qLyMayATM(), "quanLyATM");
 
-		// Quản lý giao dịch
-		pnAllCenter.add(pnQuanLyGiaoDich(), "quanLyGD");
+		// Máy ATM demo
+		pnAllCenter.add(pnQuanLyMayAtmDemo(), "quanLyMayAtmDemo");
 		
 		// Báo cáo khách hàng
 		BaoCaoKhachHang khachHang = new BaoCaoKhachHang();
@@ -184,13 +192,13 @@ public class AppQuanLyATM extends JFrame {
 	 * JPanel quản lý giao dịch
 	 * @return
 	 */
-	public JPanel pnQuanLyGiaoDich() {
-		pnQuanLyGD = new JPanel();
-		pnQuanLyGD.setLayout(new BoxLayout(pnQuanLyGD, BoxLayout.Y_AXIS));
+	public JPanel pnQuanLyMayAtmDemo() {
+		pnMayATMDemo = new JPanel();
+		pnMayATMDemo.setLayout(new BoxLayout(pnMayATMDemo, BoxLayout.Y_AXIS));
 		title = new JLabel("Máy ATM");
 		title.setFont(new Font("Times New Roman", Font.BOLD, 30));
 		title.setForeground(Color.RED);
-		pnQuanLyGD.add(title);
+		pnMayATMDemo.add(title);
 		pnMayATM = new JPanel();
 		pnMayATM.setLayout(new GridLayout(5,10));
 		
@@ -202,8 +210,8 @@ public class AppQuanLyATM extends JFrame {
 			jbmayATM.addActionListener(actionListener);
 			pnMayATM.add(jbmayATM);
 		}
-		pnQuanLyGD.add(pnMayATM);
-		return pnQuanLyGD;
+		pnMayATMDemo.add(pnMayATM);
+		return pnMayATMDemo;
 	}
 	
 	/**
