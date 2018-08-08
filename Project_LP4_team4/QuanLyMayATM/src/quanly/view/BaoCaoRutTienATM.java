@@ -137,8 +137,7 @@ public class BaoCaoRutTienATM extends JFrame {
 							JOptionPane.showMessageDialog(null, "Không có máy ATM nào");
 						} else if (boxMay.getSelectedItem().toString().equals("Tất cả")) {
 							ArrayList<GiaoDich> listGD = new ArrayList<>();
-							listGD = giaoDichDAO.showGiaoDichTheoDiaChiAndDate(boxPhuong.getSelectedItem().toString(),
-									strdate, strdate2);
+							listGD = giaoDichDAO.showGiaoDichTheoDiaChiAndDate(boxPhuong.getSelectedItem().toString(),strdate, strdate2);
 							if (listGD.isEmpty()) {
 								JOptionPane.showMessageDialog(null,
 										"Không có máy ATM nào thực hiện giao dịch trong thời gian này");
@@ -148,7 +147,7 @@ public class BaoCaoRutTienATM extends JFrame {
 											listGD.get(i).getMayATM().getMaMay(),
 											listGD.get(i).getKhachHang().getMaKH(),
 											listGD.get(i).getKhachHang().getSoTheATM(), listGD.get(i).getThoiGian(),
-											listGD.get(i).getSoTien() });
+											listGD.get(i).getSoTienRut() });
 								}
 							}
 
@@ -165,12 +164,30 @@ public class BaoCaoRutTienATM extends JFrame {
 											listGD.get(i).getMayATM().getMaMay(),
 											listGD.get(i).getKhachHang().getMaKH(),
 											listGD.get(i).getKhachHang().getSoTheATM(), listGD.get(i).getThoiGian(),
-											listGD.get(i).getSoTien() });
+											listGD.get(i).getSoTienRut() });
 								}
 							}
 
 						}
 
+					}
+				}
+			}
+			
+			if (e.getSource() == hienThi) {
+				ArrayList<GiaoDich> listGD = new ArrayList<>();
+				listGD = giaoDichDAO.showAllGiaoDichTheoCuaMayATM();
+				if (listGD.isEmpty()) {
+					JOptionPane.showMessageDialog(null,
+							"Chưa có máy ATM nào thực hiện giao dịch");
+				} else {
+					tableModel.setRowCount(0);
+					for (int i = 0; i < listGD.size(); i++) {
+						tableModel.addRow(new String[] { ("" + listGD.get(i).getMaGiaoDich()),
+								listGD.get(i).getMayATM().getMaMay(),
+								listGD.get(i).getKhachHang().getMaKH(),
+								listGD.get(i).getKhachHang().getSoTheATM(), listGD.get(i).getThoiGian(),
+								listGD.get(i).getSoTienRut() });
 					}
 				}
 			}
@@ -255,9 +272,12 @@ public class BaoCaoRutTienATM extends JFrame {
 
 		pnTim = new JPanel();
 		tim = new JButton("Tìm kiếm");
+		hienThi = new JButton("Hiển thị tất cả");
+		hienThi.addActionListener(actionListener);
 		tim.addActionListener(actionListener);
-
+		
 		pnTim.add(tim);
+		pnTim.add(hienThi);
 		pnBaoCaoTinhHinh.add(pnTim);
 
 		// Bảng báo cáo
@@ -272,7 +292,7 @@ public class BaoCaoRutTienATM extends JFrame {
 		tableModel.addColumn("Số tiền giao dịch");
 
 		table = new JTable(tableModel);
-//		table.getTableHeader().setReorderingAllowed(false);
+		// table.getTableHeader().setReorderingAllowed(false);
 		table.setDefaultEditor(Object.class, null);
 
 		JScrollPane jScrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
@@ -285,7 +305,7 @@ public class BaoCaoRutTienATM extends JFrame {
 	}
 
 	/**
-	 *   Chuyển kiểu Date về kiểu String
+	 * Chuyển kiểu Date về kiểu String
 	 */
 	public class DateLabelFormatter extends AbstractFormatter {
 		private static final long serialVersionUID = 1L;

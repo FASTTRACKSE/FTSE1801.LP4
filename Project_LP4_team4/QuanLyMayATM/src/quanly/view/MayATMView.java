@@ -55,6 +55,7 @@ public class MayATMView extends JFrame {
 	Container conn;
 	String maMayATM;
 	static String sotheATM = null;
+	static String maPinCu = null;
 	DangNhapDAO dangNhapDAO;
 	KhachHangDAO khachHangDAO;
 	MayAtmDAO mayAtmDAO;
@@ -79,6 +80,7 @@ public class MayATMView extends JFrame {
 					MayATMView mayATM = new MayATMView(maMayATM);
 					mayATM.display();
 					mayATM.thongTinKH(khachHang1);
+					maPinCu = txtPin.getText();
 					txtSoTheATM.setText("");
 					txtPin.setText("");
 				} else {
@@ -129,12 +131,33 @@ public class MayATMView extends JFrame {
 				} else if (output == JOptionPane.NO_OPTION) {
 				}
 
-			} else {
-
 			}
 			
-			if (e.getSource() == btXacNhan) {
-				
+			if (e.getSource() == btHuy) {
+				txtPinCu.setText("");
+				txtPinMoi.setText("");
+				txtPinMoi2.setText("");
+			}
+			
+			if (e.getSource()==btXacNhan) {
+				if (kiemTraDoiMatKhau()) {
+					if (txtPinCu.getText().equals(maPinCu)) {
+						if (txtPinMoi.getText().equals(txtPinMoi2.getText())) {
+							if (theAtmDAO.doiMaPin(txtPinMoi.getText(), sotheATM)) {
+								JOptionPane.showMessageDialog(null, "Đổi mã pin thành công");
+								txtPinCu.setText("");
+								txtPinMoi.setText("");
+								txtPinMoi2.setText("");
+							}else {
+								JOptionPane.showMessageDialog(null, "Đổi mã pin thất bại");
+							}
+						}else {
+							JOptionPane.showMessageDialog(null, "Mã pin mới phải nhập giống nhau");
+						}
+					}else {
+						JOptionPane.showMessageDialog(null, "Nhập sai mã pin");
+					}
+				}
 			}
 			
 		}
@@ -378,6 +401,8 @@ public class MayATMView extends JFrame {
 		pnButton4 = new JPanel();
 		btXacNhan = new JButton("Xác nhận");
 		btHuy = new JButton("Hủy");
+		btXacNhan.addActionListener(actionListener);
+		btHuy.addActionListener(actionListener);
 		pnButton4.add(btXacNhan);
 		pnButton4.add(btHuy);
 		
@@ -436,6 +461,31 @@ public class MayATMView extends JFrame {
 		String pantter = "[1-9][0-9]{0,2}0000";
 		if (!txtRutTien.getText().matches(pantter)) {
 			kiemTra = false;
+		}
+		return kiemTra;
+	}
+	
+	/**
+	 * Kiểm tra nhập thông tin đổi mật khẩu
+	 * @return
+	 */
+	public boolean kiemTraDoiMatKhau() {
+		boolean kiemTra = true;
+		String pantterMaPin = "[0-9]{6}";
+		if (!txtPinCu.getText().matches(pantterMaPin)) {
+			kiemTra = false;
+			txtPinCu.setText("");
+		}
+		if (!txtPinMoi.getText().matches(pantterMaPin)) {
+			kiemTra = false;
+			txtPinMoi.setText("");
+		}
+		if (!txtPinMoi2.getText().matches(pantterMaPin)) {
+			kiemTra = false;
+			txtPinMoi2.setText("");
+		}
+		if (kiemTra==false) {
+			JOptionPane.showMessageDialog(null, "Mã pin nhập số và có 6 kí tự");
 		}
 		return kiemTra;
 	}

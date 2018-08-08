@@ -190,5 +190,36 @@ public class TheAtmDAO {
 		return listSoThe;
 
 	}
+	
+	/**
+	 * Đổi mã Pin
+	 * @param pass
+	 * @param soTheATM
+	 * @return
+	 */
+	public boolean doiMaPin(String pass, String soTheATM) {
+		boolean kiemTra = false;
+		String sql = "UPDATE the_atm SET pass = ? WHERE soTheATM = ?";
+		conn = DatabaseUntil.getConnect();
+		PreparedStatement statement = null;
+		try {
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, pass);
+			statement.setString(2, soTheATM);
+			if (statement.executeUpdate() > 0) {
+				kiemTra = true;
+			}
+		} catch (SQLException e) {
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+		DatabaseUntil.closeConnection(conn);
+		return kiemTra;
+	}
 
 }
