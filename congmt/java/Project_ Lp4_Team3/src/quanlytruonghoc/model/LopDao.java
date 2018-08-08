@@ -110,11 +110,12 @@ public class LopDao {
 
 	public ArrayList<Lop> showTableLopTimKiem(Lop lop) {
 		conn = DatabasaUltil.getConnect();
-		String sql = "SELECT * FROM lop WHERE tenlop=?";
+		String sql = "SELECT * FROM lop WHERE namhoc=? AND tenlop=?";
 		ArrayList<Lop> listLop = new ArrayList<Lop>();
 		try {
 			statement = conn.prepareStatement(sql);
-			statement.setString(1, lop.getTenLop());
+			statement.setString(1, lop.getNamHoc());
+			statement.setString(2, lop.getTenLop());
 			ResultSet result = statement.executeQuery();
 			Lop lop1;
 			while (result.next()) {
@@ -201,6 +202,29 @@ public class LopDao {
 		}
 		DatabasaUltil.closeConnection(conn);
 		return listTenLop;
+	}
+	/**
+	 * Hiển thị idlop từ lớp trong bảng lớp(Lọc theo tên lớp)
+	 * @param namHoc
+	 * @return
+	 */
+	public ArrayList<String> getAllMaLop(String tenLop) {
+		String sql = "SELECT `idlop` FROM `lop` WHERE tenlop=?";
+		conn = DatabasaUltil.getConnect();
+		ArrayList<String> listMaLop = new ArrayList<String>();
+		try {
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, tenLop);
+			ResultSet result = statement.executeQuery();
+
+			while (result.next()) {
+				listMaLop.add(result.getString("idlop"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DatabasaUltil.closeConnection(conn);
+		return listMaLop;
 	}
 
 	/**

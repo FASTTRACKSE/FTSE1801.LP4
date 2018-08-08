@@ -13,26 +13,7 @@ public class Lop {
 	private String namHoc;
 	private SinhVien sinhvien;
 
-	public Lop() {
-
-	}
-
-	public Lop(String idLop, String tenLop, String namHoc) {
-
-		this.idLop = idLop;
-		this.tenLop = tenLop;
-		this.namHoc = namHoc;
-	}
-
-	public Lop(String idLop, String tenLop, String namHoc, SinhVien sinhvien) {
-
-		this.idLop = idLop;
-		this.tenLop = tenLop;
-		this.namHoc = namHoc;
-		this.sinhvien = sinhvien;
-	}
-
-	public SinhVien getSinhVien(){
+	public SinhVien getSinhVien() {
 		return sinhvien;
 	}
 
@@ -63,9 +44,5 @@ public class Lop {
 	public void setNamHoc(String namHoc) {
 		this.namHoc = namHoc;
 	}
-
-
-
-
 
 }

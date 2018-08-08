@@ -16,36 +16,8 @@ public class SinhVien {
 	private String diaChi;
 	private String email;
 	private String sdt;
-	private Diem diem;
 	private MonHoc monHoc;
-	private Lop lop;
 	private Phuong phuong;
-
-	public SinhVien() {
-	}
-
-	public SinhVien(String idSinhVien, String hoTen, Diem diem, MonHoc monHoc, Lop lop) {
-		super();
-		this.idSinhVien = idSinhVien;
-		this.hoTen = hoTen;
-		this.diem = diem;
-		this.monHoc = monHoc;
-		this.lop = lop;
-	}
-
-	public SinhVien(String idSinhVien, String hoTen, String quan, String thanhpho, String diaChi, String email,
-			String sdt, Phuong phuong) {
-		super();
-		this.idSinhVien = idSinhVien;
-		this.hoTen = hoTen;
-		this.quan = quan;
-		this.thanhpho = thanhpho;
-		this.diaChi = diaChi;
-		this.email = email;
-		this.sdt = sdt;
-		this.phuong = phuong;
-	}
-
 
 	public Phuong getPhuong() {
 		return phuong;
@@ -55,28 +27,12 @@ public class SinhVien {
 		this.phuong = phuong;
 	}
 
-	public Lop getLop() {
-		return lop;
-	}
-
-	public void setLop(Lop lop) {
-		this.lop = lop;
-	}
-
 	public MonHoc getMonHoc() {
 		return monHoc;
 	}
 
 	public void setMonHoc(MonHoc monHoc) {
 		this.monHoc = monHoc;
-	}
-
-	public Diem getDiem() {
-		return diem;
-	}
-
-	public void setDiem(Diem diem) {
-		this.diem = diem;
 	}
 
 	public String getIdSinhVien() {
@@ -102,8 +58,6 @@ public class SinhVien {
 	public void setIdLop(String idLop) {
 		this.idLop = idLop;
 	}
-
-	
 
 	public String getQuan() {
 		return quan;
