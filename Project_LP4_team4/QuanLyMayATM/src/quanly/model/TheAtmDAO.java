@@ -96,22 +96,22 @@ public class TheAtmDAO {
 	}
 
 	/**
-	 * Lấy mã thẻ theo số tài khoản
+	 * Lấy số tk theo số thẻ
 	 * 
 	 * @param soTK
 	 * @return
 	 */
-	public String layThongTinMaThe(String soTK) {
-		String maThe = null;
+	public String layThongTinMaThe(String soThe) {
+		String soTK = null;
 		conn = DatabaseUntil.getConnect();
-		String sql = "SELECT * FROM the_atm WHERE soTK = ?";
+		String sql = "SELECT * FROM the_atm WHERE soTheATM = ?";
 		PreparedStatement statement = null;
 		try {
 			statement = conn.prepareStatement(sql);
-			statement.setString(1, soTK);
+			statement.setString(1, soThe);
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				maThe = resultSet.getString("soTheATM");
+				soTK = resultSet.getString("soTK");
 			}
 		} catch (SQLException e) {
 		} finally {
@@ -123,7 +123,7 @@ public class TheAtmDAO {
 			}
 		}
 		DatabaseUntil.getConnect();
-		return maThe;
+		return soTK;
 	}
 
 	/**

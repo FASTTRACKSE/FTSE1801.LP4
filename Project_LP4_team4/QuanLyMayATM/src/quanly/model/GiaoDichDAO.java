@@ -23,19 +23,21 @@ public class GiaoDichDAO {
 	 * @param maKH
 	 * @return
 	 */
-	public boolean addThongTinGiaoDich(String soTienRut, String soTheATM, String mayATM) {
+	public boolean addThongTinGiaoDich(String soTienRut, String soTK, String mayATM, String maKH) {
 		boolean kiemTra = false;
 		conn = DatabaseUntil.getConnect();
-		String sql = "INSERT INTO giao_dich(soTheATM,thoiGian,soTien,maMayATM) VALUES (?,?,?,?)";
+		String sql = "INSERT INTO giao_dich(soTK,thoiGian,soTienThem,soTienRut,maMayATM,maKH) VALUES (?,?,?,?,?,?)";
 		PreparedStatement statement = null;
 		Date date = new Date();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		try {
 			statement = conn.prepareStatement(sql);
-			statement.setString(1, soTheATM);
+			statement.setString(1, soTK);
 			statement.setString(2, dateFormat.format(date));
-			statement.setString(3, soTienRut);
-			statement.setString(4, mayATM);
+			statement.setString(3, "0");
+			statement.setString(4, soTienRut);
+			statement.setString(5, mayATM);
+			statement.setString(6, maKH);
 			if (statement.executeUpdate() > 0) {
 				kiemTra = true;
 			}
@@ -70,7 +72,7 @@ public class GiaoDichDAO {
 				giaoDich = new GiaoDich();
 				giaoDich.setMaGiaoDich(resultSet.getInt("maGiaoDich"));
 				giaoDich.setThoiGian(resultSet.getString("thoiGian"));
-				giaoDich.setSoTien(resultSet.getString("soTien"));
+				giaoDich.setSoTienRut(resultSet.getString("soTienRut"));
 			}
 		} catch (SQLException e) {
 		} finally {
@@ -109,7 +111,8 @@ public class GiaoDichDAO {
 				giaoDich.setMaGiaoDich(resultSet.getInt("maGiaoDich"));
 				khachHang.setSoTheATM(resultSet.getString("soTheATM"));
 				giaoDich.setThoiGian(resultSet.getString("thoiGian"));
-				giaoDich.setSoTien(resultSet.getString("soTien"));
+				giaoDich.setSoTienRut(resultSet.getString("soTienRut"));
+				giaoDich.setSoTienThem(resultSet.getString("soTienThem"));
 				mayATM.setMaMay(resultSet.getString("maMayATM"));
 
 				giaoDich.setKhachHang(khachHang);
@@ -171,14 +174,14 @@ public class GiaoDichDAO {
 	 * @param ngayKetThuc
 	 * @return
 	 */
-	public ArrayList<GiaoDich> showGiaoDichTheoMaKHAnDate(String soTheATM, String ngayBatDau, String ngayKetThuc) {
+	public ArrayList<GiaoDich> showGiaoDichTheoMaKHAnDate(String maKH, String ngayBatDau, String ngayKetThuc) {
 		ArrayList<GiaoDich> myList = new ArrayList<GiaoDich>();
-		String sql = "SELECT * FROM giao_dich WHERE soTheATM = ? AND DATE(thoiGian) BETWEEN ? AND ?";
+		String sql = "SELECT * FROM giao_dich WHERE maKH = ? AND DATE(thoiGian) BETWEEN ? AND ?";
 		conn = DatabaseUntil.getConnect();
 		PreparedStatement statement = null;
 		try {
 			statement = conn.prepareStatement(sql);
-			statement.setString(1, soTheATM);
+			statement.setString(1, maKH);
 			statement.setString(2, ngayBatDau);
 			statement.setString(3, ngayKetThuc);
 			ResultSet resultSet = statement.executeQuery();
@@ -190,9 +193,10 @@ public class GiaoDichDAO {
 				khachHang = new KhachHang();
 				mayATM = new MayATM();
 
-				khachHang.setSoTheATM(resultSet.getString("soTheATM"));
+				khachHang.setSoTheATM(resultSet.getString("soTK"));
 				giaoDich.setThoiGian(resultSet.getString("thoiGian"));
-				giaoDich.setSoTien(resultSet.getString("soTien"));
+				giaoDich.setSoTienRut(resultSet.getString("soTienRut"));
+				giaoDich.setSoTienThem(resultSet.getString("soTienThem"));
 				mayATM.setMaMay(resultSet.getString("maMayATM"));
 
 				giaoDich.setKhachHang(khachHang);
@@ -225,7 +229,7 @@ public class GiaoDichDAO {
 	 */
 	public ArrayList<GiaoDich> showGiaoDichTheoDiaChiAndDate(String phuong, String ngayBatDau, String ngayKetThuc) {
 		ArrayList<GiaoDich> myList = new ArrayList<GiaoDich>();
-		String sql = "	SELECT * FROM giao_dich LEFT JOIN may_atm ON giao_dich.maMayATM = may_atm.maMayATM LEFT JOIN phuong ON may_atm.maPhuong = phuong.maPhuong LEFT JOIN quan ON phuong.maQuan = quan.maQuan WHERE phuong.tenPhuong = ? AND DATE(thoiGian) BETWEEN ? AND ?";
+		String sql = "	SELECT * FROM giao_dich LEFT JOIN may_atm ON giao_dich.maMayATM = may_atm.maMayATM LEFT JOIN phuong ON may_atm.maPhuong = phuong.maPhuong LEFT JOIN quan ON phuong.maQuan = quan.maQuan WHERE phuong.tenPhuong = ? AND maMay != 'Tại ngân hàng' AND DATE(thoiGian) BETWEEN ? AND ?";
 		conn = DatabaseUntil.getConnect();
 		PreparedStatement statement = null;
 		try {
@@ -245,7 +249,7 @@ public class GiaoDichDAO {
 				giaoDich.setMaGiaoDich(resultSet.getInt("giao_dich.maGiaoDich"));
 				khachHang.setSoTheATM(resultSet.getString("giao_dich.soTheATM"));
 				giaoDich.setThoiGian(resultSet.getString("giao_dich.thoiGian"));
-				giaoDich.setSoTien(resultSet.getString("giao_dich.soTien"));
+				giaoDich.setSoTienRut(resultSet.getString("giao_dich.soTienRut"));
 				mayATM.setMaMay(resultSet.getString("giao_dich.maMayATM"));
 				khachHang.setMaKH(resultSet.getString("giao_dich.maKhachHang"));
 				
@@ -299,7 +303,7 @@ public class GiaoDichDAO {
 				giaoDich.setMaGiaoDich(resultSet.getInt("giao_dich.maGiaoDich"));
 				khachHang.setSoTheATM(resultSet.getString("giao_dich.soTheATM"));
 				giaoDich.setThoiGian(resultSet.getString("giao_dich.thoiGian"));
-				giaoDich.setSoTien(resultSet.getString("giao_dich.soTien"));
+				giaoDich.setSoTienRut(resultSet.getString("giao_dich.soTienRut"));
 				mayATM.setMaMay(resultSet.getString("giao_dich.maMayATM"));
 				khachHang.setMaKH(resultSet.getString("giao_dich.maKhachHang"));
 				
@@ -354,7 +358,7 @@ public class GiaoDichDAO {
 	 * @param maKH
 	 */
 	public void xoaThongTinGDTheoMaKH(String maKH) {
-		String sql = "DELETE FROM giao_dich_khach_hang WHERE MaKH = ?";
+		String sql = "DELETE FROM giao_dich WHERE MaKH = ?";
 		conn = DatabaseUntil.getConnect();
 		PreparedStatement statement = null;
 		try {

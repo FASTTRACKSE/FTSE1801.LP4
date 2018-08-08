@@ -109,14 +109,14 @@ public class MayATMView extends JFrame {
 						String soTienRut = txtRutTien.getText();
 						if (dangNhapDAO.kiemTraTienMayATM(mayAtmDAO.showMayATMMaMay(maMayATM), soTienRut)) {
 							if (khachHangDAO.rutTien(khachHangDAO.showKhachHangTheoSoThe(sotheATM), soTienRut)) {
-								giaoDichDAO.addThongTinGiaoDich(soTienRut, theAtmDAO.layThongTinMaThe(sotheATM),
-										maMayATM);
 								mayAtmDAO.updateMayAtmRutTien(mayAtmDAO.showMayATMMaMay(maMayATM), soTienRut);
+								giaoDichDAO.addThongTinGiaoDich(soTienRut, theAtmDAO.layThongTinMaThe(sotheATM),
+										maMayATM, khachHangDAO.layMaKH(sotheATM));
 								giaoDich = giaoDichDAO.layMaGiaoDich();
 								khachHang = khachHangDAO.showKhachHangTheoSoThe(sotheATM);
 								soTien.setText(khachHang.getSoTienTrongTK());
 								tableModel.addRow(new String[] { ("" + giaoDich.getMaGiaoDich()),
-										giaoDich.getThoiGian(), giaoDich.getSoTien(), khachHang.getSoTienTrongTK() });
+										giaoDich.getThoiGian(), giaoDich.getSoTienRut(), khachHang.getSoTienTrongTK() });
 							} else {
 								JOptionPane.showMessageDialog(null, "Số tiền trong thẻ không đủ để rút");
 							}
