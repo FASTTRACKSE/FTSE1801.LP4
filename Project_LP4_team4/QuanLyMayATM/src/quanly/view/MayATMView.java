@@ -44,7 +44,7 @@ public class MayATMView extends JFrame {
 	JPanel pnLabel1, pnLabel2, pnThongTinKH, pnLabel3, pnButton2, pnLabel4, pnButton3, pnButton4;
 	JLabel title, title2, logoname, lbAccount, lbPin, lpPinCu, lpPinMoi, lpPinMoi2;
 	JLabel lbMaKH, lbTen, lbDiaChi, lbQuan, lbPhuong, lbSoDT, lbEmail, lbSoThe, lbSoTK, lbSoTien, lbRutTien;
-	JTextField txtTaiKhoan, txtPin, txtRutTien, txtPinCu, txtPinMoi,txtPinMoi2;
+	JTextField txtSoTheATM, txtPin, txtRutTien, txtPinCu, txtPinMoi,txtPinMoi2;
 	JTextField maKH, ten, diaChi, quan, phuong, soDT, email, soThe, soTK, soTien;
 	Border border;
 	TitledBorder titledBorder;
@@ -54,7 +54,7 @@ public class MayATMView extends JFrame {
 	CardLayout card;
 	Container conn;
 	String maMayATM;
-	static String soTaiKhoan = null;
+	static String sotheATM = null;
 	DangNhapDAO dangNhapDAO;
 	KhachHangDAO khachHangDAO;
 	MayAtmDAO mayAtmDAO;
@@ -72,14 +72,14 @@ public class MayATMView extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 
 			if (e.getSource() == btDangNhap) {
-				soTaiKhoan = txtTaiKhoan.getText();
+				sotheATM = txtSoTheATM.getText();
 				dangNhapDAO = new DangNhapDAO();
-				if (dangNhapDAO.dangNhap(soTaiKhoan, txtPin.getText())) {
-					KhachHang khachHang1 = khachHangDAO.showKhachHangTheoSoTK(soTaiKhoan);
+				if (dangNhapDAO.dangNhap(sotheATM, txtPin.getText())) {
+					KhachHang khachHang1 = khachHangDAO.showKhachHangTheoSoThe(sotheATM);
 					MayATMView mayATM = new MayATMView(maMayATM);
 					mayATM.display();
 					mayATM.thongTinKH(khachHang1);
-					txtTaiKhoan.setText("");
+					txtSoTheATM.setText("");
 					txtPin.setText("");
 				} else {
 					JOptionPane.showMessageDialog(null, "Sai số tài khoản hoặc pass");
@@ -108,15 +108,15 @@ public class MayATMView extends JFrame {
 					if (kiemTraSoTien()) {
 						String soTienRut = txtRutTien.getText();
 						if (dangNhapDAO.kiemTraTienMayATM(mayAtmDAO.showMayATMMaMay(maMayATM), soTienRut)) {
-							if (khachHangDAO.rutTien(khachHangDAO.showKhachHangTheoSoTK(soTaiKhoan), soTienRut)) {
-								giaoDichDAO.addThongTinGiaoDich(soTienRut, theAtmDAO.layThongTinMaThe(soTaiKhoan),
-										maMayATM, khachHangDAO.layMaKH(theAtmDAO.layThongTinMaThe(soTaiKhoan)));
+							if (khachHangDAO.rutTien(khachHangDAO.showKhachHangTheoSoThe(sotheATM), soTienRut)) {
+								giaoDichDAO.addThongTinGiaoDich(soTienRut, theAtmDAO.layThongTinMaThe(sotheATM),
+										maMayATM);
 								mayAtmDAO.updateMayAtmRutTien(mayAtmDAO.showMayATMMaMay(maMayATM), soTienRut);
 								giaoDich = giaoDichDAO.layMaGiaoDich();
-								khachHang = khachHangDAO.showKhachHangTheoSoTK(soTaiKhoan);
+								khachHang = khachHangDAO.showKhachHangTheoSoThe(sotheATM);
 								soTien.setText(khachHang.getSoTienTrongTK());
 								tableModel.addRow(new String[] { ("" + giaoDich.getMaGiaoDich()),
-										giaoDich.getThoiGian(), txtRutTien.getText(), khachHang.getSoTienTrongTK() });
+										giaoDich.getThoiGian(), giaoDich.getSoTien(), khachHang.getSoTienTrongTK() });
 							} else {
 								JOptionPane.showMessageDialog(null, "Số tiền trong thẻ không đủ để rút");
 							}
@@ -171,9 +171,9 @@ public class MayATMView extends JFrame {
 		pnMayATM.setLayout(new BoxLayout(pnMayATM, BoxLayout.Y_AXIS));
 		pnDangNhap = new JPanel();
 		lbAccount = new JLabel("Nhập số thẻ ATM");
-		txtTaiKhoan = new JTextField(10);
+		txtSoTheATM = new JTextField(10);
 		pnDangNhap.add(lbAccount);
-		pnDangNhap.add(txtTaiKhoan);
+		pnDangNhap.add(txtSoTheATM);
 		lbPin = new JLabel("Nhập mã Pin");
 		txtPin = new JTextField(10);
 		pnDangNhap.add(lbPin);

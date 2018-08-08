@@ -302,19 +302,18 @@ public class KhachHangDAO {
 	/**
 	 * Lấy ra thông tin khách hàng theo số tài khoản
 	 * 
-	 * @param soTk
+	 * @param soThe
 	 * @return
 	 */
-	public KhachHang showKhachHangTheoSoTK(String soTK) {
+	public KhachHang showKhachHangTheoSoThe(String soThe) {
 		PreparedStatement statement = null;
 		KhachHang khachHang = null;
 		conn = DatabaseUntil.getConnect();
-		String sql = "SELECT*FROM khach_hang JOIN phuong ON khach_hang.maPhuong = phuong.maPhuong JOIN quan ON phuong.maQuan = quan.maQuan JOIN the_atm ON khach_hang.soTheATM = the_atm.soTheATM WHERE the_atm.soTK= ?";
+		String sql = "SELECT*FROM khach_hang JOIN phuong ON khach_hang.maPhuong = phuong.maPhuong JOIN quan ON phuong.maQuan = quan.maQuan JOIN the_atm ON khach_hang.soTheATM = the_atm.soTheATM WHERE khach_hang.soTheATM= ?";
 		try {
 			statement = conn.prepareStatement(sql);
-			statement.setString(1, soTK);
+			statement.setString(1, soThe);
 			ResultSet resultSet = statement.executeQuery();
-
 			while (resultSet.next()) {
 				khachHang = new KhachHang();
 				khachHang.setMaKH(resultSet.getString("khach_hang.maKhachHang"));
@@ -375,7 +374,6 @@ public class KhachHangDAO {
 		} else {
 			kiemTra = false;
 		}
-
 		DatabaseUntil.closeConnection(conn);
 		return kiemTra;
 	}

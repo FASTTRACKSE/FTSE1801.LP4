@@ -33,6 +33,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 import quanly.entity.KhachHang;
+import quanly.model.GiaoDichDAO;
 import quanly.model.KhachHangDAO;
 import quanly.model.PhuongQuanDAO;
 import quanly.model.TheAtmDAO;
@@ -53,6 +54,7 @@ public class QuanLyKhachHang extends JFrame {
 	KhachHangDAO khachHangDAO;
 	PhuongQuanDAO phuongQuanDAO;
 	TheAtmDAO theAtmDAO;
+	GiaoDichDAO giaoDichDAO;
 
 	KhachHang khachHang;
 	ArrayList<String> listQuan;
@@ -99,7 +101,10 @@ public class QuanLyKhachHang extends JFrame {
 				for (int i = 0; i < listPhuong.size(); i++) {
 					boxPhuong.addItem(listPhuong.get(i));
 				}
-				xoa.setEnabled(false);
+				if (kiemTra) {
+					xoa.setEnabled(false);
+					sua.setEnabled(true);
+				}
 			}
 		}
 	};
@@ -113,7 +118,10 @@ public class QuanLyKhachHang extends JFrame {
 				String soTheATM = boxtheATM.getSelectedItem().toString();
 				txtSoTK.setText(theAtmDAO.layThongTinMaTK(soTheATM));
 			}
-			xoa.setEnabled(false);
+			if (kiemTra) {
+				xoa.setEnabled(false);
+				sua.setEnabled(true);
+			}
 		}
 	};
 
@@ -192,6 +200,7 @@ public class QuanLyKhachHang extends JFrame {
 			if (button == xoa) {
 				if (output == JOptionPane.YES_OPTION) {
 					if (khachHangDAO.deleteKhachHangTheoMaKH(maKH)) {
+						giaoDichDAO.xoaThongTinGDTheoMaKH(maKH);
 						JOptionPane.showMessageDialog(null, "Xóa thành công");
 						txtDiaChi.setText("");
 						txtDienThoai.setText("");
@@ -243,6 +252,7 @@ public class QuanLyKhachHang extends JFrame {
 		khachHangDAO = new KhachHangDAO();
 		phuongQuanDAO = new PhuongQuanDAO();
 		theAtmDAO = new TheAtmDAO();
+		giaoDichDAO = new GiaoDichDAO();
 
 		// Phần tiêu đề
 		title = new JLabel("Quản lý khách hàng");

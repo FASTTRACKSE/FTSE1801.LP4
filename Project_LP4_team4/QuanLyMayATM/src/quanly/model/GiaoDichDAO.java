@@ -23,10 +23,10 @@ public class GiaoDichDAO {
 	 * @param maKH
 	 * @return
 	 */
-	public boolean addThongTinGiaoDich(String soTienRut, String soTheATM, String mayATM, String maKH) {
+	public boolean addThongTinGiaoDich(String soTienRut, String soTheATM, String mayATM) {
 		boolean kiemTra = false;
 		conn = DatabaseUntil.getConnect();
-		String sql = "INSERT INTO giao_dich(soTheATM,thoiGian,soTien,maMayATM,maKhachHang) VALUES (?,?,?,?,?)";
+		String sql = "INSERT INTO giao_dich(soTheATM,thoiGian,soTien,maMayATM) VALUES (?,?,?,?)";
 		PreparedStatement statement = null;
 		Date date = new Date();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -36,7 +36,6 @@ public class GiaoDichDAO {
 			statement.setString(2, dateFormat.format(date));
 			statement.setString(3, soTienRut);
 			statement.setString(4, mayATM);
-			statement.setString(5, maKH);
 			if (statement.executeUpdate() > 0) {
 				kiemTra = true;
 			}
@@ -71,6 +70,7 @@ public class GiaoDichDAO {
 				giaoDich = new GiaoDich();
 				giaoDich.setMaGiaoDich(resultSet.getInt("maGiaoDich"));
 				giaoDich.setThoiGian(resultSet.getString("thoiGian"));
+				giaoDich.setSoTien(resultSet.getString("soTien"));
 			}
 		} catch (SQLException e) {
 		} finally {
@@ -111,7 +111,6 @@ public class GiaoDichDAO {
 				giaoDich.setThoiGian(resultSet.getString("thoiGian"));
 				giaoDich.setSoTien(resultSet.getString("soTien"));
 				mayATM.setMaMay(resultSet.getString("maMayATM"));
-				khachHang.setMaKH(resultSet.getString("maKhachHang"));
 
 				giaoDich.setKhachHang(khachHang);
 				giaoDich.setMayATM(mayATM);
@@ -138,7 +137,7 @@ public class GiaoDichDAO {
 	 * @param maKH
 	 * @return
 	 */
-	public boolean kiemTraMaKHDaGiaoDichChua(String maKH) {
+	public boolean kiemTraMaKHDaGiaoDichChua(String soTheATM) {
 		boolean kiemTra = false;
 		String sql = "SELECT * FROM giao_dich";
 		conn = DatabaseUntil.getConnect();
@@ -147,7 +146,7 @@ public class GiaoDichDAO {
 			statement = conn.prepareStatement(sql);
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				if (maKH.equals(resultSet.getString("maKhachHang"))) {
+				if (soTheATM.equals(resultSet.getString("soTheATM"))) {
 					kiemTra = true;
 				}
 			}
@@ -172,14 +171,14 @@ public class GiaoDichDAO {
 	 * @param ngayKetThuc
 	 * @return
 	 */
-	public ArrayList<GiaoDich> showGiaoDichTheoMaKHAnDate(String maKH, String ngayBatDau, String ngayKetThuc) {
+	public ArrayList<GiaoDich> showGiaoDichTheoMaKHAnDate(String soTheATM, String ngayBatDau, String ngayKetThuc) {
 		ArrayList<GiaoDich> myList = new ArrayList<GiaoDich>();
-		String sql = "SELECT * FROM giao_dich WHERE maKhachHang = ? AND DATE(thoiGian) BETWEEN ? AND ?";
+		String sql = "SELECT * FROM giao_dich WHERE soTheATM = ? AND DATE(thoiGian) BETWEEN ? AND ?";
 		conn = DatabaseUntil.getConnect();
 		PreparedStatement statement = null;
 		try {
 			statement = conn.prepareStatement(sql);
-			statement.setString(1, maKH);
+			statement.setString(1, soTheATM);
 			statement.setString(2, ngayBatDau);
 			statement.setString(3, ngayKetThuc);
 			ResultSet resultSet = statement.executeQuery();
@@ -322,5 +321,56 @@ public class GiaoDichDAO {
 
 		DatabaseUntil.closeConnection(conn);
 		return myList;
+	}
+	
+	/**
+	 * Xóa thông tin giao dịch theo mã máy ATM
+	 * @param maMay
+	 */
+	public void xoaThongTinGDTheoMaMay(String maMay) {
+		String sql = "DELETE FROM giao_dich WHERE maMayATM = ?";
+		conn = DatabaseUntil.getConnect();
+		PreparedStatement statement = null;
+		try {
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, maMay);
+			if (statement.executeUpdate() > 0) {
+			}
+		} catch (SQLException e) {
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+		DatabaseUntil.closeConnection(conn);
+	}
+	
+
+	/**
+	 * Xóa thông tin giao dịch theo maKH
+	 * @param maKH
+	 */
+	public void xoaThongTinGDTheoMaKH(String maKH) {
+		String sql = "DELETE FROM giao_dich_khach_hang WHERE MaKH = ?";
+		conn = DatabaseUntil.getConnect();
+		PreparedStatement statement = null;
+		try {
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, maKH);
+			if (statement.executeUpdate() > 0) {
+			}
+		} catch (SQLException e) {
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+		DatabaseUntil.closeConnection(conn);
 	}
 }

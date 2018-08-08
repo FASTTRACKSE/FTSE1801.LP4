@@ -33,6 +33,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 import quanly.entity.MayATM;
+import quanly.model.GiaoDichDAO;
 import quanly.model.KhachHangDAO;
 import quanly.model.MayAtmDAO;
 import quanly.model.PhuongQuanDAO;;
@@ -54,23 +55,30 @@ public class QuanLyMayATM extends JFrame {
 	KhachHangDAO khachHangDAO;
 	MayAtmDAO mayAtmDAO;
 	PhuongQuanDAO phuongQuanDAO;
+	GiaoDichDAO giaoDichDAO;
 	ArrayList<String> listQuan;
 	ArrayList<String> listPhuong;
 	MayATM mayATM;
 	String tenQuan;
 	String tenPhuong;
-
+	boolean kiemTra = false;
+	
 	DocumentListener documentListener = new DocumentListener() {
 		
 		@Override
 		public void removeUpdate(DocumentEvent e) {
-			xoa.setEnabled(false);
-			sua.setEnabled(true);
+			if (kiemTra) {
+				xoa.setEnabled(false);
+				sua.setEnabled(true);
+			}
 		}
 		
 		@Override
 		public void insertUpdate(DocumentEvent e) {
-			
+			if (kiemTra) {
+				xoa.setEnabled(false);
+				sua.setEnabled(true);
+			}
 		}
 		
 		@Override
@@ -132,8 +140,7 @@ public class QuanLyMayATM extends JFrame {
 				if (output == JOptionPane.YES_OPTION) {
 					if (kiemTraAddMayATM()) {
 						mayATM = layThongTinMay();
-						MayATM mayAtm1 = mayAtmDAO.showMayATMMaMay(mayATM.getMaMay());
-						if (mayAtmDAO.updateMayATM(mayATM, mayAtm1.getTongTien(), phuongQuanDAO.layThongTinMaPhuong(boxPhuong.getSelectedItem().toString()))) {
+						if (mayAtmDAO.updateMayATM(mayATM, phuongQuanDAO.layThongTinMaPhuong(boxPhuong.getSelectedItem().toString()))) {
 							JOptionPane.showMessageDialog(null, "Sửa thành công");
 							tableModel.setRowCount(0);
 							showTable();
@@ -144,6 +151,7 @@ public class QuanLyMayATM extends JFrame {
 							txtMaMayATM.setText("");
 							txtTongTien.setText("");
 							txtViTri.setText("");
+							kiemTra = false;
 						}
 					}
 				} else if (output == JOptionPane.NO_OPTION) {
@@ -153,6 +161,7 @@ public class QuanLyMayATM extends JFrame {
 			if (button == xoa) {
 				if (output == JOptionPane.YES_OPTION) {
 					if (mayAtmDAO.deleteMayATM(txtMaMayATM.getText())) {
+						giaoDichDAO.xoaThongTinGDTheoMaMay(txtMaMayATM.getText());
 						JOptionPane.showMessageDialog(null, "Xóa thành công");
 						tableModel.setRowCount(0);
 						showTable();
@@ -163,8 +172,7 @@ public class QuanLyMayATM extends JFrame {
 						txtMaMayATM.setText("");
 						txtTongTien.setText("");
 						txtViTri.setText("");
-					} else {
-						JOptionPane.showMessageDialog(null, "Kiểm tra lại mã máy");
+						kiemTra = false;
 					}
 				} else if (output == JOptionPane.NO_OPTION) {
 				}
@@ -195,6 +203,7 @@ public class QuanLyMayATM extends JFrame {
 		khachHangDAO = new KhachHangDAO();
 		mayAtmDAO = new MayAtmDAO();
 		phuongQuanDAO = new PhuongQuanDAO();
+		giaoDichDAO = new GiaoDichDAO();
 
 		// Phần tiêu đề
 		title = new JLabel("Quản lý máy ATM");
@@ -325,6 +334,7 @@ public class QuanLyMayATM extends JFrame {
 				sua.setEnabled(false);
 				them.setEnabled(false);
 				txtMaMayATM.setEnabled(false);
+				kiemTra = true;
 			}
 		});
 

@@ -54,15 +54,14 @@ public class MayAtmDAO {
 	 * @param soTien
 	 * @return
 	 */
-	public boolean updateMayATM(MayATM mayATM,String soTien, int maPhuong) {
+	public boolean updateMayATM(MayATM mayATM, int maPhuong) {
 		boolean kiemTra = false;
 		String sql = "UPDATE may_atm SET tongTien=?, viTri=?, maPhuong=? WHERE maMayATM = ?";
-		Integer allTien = Integer.parseInt(mayATM.getTongTien()) + Integer.parseInt(soTien);
 		conn = DatabaseUntil.getConnect();
 		PreparedStatement statement = null;
 		try {
 			statement = conn.prepareStatement(sql);
-			statement.setString(1, (String.valueOf(allTien)));
+			statement.setString(1, mayATM.getTongTien());
 			statement.setString(2, mayATM.getViTri());
 			statement.setInt(3, maPhuong);
 			statement.setString(4, mayATM.getMaMay());
