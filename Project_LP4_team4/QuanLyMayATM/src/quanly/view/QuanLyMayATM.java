@@ -46,7 +46,7 @@ public class QuanLyMayATM extends JFrame {
 	JPanel pnLabel1, pnTextField1, pnLabel2, pnTextField2, pnLabel3, pnTextField3;
 	JLabel title, maMayATM, viTri, tongTien, quan, phuong;
 	JTextField txtMaMayATM, txtViTri, txtTongTien;
-	JButton them, sua, xoa, tim, hienThi;
+	JButton them, sua, xoa, tim, hienThi, huy;
 	DefaultTableModel tableModel;
 	JTable table;
 	Border border;
@@ -62,9 +62,9 @@ public class QuanLyMayATM extends JFrame {
 	String tenQuan;
 	String tenPhuong;
 	boolean kiemTra = false;
-	
+
 	DocumentListener documentListener = new DocumentListener() {
-		
+
 		@Override
 		public void removeUpdate(DocumentEvent e) {
 			if (kiemTra) {
@@ -72,7 +72,7 @@ public class QuanLyMayATM extends JFrame {
 				sua.setEnabled(true);
 			}
 		}
-		
+
 		@Override
 		public void insertUpdate(DocumentEvent e) {
 			if (kiemTra) {
@@ -80,13 +80,13 @@ public class QuanLyMayATM extends JFrame {
 				sua.setEnabled(true);
 			}
 		}
-		
+
 		@Override
 		public void changedUpdate(DocumentEvent e) {
-			
+
 		}
 	};
-	
+
 	/**
 	 * Sự kiện cho chọn phường và quận
 	 */
@@ -102,9 +102,9 @@ public class QuanLyMayATM extends JFrame {
 				xoa.setEnabled(false);
 			}
 
-//			if (e.getStateChange() == ItemEvent.SELECTED) {
-//				tenPhuong = boxPhuong.getSelectedItem().toString();
-//			}
+			// if (e.getStateChange() == ItemEvent.SELECTED) {
+			// tenPhuong = boxPhuong.getSelectedItem().toString();
+			// }
 		}
 	};
 
@@ -140,7 +140,8 @@ public class QuanLyMayATM extends JFrame {
 				if (output == JOptionPane.YES_OPTION) {
 					if (kiemTraAddMayATM()) {
 						mayATM = layThongTinMay();
-						if (mayAtmDAO.updateMayATM(mayATM, phuongQuanDAO.layThongTinMaPhuong(boxPhuong.getSelectedItem().toString()))) {
+						if (mayAtmDAO.updateMayATM(mayATM,
+								phuongQuanDAO.layThongTinMaPhuong(boxPhuong.getSelectedItem().toString()))) {
 							JOptionPane.showMessageDialog(null, "Sửa thành công");
 							tableModel.setRowCount(0);
 							showTable();
@@ -194,6 +195,21 @@ public class QuanLyMayATM extends JFrame {
 				} else if (output == JOptionPane.NO_OPTION) {
 				}
 
+			}
+
+			if (button == huy) {
+				if (output == JOptionPane.YES_OPTION) {
+					
+					sua.setEnabled(false);
+					xoa.setEnabled(false);
+					them.setEnabled(true);
+					txtMaMayATM.setEnabled(true);
+					txtMaMayATM.setText("");
+					txtTongTien.setText("");
+					txtViTri.setText("");
+					kiemTra = false;
+				} else if (output == JOptionPane.NO_OPTION) {
+				}
 			}
 		}
 	};
@@ -270,20 +286,23 @@ public class QuanLyMayATM extends JFrame {
 		tim = new JButton("Tìm kiếm");
 		xoa = new JButton("Xóa thông tin máy ATM");
 		hienThi = new JButton("Hiển thị tất cả máy ATM");
+		huy = new JButton("Hủy");
 
 		them.addActionListener(actionListener);
 		sua.addActionListener(actionListener);
 		tim.addActionListener(actionListener);
 		xoa.addActionListener(actionListener);
 		hienThi.addActionListener(actionListener);
+		huy.addActionListener(actionListener);
 		sua.setEnabled(false);
 		xoa.setEnabled(false);
-		
+
 		pnbutton.add(them);
 		pnbutton.add(sua);
 		pnbutton.add(tim);
 		pnbutton.add(hienThi);
 		pnbutton.add(xoa);
+		pnbutton.add(huy);
 
 		// Phần bảng danh sách máy ATM
 		border = BorderFactory.createLineBorder(Color.BLUE, 3, true);

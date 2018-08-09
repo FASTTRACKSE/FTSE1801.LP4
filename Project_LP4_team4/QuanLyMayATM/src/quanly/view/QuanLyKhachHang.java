@@ -46,7 +46,7 @@ public class QuanLyKhachHang extends JFrame {
 	JLabel title, soCMND, tenKH, diaChi, phuong, quan, dienThoai, email, soTheATM, soTK, soTien;
 	JTextField txtSoCMND, txtTenKH, txtDiaChi, txtDienThoai, txtEmail, txtSoTK, txtSoTien;
 	JComboBox<String> boxPhuong, boxQuan, boxtheATM;
-	JButton them, sua, xoa, hienthi, tim;
+	JButton them, sua, xoa, hienthi, tim, huy;
 	DefaultTableModel tableModel;
 	JTable table;
 	Border border;
@@ -243,6 +243,30 @@ public class QuanLyKhachHang extends JFrame {
 				}
 
 			}
+
+			if (button == huy) {
+				if (output == JOptionPane.YES_OPTION) {
+					boxtheATM.removeAllItems();
+					ArrayList<String> listSoThe = theAtmDAO.laySoTheATM();
+					for (int i = 0; i < listSoThe.size(); i++) {
+						boxtheATM.addItem(listSoThe.get(i));
+					}
+
+					txtDiaChi.setText("");
+					txtDienThoai.setText("");
+					txtEmail.setText("");
+					txtSoCMND.setText("");
+					txtSoTien.setText("");
+					txtTenKH.setText("");
+					sua.setEnabled(false);
+					xoa.setEnabled(false);
+					them.setEnabled(true);
+					txtSoTien.setEnabled(true);
+					boxtheATM.setEnabled(true);
+					kiemTra = false;
+				}
+			} else if (output == JOptionPane.NO_OPTION) {
+			}
 		}
 
 	};
@@ -349,11 +373,13 @@ public class QuanLyKhachHang extends JFrame {
 		hienthi = new JButton("Hiển thị danh sách");
 		xoa = new JButton("Xóa thông tin");
 		tim = new JButton("Tìm kiếm");
+		huy = new JButton("Hủy");
 		them.addActionListener(actionListener);
 		sua.addActionListener(actionListener);
 		xoa.addActionListener(actionListener);
 		tim.addActionListener(actionListener);
 		hienthi.addActionListener(actionListener);
+		huy.addActionListener(actionListener);
 		sua.setEnabled(false);
 		xoa.setEnabled(false);
 		pnbutton.add(them);
@@ -361,6 +387,7 @@ public class QuanLyKhachHang extends JFrame {
 		pnbutton.add(hienthi);
 		pnbutton.add(tim);
 		pnbutton.add(xoa);
+		pnbutton.add(huy);
 		pnQuanLyKH.add(pnbutton);
 
 		// Phần bảng danh sách khách hàng
