@@ -36,7 +36,7 @@ public class BienLaiDAO {
 			while (resultSet.next()) {
 				bienLai = new BienLai();
 				congToDien = new CongToDien();
-				bienLai.setMaBienLai(resultSet.getInt("maBienLai"));
+				bienLai.setMaBienLai(resultSet.getString("maBienLai"));
 				congToDien.setMaCongTo(resultSet.getString("maCongToDien"));
 				bienLai.setNgayNhap(resultSet.getDate("bienlai.ngayNhap"));
 				bienLai.setChuKyNhap(resultSet.getString("chuKyNhap"));
@@ -95,7 +95,7 @@ public class BienLaiDAO {
 			preparedStatement.setDate(1, bienLai.getNgayNhap());
 			preparedStatement.setString(2, bienLai.getChuKyNhap());
 			preparedStatement.setString(3, bienLai.getChiSoCongTo());
-			preparedStatement.setInt(4, bienLai.getMaBienLai());
+			preparedStatement.setString(4, bienLai.getMaBienLai());
 
 			if (preparedStatement.executeUpdate() > 0) {
 				statusExecute = true;
@@ -119,7 +119,7 @@ public class BienLaiDAO {
 		conn = DatabaseUltil.getConnection();
 		try {
 			PreparedStatement preparedStatement = conn.prepareStatement(sql);
-			preparedStatement.setInt(1, bienLai.getMaBienLai());
+			preparedStatement.setString(1, bienLai.getMaBienLai());
 
 			if (preparedStatement.executeUpdate() > 0) {
 				statusExecute = true;
@@ -138,12 +138,13 @@ public class BienLaiDAO {
 	 * @return list
 	 */
 	public ArrayList<BienLai> searchBienLai(BienLai bienLai) {
-		String sql = "SELECT bienlai.maBienLai, cong_to_dien.maCongToDien, bienlai.ngayNhap, bienlai.chuKyNhap, bienlai.chiSoCongTo FROM bienlai INNER JOIN cong_to_dien ON bienlai.maCongToDien = cong_to_dien.maCongToDien WHERE bienlai.maCongToDien LIKE ?";
+		String sql = "SELECT bienlai.maBienLai, cong_to_dien.maCongToDien, bienlai.ngayNhap, bienlai.chuKyNhap, bienlai.chiSoCongTo FROM bienlai INNER JOIN cong_to_dien ON bienlai.maCongToDien = cong_to_dien.maCongToDien WHERE bienlai.maCongToDien LIKE ? OR bienlai.maBienLai LIKE ?";
 		conn = DatabaseUltil.getConnection();
 		ArrayList<BienLai> list = new ArrayList<BienLai>();
 		try {
 			PreparedStatement preparedStatement = conn.prepareStatement(sql);
 			preparedStatement.setString(1, "%" + bienLai.getMaCongTo().getMaCongTo() + "%");
+			preparedStatement.setString(2, "%" + bienLai.getMaBienLai() + "%");
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			BienLai bienLai1;
@@ -151,7 +152,7 @@ public class BienLaiDAO {
 			while (resultSet.next()) {
 
 				bienLai1 = new BienLai();
-				bienLai1.setMaBienLai(resultSet.getInt("maBienLai"));
+				bienLai1.setMaBienLai(resultSet.getString("maBienLai"));
 				bienLai1.setNgayNhap(resultSet.getDate("ngayNhap"));
 				bienLai1.setChuKyNhap(resultSet.getString("chuKyNhap"));
 				bienLai1.setChiSoCongTo(resultSet.getString("chiSoCongTo"));
