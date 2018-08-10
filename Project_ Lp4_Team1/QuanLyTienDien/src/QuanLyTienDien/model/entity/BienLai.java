@@ -1,9 +1,13 @@
 package QuanLyTienDien.model.entity;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
+import java.util.Locale;
 
 public class BienLai {
-	private int maBienLai;
+	private String maBienLai;
 	private CongToDien maCongTo;
 	private Date ngayNhap;
 	private String chuKyNhap;
@@ -21,7 +25,7 @@ public class BienLai {
 		this.chuKyNhap = chuKyNhap;
 	}
 
-	public BienLai(int maBienLai, CongToDien maCongTo, Date ngayNhap, String chuKyNhap, String chiSoCongTo,
+	public BienLai(String maBienLai, CongToDien maCongTo, Date ngayNhap, String chuKyNhap, String chiSoCongTo,
 			KhachHang khachHang) {
 		super();
 		this.maBienLai = maBienLai;
@@ -32,11 +36,11 @@ public class BienLai {
 		this.khachHang = khachHang;
 	}
 
-	public int getMaBienLai() {
+	public String getMaBienLai() {
 		return maBienLai;
 	}
 
-	public void setMaBienLai(int maBienLai) {
+	public void setMaBienLai(String maBienLai) {
 		this.maBienLai = maBienLai;
 	}
 
