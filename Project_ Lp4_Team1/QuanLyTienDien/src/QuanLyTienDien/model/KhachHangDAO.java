@@ -157,12 +157,15 @@ public class KhachHangDAO {
 	 * @return list
 	 */
 	public ArrayList<KhachHang> searchMaKH(KhachHang khachHang) {
-		String sql = "SELECT khachhang.MaKH, khachhang.TenKH,khachhang.diaChi,phuong.tenPhuong as Phuong, District.tenQuan as Quan,khachhang.dienThoai,khachhang.email, CongToDien.maCongToDien AS MaCongTo FROM khachhang INNER JOIN phuong ON khachhang.maPhuong = phuong.maPhuong INNER JOIN quan as District ON khachhang.maQuan = District.maQuan INNER JOIN cong_to_dien as CongToDien ON khachhang.maCongToDien = CongToDien.maCongToDien WHERE khachhang.TenKH LIKE ?";
+		String sql = "SELECT khachhang.MaKH, khachhang.TenKH,khachhang.diaChi,phuong.tenPhuong as Phuong, District.tenQuan as Quan,khachhang.dienThoai,khachhang.email, CongToDien.maCongToDien AS MaCongTo FROM khachhang INNER JOIN phuong ON khachhang.maPhuong = phuong.maPhuong INNER JOIN quan as District ON khachhang.maQuan = District.maQuan INNER JOIN cong_to_dien as CongToDien ON khachhang.maCongToDien = CongToDien.maCongToDien WHERE khachhang.TenKH LIKE ? OR Phuong.tenPhuong LIKE ? OR District.tenQuan LIKE ? OR khachhang.MaKH LIKE ?";
 		conn = DatabaseUltil.getConnection();
 		ArrayList<KhachHang> list = new ArrayList<KhachHang>();
 		try {
 			PreparedStatement preparedStatement = conn.prepareStatement(sql);
 			preparedStatement.setString(1, "%" + khachHang.getNameKhachHang() + "%");
+			preparedStatement.setString(2, "%" + khachHang.getTenPhuong() + "%");
+			preparedStatement.setString(3, "%" + khachHang.getTenQuan() + "%");
+			preparedStatement.setString(4, "%" + khachHang.getMaKhachHang() + "%");
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			KhachHang khachHang1;

@@ -23,23 +23,21 @@ public class GiaoDichDAO {
 	 * @param maKH
 	 * @return
 	 */
-	public boolean addThongTinGiaoDich(String soTienRut, String soTheATM, String mayATM, String maKH) {
-		boolean kiemTra = false;
+	public void addThongTinGiaoDich(String soTienRut, String soTK, String mayATM, String maKH) {
 		conn = DatabaseUntil.getConnect();
-		String sql = "INSERT INTO giao_dich(soTheATM,thoiGian,soTien,maMayATM,maKhachHang) VALUES (?,?,?,?,?)";
+		String sql = "INSERT INTO giao_dich(soTK,thoiGian,soTienThem,soTienRut,maMayATM,maKH) VALUES (?,?,?,?,?,?)";
 		PreparedStatement statement = null;
 		Date date = new Date();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		try {
 			statement = conn.prepareStatement(sql);
-			statement.setString(1, soTheATM);
+			statement.setString(1, soTK);
 			statement.setString(2, dateFormat.format(date));
-			statement.setString(3, soTienRut);
-			statement.setString(4, mayATM);
-			statement.setString(5, maKH);
-			if (statement.executeUpdate() > 0) {
-				kiemTra = true;
-			}
+			statement.setString(3, "0");
+			statement.setString(4, soTienRut);
+			statement.setString(5, mayATM);
+			statement.setString(6, maKH);
+			statement.executeUpdate();
 		} catch (SQLException e) {
 		} finally {
 			if (statement != null) {
@@ -51,8 +49,79 @@ public class GiaoDichDAO {
 		}
 
 		DatabaseUntil.getConnect();
-		return kiemTra;
 	}
+	
+	/**
+	 * Thêm thông tin giao dịch khi thêm tiền tại ngân hàng
+	 * @param soTienThem
+	 * @param soTheATM
+	 * @param maKH
+	 * @return
+	 */
+	public void addThongTinGiaoDichKhiThemTienTaiNganHang(String soTienThem, String soTK, String maKH) {
+		conn = DatabaseUntil.getConnect();
+		String sql = "INSERT INTO giao_dich(soTK,thoiGian,soTienThem,soTienRut,maMayATM,maKH) VALUES (?,?,?,?,?,?)";
+		PreparedStatement statement = null;
+		Date date = new Date();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		try {
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, soTK);
+			statement.setString(2, dateFormat.format(date));
+			statement.setString(3, soTienThem);
+			statement.setString(4, "0");
+			statement.setString(5, "Tại ngân hàng");
+			statement.setString(6, maKH);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+
+		DatabaseUntil.getConnect();
+	}
+	
+	/**
+	 * Thêm thông tin giao dịch khi thêm tiền rút tiền tại ngân hàng
+	 * @param soTienRut
+	 * @param soTheATM
+	 * @param maKH
+	 * @return
+	 */
+	public void addThongTinGiaoDichKhiRutTienTaiNganHang(String soTienRut, String soTK, String maKH) {
+		conn = DatabaseUntil.getConnect();
+		String sql = "INSERT INTO giao_dich(soTK,thoiGian,soTienThem,soTienRut,maMayATM,maKH) VALUES (?,?,?,?,?,?)";
+		PreparedStatement statement = null;
+		Date date = new Date();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		try {
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, soTK);
+			statement.setString(2, dateFormat.format(date));
+			statement.setString(3, "0");
+			statement.setString(4, soTienRut);
+			statement.setString(5, "Tại ngân hàng");
+			statement.setString(6, maKH);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+
+		DatabaseUntil.getConnect();
+	}
+
+	/**
 
 	/**
 	 * Lấy mã giao dịch
@@ -61,6 +130,8 @@ public class GiaoDichDAO {
 	 */
 	public GiaoDich layMaGiaoDich() {
 		GiaoDich giaoDich = null;
+		KhachHang khachHang = null;
+		MayATM mayATM = null;
 		conn = DatabaseUntil.getConnect();
 		String sql = "SELECT * FROM `giao_dich` ORDER BY `giao_dich`.`thoiGian` DESC LIMIT 1";
 		PreparedStatement statement = null;
@@ -69,8 +140,17 @@ public class GiaoDichDAO {
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				giaoDich = new GiaoDich();
+				khachHang = new KhachHang();
+				mayATM = new MayATM();
+				
+				khachHang.setSoTK(resultSet.getString("soTK"));
+				mayATM.setMaMay(resultSet.getString("maMayATM"));
 				giaoDich.setMaGiaoDich(resultSet.getInt("maGiaoDich"));
 				giaoDich.setThoiGian(resultSet.getString("thoiGian"));
+				giaoDich.setSoTienRut(resultSet.getString("soTienRut"));
+				giaoDich.setSoTienThem(resultSet.getString("soTienThem"));
+				giaoDich.setKhachHang(khachHang);
+				giaoDich.setMayATM(mayATM);
 			}
 		} catch (SQLException e) {
 		} finally {
@@ -92,7 +172,7 @@ public class GiaoDichDAO {
 	 */
 	public ArrayList<GiaoDich> showAllThongTinGiaoDich() {
 		ArrayList<GiaoDich> myList = new ArrayList<GiaoDich>();
-		String sql = "SELECT * FROM giao_dich ORDER BY maKhachHang ASC";
+		String sql = "SELECT * FROM giao_dich ORDER BY maKH ASC";
 		conn = DatabaseUntil.getConnect();
 		PreparedStatement statement = null;
 		try {
@@ -107,11 +187,11 @@ public class GiaoDichDAO {
 				mayATM = new MayATM();
 
 				giaoDich.setMaGiaoDich(resultSet.getInt("maGiaoDich"));
-				khachHang.setSoTheATM(resultSet.getString("soTheATM"));
+				khachHang.setMaKH(""+resultSet.getString("maKH"));
 				giaoDich.setThoiGian(resultSet.getString("thoiGian"));
-				giaoDich.setSoTien(resultSet.getString("soTien"));
+				giaoDich.setSoTienRut(resultSet.getString("soTienRut"));
+				giaoDich.setSoTienThem(resultSet.getString("soTienThem"));
 				mayATM.setMaMay(resultSet.getString("maMayATM"));
-				khachHang.setMaKH(resultSet.getString("maKhachHang"));
 
 				giaoDich.setKhachHang(khachHang);
 				giaoDich.setMayATM(mayATM);
@@ -147,7 +227,7 @@ public class GiaoDichDAO {
 			statement = conn.prepareStatement(sql);
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				if (maKH.equals(resultSet.getString("maKhachHang"))) {
+				if (maKH.equals(resultSet.getString("maKH"))) {
 					kiemTra = true;
 				}
 			}
@@ -174,7 +254,7 @@ public class GiaoDichDAO {
 	 */
 	public ArrayList<GiaoDich> showGiaoDichTheoMaKHAnDate(String maKH, String ngayBatDau, String ngayKetThuc) {
 		ArrayList<GiaoDich> myList = new ArrayList<GiaoDich>();
-		String sql = "SELECT * FROM giao_dich WHERE maKhachHang = ? AND DATE(thoiGian) BETWEEN ? AND ?";
+		String sql = "SELECT * FROM giao_dich WHERE maKH = ? AND DATE(thoiGian) BETWEEN ? AND ?";
 		conn = DatabaseUntil.getConnect();
 		PreparedStatement statement = null;
 		try {
@@ -191,9 +271,10 @@ public class GiaoDichDAO {
 				khachHang = new KhachHang();
 				mayATM = new MayATM();
 
-				khachHang.setSoTheATM(resultSet.getString("soTheATM"));
+				khachHang.setSoTheATM(resultSet.getString("soTK"));
 				giaoDich.setThoiGian(resultSet.getString("thoiGian"));
-				giaoDich.setSoTien(resultSet.getString("soTien"));
+				giaoDich.setSoTienRut(resultSet.getString("soTienRut"));
+				giaoDich.setSoTienThem(resultSet.getString("soTienThem"));
 				mayATM.setMaMay(resultSet.getString("maMayATM"));
 
 				giaoDich.setKhachHang(khachHang);
@@ -219,19 +300,19 @@ public class GiaoDichDAO {
 	/**
 	 * báo cáo giao dịch khách hàng theo địa chỉ và ngày giao dịch
 	 * 
-	 * @param phuong
+	 * @param tenPhuong
 	 * @param ngayBatDau
 	 * @param ngayKetThuc
 	 * @return
 	 */
-	public ArrayList<GiaoDich> showGiaoDichTheoDiaChiAndDate(String phuong, String ngayBatDau, String ngayKetThuc) {
+	public ArrayList<GiaoDich> showGiaoDichTheoDiaChiAndDate(String tenPuong,String ngayBatDau, String ngayKetThuc) {
 		ArrayList<GiaoDich> myList = new ArrayList<GiaoDich>();
-		String sql = "	SELECT * FROM giao_dich LEFT JOIN may_atm ON giao_dich.maMayATM = may_atm.maMayATM LEFT JOIN phuong ON may_atm.maPhuong = phuong.maPhuong LEFT JOIN quan ON phuong.maQuan = quan.maQuan WHERE phuong.tenPhuong = ? AND DATE(thoiGian) BETWEEN ? AND ?";
+		String sql = "SELECT * FROM giao_dich LEFT JOIN may_atm ON giao_dich.maMayATM = may_atm.maMayATM LEFT JOIN phuong ON may_atm.maPhuong = phuong.maPhuong LEFT JOIN quan ON phuong.maQuan = quan.maQuan LEFT JOIN the_atm ON giao_dich.soTK = the_atm.soTK WHERE phuong.tenPhuong = ? AND giao_dich.maMayATM != 'Tại ngân hàng' AND DATE(thoiGian) BETWEEN ? AND ?";
 		conn = DatabaseUntil.getConnect();
 		PreparedStatement statement = null;
 		try {
 			statement = conn.prepareStatement(sql);
-			statement.setString(1, phuong);
+			statement.setString(1, tenPuong);
 			statement.setString(2, ngayBatDau);
 			statement.setString(3, ngayKetThuc);
 			ResultSet resultSet = statement.executeQuery();
@@ -244,14 +325,62 @@ public class GiaoDichDAO {
 				mayATM = new MayATM();
 				
 				giaoDich.setMaGiaoDich(resultSet.getInt("giao_dich.maGiaoDich"));
-				khachHang.setSoTheATM(resultSet.getString("giao_dich.soTheATM"));
-				giaoDich.setThoiGian(resultSet.getString("giao_dich.thoiGian"));
-				giaoDich.setSoTien(resultSet.getString("giao_dich.soTien"));
-				mayATM.setMaMay(resultSet.getString("giao_dich.maMayATM"));
-				khachHang.setMaKH(resultSet.getString("giao_dich.maKhachHang"));
-				
+				khachHang.setSoTheATM(resultSet.getString("the_atm.soTheATM"));
+				khachHang.setMaKH(""+resultSet.getInt("giao_dich.maKH"));
 				giaoDich.setKhachHang(khachHang);
+				giaoDich.setThoiGian(resultSet.getString("giao_dich.thoiGian"));
+				giaoDich.setSoTienRut(resultSet.getString("giao_dich.soTienRut"));
+				mayATM.setMaMay(resultSet.getString("giao_dich.maMayATM"));
 				giaoDich.setMayATM(mayATM);
+				
+				myList.add(giaoDich);
+
+			}
+
+		} catch (SQLException e) {
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+
+		DatabaseUntil.closeConnection(conn);
+		return myList;
+	}
+	
+	/**
+	 * lấy toàn bộ thông tin giao dịch của máy ATM
+	 * 
+	 * @return
+	 */
+	public ArrayList<GiaoDich> showAllGiaoDichTheoCuaMayATM() {
+		ArrayList<GiaoDich> myList = new ArrayList<GiaoDich>();
+		String sql = "SELECT * FROM giao_dich LEFT JOIN may_atm ON giao_dich.maMayATM = may_atm.maMayATM LEFT JOIN phuong ON may_atm.maPhuong = phuong.maPhuong LEFT JOIN quan ON phuong.maQuan = quan.maQuan LEFT JOIN the_atm ON giao_dich.soTK = the_atm.soTK WHERE giao_dich.maMayATM != 'Tại ngân hàng'";
+		conn = DatabaseUntil.getConnect();
+		PreparedStatement statement = null;
+		try {
+			statement = conn.prepareStatement(sql);
+			ResultSet resultSet = statement.executeQuery();
+			GiaoDich giaoDich;
+			KhachHang khachHang;
+			MayATM mayATM;
+			while (resultSet.next()) {
+				giaoDich = new GiaoDich();
+				khachHang = new KhachHang();
+				mayATM = new MayATM();
+				
+				giaoDich.setMaGiaoDich(resultSet.getInt("giao_dich.maGiaoDich"));
+				khachHang.setSoTheATM(resultSet.getString("the_atm.soTheATM"));
+				khachHang.setMaKH(""+resultSet.getInt("giao_dich.maKH"));
+				giaoDich.setKhachHang(khachHang);
+				giaoDich.setThoiGian(resultSet.getString("giao_dich.thoiGian"));
+				giaoDich.setSoTienRut(resultSet.getString("giao_dich.soTienRut"));
+				mayATM.setMaMay(resultSet.getString("giao_dich.maMayATM"));
+				giaoDich.setMayATM(mayATM);
+				
 				myList.add(giaoDich);
 
 			}
@@ -280,7 +409,7 @@ public class GiaoDichDAO {
 	 */
 	public ArrayList<GiaoDich> showGiaoDichTheoMaMayAndDate(String maMay, String ngayBatDau, String ngayKetThuc) {
 		ArrayList<GiaoDich> myList = new ArrayList<GiaoDich>();
-		String sql = "	SELECT * FROM giao_dich LEFT JOIN may_atm ON giao_dich.maMayATM = may_atm.maMayATM LEFT JOIN phuong ON may_atm.maPhuong = phuong.maPhuong LEFT JOIN quan ON phuong.maQuan = quan.maQuan WHERE giao_dich.maMayATM = ? AND DATE(thoiGian) BETWEEN ? AND ?";
+		String sql = "SELECT * FROM giao_dich LEFT JOIN may_atm ON giao_dich.maMayATM = may_atm.maMayATM LEFT JOIN phuong ON may_atm.maPhuong = phuong.maPhuong LEFT JOIN quan ON phuong.maQuan = quan.maQuan LEFT JOIN the_atm ON giao_dich.soTK = the_atm.soTK  WHERE giao_dich.maMayATM = ? AND DATE(thoiGian) BETWEEN ? AND ?";
 		conn = DatabaseUntil.getConnect();
 		PreparedStatement statement = null;
 		try {
@@ -298,16 +427,15 @@ public class GiaoDichDAO {
 				mayATM = new MayATM();
 				
 				giaoDich.setMaGiaoDich(resultSet.getInt("giao_dich.maGiaoDich"));
-				khachHang.setSoTheATM(resultSet.getString("giao_dich.soTheATM"));
-				giaoDich.setThoiGian(resultSet.getString("giao_dich.thoiGian"));
-				giaoDich.setSoTien(resultSet.getString("giao_dich.soTien"));
-				mayATM.setMaMay(resultSet.getString("giao_dich.maMayATM"));
-				khachHang.setMaKH(resultSet.getString("giao_dich.maKhachHang"));
-				
+				khachHang.setSoTheATM(resultSet.getString("the_atm.soTheATM"));
+				khachHang.setMaKH(""+resultSet.getInt("giao_dich.maKH"));
 				giaoDich.setKhachHang(khachHang);
+				giaoDich.setThoiGian(resultSet.getString("giao_dich.thoiGian"));
+				giaoDich.setSoTienRut(resultSet.getString("giao_dich.soTienRut"));
+				mayATM.setMaMay(resultSet.getString("giao_dich.maMayATM"));
 				giaoDich.setMayATM(mayATM);
+				
 				myList.add(giaoDich);
-
 			}
 
 		} catch (SQLException e) {
@@ -322,5 +450,56 @@ public class GiaoDichDAO {
 
 		DatabaseUntil.closeConnection(conn);
 		return myList;
+	}
+	
+	/**
+	 * Xóa thông tin giao dịch theo mã máy ATM
+	 * @param maMay
+	 */
+	public void xoaThongTinGDTheoMaMay(String maMay) {
+		String sql = "DELETE FROM giao_dich WHERE maMayATM = ?";
+		conn = DatabaseUntil.getConnect();
+		PreparedStatement statement = null;
+		try {
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, maMay);
+			if (statement.executeUpdate() > 0) {
+			}
+		} catch (SQLException e) {
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+		DatabaseUntil.closeConnection(conn);
+	}
+	
+
+	/**
+	 * Xóa thông tin giao dịch theo maKH
+	 * @param maKH
+	 */
+	public void xoaThongTinGDTheoMaKH(String maKH) {
+		String sql = "DELETE FROM giao_dich WHERE MaKH = ?";
+		conn = DatabaseUntil.getConnect();
+		PreparedStatement statement = null;
+		try {
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, maKH);
+			if (statement.executeUpdate() > 0) {
+			}
+		} catch (SQLException e) {
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+		DatabaseUntil.closeConnection(conn);
 	}
 }

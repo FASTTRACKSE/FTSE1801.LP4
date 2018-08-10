@@ -14,14 +14,15 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Date;
-import java.util.Properties;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -30,6 +31,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -43,6 +45,7 @@ import org.jdatepicker.impl.UtilDateModel;
 
 import QuanLyTienDien.model.BaoCaoDAO;
 import QuanLyTienDien.model.BienLaiDAO;
+import QuanLyTienDien.model.CongToDienDAO;
 import QuanLyTienDien.model.KhachHangDAO;
 import QuanLyTienDien.model.entity.BienLai;
 import QuanLyTienDien.model.entity.CongToDien;
@@ -61,27 +64,33 @@ import QuanLyTienDien.model.entity.TienDien;
 public class QuanLyTienDien extends JFrame implements ActionListener {
 	CardLayout cardLayout;
 	JPanel cardPane, infoPane, btPane, tablePane, infoPane1, btPane1, tablePane1, tablePane2, tablePane4, tablePane5,
-			tablePane6, tablePane7, tablePane8, tablePane9, card0;
-	JTextField txtMaCongTo, txtMaKhachHang, txtNameKhachHang, txtDiachi, txtDienthoai, txtEmail, txtMaCongTo1,
-			txtChuKyNhap, txtChiSoCongTo, txtMaKhachHang1, txtChuKyNhap7, txtChuKyNhap8, txtChuKyNhaP8, txtChuKyNhap9,
-			txtMaBienLai;
-	JComboBox cbPhuong, cbQuan, cbPhuong2, cbQuan2, cbPhuong5, cbQuan5;
+			tablePane6, tablePane7, tablePane8, tablePane9, card0, Panectdien, btPane5;
+	JTextField txtMaKhachHang, txtNameKhachHang, txtDiachi, txtDienthoai, txtEmail, txtChuKyNhap, txtChiSoCongTo,
+			txtMaKhachHang1, txtChuKyNhap7, txtChuKyNhap8, txtChuKyNhaP8, txtChuKyNhap9, txtMaBienLai, txtTimKiem,
+			txtTimKiem1, txtMaCongToDien, txtTimKiem5;
+	JComboBox cbPhuong, cbQuan, cbPhuong2, cbQuan2, cbPhuong5, cbQuan5, cbCongToDien, cbCongToDien1;
 	JButton btAdd, btRepair, btDelete, btExit, btAdd1, btRepair1, btDelete1, btExit1, btKhachHang, btBienLai,
 			btDSKHTQuan, btdsttdAll, btdsttkhuvuc, btdsttoneKH, btdstttheonam, btdstttkhoangtg, btdstttheoky, btdisplay,
-			btdisplay7, btdisplay8, btdisplay9, btfind, btLamMoi, btfind1, btLamMoi1, btdanhsach;
-	JTable jTable, jTable1, jTable2, jTable4, jTable5, jTable6, jTable7, jTable8, jTable9;
-	DefaultTableModel dtm, dtm1, dtm2, dtm4, dtm5, dtm6, dtm7, dtm8, dtm9;
+			btdisplay7, btdisplay8, btdisplay9, btfind, btLamMoi, btfind1, btLamMoi1, btdanhsach, btCongToDien, btAdd5,
+			btRepair5, btDelete5, btfind5, btLamMoi5, btExit5;
+	JTable jTable, jTable1, jTable2, jTable4, jTable5;
+	JLabel lbTKiem, lbTKiem1, lbTKiem5;
+	JRadioButton rad1, rad2, rad3, rad4, rad5, rad6, rad7;
+	DefaultTableModel dtm, dtm1, dtm2, dtm4, dtm5;
 	KhachHangDAO khachHangDAO;
 	BienLaiDAO bienLaiDao;
 	BaoCaoDAO baoCaoDAO;
+	CongToDienDAO congToDienDAO;
 	ArrayList<Quan> list;
 	ArrayList<Phuong> list1;
+	ArrayList<CongToDien> list2;
 	TienDien tienDien;
 	String tenQuan;
 	UtilDateModel model;
 	Properties p;
 	JDatePanelImpl datePanel;
 	JDatePickerImpl datePicker;
+	ButtonGroup grouprdo, group1rdo;
 
 	/**
 	 * Thêm các mục
@@ -121,6 +130,7 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 		bienLaiDao = new BienLaiDAO();
 		baoCaoDAO = new BaoCaoDAO();
 		tienDien = new TienDien();
+		congToDienDAO = new CongToDienDAO();
 
 		//
 		JPanel pnBorder = new JPanel();
@@ -143,34 +153,25 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 		btBienLai = new JButton("Biên Lai");
 		JLabel lbBaoCao = new JLabel("Thống kê báo cáo");
 		btDSKHTQuan = new JButton("Khách hàng theo quận , phường");
-		btdsttdAll = new JButton("Tình hình tất cả khách hàng tiêu thụ");
-		btdsttkhuvuc = new JButton("Khách hàng tiêu thụ theo khu vực");
-		btdsttoneKH = new JButton("Tình hình tiêu thụ của 1 khách hàng");
-		btdstttheonam = new JButton("Tình hình tiêu thụ theo năm");
-		btdstttkhoangtg = new JButton("Tình hình tiêu thụ khoảng thời gian");
-		btdstttheoky = new JButton("Tình hình tiêu thụ theo chu kỳ");
+		btdsttdAll = new JButton("Tình hình tiêu thụ của khách hàng");
+		btCongToDien = new JButton("Công tơ điện");
+
 		JPanel layout = new JPanel();
 		pnWest.setLayout(new BoxLayout(pnWest, BoxLayout.Y_AXIS));
 		layout.add(lbQuanLy);
+		layout.add(btCongToDien);
 		layout.add(btKhachHang);
 		layout.add(btBienLai);
 		layout.add(lbBaoCao);
 		layout.add(btDSKHTQuan);
 		layout.add(btdsttdAll);
-		layout.add(btdsttkhuvuc);
-		layout.add(btdsttoneKH);
-		layout.add(btdstttheonam);
-		layout.add(btdstttkhoangtg);
-		layout.add(btdstttheoky);
+
+		btCongToDien.setPreferredSize(new Dimension(250, 30));
 		btKhachHang.setPreferredSize(new Dimension(250, 30));
 		btBienLai.setPreferredSize(new Dimension(250, 30));
 		btDSKHTQuan.setPreferredSize(new Dimension(250, 30));
 		btdsttdAll.setPreferredSize(new Dimension(250, 30));
-		btdsttkhuvuc.setPreferredSize(new Dimension(250, 30));
-		btdsttoneKH.setPreferredSize(new Dimension(250, 30));
-		btdstttheonam.setPreferredSize(new Dimension(250, 30));
-		btdstttkhoangtg.setPreferredSize(new Dimension(250, 30));
-		btdstttheoky.setPreferredSize(new Dimension(250, 30));
+
 		pnWest.setPreferredSize(new Dimension(250, 700));
 		pnWest.add(layout);
 		Border border2 = BorderFactory.createLineBorder(Color.RED);
@@ -201,34 +202,39 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 
 		// PHẦN TIÊU ĐỀ
 		JPanel TitlePane = new JPanel();
-		JLabel txtTitle = new JLabel("Quản lý khách hàng");
+		JLabel txtTitle = new JLabel("QUẢN LÝ KHÁCH HÀNG");
 		txtTitle.setFont(new Font("Serif", Font.BOLD, 20));
 		TitlePane.add(txtTitle);
 		TitlePane.setBackground(Color.WHITE);
 		card1.add(TitlePane);
 
 		// CÁC TRƯỜNG NHẬP DỮ LIỆU
-		txtMaCongTo = new JTextField(15);
 		txtMaKhachHang = new JTextField(15);
 		txtNameKhachHang = new JTextField(15);
 		txtDiachi = new JTextField(15);
 		cbPhuong = new JComboBox();
+		cbPhuong.addItem("Chọn Phường");
 		cbQuan = new JComboBox();
+		cbQuan.addItem("Chọn Quận");
 		txtDienthoai = new JTextField(15);
 		txtEmail = new JTextField(15);
+		cbCongToDien = new JComboBox<>();
+		cbCongToDien.setPreferredSize(new Dimension(170, 25));
+		cbQuan.setPreferredSize(new Dimension(170, 25));
+		cbPhuong.setPreferredSize(new Dimension(170, 25));
 
 		infoPane = new JPanel();
 		JPanel info1 = new JPanel();
 		infoPane.setLayout(new GridBagLayout());
 		info1.setLayout(new GridBagLayout());
-		addItem(infoPane, new JLabel("Mã Khách Hàng:"), 0, 0, 1, 1, GridBagConstraints.EAST);
-		addItem(infoPane, new JLabel("Họ Tên Khách Hàng:"), 0, 1, 1, 1, GridBagConstraints.EAST);
+		addItem(infoPane, new JLabel("Mã Khách Hàng (*):"), 0, 0, 1, 1, GridBagConstraints.EAST);
+		addItem(infoPane, new JLabel("Họ Tên Khách Hàng (*):"), 0, 1, 1, 1, GridBagConstraints.EAST);
 		addItem(info1, new JLabel("Địa Chỉ:"), 0, 0, 1, 1, GridBagConstraints.EAST);
-		addItem(info1, new JLabel("Phường:"), 0, 2, 1, 1, GridBagConstraints.EAST);
-		addItem(info1, new JLabel("Quận:"), 0, 1, 1, 1, GridBagConstraints.EAST);
-		addItem(info1, new JLabel("Điện thoại:"), 0, 3, 1, 1, GridBagConstraints.EAST);
+		addItem(info1, new JLabel("Phường (*):"), 0, 2, 1, 1, GridBagConstraints.EAST);
+		addItem(info1, new JLabel("Quận (*):"), 0, 1, 1, 1, GridBagConstraints.EAST);
+		addItem(info1, new JLabel("Điện thoại (*):"), 0, 3, 1, 1, GridBagConstraints.EAST);
 		addItem(infoPane, new JLabel("Email:"), 0, 2, 1, 1, GridBagConstraints.EAST);
-		addItem(infoPane, new JLabel("Mã công tơ điện:"), 0, 3, 1, 1, GridBagConstraints.EAST);
+		addItem(infoPane, new JLabel("Mã công tơ điện (*):"), 0, 3, 1, 1, GridBagConstraints.EAST);
 
 		addItem(infoPane, txtMaKhachHang, 1, 0, 1, 1, GridBagConstraints.WEST);
 		addItem(infoPane, txtNameKhachHang, 1, 1, 2, 1, GridBagConstraints.WEST);
@@ -237,7 +243,7 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 		addItem(info1, cbQuan, 1, 1, 2, 1, GridBagConstraints.WEST);
 		addItem(info1, txtDienthoai, 1, 3, 2, 1, GridBagConstraints.WEST);
 		addItem(infoPane, txtEmail, 1, 2, 2, 1, GridBagConstraints.WEST);
-		addItem(infoPane, txtMaCongTo, 1, 3, 2, 1, GridBagConstraints.WEST);
+		addItem(infoPane, cbCongToDien, 1, 3, 2, 1, GridBagConstraints.WEST);
 
 		list = khachHangDAO.getAllQuan();
 		for (int i = 0; i < list.size(); i++) {
@@ -253,16 +259,21 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 				cbPhuong.removeAllItems();
 				list1 = khachHangDAO.getAllPhuong(tenQuan);
 				for (int i = 0; i < list1.size(); i++) {
-
 					cbPhuong.addItem(list1.get(i));
 				}
+				cbPhuong.addItem("Chọn Phường");
 			}
 		});
 		list1 = khachHangDAO.getAllPhuong(cbQuan.getSelectedItem().toString());
 		for (int i = 0; i < list1.size(); i++) {
-
 			cbPhuong.addItem(list1.get(i));
 		}
+
+		list2 = congToDienDAO.getAllCongToDien();
+		for (int i = 0; i < list2.size(); i++) {
+			cbCongToDien.addItem(list2.get(i));
+		}
+
 		JPanel infoChung = new JPanel();
 		infoChung.setLayout(new BoxLayout(infoChung, BoxLayout.X_AXIS));
 		infoChung.add(infoPane);
@@ -271,28 +282,56 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 		infoPane.setBackground(Color.WHITE);
 		card1.add(infoChung);
 
+		JPanel PaneInfor = new JPanel();
+		JLabel lbinfor = new JLabel("(*) Thông tin cần phải nhập");
+		PaneInfor.add(lbinfor);
+		PaneInfor.setBackground(Color.WHITE);
+		card1.add(PaneInfor);
+
 		// CÁC NÚT THÊM SỬA XÓA
 		btPane = new JPanel();
 		btAdd = new JButton("Thêm");
 		btRepair = new JButton("Sửa");
 		btDelete = new JButton("Xóa");
-		btfind = new JButton("Tìm kiếm");
 		btLamMoi = new JButton("Làm mới");
 		btExit = new JButton("Thoát");
+
 		btPane.add(btAdd);
 		btPane.add(btRepair);
 		btPane.add(btDelete);
-		btPane.add(btfind);
 		btPane.add(btLamMoi);
 		btPane.add(btExit);
 		pnCenter.add(btPane);
 		btPane.setBackground(Color.WHITE);
+
+		btRepair.setEnabled(false);
+		btDelete.setEnabled(false);
+
+		btLamMoi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				btAdd.setEnabled(true);
+				btRepair.setEnabled(false);
+				btDelete.setEnabled(false);
+			}
+		});
+
 		card1.add(btPane);
+
+		JPanel PaneBT = new JPanel();
+		lbTKiem = new JLabel("Tìm kiếm:");
+		btfind = new JButton("Tìm kiếm thông tin");
+		txtTimKiem = new JTextField(15);
+		PaneBT.add(lbTKiem);
+		PaneBT.add(txtTimKiem);
+		PaneBT.add(btfind);
+		PaneBT.setBackground(Color.WHITE);
+		card1.add(PaneBT);
 
 		// BẢNG HIỂN THỊ BẢNG DANH SÁCH KHÁCH HÀNG
 		tablePane = new JPanel();
 		Border border = BorderFactory.createLineBorder(Color.RED);
 		TitledBorder titledBorder = BorderFactory.createTitledBorder(border, "Danh sách khách hàng");
+
 		dtm = new DefaultTableModel();
 		dtm.addColumn("Mã khách hàng");
 		dtm.addColumn("Họ tên khách hàng");
@@ -341,7 +380,11 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 				String s6 = (String) jTable.getValueAt(row, 6);
 				txtEmail.setText(s6);
 				String s7 = (String) jTable.getValueAt(row, 7);
-				txtMaCongTo.setText(s7);
+				cbCongToDien.getModel().setSelectedItem(s7);
+
+				btAdd.setEnabled(false);
+				btRepair.setEnabled(true);
+				btDelete.setEnabled(true);
 			}
 		});
 
@@ -361,7 +404,7 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 
 		// TIÊU ĐỀ
 		JPanel titlePane1 = new JPanel();
-		JLabel txtTitle1 = new JLabel("Quản lý biên lai");
+		JLabel txtTitle1 = new JLabel("QUẢN LÝ BIÊN LAI");
 		txtTitle1.setFont(new Font("Serif", Font.BOLD, 20));
 		titlePane1.add(txtTitle1);
 		titlePane1.setBackground(Color.WHITE);
@@ -370,35 +413,49 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 		// CÁC TRƯỜNG NHẬP DỮ LIỆU
 
 		model = new UtilDateModel();
+		model.setSelected(true);
 		p = new Properties();
 		p.put("text.today", "today");
 		p.put("text.month", "month");
 		p.put("text.year", "year");
 		datePanel = new JDatePanelImpl(model, p);
+		// datePicker.setValue(LocalDate.now());
 		datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
 		datePicker.setBounds(230, 30, 110, 30);
 
 		txtMaBienLai = new JTextField(15);
-		txtMaCongTo1 = new JTextField(15);
 		txtChuKyNhap = new JTextField(15);
 		txtChiSoCongTo = new JTextField(15);
+		cbCongToDien1 = new JComboBox<>();
+		cbCongToDien1.setPreferredSize(new Dimension(170, 25));
 
 		infoPane1 = new JPanel();
 		infoPane1.setLayout(new GridBagLayout());
-		addItem(infoPane1, new JLabel("Mã biên lai"), 0, 0, 1, 1, GridBagConstraints.EAST);
-		addItem(infoPane1, new JLabel("Mã Công Tơ:"), 0, 1, 1, 1, GridBagConstraints.EAST);
-		addItem(infoPane1, new JLabel("Ngày nhập:"), 0, 2, 1, 1, GridBagConstraints.EAST);
-		addItem(infoPane1, new JLabel("Chu kỳ nhập:"), 0, 3, 1, 1, GridBagConstraints.EAST);
-		addItem(infoPane1, new JLabel("Chỉ số công tơ:"), 0, 4, 1, 1, GridBagConstraints.EAST);
+		addItem(infoPane1, new JLabel("Mã biên lai (*)"), 0, 0, 1, 1, GridBagConstraints.EAST);
+		addItem(infoPane1, new JLabel("Mã Công Tơ (*):"), 0, 1, 1, 1, GridBagConstraints.EAST);
+		addItem(infoPane1, new JLabel("Ngày nhập (*):"), 0, 2, 1, 1, GridBagConstraints.EAST);
+		addItem(infoPane1, new JLabel("Chu kỳ nhập (*):"), 0, 3, 1, 1, GridBagConstraints.EAST);
+		addItem(infoPane1, new JLabel("Chỉ số công tơ (*):"), 0, 4, 1, 1, GridBagConstraints.EAST);
 
 		addItem(infoPane1, txtMaBienLai, 1, 0, 2, 1, GridBagConstraints.WEST);
-		addItem(infoPane1, txtMaCongTo1, 1, 1, 2, 1, GridBagConstraints.WEST);
+		addItem(infoPane1, cbCongToDien1, 1, 1, 2, 1, GridBagConstraints.WEST);
 		addItem(infoPane1, datePicker, 1, 2, 1, 1, GridBagConstraints.WEST);
 		addItem(infoPane1, txtChuKyNhap, 1, 3, 2, 1, GridBagConstraints.WEST);
 		addItem(infoPane1, txtChiSoCongTo, 1, 4, 2, 1, GridBagConstraints.WEST);
 
+		list2 = congToDienDAO.getAllCongToDien();
+		for (int i = 0; i < list2.size(); i++) {
+			cbCongToDien1.addItem(list2.get(i));
+		}
+
 		infoPane1.setBackground(Color.WHITE);
 		card2.add(infoPane1);
+
+		JPanel PaneInfor1 = new JPanel();
+		JLabel lbinfor1 = new JLabel("(*) Thông tin cần phải nhập");
+		PaneInfor1.add(lbinfor1);
+		PaneInfor1.setBackground(Color.WHITE);
+		card2.add(PaneInfor1);
 
 		// CÁC NÚT THÊM SỬA XÓA
 		btPane1 = new JPanel();
@@ -411,12 +468,34 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 		btPane1.add(btAdd1);
 		btPane1.add(btRepair1);
 		btPane1.add(btDelete1);
-		btPane1.add(btfind1);
+
 		btPane1.add(btLamMoi1);
 		btPane1.add(btExit1);
 		pnCenter.add(btPane1);
 		btPane1.setBackground(Color.WHITE);
+
+		btRepair1.setEnabled(false);
+		btDelete1.setEnabled(false);
+
+		btLamMoi1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				btAdd1.setEnabled(true);
+				btRepair1.setEnabled(false);
+				btDelete1.setEnabled(false);
+			}
+		});
+
 		card2.add(btPane1);
+
+		JPanel PaneBT1 = new JPanel();
+		lbTKiem1 = new JLabel("Tìm kiếm:");
+		btfind1 = new JButton("Tìm kiếm thông tin");
+		txtTimKiem1 = new JTextField(15);
+		PaneBT1.add(lbTKiem1);
+		PaneBT1.add(txtTimKiem1);
+		PaneBT1.add(btfind1);
+		PaneBT1.setBackground(Color.WHITE);
+		card2.add(PaneBT1);
 
 		// BẢNG HIỂN THỊ DANH SÁCH BIÊN LAI
 		tablePane1 = new JPanel();
@@ -455,21 +534,28 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 				String s = (String) jTable1.getValueAt(row, 0);
 				txtMaBienLai.setText(s);
 				String s1 = (String) jTable1.getValueAt(row, 1);
-				txtMaCongTo1.setText(s1);
+				cbCongToDien1.getModel().setSelectedItem(s1);
 				String s2 = (String) jTable1.getValueAt(row, 2);
 				datePicker.getJFormattedTextField().setText(s2);
 				String s3 = (String) jTable1.getValueAt(row, 3);
 				txtChuKyNhap.setText(s3);
 				String s4 = (String) jTable1.getValueAt(row, 4);
 				txtChiSoCongTo.setText(s4);
+
+				btAdd1.setEnabled(false);
+				btRepair1.setEnabled(true);
+				btDelete1.setEnabled(true);
 			}
 		});
 
 		ArrayList<BienLai> listds1 = bienLaiDao.getAllBienLai();
 		dtm1.setRowCount(0);
+		String datePattern = "dd-MM-yyyy";
+		SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
 		for (BienLai bienLai : listds1) {
 			dtm1.addRow(new String[] { "" + bienLai.getMaBienLai(), bienLai.getMaCongTo().getMaCongTo(),
-					"" + bienLai.getNgayNhap(), "" + bienLai.getChuKyNhap(), bienLai.getChiSoCongTo() });
+					dateFormatter.format(bienLai.getNgayNhap()), "" + bienLai.getChuKyNhap(),
+					bienLai.getChiSoCongTo() });
 		}
 
 		card2.setLayout(new BoxLayout(card2, BoxLayout.Y_AXIS));
@@ -481,7 +567,7 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 
 		// PHẦN TIÊU ĐỀ
 		JPanel titlePan3 = new JPanel();
-		JLabel txtTitle3 = new JLabel("Danh sách khách hàng theo quận, phường");
+		JLabel txtTitle3 = new JLabel("DANH SÁCH KHÁCH HÀNG THEO QUẬN, PHƯỜNG");
 		txtTitle3.setFont(new Font("Serif", Font.BOLD, 20));
 		titlePan3.add(txtTitle3);
 		titlePan3.setBackground(Color.WHITE);
@@ -562,7 +648,7 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 		jTable2.setDefaultEditor(Object.class, null);
 		jTable2.getTableHeader().setReorderingAllowed(false);
 		JScrollPane jScrollPane2 = new JScrollPane(jTable2);
-		jScrollPane2.setPreferredSize(new Dimension(800, 400));
+		jScrollPane2.setPreferredSize(new Dimension(1000, 400));
 		tablePane2.add(jScrollPane2);
 		card3.setLayout(new BoxLayout(card3, BoxLayout.Y_AXIS));
 		card3.add(tablePane2);
@@ -572,10 +658,164 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 
 		// PHẦN TIÊU ĐỀ
 		JPanel titlePan4 = new JPanel();
-		JLabel txtTitle4 = new JLabel("Danh sách tiêu thụ của tất cả khách hàng");
+		JLabel txtTitle4 = new JLabel("DANH SÁCH TIÊU THỤ CỦA KHÁCH HÀNG");
 		txtTitle4.setFont(new Font("Serif", Font.BOLD, 20));
 		titlePan4.add(txtTitle4);
+		titlePan4.setBackground(Color.WHITE);
 		card4.add(titlePan4);
+
+		// PHẦN RADIO
+		cbQuan5 = new JComboBox<>();
+		cbPhuong5 = new JComboBox<>();
+		txtMaKhachHang1 = new JTextField(15);
+		txtChuKyNhap7 = new JTextField(15);
+		txtChuKyNhap9 = new JTextField(15);
+		txtChuKyNhap8 = new JTextField(15);
+		txtChuKyNhaP8 = new JTextField(15);
+
+		JPanel rdoPane = new JPanel();
+		JPanel rdoPane1 = new JPanel();
+		Border bor = BorderFactory.createLineBorder(Color.RED);
+		TitledBorder titlebor = new TitledBorder(bor, "Khách Hàng:");
+		rdoPane.setBorder(titlebor);
+		Border bor1 = BorderFactory.createLineBorder(Color.RED);
+		TitledBorder titlebor1 = new TitledBorder(bor1, "Thời gian:");
+		rdoPane1.setBorder(titlebor1);
+		rdoPane.setLayout(new GridBagLayout());
+		rdoPane1.setLayout(new GridBagLayout());
+		addItem(rdoPane, rad1 = new JRadioButton("Tất cả khách hàng"), 0, 0, 1, 1, GridBagConstraints.WEST);
+		addItem(rdoPane, rad2 = new JRadioButton("Khách hàng theo khu vực Quận"), 0, 1, 1, 1, GridBagConstraints.WEST);
+		addItem(rdoPane, rad3 = new JRadioButton("Khách hàng theo khu vực Phường"), 0, 2, 1, 1,
+				GridBagConstraints.WEST);
+		addItem(rdoPane, rad4 = new JRadioButton("Khách hàng cụ thể"), 0, 3, 1, 1, GridBagConstraints.WEST);
+		addItem(rdoPane1, rad5 = new JRadioButton("Theo năm"), 0, 0, 1, 1, GridBagConstraints.WEST);
+		addItem(rdoPane1, rad6 = new JRadioButton("Theo khoảng thời gian: Từ tháng/năm:"), 0, 1, 1, 1,
+				GridBagConstraints.WEST);
+		addItem(rdoPane1, new JLabel("Đến tháng/năm:"), 0, 2, 1, 1, GridBagConstraints.EAST);
+		addItem(rdoPane1, rad7 = new JRadioButton("Theo chu kỳ (Chọn tháng - năm)"), 0, 3, 1, 1,
+				GridBagConstraints.WEST);
+
+		addItem(rdoPane, cbQuan5, 1, 1, 1, 1, GridBagConstraints.WEST);
+		addItem(rdoPane, cbPhuong5, 1, 2, 2, 1, GridBagConstraints.WEST);
+		addItem(rdoPane, txtMaKhachHang1, 1, 3, 2, 1, GridBagConstraints.WEST);
+		addItem(rdoPane1, txtChuKyNhap7, 1, 0, 2, 1, GridBagConstraints.WEST);
+		addItem(rdoPane1, txtChuKyNhap8, 1, 1, 2, 1, GridBagConstraints.WEST);
+		addItem(rdoPane1, txtChuKyNhaP8, 1, 2, 2, 1, GridBagConstraints.WEST);
+		addItem(rdoPane1, txtChuKyNhap9, 1, 3, 2, 1, GridBagConstraints.WEST);
+
+		list = khachHangDAO.getAllQuan();
+		for (int i = 0; i < list.size(); i++) {
+			cbQuan5.addItem(list.get(i));
+		}
+
+		list1 = baoCaoDAO.getAllPhuong();
+		for (int i = 0; i < list1.size(); i++) {
+			cbPhuong5.addItem(list1.get(i));
+		}
+
+		grouprdo = new ButtonGroup();
+		grouprdo.add(rad1);
+		grouprdo.add(rad2);
+		grouprdo.add(rad3);
+		grouprdo.add(rad4);
+		group1rdo = new ButtonGroup();
+		group1rdo.add(rad5);
+		group1rdo.add(rad6);
+		group1rdo.add(rad7);
+		JPanel PaneChungrdo = new JPanel();
+		PaneChungrdo.add(rdoPane);
+		PaneChungrdo.add(rdoPane1);
+		rad1.setBackground(Color.WHITE);
+		rad2.setBackground(Color.WHITE);
+		rad3.setBackground(Color.WHITE);
+		rad4.setBackground(Color.WHITE);
+		rad5.setBackground(Color.WHITE);
+		rad6.setBackground(Color.WHITE);
+		rad7.setBackground(Color.WHITE);
+		rdoPane.setBackground(Color.WHITE);
+		rdoPane1.setBackground(Color.WHITE);
+		PaneChungrdo.setBackground(Color.WHITE);
+
+		rad1.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cbQuan5.setEnabled(false);
+				cbPhuong5.setEnabled(false);
+				txtMaKhachHang1.setEditable(false);
+			}
+		});
+
+		rad2.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cbQuan5.setEnabled(true);
+				cbPhuong5.setEnabled(false);
+				txtMaKhachHang1.setEditable(false);
+			}
+		});
+
+		rad4.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cbQuan5.setEnabled(false);
+				cbPhuong5.setEnabled(false);
+				txtMaKhachHang1.setEditable(true);
+			}
+		});
+
+		rad5.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				txtChuKyNhap7.setEditable(true);
+				txtChuKyNhap8.setEditable(false);
+				txtChuKyNhaP8.setEditable(false);
+				txtChuKyNhap9.setEditable(false);
+			}
+		});
+
+		rad6.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				txtChuKyNhap7.setEditable(false);
+				txtChuKyNhap8.setEditable(true);
+				txtChuKyNhaP8.setEditable(true);
+				txtChuKyNhap9.setEditable(false);
+			}
+		});
+
+		rad7.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				txtChuKyNhap7.setEditable(false);
+				txtChuKyNhap8.setEditable(false);
+				txtChuKyNhaP8.setEditable(false);
+				txtChuKyNhap9.setEditable(true);
+			}
+		});
+
+		rad3.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cbQuan5.setEnabled(false);
+				cbPhuong5.setEnabled(true);
+				txtMaKhachHang1.setEditable(false);
+			}
+		});
+		card4.add(PaneChungrdo);
+
+		// PHẦN NÚT HIỂN THỊ DANH SÁCH
+		JPanel paneBT = new JPanel();
+		btdanhsach = new JButton("Xem danh sách");
+		paneBT.add(btdanhsach);
+		paneBT.setBackground(Color.WHITE);
+		card4.add(paneBT);
 
 		// PHẦN HIỂN THỊ DANH SÁCH KHÁCH HÀNG
 		tablePane4 = new JPanel();
@@ -584,7 +824,8 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 		dtm4 = new DefaultTableModel();
 		dtm4.addColumn("Mã khách hàng");
 		dtm4.addColumn("Họ tên khách hàng");
-		dtm4.addColumn("Địa chỉ");
+		dtm4.addColumn("Phường");
+		dtm4.addColumn("Quận");
 		dtm4.addColumn("Mã Công tơ");
 		dtm4.addColumn("Chu kỳ nhập");
 		dtm4.addColumn("Chỉ số công tơ");
@@ -595,320 +836,128 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 		jTable4.setDefaultEditor(Object.class, null);
 		jTable4.getTableHeader().setReorderingAllowed(false);
 		JScrollPane jScrollPane4 = new JScrollPane(jTable4);
-		jScrollPane4.setPreferredSize(new Dimension(1000, 600));
+		jScrollPane4.setPreferredSize(new Dimension(1000, 400));
 		tablePane4.add(jScrollPane4);
 		card4.setLayout(new BoxLayout(card4, BoxLayout.Y_AXIS));
 		card4.add(tablePane4);
 
-		ArrayList<KhachHang> listdsbc = tienDien.tienDien();
-		for (int j = 0; j < listdsbc.size(); j++) {
-			dtm4.addRow(new String[] { listdsbc.get(j).getMaKhachHang(), listdsbc.get(j).getNameKhachHang(),
-					listdsbc.get(j).getAddress(), listdsbc.get(j).getMaCongTo().getMaCongTo(),
-					"" + listdsbc.get(j).getBienLai().getChuKyNhap(), listdsbc.get(j).getBienLai().getChiSoCongTo(),
-					"" + listdsbc.get(j).getTienDien() });
-		}
-
-		// ************BÁO CÁO KHÁCH HÀNG TIÊU THỤ THEO KHU VỰC*************
+		// **************************QUẢN LÝ CÔNG TƠ ĐIỆN******************************
 		JPanel card5 = new JPanel();
 
-		// PHẦN TIÊU ĐỀ
 		JPanel titlePan5 = new JPanel();
-		JLabel txtTitle5 = new JLabel("Danh sách khách hàng tiêu thụ theo khu vực");
+		JLabel txtTitle5 = new JLabel("QUẢN LÝ CÔNG TƠ ĐIỆN");
 		txtTitle5.setFont(new Font("Serif", Font.BOLD, 20));
 		titlePan5.add(txtTitle5);
 		titlePan5.setBackground(Color.WHITE);
 		card5.add(titlePan5);
 
-		// PHẦN HIỂN THỊ COMBOBOX
-		JPanel quanPaneChung5 = new JPanel();
-		JPanel quanPane5 = new JPanel();
-		JPanel quanPanE = new JPanel();
-		cbPhuong5 = new JComboBox();
-		cbQuan5 = new JComboBox();
-		quanPane.setLayout(new GridBagLayout());
-		quanPane1.setLayout(new GridBagLayout());
+		// PHẦN NHẬP DỮ LIỆU
+		txtMaCongToDien = new JTextField(15);
 
-		addItem(quanPanE, new JLabel("Phường:"), 0, 0, 1, 1, GridBagConstraints.EAST);
-		addItem(quanPane5, new JLabel("Quận:"), 0, 1, 1, 1, GridBagConstraints.EAST);
-		addItem(quanPanE, cbPhuong5, 1, 0, 2, 1, GridBagConstraints.WEST);
-		addItem(quanPane5, cbQuan5, 1, 1, 2, 1, GridBagConstraints.WEST);
+		Panectdien = new JPanel();
+		Panectdien.setLayout(new GridBagLayout());
+		addItem(Panectdien, new JLabel("Mã công tơ (*):"), 0, 0, 1, 1, GridBagConstraints.EAST);
 
-		list = khachHangDAO.getAllQuan();
-		for (int i = 0; i < list.size(); i++) {
-			cbQuan5.addItem(list.get(i));
-		}
+		addItem(Panectdien, txtMaCongToDien, 1, 0, 2, 1, GridBagConstraints.WEST);
 
-		cbQuan5.addActionListener(new ActionListener() {
+		Panectdien.setBackground(Color.WHITE);
+		card5.add(Panectdien);
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		JPanel PaneInfor5 = new JPanel();
+		JLabel lbinfor5 = new JLabel("(*) Thông tin cần phải nhập");
+		PaneInfor5.add(lbinfor5);
+		PaneInfor5.setBackground(Color.WHITE);
+		card5.add(PaneInfor5);
 
-				tenQuan = cbQuan5.getSelectedItem().toString();
-				cbPhuong5.removeAllItems();
-				list1 = khachHangDAO.getAllPhuong(tenQuan);
-				for (int i = 0; i < list1.size(); i++) {
+		// PHẦN NÚT THÊM SỬA XÓA
+		btPane5 = new JPanel();
+		btAdd5 = new JButton("Thêm");
+		btRepair5 = new JButton("Sửa");
+		btDelete5 = new JButton("Xóa");
+		btfind5 = new JButton("Tìm kiếm");
+		btLamMoi5 = new JButton("Làm mới");
+		btExit5 = new JButton("Thoát");
+		btPane5.add(btAdd5);
+		btPane5.add(btRepair5);
+		btPane5.add(btDelete5);
 
-					cbPhuong5.addItem(list1.get(i));
-				}
+		btPane5.add(btLamMoi5);
+		btPane5.add(btExit5);
+		pnCenter.add(btPane5);
+		btPane5.setBackground(Color.WHITE);
+
+		btRepair5.setEnabled(false);
+		btDelete5.setEnabled(false);
+
+		btLamMoi5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				btAdd5.setEnabled(true);
+				btRepair5.setEnabled(false);
+				btDelete5.setEnabled(false);
 			}
 		});
 
-		list1 = khachHangDAO.getAllPhuong(cbQuan5.getSelectedItem().toString());
-		for (int i = 0; i < list1.size(); i++) {
+		card5.add(btPane5);
 
-			cbPhuong5.addItem(list1.get(i));
-		}
+		JPanel PaneBT5 = new JPanel();
+		lbTKiem5 = new JLabel("Tìm kiếm:");
+		btfind5 = new JButton("Tìm kiếm thông tin");
+		txtTimKiem5 = new JTextField(15);
+		PaneBT5.add(lbTKiem5);
+		PaneBT5.add(txtTimKiem5);
+		PaneBT5.add(btfind5);
+		PaneBT5.setBackground(Color.WHITE);
+		card5.add(PaneBT5);
 
-		quanPaneChung5.add(quanPanE);
-		quanPaneChung5.add(quanPane5);
-		card5.add(quanPaneChung5);
-		card5.setPreferredSize(new Dimension(1000, 650));
-		quanPanE.setBackground(Color.WHITE);
-		quanPane5.setBackground(Color.WHITE);
-		quanPaneChung5.setBackground(Color.WHITE);
-		card5.setLayout(new BoxLayout(card5, BoxLayout.Y_AXIS));
-
-		// NÚT XEM DANH SÁCH
-		JPanel paneBT = new JPanel();
-		btdanhsach = new JButton("Xem danh sách");
-		paneBT.add(btdanhsach);
-		paneBT.setBackground(Color.WHITE);
-		card5.add(paneBT);
-
-		// PHẦN BẢNG HIỂN THỊ DANH SÁCH KHÁCH HÀNG
+		// PHẦN HIỂN THỊ DANH SÁCH
 		tablePane5 = new JPanel();
 		Border border5 = BorderFactory.createLineBorder(Color.RED);
-		TitledBorder titledBorder5 = BorderFactory.createTitledBorder(border5, "Danh sách khách hàng");
+		TitledBorder titledBorder5 = BorderFactory.createTitledBorder(border, "Danh sách công tơ");
+
 		dtm5 = new DefaultTableModel();
-		dtm5.addColumn("Mã khách hàng");
-		dtm5.addColumn("Họ tên khách hàng");
-		dtm5.addColumn("Địa chỉ");
-		dtm5.addColumn("Phường");
-		dtm5.addColumn("Quận");
-		dtm5.addColumn("Mã công tơ");
-		dtm5.addColumn("Chu kỳ nhập");
-		dtm5.addColumn("Chỉ số công tơ");
-		dtm5.addColumn("Thành tiền");
+		dtm5.addColumn("Mã Công tơ");
 
 		tablePane5.setBorder(titledBorder5);
 		jTable5 = new JTable(dtm5);
 		jTable5.setDefaultEditor(Object.class, null);
 		jTable5.getTableHeader().setReorderingAllowed(false);
 		JScrollPane jScrollPane5 = new JScrollPane(jTable5);
-		jScrollPane5.setPreferredSize(new Dimension(1000, 500));
+		jScrollPane5.setPreferredSize(new Dimension(200, 400));
 		tablePane5.add(jScrollPane5);
-		card5.setLayout(new BoxLayout(card5, BoxLayout.Y_AXIS));
+
+		jTable5.addMouseListener(new MouseListener() {
+			public void mouseReleased(MouseEvent e) {
+			}
+
+			public void mousePressed(MouseEvent e) {
+			}
+
+			public void mouseExited(MouseEvent e) {
+			}
+
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			public void mouseClicked(MouseEvent e) {
+				int row = jTable5.getSelectedRow();
+				String s = (String) jTable5.getValueAt(row, 0);
+				txtMaCongToDien.setText(s);
+
+				btAdd5.setEnabled(false);
+				btRepair5.setEnabled(true);
+				btDelete5.setEnabled(true);
+			}
+		});
+
+		ArrayList<CongToDien> list = congToDienDAO.getAllCongToDien();
+		dtm5.setRowCount(0);
+		for (CongToDien congToDien2 : list) {
+			dtm5.addRow(new String[] { congToDien2.getMaCongTo() });
+		}
 		card5.add(tablePane5);
 
-		// *****************BÁO CÁO TÌNH HÌNH CỦA 1 KHÁCH HÀNG******************
-		JPanel card6 = new JPanel();
-
-		// PHẦN TIÊU ĐỀ
-		JPanel titlePan6 = new JPanel();
-		JLabel txtTitle6 = new JLabel("Danh sách tiêu thụ của một khách hàng cụ thể");
-		txtTitle6.setFont(new Font("Serif", Font.BOLD, 20));
-		titlePan6.add(txtTitle6);
-		titlePan6.setBackground(Color.WHITE);
-		card6.add(titlePan6);
-
-		// PHẦN NHẬP DỮ LIỆU
-		txtMaKhachHang1 = new JTextField();
-		JPanel txtPane6 = new JPanel();
-		txtPane6.setLayout(new GridBagLayout());
-		addItem(txtPane6, new JLabel("Mã khách hàng:"), 0, 0, 1, 1, GridBagConstraints.EAST);
-		addItem(txtPane6, txtMaKhachHang1, 1, 0, 2, 1, GridBagConstraints.WEST);
-		txtMaKhachHang1.setPreferredSize(new Dimension(200, 20));
-		txtPane6.setBackground(Color.WHITE);
-		card6.add(txtPane6);
-
-		// NÚT XEM DANH SÁCH
-		JPanel btPane6 = new JPanel();
-		btdisplay = new JButton("Xem danh sách");
-		btPane6.add(btdisplay);
-		btPane6.setBackground(Color.WHITE);
-		card6.add(btPane6);
-
-		// PHẦN BẢNG HIỂN THỊ DANH SÁCH KHÁCH HÀNG
-		tablePane6 = new JPanel();
-		Border border6 = BorderFactory.createLineBorder(Color.RED);
-		TitledBorder titledBorder6 = BorderFactory.createTitledBorder(border6, "Danh sách khách hàng");
-		dtm6 = new DefaultTableModel();
-		dtm6.addColumn("Mã khách hàng");
-		dtm6.addColumn("Họ tên khách hàng");
-		dtm6.addColumn("Địa chỉ");
-		dtm6.addColumn("Phường");
-		dtm6.addColumn("Quận");
-		dtm6.addColumn("Mã công tơ");
-		dtm6.addColumn("Chu kỳ nhập");
-		dtm6.addColumn("Chỉ số công tơ");
-		dtm6.addColumn("Thành tiền");
-
-		tablePane6.setBorder(titledBorder6);
-		jTable6 = new JTable(dtm6);
-		jTable6.setDefaultEditor(Object.class, null);
-		jTable6.getTableHeader().setReorderingAllowed(false);
-		JScrollPane jScrollPane6 = new JScrollPane(jTable6);
-		jScrollPane6.setPreferredSize(new Dimension(1000, 500));
-		tablePane6.add(jScrollPane6);
-		card6.setLayout(new BoxLayout(card6, BoxLayout.Y_AXIS));
-		card6.add(tablePane6);
-
-		// *********BÁO CÁO TÌNH HÌNH TIÊU THỊ ĐIỆN CỦA KHÁCH HÀNG THEO NĂM**********
-		JPanel card7 = new JPanel();
-
-		// PHẦN TIÊU ĐỀ
-		JPanel titlePan7 = new JPanel();
-		JLabel txtTitle7 = new JLabel("Danh sách tiêu thụ điện của khách hàng theo năm");
-		txtTitle7.setFont(new Font("Serif", Font.BOLD, 20));
-		titlePan7.add(txtTitle7);
-		titlePan7.setBackground(Color.WHITE);
-		card7.add(titlePan7);
-
-		// PHẦN NHẬP DỮ LIỆU
-		txtChuKyNhap7 = new JTextField();
-		JPanel txtPane7 = new JPanel();
-		txtPane7.setLayout(new GridBagLayout());
-		addItem(txtPane7, new JLabel("Nhập Năm:"), 0, 0, 1, 1, GridBagConstraints.EAST);
-		addItem(txtPane7, txtChuKyNhap7, 1, 0, 2, 1, GridBagConstraints.WEST);
-		txtChuKyNhap7.setPreferredSize(new Dimension(200, 20));
-		txtPane7.setBackground(Color.WHITE);
-		card7.add(txtPane7);
-
-		// PHẦN NÚT XEM DANH SÁCH
-		JPanel btPane7 = new JPanel();
-		btdisplay7 = new JButton("Xem danh sách");
-		btPane7.add(btdisplay7);
-		btPane7.setBackground(Color.WHITE);
-		card7.add(btPane7);
-
-		// PHẦN BẢNG HIỂN THỊ DANH SÁCH KHÁCH HÀNG
-		tablePane7 = new JPanel();
-		Border border7 = BorderFactory.createLineBorder(Color.RED);
-		TitledBorder titledBorder7 = BorderFactory.createTitledBorder(border7, "Danh sách khách hàng");
-		dtm7 = new DefaultTableModel();
-		dtm7.addColumn("Mã khách hàng");
-		dtm7.addColumn("Họ tên khách hàng");
-		dtm7.addColumn("Địa chỉ");
-		dtm7.addColumn("Mã công tơ");
-		dtm7.addColumn("Chu kỳ");
-		dtm7.addColumn("Chỉ số công tơ");
-		dtm7.addColumn("Thành tiền");
-
-		tablePane7.setBorder(titledBorder7);
-		jTable7 = new JTable(dtm7);
-		jTable7.setDefaultEditor(Object.class, null);
-		jTable7.getTableHeader().setReorderingAllowed(false);
-		JScrollPane jScrollPane7 = new JScrollPane(jTable7);
-		jScrollPane7.setPreferredSize(new Dimension(1000, 500));
-		tablePane7.add(jScrollPane7);
-		card7.setLayout(new BoxLayout(card7, BoxLayout.Y_AXIS));
-		card7.add(tablePane7);
-
-		// ***********BÁO CÁO TÌNH HÌNH KHÁCH HÀNG TIÊU THỤ TRONG KHOẢNG THỜI GIAN*****
-		JPanel card8 = new JPanel();
-
-		// PHẦN TIÊU ĐỀ
-		JPanel titlePan8 = new JPanel();
-		JLabel txtTitle8 = new JLabel("Danh sách khách hàng tiêu thụ theo khoảng thời gian");
-		txtTitle8.setFont(new Font("Serif", Font.BOLD, 20));
-		titlePan8.add(txtTitle8);
-		titlePan8.setBackground(Color.WHITE);
-		card8.add(titlePan8);
-
-		// PHẦN NHẬP DỮ LIỆU
-		txtChuKyNhap8 = new JTextField();
-		txtChuKyNhaP8 = new JTextField();
-		JPanel txtPane8 = new JPanel();
-		txtPane8.setLayout(new GridBagLayout());
-		addItem(txtPane8, new JLabel("Từ tháng/năm:"), 0, 0, 1, 1, GridBagConstraints.EAST);
-		addItem(txtPane8, txtChuKyNhap8, 1, 0, 2, 1, GridBagConstraints.WEST);
-		addItem(txtPane8, new JLabel("Đến tháng/năm:"), 0, 1, 1, 1, GridBagConstraints.EAST);
-		addItem(txtPane8, txtChuKyNhaP8, 1, 1, 2, 1, GridBagConstraints.WEST);
-		txtChuKyNhap8.setPreferredSize(new Dimension(200, 20));
-		txtChuKyNhaP8.setPreferredSize(new Dimension(200, 20));
-		txtPane8.setBackground(Color.WHITE);
-		card8.add(txtPane8);
-
-		// PHẦN NÚT XEM DANH SÁCH
-		JPanel btPane8 = new JPanel();
-		btdisplay8 = new JButton("Xem danh sách");
-		btPane8.add(btdisplay8);
-		btPane8.setBackground(Color.WHITE);
-		card8.add(btPane8);
-
-		// PHẦN BẢNG HIỂN THỊ DANH SÁCH
-		tablePane8 = new JPanel();
-		Border border8 = BorderFactory.createLineBorder(Color.RED);
-		TitledBorder titledBorder8 = BorderFactory.createTitledBorder(border8, "Danh sách khách hàng");
-		dtm8 = new DefaultTableModel();
-		dtm8.addColumn("Mã khách hàng");
-		dtm8.addColumn("Họ tên khách hàng");
-		dtm8.addColumn("Địa chỉ");
-		dtm8.addColumn("Mã công tơ");
-		dtm8.addColumn("Chu kỳ");
-		dtm8.addColumn("Chỉ số công tơ");
-		dtm8.addColumn("Thành tiền");
-
-		tablePane8.setBorder(titledBorder8);
-		jTable8 = new JTable(dtm8);
-		jTable8.setDefaultEditor(Object.class, null);
-		jTable8.getTableHeader().setReorderingAllowed(false);
-		JScrollPane jScrollPane8 = new JScrollPane(jTable8);
-		jScrollPane8.setPreferredSize(new Dimension(1000, 500));
-		tablePane8.add(jScrollPane8);
-		card8.setLayout(new BoxLayout(card8, BoxLayout.Y_AXIS));
-		card8.add(tablePane8);
-
-		// ********BÁO CÁO TÌNH HÌNH KHÁCH HÀNG TIÊU THỤ THEO CHU KỲ*************
-		JPanel card9 = new JPanel();
-
-		// PHẨN TIÊU ĐỀ
-		JPanel titlePan9 = new JPanel();
-		JLabel txtTitle9 = new JLabel("Danh sách khách hàng tiêu thụ theo chu kỳ");
-		txtTitle9.setFont(new Font("Serif", Font.BOLD, 20));
-		titlePan9.add(txtTitle9);
-		titlePan9.setBackground(Color.WHITE);
-		card9.add(titlePan9);
-
-		// PHẦN NHẬP DỮ LIỆU
-		txtChuKyNhap9 = new JTextField();
-		JPanel txtPane9 = new JPanel();
-		txtPane9.setLayout(new GridBagLayout());
-		addItem(txtPane9, new JLabel("Chu kỳ nhập:"), 0, 0, 1, 1, GridBagConstraints.EAST);
-		addItem(txtPane9, txtChuKyNhap9, 1, 0, 2, 1, GridBagConstraints.WEST);
-		txtChuKyNhap9.setPreferredSize(new Dimension(200, 20));
-		txtPane9.setBackground(Color.WHITE);
-		card9.add(txtPane9);
-
-		// PHẦN NÚT XEM DANH SÁCH
-		JPanel btPane9 = new JPanel();
-		btdisplay9 = new JButton("Xem danh sách");
-		btPane9.add(btdisplay9);
-		btPane9.setBackground(Color.WHITE);
-		card9.add(btPane9);
-
-		// PHẦN BẢNG HIỂN THỊ XEM DANH SÁCH KHÁCH HÀNG
-		tablePane9 = new JPanel();
-		Border border9 = BorderFactory.createLineBorder(Color.RED);
-		TitledBorder titledBorder9 = BorderFactory.createTitledBorder(border9, "Danh sách khách hàng");
-		dtm9 = new DefaultTableModel();
-		dtm9.addColumn("Mã khách hàng");
-		dtm9.addColumn("Họ tên khách hàng");
-		dtm9.addColumn("Địa chỉ");
-		dtm9.addColumn("Mã công tơ");
-		dtm9.addColumn("Chu kỳ");
-		dtm9.addColumn("Chỉ số công tơ");
-		dtm9.addColumn("Thành tiền");
-
-		tablePane9.setBorder(titledBorder9);
-		jTable9 = new JTable(dtm9);
-		jTable9.setDefaultEditor(Object.class, null);
-		jTable9.getTableHeader().setReorderingAllowed(false);
-		JScrollPane jScrollPane9 = new JScrollPane(jTable9);
-		jScrollPane9.setPreferredSize(new Dimension(1000, 500));
-		tablePane9.add(jScrollPane9);
-		card9.setLayout(new BoxLayout(card9, BoxLayout.Y_AXIS));
-		card9.add(tablePane9);
+		card5.setLayout(new BoxLayout(card5, BoxLayout.Y_AXIS));
+		card5.setPreferredSize(new Dimension(1000, 650));
 
 		// *******THÊM CÁC LAYOUT CON VÀ LAYOUT CHÍNH*********
 		cardLayout = new CardLayout();
@@ -918,11 +967,7 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 		cardPane.add(card2, "bienLai");
 		cardPane.add(card3, "baocaokh");
 		cardPane.add(card4, "baocaokh1");
-		cardPane.add(card5, "baocaokh2");
-		cardPane.add(card6, "baocaokh3");
-		cardPane.add(card7, "baocaokh4");
-		cardPane.add(card8, "baocaokh5");
-		cardPane.add(card9, "baocaokh6");
+		cardPane.add(card5, "congtodien");
 
 		pnCenter.add(cardPane);
 		getContentPane().add(pnBorder);
@@ -938,11 +983,6 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 		btBienLai.addActionListener(this);
 		btDSKHTQuan.addActionListener(this);
 		btdsttdAll.addActionListener(this);
-		btdsttkhuvuc.addActionListener(this);
-		btdsttoneKH.addActionListener(this);
-		btdstttheonam.addActionListener(this);
-		btdstttkhoangtg.addActionListener(this);
-		btdstttheoky.addActionListener(this);
 		btAdd.addActionListener(this);
 		btAdd1.addActionListener(this);
 		btfind.addActionListener(this);
@@ -950,16 +990,19 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 		btRepair.addActionListener(this);
 		btDelete.addActionListener(this);
 		btRepair1.addActionListener(this);
-		btLamMoi1.addActionListener(this);
 		btDelete1.addActionListener(this);
 		btfind1.addActionListener(this);
-		btdisplay.addActionListener(this);
 		btExit.addActionListener(this);
 		btdanhsach.addActionListener(this);
-		btdisplay7.addActionListener(this);
-		btdisplay9.addActionListener(this);
-		btdisplay8.addActionListener(this);
 		btExit1.addActionListener(this);
+		btCongToDien.addActionListener(this);
+		btAdd5.addActionListener(this);
+		btRepair5.addActionListener(this);
+		btDelete5.addActionListener(this);
+		btLamMoi5.addActionListener(this);
+		btExit5.addActionListener(this);
+		btfind5.addActionListener(this);
+		btLamMoi1.addActionListener(this);
 	}
 
 	/**
@@ -984,9 +1027,21 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 
 		// SỰ KIỆN CÁC NÚT CHUYỂN QUA LẠI VỚI NHAU
 		if (e.getSource() == btKhachHang) {
+			list2 = congToDienDAO.getAllCongToDien();
+			cbCongToDien.removeAllItems();
+			cbCongToDien.addItem("Chọn mã công tơ");
+			for (int i = 0; i < list2.size(); i++) {
+				cbCongToDien.addItem(list2.get(i));
+			}
 			cardLayout.show(cardPane, "khachHang");
 		}
 		if (e.getSource() == btBienLai) {
+			list2 = congToDienDAO.getAllCongToDien();
+			cbCongToDien1.removeAllItems();
+			cbCongToDien1.addItem("Chọn mã công tơ");
+			for (int i = 0; i < list2.size(); i++) {
+				cbCongToDien1.addItem(list2.get(i));
+			}
 			cardLayout.show(cardPane, "bienLai");
 		}
 		if (e.getSource() == btDSKHTQuan) {
@@ -998,17 +1053,8 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 		if (e.getSource() == btdsttkhuvuc) {
 			cardLayout.show(cardPane, "baocaokh2");
 		}
-		if (e.getSource() == btdsttoneKH) {
-			cardLayout.show(cardPane, "baocaokh3");
-		}
-		if (e.getSource() == btdstttheonam) {
-			cardLayout.show(cardPane, "baocaokh4");
-		}
-		if (e.getSource() == btdstttkhoangtg) {
-			cardLayout.show(cardPane, "baocaokh5");
-		}
-		if (e.getSource() == btdstttheoky) {
-			cardLayout.show(cardPane, "baocaokh6");
+		if (e.getSource() == btCongToDien) {
+			cardLayout.show(cardPane, "congtodien");
 		}
 
 		// SỰ KIỆN NÚT THÊM KHÁCH HÀNG
@@ -1022,20 +1068,28 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 			khachHang.setTenQuan(cbQuan.getSelectedItem().toString());
 			khachHang.setPhone(txtDienthoai.getText());
 			khachHang.setEmail(txtEmail.getText());
-			congToDien.setMaCongTo(txtMaCongTo.getText());
+			congToDien.setMaCongTo(cbCongToDien.getSelectedItem().toString());
 			khachHang.setMaCongTo(congToDien);
 			if (txtMaKhachHang.getText().equals("") || txtNameKhachHang.getText().equals("")
 					|| cbPhuong.getSelectedItem().toString().equals("")
 					|| cbQuan.getSelectedItem().toString().equals("") || txtDienthoai.getText().equals("")
-					|| txtMaCongTo.getText().equals("")) {
+					|| cbCongToDien.getSelectedItem().toString().equals("")) {
 				JOptionPane.showMessageDialog(null, "Bạn cần phải nhập vào trường còn trống");
 			} else {
 				if (khachHangDAO.addKhachHang(khachHang)) {
 					JOptionPane.showMessageDialog(null, "Thêm thành công");
+					txtMaKhachHang.setText("");
+					txtNameKhachHang.setText("");
+					txtDiachi.setText("");
+					txtDienthoai.setText("");
+					txtEmail.setText("");
+					cbCongToDien.setSelectedItem("Chọn mã công tơ");
+
 				} else {
-					JOptionPane.showMessageDialog(null, "Mã công tơ hoặc mã thành viên đã tồn tại");
+					JOptionPane.showMessageDialog(null, "Mã công tơ hoặc mã khách hàng đã tồn tại");
 				}
 			}
+
 			ArrayList<KhachHang> list = khachHangDAO.getAllKhachHang();
 			dtm.setRowCount(0);
 			for (KhachHang khachHang1 : list) {
@@ -1043,28 +1097,39 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 						khachHang1.getAddress(), khachHang1.getTenPhuong(), khachHang1.getTenQuan(),
 						khachHang1.getPhone(), khachHang1.getEmail(), khachHang1.getMaCongTo().getMaCongTo() });
 			}
-			txtMaKhachHang.setText("");
-			txtNameKhachHang.setText("");
-			txtDiachi.setText("");
-			txtDienthoai.setText("");
-			txtEmail.setText("");
-			txtMaCongTo.setText("");
+
 		}
 
 		// SỰ KIỆN NÚT TÌM KIẾM KHÁCH HÀNG
 		if (e.getSource() == btfind) {
 			KhachHang khachHang = new KhachHang();
-			khachHang.setNameKhachHang(txtNameKhachHang.getText());
-			if (txtNameKhachHang.getText().equals("")) {
-				JOptionPane.showMessageDialog(null, "Bạn cần nhập tên khách hàng để tìm kiếm");
+			khachHang.setNameKhachHang(txtTimKiem.getText());
+			khachHang.setTenPhuong(txtTimKiem.getText());
+			khachHang.setTenQuan(txtTimKiem.getText());
+			khachHang.setMaKhachHang(txtTimKiem.getText());
+
+			if (txtTimKiem.getText().equals("")) {
+				JOptionPane.showMessageDialog(null, "Bạn cần phải nhập vào tìm kiếm");
 			} else {
-				JOptionPane.showMessageDialog(null, "Tìm kiếm thành công");
 				ArrayList<KhachHang> list = khachHangDAO.searchMaKH(khachHang);
-				dtm.setRowCount(0);
-				for (KhachHang khachHang1 : list) {
-					dtm.addRow(new String[] { khachHang1.getMaKhachHang(), khachHang1.getNameKhachHang(),
-							khachHang1.getAddress(), khachHang1.getTenPhuong(), khachHang1.getTenQuan(),
-							khachHang1.getPhone(), khachHang1.getEmail(), khachHang1.getMaCongTo().getMaCongTo() });
+				ArrayList<KhachHang> myList = new ArrayList<>();
+
+				for (int j = 0; j < list.size(); j++) {
+					if (!list.get(j).equals(txtTimKiem.getText())) {
+						myList.add(list.get(j));
+					}
+				}
+				if (myList.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Không có dữ liệu");
+				} else {
+					JOptionPane.showMessageDialog(null, "Tìm kiếm thành công");
+					dtm.setRowCount(0);
+					for (int j = 0; j < myList.size(); j++) {
+						dtm.addRow(new String[] { myList.get(j).getMaKhachHang(), myList.get(j).getNameKhachHang(),
+								myList.get(j).getAddress(), myList.get(j).getTenPhuong(), myList.get(j).getTenQuan(),
+								myList.get(j).getPhone(), myList.get(j).getEmail(),
+								myList.get(j).getMaCongTo().getMaCongTo() });
+					}
 				}
 			}
 		}
@@ -1076,8 +1141,9 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 			txtDiachi.setText("");
 			txtDienthoai.setText("");
 			txtEmail.setText("");
-			txtMaCongTo.setText("");
-
+			cbQuan.setSelectedItem("Chọn Quận");
+			cbPhuong.setSelectedItem("Chọn Phường");
+			cbCongToDien.setSelectedItem("Chọn mã công tơ");
 			ArrayList<KhachHang> list = khachHangDAO.getAllKhachHang();
 			dtm.setRowCount(0);
 			for (KhachHang khachHang1 : list) {
@@ -1099,13 +1165,13 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 			khachHang.setTenQuan(cbQuan.getSelectedItem().toString());
 			khachHang.setPhone(txtDienthoai.getText());
 			khachHang.setEmail(txtEmail.getText());
-			congToDien.setMaCongTo(txtMaCongTo.getText());
+			congToDien.setMaCongTo(cbCongToDien.getSelectedItem().toString());
 			khachHang.setMaCongTo(congToDien);
 
 			if (txtMaKhachHang.getText().equals("") || txtNameKhachHang.getText().equals("")
 					|| cbPhuong.getSelectedItem().toString().equals("")
 					|| cbQuan.getSelectedItem().toString().equals("") || txtDienthoai.getText().equals("")
-					|| txtMaCongTo.getText().equals("")) {
+					|| cbCongToDien.getSelectedItem().toString().equals("")) {
 				JOptionPane.showMessageDialog(null, "Bạn cần phải nhập vào trường còn trống");
 			} else {
 				if (khachHangDAO.updateKhachHang(khachHang)) {
@@ -1117,6 +1183,8 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 					} else if (ret == JOptionPane.NO_OPTION) {
 						JOptionPane.showMessageDialog(null, "Sửa không thành công");
 					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Mã công tơ hoặc mã khách hàng đã tồn tại.");
 				}
 			}
 
@@ -1157,10 +1225,10 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 
 		// SỰ KIỆN NÚT THOÁT
 		if (e.getSource() == btExit) {
-			int ret = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn thoát không?", "Thoát",
+			int ret = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn quay lại trang chủ không?", "Thoát",
 					JOptionPane.YES_NO_OPTION);
 			if (ret == JOptionPane.YES_OPTION) {
-				System.exit(0);
+				cardLayout.show(cardPane, "home");
 			}
 		}
 
@@ -1168,14 +1236,14 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 		if (e.getSource() == btAdd1) {
 			CongToDien congToDien = new CongToDien();
 			BienLai bienlai = new BienLai();
-			if (txtMaCongTo1.getText().equals("") || txtChuKyNhap.getText().equals("")
+			if (cbCongToDien1.getSelectedItem().equals("") || txtChuKyNhap.getText().equals("")
 					|| datePicker.getJFormattedTextField().getText().equals("")
 					|| txtChiSoCongTo.getText().equals("")) {
 				JOptionPane.showMessageDialog(null, "Bạn cần phải nhập vào các trường còn trống.");
 			}
 
-			congToDien.setMaCongTo(txtMaCongTo1.getText());
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			congToDien.setMaCongTo(cbCongToDien1.getSelectedItem().toString());
+			SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 			Date parsed = null;
 
 			try {
@@ -1190,35 +1258,37 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 
 			if (bienLaiDao.addBienLai(bienlai, congToDien)) {
 				JOptionPane.showMessageDialog(null, "Thêm thành công");
+				txtMaBienLai.setText("");
+				// datePicker.getJFormattedTextField().setText("");
+				txtChuKyNhap.setText("");
+				txtChiSoCongTo.setText("");
+				cbCongToDien1.setSelectedItem("Chọn mã công tơ");
 			} else {
 				JOptionPane.showMessageDialog(null, "Thêm thất bại");
 			}
 			ArrayList<BienLai> list1 = bienLaiDao.getAllBienLai();
 			dtm1.setRowCount(0);
+			String datePattern = "dd-MM-yyyy";
+			SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
 			for (BienLai bienLai2 : list1) {
 				dtm1.addRow(new String[] { "" + bienLai2.getMaBienLai(), bienLai2.getMaCongTo().getMaCongTo(),
-						"" + bienLai2.getNgayNhap(), "" + bienLai2.getChuKyNhap(), bienLai2.getChiSoCongTo() });
+						dateFormatter.format(bienLai2.getNgayNhap()), "" + bienLai2.getChuKyNhap(),
+						bienLai2.getChiSoCongTo() });
 			}
-			txtMaBienLai.setText("");
-			txtMaCongTo1.setText("");
-			datePicker.getJFormattedTextField().setText("");
-			txtChuKyNhap.setText("");
-			txtChiSoCongTo.setText("");
-
 		}
 
 		// SỰ KIỆN NÚT SỬA BIÊN LAI
 		if (e.getSource() == btRepair1) {
 			BienLai bienLai = new BienLai();
 
-			if (txtMaCongTo1.getText().equals("") || txtChuKyNhap.getText().equals("")
+			if (cbCongToDien1.getSelectedItem().equals("") || txtChuKyNhap.getText().equals("")
 					|| datePicker.getJFormattedTextField().getText().equals("")
 					|| txtChiSoCongTo.getText().equals("")) {
 				JOptionPane.showMessageDialog(null, "Bạn cần phải nhập vào các trường còn trống để sửa.");
 			}
 
-			bienLai.setMaBienLai(Integer.parseInt(txtMaBienLai.getText()));
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			bienLai.setMaBienLai((txtMaBienLai.getText()));
+			SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 			Date parsed = null;
 
 			try {
@@ -1243,20 +1313,22 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 			}
 			ArrayList<BienLai> list1 = bienLaiDao.getAllBienLai();
 			dtm1.setRowCount(0);
+			String datePattern = "dd-MM-yyyy";
+			SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
 			for (BienLai bienLai2 : list1) {
 				dtm1.addRow(new String[] { "" + bienLai2.getMaBienLai(), bienLai2.getMaCongTo().getMaCongTo(),
-						"" + bienLai2.getNgayNhap(), "" + bienLai2.getChuKyNhap(), bienLai2.getChiSoCongTo() });
+						dateFormatter.format(bienLai2.getNgayNhap()), "" + bienLai2.getChuKyNhap(),
+						bienLai2.getChiSoCongTo() });
 			}
-
 		}
 
 		// SỰ KIẾN NÚT LÀM MỚI
 		if (e.getSource() == btLamMoi1) {
 			txtMaBienLai.setText("");
-			txtMaCongTo1.setText("");
-			datePicker.getJFormattedTextField().setText("");
 			txtChuKyNhap.setText("");
 			txtChiSoCongTo.setText("");
+			txtTimKiem1.setText("");
+			cbCongToDien1.setSelectedItem("Chọn mã công tơ");
 
 			ArrayList<BienLai> list = bienLaiDao.getAllBienLai();
 			dtm1.setRowCount(0);
@@ -1273,12 +1345,12 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 			int ret = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa không?", "Xóa danh sách",
 					JOptionPane.YES_NO_OPTION);
 			if (ret == JOptionPane.YES_OPTION) {
-				if (txtNameKhachHang.getText().isEmpty()) {
+				if (txtMaBienLai.getText().isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Xóa thất bại. Bạn cần phải nhập mã biên lai để xóa");
 					txtMaBienLai.requestFocus();
 					return;
 				}
-				bienLai.setMaBienLai(Integer.parseInt(txtMaBienLai.getText()));
+				bienLai.setMaBienLai((txtMaBienLai.getText()));
 				bienLaiDao.deleteBienLai(bienLai);
 				JOptionPane.showMessageDialog(null, "Xóa thành công");
 			} else if (ret == JOptionPane.NO_OPTION) {
@@ -1298,181 +1370,570 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 		if (e.getSource() == btfind1) {
 			CongToDien congToDien = new CongToDien();
 			BienLai bienLai = new BienLai();
-			congToDien.setMaCongTo(txtMaCongTo1.getText());
+			congToDien.setMaCongTo(txtTimKiem1.getText());
+			bienLai.setMaBienLai(txtTimKiem1.getText());
 			bienLai.setMaCongTo(congToDien);
-			if (txtMaCongTo1.getText().equals("")) {
-				JOptionPane.showMessageDialog(null, "Bạn cần phải nhập mã công tơ để tìm kiếm");
+			if (txtTimKiem1.getText().equals("")) {
+				JOptionPane.showMessageDialog(null, "Bạn cần phải nhập vào tìm kiếm");
 			} else {
-				JOptionPane.showMessageDialog(null, "Tìm kiếm thành công");
 				ArrayList<BienLai> list = bienLaiDao.searchBienLai(bienLai);
-				dtm1.setRowCount(0);
-				for (BienLai bienLai2 : list) {
-					dtm1.addRow(new String[] { "" + bienLai2.getMaBienLai(), bienLai2.getMaCongTo().getMaCongTo(),
-							"" + bienLai2.getNgayNhap(), "" + bienLai2.getChuKyNhap(), bienLai2.getChiSoCongTo() });
+				ArrayList<BienLai> myList = new ArrayList<>();
+				for (int i = 0; i < list.size(); i++) {
+					if (!list.get(i).equals(txtTimKiem1.getText())) {
+						myList.add(list.get(i));
+					}
+				}
+
+				if (myList.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "không có dữ liệu.");
+				} else {
+					JOptionPane.showMessageDialog(null, "Tìm kiếm thành công");
+					dtm1.setRowCount(0);
+					for (int i = 0; i < myList.size(); i++) {
+						dtm1.addRow(new String[] { "" + myList.get(i).getMaBienLai(),
+								myList.get(i).getMaCongTo().getMaCongTo(), "" + myList.get(i).getNgayNhap(),
+								"" + myList.get(i).getChuKyNhap(), myList.get(i).getChiSoCongTo() });
+					}
 				}
 			}
 		}
 
 		// SỰ KIỆN NÚT THOÁT BIÊN LAI
 		if (e.getSource() == btExit1) {
-			int ret = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn thoát không?", "Thoát",
+			int ret = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn quay lại trang chủ không?", "Thoát",
 					JOptionPane.YES_NO_OPTION);
 			if (ret == JOptionPane.YES_OPTION) {
-				System.exit(0);
+				cardLayout.show(cardPane, "home");
 			}
 		}
 
-		// SỰ KIỆN NÚT DANH SÁCH KHÁCH HÀNG THEO KHU VỰC
-		if (e.getSource() == btdanhsach) {
+		// SỰ KIỆN NÚT THÊM CÔNG TƠ ĐIỆN
+		if (e.getSource() == btAdd5) {
+			CongToDien congToDien = new CongToDien();
+			congToDien.setMaCongTo(txtMaCongToDien.getText());
+			if (txtMaCongToDien.getText().equals("")) {
+				JOptionPane.showMessageDialog(null, "Bạn cần phải nhập vào trường còn trống");
+			} else {
+				if (congToDienDAO.addCongToDien(congToDien)) {
+					JOptionPane.showMessageDialog(null, "Thêm thành công");
+
+					txtMaCongToDien.setText("");
+				} else {
+					JOptionPane.showMessageDialog(null, "Mã công tơ hoặc mã khách hàng đã tồn tại");
+				}
+			}
+
+			ArrayList<CongToDien> list = congToDienDAO.getAllCongToDien();
 			dtm5.setRowCount(0);
-			if (cbPhuong5.getSelectedItem().toString().equals("")) {
-				JOptionPane.showMessageDialog(null, "Bạn cần phải chọn phường.");
+			for (CongToDien congToDien2 : list) {
+				dtm5.addRow(new String[] { congToDien2.getMaCongTo() });
+			}
+		}
+
+		// SỰ KIỆN NÚT SỬA CÔNG TƠ ĐIỆN
+		if (e.getSource() == btRepair5) {
+			CongToDien congToDien = new CongToDien();
+			congToDien.setMaCongTo(cbCongToDien.getSelectedItem().toString());
+
+			if (cbCongToDien.getSelectedItem().toString().equals("")) {
+				JOptionPane.showMessageDialog(null, "Bạn cần phải nhập vào trường còn trống");
 			} else {
-				ArrayList<KhachHang> listdsbc = tienDien.tienDien();
-				ArrayList<KhachHang> myList = new ArrayList<>();
-
-				for (int j = 0; j < listdsbc.size(); j++) {
-					if (listdsbc.get(j).getTenPhuong().equals(cbPhuong5.getSelectedItem().toString())) {
-						myList.add(listdsbc.get(j));
-					}
-				}
-
-				if (myList.isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Không có dữ liệu.");
-				} else {
-					for (int j = 0; j < myList.size(); j++) {
-						dtm5.addRow(new String[] { myList.get(j).getMaKhachHang(), myList.get(j).getNameKhachHang(),
-								myList.get(j).getAddress(), myList.get(j).getTenPhuong(), myList.get(j).getTenQuan(),
-								myList.get(j).getMaCongTo().getMaCongTo(),
-								"" + myList.get(j).getBienLai().getChuKyNhap(),
-								myList.get(j).getBienLai().getChiSoCongTo(), "" + myList.get(j).getTienDien() });
+				if (congToDienDAO.updateCongToDien(congToDien)) {
+					int ret = JOptionPane.showConfirmDialog(null, "Bạn có muốn chắc sửa không?", "Sửa",
+							JOptionPane.YES_NO_OPTION);
+					if (ret == JOptionPane.YES_OPTION) {
+						congToDienDAO.updateCongToDien(congToDien);
+						JOptionPane.showMessageDialog(null, "Sửa thành công");
+					} else if (ret == JOptionPane.NO_OPTION) {
+						JOptionPane.showMessageDialog(null, "Sửa không thành công");
 					}
 				}
 			}
 		}
 
-		// SỰ KIỆN NÚT XEM DANH SÁCH CỦA 1 KHÁCH HÀNG TIÊU THỤ
+		// SỰ KIỆN NÚT XÓA CÔNG TƠ ĐIỆN
+		if (e.getSource() == btDelete5) {
+			int ret = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa không?", "Xóa danh sách",
+					JOptionPane.YES_NO_OPTION);
+			if (ret == JOptionPane.YES_OPTION) {
+				if (txtMaCongToDien.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Xóa thất bại. Bạn cần phải nhập mã công tớ để xóa");
+					txtMaCongToDien.requestFocus();
+					return;
+				} else if (congToDienDAO.deleteCongToDien(txtMaCongToDien.getText())) {
+					JOptionPane.showMessageDialog(null, "Xóa thành công");
+				} else {
+					JOptionPane.showMessageDialog(null, "Không thể xóa được");
+				}
+			} else if (ret == JOptionPane.NO_OPTION) {
+				JOptionPane.showMessageDialog(null, "Xóa thất bại");
+			}
 
-		if (e.getSource() == btdisplay) {
+			ArrayList<CongToDien> list = congToDienDAO.getAllCongToDien();
+			dtm5.setRowCount(0);
+			for (CongToDien congToDien2 : list) {
+				dtm5.addRow(new String[] { congToDien2.getMaCongTo() });
+			}
+		}
 
-			dtm6.setRowCount(0);
-			if (txtMaKhachHang1.getText().equals("")) {
-				JOptionPane.showMessageDialog(null, "Bạn cần phải nhập mã khách hàng.");
+		// SỰ KIỆN LÀM MỚI
+		if (e.getSource() == btLamMoi5) {
+			txtMaCongToDien.setText("");
+			txtTimKiem5.setText("");
+			ArrayList<CongToDien> list = congToDienDAO.getAllCongToDien();
+			dtm5.setRowCount(0);
+			for (CongToDien congToDien2 : list) {
+				dtm5.addRow(new String[] { congToDien2.getMaCongTo() });
+			}
+		}
+
+		// SỰ KIỆN NÚT TÌM KIẾM CÔNG TƠ ĐIỆN
+		if (e.getSource() == btfind5) {
+			CongToDien congToDien = new CongToDien();
+			congToDien.setMaCongTo(txtTimKiem5.getText());
+			if (txtTimKiem5.getText().equals("")) {
+				JOptionPane.showMessageDialog(null, "Bạn cần phải nhập vào tìm kiếm");
 			} else {
-				ArrayList<KhachHang> listdsbc = tienDien.tienDien();
-				ArrayList<KhachHang> myList = new ArrayList<>();
-
-				for (int j = 0; j < listdsbc.size(); j++) {
-					if (listdsbc.get(j).getMaKhachHang().equals(txtMaKhachHang1.getText())) {
-						myList.add(listdsbc.get(j));
+				ArrayList<CongToDien> list = congToDienDAO.searchCongToDien(congToDien);
+				ArrayList<CongToDien> myList = new ArrayList<>();
+				for (int i = 0; i < list.size(); i++) {
+					if (!list.get(i).equals(txtTimKiem1.getText())) {
+						myList.add(list.get(i));
 					}
 				}
 
 				if (myList.isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Không có dữ liệu.");
+					JOptionPane.showMessageDialog(null, "không có dữ liệu.");
 				} else {
-					for (int j = 0; j < myList.size(); j++) {
-						dtm6.addRow(new String[] { myList.get(j).getMaKhachHang(), myList.get(j).getNameKhachHang(),
-								myList.get(j).getAddress(), myList.get(j).getTenPhuong(), myList.get(j).getTenQuan(),
-								myList.get(j).getMaCongTo().getMaCongTo(),
-								"" + myList.get(j).getBienLai().getChuKyNhap(),
-								myList.get(j).getBienLai().getChiSoCongTo(), "" + myList.get(j).getTienDien() });
-					}
-				}
-			}
-
-		}
-
-		// SỰ KIỆN NÚT XEM DANH SÁCH KHÁCH HÀNG TIÊU THỤ THEO NĂM
-		if (e.getSource() == btdisplay7) {
-			dtm7.setRowCount(0);
-			if (txtChuKyNhap7.getText().equals("")) {
-				JOptionPane.showMessageDialog(null, "Bạn cần phải nhập năm");
-			} else {
-				ArrayList<KhachHang> listdsbc = tienDien.tienDien();
-				ArrayList<KhachHang> myList = new ArrayList<>();
-
-				for (int j = 0; j < listdsbc.size(); j++) {
-					if (listdsbc.get(j).getBienLai().getChuKyNhap().split("-")[1].equals(txtChuKyNhap7.getText())) {
-						myList.add(listdsbc.get(j));
-					}
-				}
-
-				if (myList.isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Không có dữ liệu.");
-				} else {
-					for (int j = 0; j < myList.size(); j++) {
-						dtm7.addRow(new String[] { myList.get(j).getMaKhachHang(), myList.get(j).getNameKhachHang(),
-								myList.get(j).getAddress(), myList.get(j).getMaCongTo().getMaCongTo(),
-								"" + myList.get(j).getBienLai().getChuKyNhap(),
-								myList.get(j).getBienLai().getChiSoCongTo(), "" + myList.get(j).getTienDien() });
+					JOptionPane.showMessageDialog(null, "Tìm kiếm thành công");
+					dtm5.setRowCount(0);
+					for (int i = 0; i < myList.size(); i++) {
+						dtm5.addRow(new String[] { myList.get(i).getMaCongTo() });
 					}
 				}
 			}
 		}
 
-		// SỰ KIỆN NÚT XEM DANH SÁCH KHÁCH HÀNG TIÊU THỤ KHOẢNG THỜI GIAN
-		if (e.getSource() == btdisplay8) {
-			dtm8.setRowCount(0);
-			SimpleDateFormat formatter = new SimpleDateFormat("MM-yyyy");
-			Date min = null, max = null, d = null;
-			try {
-				min = formatter.parse(txtChuKyNhap8.getText());
-				max = formatter.parse(txtChuKyNhaP8.getText());
-			} catch (ParseException e1) {
-				e1.printStackTrace();
+		// SỰ KIỆN NÚT THOÁT
+		if (e.getSource() == btExit5) {
+			int ret = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn quay lại trang chủ không?", "Thoát",
+					JOptionPane.YES_NO_OPTION);
+			if (ret == JOptionPane.YES_OPTION) {
+				cardLayout.show(cardPane, "home");
 			}
-			if (txtChuKyNhap8.getText().equals("") || txtChuKyNhaP8.getText().equals("")) {
-				JOptionPane.showMessageDialog(null, "Bạn cần phải nhập vào các trường.");
-			} else {
-				ArrayList<KhachHang> listdsbc = tienDien.tienDien();
-				ArrayList<KhachHang> myList = new ArrayList<>();
+		}
 
-				for (int i = 0; i < listdsbc.size(); i++) {
+		// SỰ KIỆN NÚT DANH SÁCH KHÁCH HÀNG
+		if (e.getSource() == btdanhsach) {
+			if (grouprdo.getSelection() == null || group1rdo.getSelection() == null) {
+				JOptionPane.showMessageDialog(null, "Bạn phải chọn.");
+			} else {
+				if (rad1.isSelected() && rad5.isSelected()) {
+					dtm4.setRowCount(0);
+					if (txtChuKyNhap7.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Bạn cần phải nhập năm");
+					} else {
+						ArrayList<KhachHang> listdsbc = tienDien.tienDien();
+						ArrayList<KhachHang> myList = new ArrayList<>();
+
+						for (int j = 0; j < listdsbc.size(); j++) {
+							if (listdsbc.get(j).getBienLai().getChuKyNhap().split("-")[1]
+									.equals(txtChuKyNhap7.getText())) {
+								myList.add(listdsbc.get(j));
+							}
+						}
+
+						if (myList.isEmpty()) {
+							JOptionPane.showMessageDialog(null, "Không có dữ liệu.");
+						} else {
+							for (int j = 0; j < myList.size(); j++) {
+								dtm4.addRow(new String[] { myList.get(j).getMaKhachHang(),
+										myList.get(j).getNameKhachHang(), myList.get(j).getTenPhuong(),
+										myList.get(j).getTenQuan(), myList.get(j).getMaCongTo().getMaCongTo(),
+										"" + myList.get(j).getBienLai().getChuKyNhap(),
+										myList.get(j).getBienLai().getChiSoCongTo(),
+										"" + myList.get(j).getTienDien() });
+							}
+						}
+					}
+				}
+
+				if (rad1.isSelected() && rad6.isSelected()) {
+					dtm4.setRowCount(0);
+					SimpleDateFormat formatter = new SimpleDateFormat("MM-yyyy");
+					Date min = null, max = null, d = null;
 					try {
-						d = formatter.parse(listdsbc.get(i).getBienLai().getChuKyNhap());
+						min = formatter.parse(txtChuKyNhap8.getText());
+						max = formatter.parse(txtChuKyNhaP8.getText());
 					} catch (ParseException e1) {
 						e1.printStackTrace();
 					}
-					if (d.after(min) && d.before(max)) {
-						myList.add(listdsbc.get(i));
-					}
-				}
-				if (myList.isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Không có dữ liệu.");
-				} else {
-					for (int i = 0; i < myList.size(); i++) {
-						dtm8.addRow(new String[] { myList.get(i).getMaKhachHang(), myList.get(i).getNameKhachHang(),
-								myList.get(i).getAddress(), myList.get(i).getMaCongTo().getMaCongTo(),
-								"" + myList.get(i).getBienLai().getChuKyNhap(),
-								myList.get(i).getBienLai().getChiSoCongTo(), "" + myList.get(i).getTienDien() });
-					}
-				}
-			}
-		}
+					if (txtChuKyNhap8.getText().equals("") || txtChuKyNhaP8.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Bạn cần phải nhập vào các trường.");
+					} else {
+						ArrayList<KhachHang> listdsbc = tienDien.tienDien();
+						ArrayList<KhachHang> myList = new ArrayList<>();
 
-		// SỰ KIỆN NÚT XEM DANH SÁCH KHÁCH HÀNG TIÊU THỤ THEO CHU KỲ
-		if (e.getSource() == btdisplay9) {
-			dtm9.setRowCount(0);
-			if (txtChuKyNhap9.getText().equals("")) {
-				JOptionPane.showMessageDialog(null, "Bạn cần phải nhập chu kỳ.");
-			} else {
-				ArrayList<KhachHang> listdsbc = tienDien.tienDien();
-				ArrayList<KhachHang> myList = new ArrayList<>();
-
-				for (int j = 0; j < listdsbc.size(); j++) {
-					if (listdsbc.get(j).getBienLai().getChuKyNhap().equals(txtChuKyNhap9.getText())) {
-						myList.add(listdsbc.get(j));
+						for (int i = 0; i < listdsbc.size(); i++) {
+							try {
+								d = formatter.parse(listdsbc.get(i).getBienLai().getChuKyNhap());
+							} catch (ParseException e1) {
+								e1.printStackTrace();
+							}
+							if (d.after(min) && d.before(max)) {
+								myList.add(listdsbc.get(i));
+							}
+						}
+						if (myList.isEmpty()) {
+							JOptionPane.showMessageDialog(null, "Không có dữ liệu.");
+						} else {
+							for (int i = 0; i < myList.size(); i++) {
+								dtm4.addRow(new String[] { myList.get(i).getMaKhachHang(),
+										myList.get(i).getNameKhachHang(), myList.get(i).getTenPhuong(),
+										myList.get(i).getTenQuan(), myList.get(i).getMaCongTo().getMaCongTo(),
+										"" + myList.get(i).getBienLai().getChuKyNhap(),
+										myList.get(i).getBienLai().getChiSoCongTo(),
+										"" + myList.get(i).getTienDien() });
+							}
+						}
 					}
 				}
-				if (myList.isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Không có dữ liệu.");
-				} else {
-					for (int j = 0; j < myList.size(); j++) {
-						dtm9.addRow(new String[] { myList.get(j).getMaKhachHang(), myList.get(j).getNameKhachHang(),
-								myList.get(j).getAddress(), myList.get(j).getMaCongTo().getMaCongTo(),
-								"" + myList.get(j).getBienLai().getChuKyNhap(),
-								myList.get(j).getBienLai().getChiSoCongTo(), "" + myList.get(j).getTienDien() });
+
+				if (rad1.isSelected() && rad7.isSelected()) {
+					dtm4.setRowCount(0);
+					if (txtChuKyNhap9.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Bạn cần phải nhập chu kỳ.");
+					} else {
+						ArrayList<KhachHang> listdsbc = tienDien.tienDien();
+						ArrayList<KhachHang> myList = new ArrayList<>();
+
+						for (int j = 0; j < listdsbc.size(); j++) {
+							if (listdsbc.get(j).getBienLai().getChuKyNhap().equals(txtChuKyNhap9.getText())) {
+								myList.add(listdsbc.get(j));
+							}
+						}
+						if (myList.isEmpty()) {
+							JOptionPane.showMessageDialog(null, "Không có dữ liệu.");
+						} else {
+							for (int j = 0; j < myList.size(); j++) {
+								dtm4.addRow(new String[] { myList.get(j).getMaKhachHang(),
+										myList.get(j).getNameKhachHang(), myList.get(j).getTenPhuong(),
+										myList.get(j).getTenQuan(), myList.get(j).getMaCongTo().getMaCongTo(),
+										"" + myList.get(j).getBienLai().getChuKyNhap(),
+										myList.get(j).getBienLai().getChiSoCongTo(),
+										"" + myList.get(j).getTienDien() });
+							}
+						}
+					}
+				}
+
+				if (rad2.isSelected() && rad5.isSelected()) {
+					dtm4.setRowCount(0);
+					if (txtChuKyNhap7.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Bạn cần phải nhập năm.");
+					} else {
+						ArrayList<KhachHang> listdsbc = tienDien.tienDien();
+						ArrayList<KhachHang> myList = new ArrayList<>();
+
+						for (int j = 0; j < listdsbc.size(); j++) {
+							if (listdsbc.get(j).getTenQuan().equals(cbQuan5.getSelectedItem().toString())
+									&& listdsbc.get(j).getBienLai().getChuKyNhap().split("-")[1]
+											.equals(txtChuKyNhap7.getText())) {
+								myList.add(listdsbc.get(j));
+							}
+						}
+
+						if (myList.isEmpty()) {
+							JOptionPane.showMessageDialog(null, "Không có dữ liệu.");
+						} else {
+							for (int j = 0; j < myList.size(); j++)
+								dtm4.addRow(new String[] { myList.get(j).getMaKhachHang(),
+										myList.get(j).getNameKhachHang(), myList.get(j).getTenPhuong(),
+										myList.get(j).getTenQuan(), myList.get(j).getMaCongTo().getMaCongTo(),
+										"" + myList.get(j).getBienLai().getChuKyNhap(),
+										myList.get(j).getBienLai().getChiSoCongTo(),
+										"" + myList.get(j).getTienDien() });
+						}
+					}
+				}
+
+				if (rad2.isSelected() && rad6.isSelected()) {
+					dtm4.setRowCount(0);
+					SimpleDateFormat formatter = new SimpleDateFormat("MM-yyyy");
+					Date min = null, max = null, d = null;
+					try {
+						min = formatter.parse(txtChuKyNhap8.getText());
+						max = formatter.parse(txtChuKyNhaP8.getText());
+					} catch (ParseException e1) {
+						e1.printStackTrace();
+					}
+					if (txtChuKyNhap8.getText().equals("") || txtChuKyNhaP8.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Bạn cần phải nhập vào các trường.");
+					} else {
+						ArrayList<KhachHang> listdsbc = tienDien.tienDien();
+						ArrayList<KhachHang> myList = new ArrayList<>();
+
+						for (int j = 0; j < listdsbc.size(); j++) {
+							try {
+								d = formatter.parse(listdsbc.get(j).getBienLai().getChuKyNhap());
+							} catch (ParseException e1) {
+								e1.printStackTrace();
+							}
+							if (listdsbc.get(j).getTenQuan().equals(cbQuan5.getSelectedItem().toString())
+									&& d.after(min) && d.before(max)) {
+								myList.add(listdsbc.get(j));
+							}
+						}
+
+						if (myList.isEmpty()) {
+							JOptionPane.showMessageDialog(null, "Không có dữ liệu.");
+						} else {
+							for (int j = 0; j < myList.size(); j++)
+								dtm4.addRow(new String[] { myList.get(j).getMaKhachHang(),
+										myList.get(j).getNameKhachHang(), myList.get(j).getTenPhuong(),
+										myList.get(j).getTenQuan(), myList.get(j).getMaCongTo().getMaCongTo(),
+										"" + myList.get(j).getBienLai().getChuKyNhap(),
+										myList.get(j).getBienLai().getChiSoCongTo(),
+										"" + myList.get(j).getTienDien() });
+						}
+					}
+				}
+
+				if (rad2.isSelected() && rad7.isSelected()) {
+					dtm4.setRowCount(0);
+					if (txtChuKyNhap9.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Bạn cần phải nhập chu kỳ.");
+					} else {
+						ArrayList<KhachHang> listdsbc = tienDien.tienDien();
+						ArrayList<KhachHang> myList = new ArrayList<>();
+
+						for (int j = 0; j < listdsbc.size(); j++) {
+							if (listdsbc.get(j).getTenQuan().equals(cbQuan5.getSelectedItem().toString())
+									&& listdsbc.get(j).getBienLai().getChuKyNhap().equals(txtChuKyNhap9.getText())) {
+								myList.add(listdsbc.get(j));
+							}
+						}
+
+						if (myList.isEmpty()) {
+							JOptionPane.showMessageDialog(null, "Không có dữ liệu.");
+						} else {
+							for (int j = 0; j < myList.size(); j++)
+								dtm4.addRow(new String[] { myList.get(j).getMaKhachHang(),
+										myList.get(j).getNameKhachHang(), myList.get(j).getTenPhuong(),
+										myList.get(j).getTenQuan(), myList.get(j).getMaCongTo().getMaCongTo(),
+										"" + myList.get(j).getBienLai().getChuKyNhap(),
+										myList.get(j).getBienLai().getChiSoCongTo(),
+										"" + myList.get(j).getTienDien() });
+						}
+					}
+				}
+
+				if (rad3.isSelected() && rad5.isSelected()) {
+					dtm4.setRowCount(0);
+					if (txtChuKyNhap7.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Bạn cần phải nhập năm.");
+					} else {
+						ArrayList<KhachHang> listdsbc = tienDien.tienDien();
+						ArrayList<KhachHang> myList = new ArrayList<>();
+
+						for (int j = 0; j < listdsbc.size(); j++) {
+							if (listdsbc.get(j).getTenPhuong().equals(cbPhuong5.getSelectedItem().toString())
+									&& listdsbc.get(j).getBienLai().getChuKyNhap().split("-")[1]
+											.equals(txtChuKyNhap7.getText())) {
+								myList.add(listdsbc.get(j));
+							}
+						}
+
+						if (myList.isEmpty()) {
+							JOptionPane.showMessageDialog(null, "Không có dữ liệu.");
+						} else {
+							for (int j = 0; j < myList.size(); j++)
+								dtm4.addRow(new String[] { myList.get(j).getMaKhachHang(),
+										myList.get(j).getNameKhachHang(), myList.get(j).getTenPhuong(),
+										myList.get(j).getTenQuan(), myList.get(j).getMaCongTo().getMaCongTo(),
+										"" + myList.get(j).getBienLai().getChuKyNhap(),
+										myList.get(j).getBienLai().getChiSoCongTo(),
+										"" + myList.get(j).getTienDien() });
+						}
+					}
+				}
+
+				if (rad3.isSelected() && rad6.isSelected()) {
+					dtm4.setRowCount(0);
+					SimpleDateFormat formatter = new SimpleDateFormat("MM-yyyy");
+					Date min = null, max = null, d = null;
+					try {
+						min = formatter.parse(txtChuKyNhap8.getText());
+						max = formatter.parse(txtChuKyNhaP8.getText());
+					} catch (ParseException e1) {
+						e1.printStackTrace();
+					}
+					if (txtChuKyNhap8.getText().equals("") || txtChuKyNhaP8.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Bạn cần phải nhập vào các trường.");
+					} else {
+						ArrayList<KhachHang> listdsbc = tienDien.tienDien();
+						ArrayList<KhachHang> myList = new ArrayList<>();
+
+						for (int j = 0; j < listdsbc.size(); j++) {
+							try {
+								d = formatter.parse(listdsbc.get(j).getBienLai().getChuKyNhap());
+							} catch (ParseException e1) {
+								e1.printStackTrace();
+							}
+							if (listdsbc.get(j).getTenPhuong().equals(cbPhuong5.getSelectedItem().toString())
+									&& d.after(min) && d.before(max)) {
+								myList.add(listdsbc.get(j));
+							}
+						}
+
+						if (myList.isEmpty()) {
+							JOptionPane.showMessageDialog(null, "Không có dữ liệu.");
+						} else {
+							for (int j = 0; j < myList.size(); j++)
+								dtm4.addRow(new String[] { myList.get(j).getMaKhachHang(),
+										myList.get(j).getNameKhachHang(), myList.get(j).getTenPhuong(),
+										myList.get(j).getTenQuan(), myList.get(j).getMaCongTo().getMaCongTo(),
+										"" + myList.get(j).getBienLai().getChuKyNhap(),
+										myList.get(j).getBienLai().getChiSoCongTo(),
+										"" + myList.get(j).getTienDien() });
+						}
+					}
+				}
+
+				if (rad3.isSelected() && rad7.isSelected()) {
+					dtm4.setRowCount(0);
+					if (txtChuKyNhap9.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Bạn cần phải nhập chu kỳ.");
+					} else {
+						ArrayList<KhachHang> listdsbc = tienDien.tienDien();
+						ArrayList<KhachHang> myList = new ArrayList<>();
+
+						for (int j = 0; j < listdsbc.size(); j++) {
+							if (listdsbc.get(j).getTenPhuong().equals(cbPhuong5.getSelectedItem().toString())
+									&& listdsbc.get(j).getBienLai().getChuKyNhap().equals(txtChuKyNhap9.getText())) {
+								myList.add(listdsbc.get(j));
+							}
+						}
+
+						if (myList.isEmpty()) {
+							JOptionPane.showMessageDialog(null, "Không có dữ liệu.");
+						} else {
+							for (int j = 0; j < myList.size(); j++)
+								dtm4.addRow(new String[] { myList.get(j).getMaKhachHang(),
+										myList.get(j).getNameKhachHang(), myList.get(j).getTenPhuong(),
+										myList.get(j).getTenQuan(), myList.get(j).getMaCongTo().getMaCongTo(),
+										"" + myList.get(j).getBienLai().getChuKyNhap(),
+										myList.get(j).getBienLai().getChiSoCongTo(),
+										"" + myList.get(j).getTienDien() });
+						}
+					}
+				}
+
+				if (rad4.isSelected() && rad5.isSelected()) {
+					dtm4.setRowCount(0);
+					if (txtMaKhachHang1.getText().equals("") || txtChuKyNhap7.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Bạn cần phải nhập vào các trường.");
+					} else {
+						ArrayList<KhachHang> listdsbc = tienDien.tienDien();
+						ArrayList<KhachHang> myList = new ArrayList<>();
+
+						for (int j = 0; j < listdsbc.size(); j++) {
+							if (listdsbc.get(j).getMaKhachHang().equals(txtMaKhachHang1.getText())
+									&& listdsbc.get(j).getBienLai().getChuKyNhap().split("-")[1]
+											.equals(txtChuKyNhap7.getText())) {
+								myList.add(listdsbc.get(j));
+							}
+						}
+
+						if (myList.isEmpty()) {
+							JOptionPane.showMessageDialog(null, "Không có dữ liệu.");
+						} else {
+							for (int j = 0; j < myList.size(); j++) {
+								dtm4.addRow(
+										new String[] { myList.get(j).getMaKhachHang(), myList.get(j).getNameKhachHang(),
+												myList.get(j).getAddress(), myList.get(j).getTenPhuong(),
+												myList.get(j).getTenQuan(), myList.get(j).getMaCongTo().getMaCongTo(),
+												"" + myList.get(j).getBienLai().getChuKyNhap(),
+												myList.get(j).getBienLai().getChiSoCongTo(),
+												"" + myList.get(j).getTienDien() });
+							}
+						}
+					}
+				}
+
+				if (rad4.isSelected() && rad6.isSelected()) {
+					dtm4.setRowCount(0);
+					SimpleDateFormat formatter = new SimpleDateFormat("MM-yyyy");
+					Date min = null, max = null, d = null;
+					try {
+						min = formatter.parse(txtChuKyNhap8.getText());
+						max = formatter.parse(txtChuKyNhaP8.getText());
+					} catch (ParseException e1) {
+						e1.printStackTrace();
+					}
+					if (txtMaKhachHang1.getText().equals("") || txtChuKyNhap8.getText().equals("")
+							|| txtChuKyNhaP8.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Bạn cần phải nhập vào các trường.");
+					} else {
+						ArrayList<KhachHang> listdsbc = tienDien.tienDien();
+						ArrayList<KhachHang> myList = new ArrayList<>();
+
+						for (int j = 0; j < listdsbc.size(); j++) {
+							try {
+								d = formatter.parse(listdsbc.get(j).getBienLai().getChuKyNhap());
+							} catch (ParseException e1) {
+								e1.printStackTrace();
+							}
+							if (listdsbc.get(j).getMaKhachHang().equals(txtMaKhachHang1.getText()) && d.after(min)
+									&& d.before(max)) {
+								myList.add(listdsbc.get(j));
+							}
+						}
+
+						if (myList.isEmpty()) {
+							JOptionPane.showMessageDialog(null, "Không có dữ liệu.");
+						} else {
+							for (int j = 0; j < myList.size(); j++) {
+								dtm4.addRow(
+										new String[] { myList.get(j).getMaKhachHang(), myList.get(j).getNameKhachHang(),
+												myList.get(j).getAddress(), myList.get(j).getTenPhuong(),
+												myList.get(j).getTenQuan(), myList.get(j).getMaCongTo().getMaCongTo(),
+												"" + myList.get(j).getBienLai().getChuKyNhap(),
+												myList.get(j).getBienLai().getChiSoCongTo(),
+												"" + myList.get(j).getTienDien() });
+							}
+						}
+					}
+				}
+
+				if (rad4.isSelected() && rad7.isSelected()) {
+					dtm4.setRowCount(0);
+					if (txtMaKhachHang1.getText().equals("") || txtChuKyNhap9.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Bạn cần phải nhập vào các trường.");
+					} else {
+						ArrayList<KhachHang> listdsbc = tienDien.tienDien();
+						ArrayList<KhachHang> myList = new ArrayList<>();
+
+						for (int j = 0; j < listdsbc.size(); j++) {
+							if (listdsbc.get(j).getMaKhachHang().equals(txtMaKhachHang1.getText())
+									&& listdsbc.get(j).getBienLai().getChuKyNhap().equals(txtChuKyNhap9.getText())) {
+								myList.add(listdsbc.get(j));
+							}
+						}
+
+						if (myList.isEmpty()) {
+							JOptionPane.showMessageDialog(null, "Không có dữ liệu.");
+						} else {
+							for (int j = 0; j < myList.size(); j++) {
+								dtm4.addRow(
+										new String[] { myList.get(j).getMaKhachHang(), myList.get(j).getNameKhachHang(),
+												myList.get(j).getAddress(), myList.get(j).getTenPhuong(),
+												myList.get(j).getTenQuan(), myList.get(j).getMaCongTo().getMaCongTo(),
+												"" + myList.get(j).getBienLai().getChuKyNhap(),
+												myList.get(j).getBienLai().getChiSoCongTo(),
+												"" + myList.get(j).getTienDien() });
+							}
+						}
 					}
 				}
 			}

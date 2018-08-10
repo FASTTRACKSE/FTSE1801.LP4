@@ -8,6 +8,7 @@ public class KhachHang {
 	private String quan;
 	private String soDT;
 	private String email;
+	private String soCMND;
 	private String soTheATM;
 	private String soTK;
 	private String soTienTrongTK;
@@ -66,6 +67,14 @@ public class KhachHang {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public String getSoCMND() {
+		return soCMND;
+	}
+
+	public void setSoCMND(String soCMND) {
+		this.soCMND = soCMND;
 	}
 
 	public String getSoTheATM() {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<item value="false" key="TypeHierarchyViewPart.qualifiednames"/>
-	<item value="-1" key="TypeHierarchyViewPart.orientation"/>
+	<item value="3" key="TypeHierarchyViewPart.orientation"/>
 	<item value="false" key="TypeHierarchyViewPart.linkeditors"/>
 	<item value="D:\mysql-connector-java-8.0.11\mysql-connector-java-8.0.11" key="org.eclipse.jdt.ui.lastextjar"/>
 	<item value="2" key="TypeHierarchyViewPart.hierarchyview"/>
@@ -67,6 +67,21 @@
 	<section name="RefactoringWizard.preview">
 		<item value="630" key="width"/>
 		<item value="400" key="height"/>
+	</section>
+	<section name="FatJarPackageWizard">
+		<item value="D:\FTSE1801.LP4\FTSE1801.LP4\HoiPN\Java" key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION"/>
+		<item value="Menu - Project3" key="FatJarPackageWizardPage.LAUNCH_CONFIGURATION_SELECTION_NAME"/>
+		<item value="C:\Users\Admin\Desktop\QuanLyTruongHoc.jar" key="FatJarPackageWizardPage.DESTINATION_PATH_SELECTION"/>
+		<item value="false" key="FatJarPackageWizardPage.ANTSCRIPT_SAVE"/>
+		<item value="2" key="FatJarPackageWizardPage.LIBRARY_HANDLING"/>
+		<list key="FatJarPackageWizardPage.DESTINATION_NAMES_ID">
+			<item value="C:\Users\Admin\Desktop\QuanLyTruongHoc.jar"/>
+			<item value="C:\Users\Admin\Desktop\puzzle.jar"/>
+		</list>
+		<list key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION_HISTORY">
+			<item value="D:\FTSE1801.LP4\FTSE1801.LP4\HoiPN\Java"/>
+			<item value=".xml"/>
+		</list>
 	</section>
 	<section name="SourceActionDialog.methods">
 		<item value="false" key="SynchronizedModifier"/>

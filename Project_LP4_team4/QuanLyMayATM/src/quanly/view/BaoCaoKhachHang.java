@@ -18,6 +18,7 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -34,7 +35,7 @@ import quanly.model.PhuongQuanDAO;
 public class BaoCaoKhachHang extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	JPanel pnBaoCaoKH, chon;
 	JPanel pnLabel, pnBox, pnChon;
 	JLabel title, phuong, quan;
@@ -43,7 +44,7 @@ public class BaoCaoKhachHang extends JFrame {
 	DefaultTableModel tableModel;
 	JTable table;
 	Border border;
-	TitledBorder  titledBorder;
+	TitledBorder titledBorder;
 	ArrayList<String> listQuan;
 	ArrayList<String> listPhuong;
 	PhuongQuanDAO phuongQuanDAO;
@@ -64,7 +65,7 @@ public class BaoCaoKhachHang extends JFrame {
 			}
 		}
 	};
-	
+
 	/**
 	 * Sự kiện cho các JButton
 	 */
@@ -73,41 +74,50 @@ public class BaoCaoKhachHang extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			tableModel.setRowCount(0);
 			ArrayList<KhachHang> listKH = new ArrayList<>();
-			listKH = khachHangDAO.showKhachHangTheoPhuongVaQuan(boxPhuong.getSelectedItem().toString(), boxQuan.getSelectedItem().toString());
-			ArrayList<GiaoDich> listGD = new ArrayList<>();
-			listGD = giaoDichDAO.showAllThongTinGiaoDich();
-			Integer allTien = 0;
-			for (int i = 0; i < listKH.size(); i++) {
-				for (int j = 0; j < listGD.size(); j++) {
-					if (listKH.get(i).getSoTheATM().equals(listGD.get(j).getKhachHang().getSoTheATM())) {
-						allTien = allTien + Integer.parseInt(listGD.get(j).getSoTien());
+			listKH = khachHangDAO.showKhachHangTheoPhuongVaQuan(boxPhuong.getSelectedItem().toString(),
+					boxQuan.getSelectedItem().toString());
+			if (listKH.isEmpty()) {
+				JOptionPane.showMessageDialog(null, "Không có khách hàng theo tiêu chí bạn chọn");
+			} else {
+				ArrayList<GiaoDich> listGD = new ArrayList<>();
+				listGD = giaoDichDAO.showAllThongTinGiaoDich();
+				Integer allTienRut = 0;
+				Integer allTienThem = 0;
+				for (int i = 0; i < listKH.size(); i++) {
+					for (int j = 0; j < listGD.size(); j++) {
+						if (listKH.get(i).getMaKH().equals(listGD.get(j).getKhachHang().getMaKH())) {
+							allTienRut = allTienRut + Integer.parseInt(listGD.get(j).getSoTienRut());
+							allTienThem = allTienThem + Integer.parseInt(listGD.get(j).getSoTienThem());
+						}
 					}
+					tableModel.addRow(new String[] { listKH.get(i).getMaKH(), listKH.get(i).getTenKH(),
+							listKH.get(i).getDiaChi(), listKH.get(i).getPhuong(), listKH.get(i).getQuan(),
+							listKH.get(i).getSoDT(), listKH.get(i).getEmail(), listKH.get(i).getSoTheATM(),
+							listKH.get(i).getSoTienTrongTK(), ("" + allTienRut), ("" + allTienThem) });
+					allTienRut = 0;
+					allTienThem = 0;
 				}
-				tableModel.addRow(new String[] { listKH.get(i).getMaKH(), listKH.get(i).getTenKH(),
-						listKH.get(i).getDiaChi(), listKH.get(i).getPhuong(),listKH.get(i).getQuan(),
-						listKH.get(i).getSoDT(), listKH.get(i).getEmail(), listKH.get(i).getSoTheATM(), listKH.get(i).getSoTienTrongTK(), (""+allTien)});
-				allTien = 0;
 			}
 		}
 	};
-	
+
 	public JPanel BaoCaoKH() {
 		phuongQuanDAO = new PhuongQuanDAO();
 		khachHangDAO = new KhachHangDAO();
 		giaoDichDAO = new GiaoDichDAO();
 		pnBaoCaoKH = new JPanel();
 		pnBaoCaoKH.setLayout(new BoxLayout(pnBaoCaoKH, BoxLayout.Y_AXIS));
-		//Phần tiêu đề
+		// Phần tiêu đề
 		title = new JLabel("Báo cáo khách hàng");
 		title.setFont(new Font("Times New Roman", Font.BOLD, 30));
 		title.setForeground(Color.RED);
 		pnBaoCaoKH.add(title);
-		
+
 		// Phần chọn tiêu chí
 		chon = new JPanel();
 		chon.setLayout(new GridBagLayout());
 		pnLabel = new JPanel();
-		
+
 		quan = new JLabel("Chọn quận:");
 		boxQuan = new JComboBox<>();
 		listQuan = phuongQuanDAO.showAllDanhSachQuan();
@@ -126,18 +136,18 @@ public class BaoCaoKhachHang extends JFrame {
 		addItem(pnLabel, phuong, 0, 1, 1, 1, GridBagConstraints.EAST);
 		addItem(pnLabel, boxPhuong, 1, 1, 2, 1, GridBagConstraints.WEST);
 		chon.add(pnLabel);
-		
-		//Các nút chức năng
+
+		// Các nút chức năng
 		pnChon = new JPanel();
 		tim = new JButton("Tìm danh sách");
 		tim.addActionListener(actionListener);
 		pnChon.add(tim);
 		chon.add(pnChon);
 		pnBaoCaoKH.add(chon);
-		
+
 		// Bảng báo cáo
 		border = BorderFactory.createLineBorder(Color.BLUE, 3, true);
-		titledBorder = new TitledBorder(border,"Danh sách thông tin khách hàng");
+		titledBorder = new TitledBorder(border, "Danh sách thông tin khách hàng");
 		tableModel = new DefaultTableModel();
 		tableModel.addColumn("Mã Khách hàng");
 		tableModel.addColumn("Họ tên khách hàng");
@@ -149,21 +159,23 @@ public class BaoCaoKhachHang extends JFrame {
 		tableModel.addColumn("Số thẻ ATM");
 		tableModel.addColumn("Số tiền trong tài khoản");
 		tableModel.addColumn("Tổng số tiền đã rút");
-		
+		tableModel.addColumn("Tổng số tiền đã thêm");
+
 		table = new JTable(tableModel);
-//		table.getTableHeader().setReorderingAllowed(false);
+		// table.getTableHeader().setReorderingAllowed(false);
 		table.setDefaultEditor(Object.class, null);
-		
+
 		JScrollPane jScrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		jScrollPane.setBorder(titledBorder);
 		pnBaoCaoKH.add(jScrollPane);
 		return pnBaoCaoKH;
-		
+
 	}
-	
+
 	/**
 	 * Sắp xếp các lable nhập
+	 * 
 	 * @param p
 	 * @param c
 	 * @param x
@@ -185,5 +197,5 @@ public class BaoCaoKhachHang extends JFrame {
 		gc.fill = GridBagConstraints.NONE;
 		p.add(c, gc);
 	}
-	
+
 }
