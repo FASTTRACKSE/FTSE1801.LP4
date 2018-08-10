@@ -141,7 +141,7 @@ public class MayATMView extends JFrame {
 			
 			if (e.getSource()==btXacNhan) {
 				if (kiemTraDoiMatKhau()) {
-					if (txtPinCu.getText().equals(maPinCu)) {
+					if (txtPinCu.getText().equals(maPinCu)&& !txtPinMoi.getText().equals(maPinCu)) {
 						if (txtPinMoi.getText().equals(txtPinMoi2.getText())) {
 							if (theAtmDAO.doiMaPin(txtPinMoi.getText(), sotheATM)) {
 								JOptionPane.showMessageDialog(null, "Đổi mã pin thành công");
@@ -155,7 +155,7 @@ public class MayATMView extends JFrame {
 							JOptionPane.showMessageDialog(null, "Mã pin mới phải nhập giống nhau");
 						}
 					}else {
-						JOptionPane.showMessageDialog(null, "Nhập sai mã pin");
+						JOptionPane.showMessageDialog(null, "Nhập sai mã pin hoặc Pin mới trùng với Pin cũ");
 					}
 				}
 			}
