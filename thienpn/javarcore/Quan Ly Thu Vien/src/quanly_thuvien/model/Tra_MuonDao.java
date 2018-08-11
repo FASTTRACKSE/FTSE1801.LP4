@@ -16,15 +16,16 @@ import quanly_thuvien.model.entity.muon_TraSach;
 public class Tra_MuonDao {
 	Connection conn;
 
-	public boolean MuonSach(String ngay, int maThanhVien, int maSach) {
+	public boolean MuonSach(String ngay, int maThanhVien, int maSach,int maGD) {
 		boolean statusExecute = false;
-		String sql = "INSERT INTO `muon_tra_sach`(`NgayMuon`, `MaThanhVien`, `MaSach`, `tinhTrang`) VALUES (?,?,?,\"Đang Mượn\")";
+		String sql = "INSERT INTO `muon_tra_sach`(`MaGiaoDich`,`NgayMuon`, `MaThanhVien`, `MaSach`, `tinhTrang`) VALUES (?,?,?,?,\"Đang Mượn\")";
 		conn = DatabaseUtil.getConnect();
 		try {
 			PreparedStatement statement = conn.prepareStatement(sql);
-			statement.setString(1, ngay);
-			statement.setInt(2, maThanhVien);
-			statement.setInt(3, maSach);
+			statement.setInt(1, maGD);
+			statement.setString(2, ngay);
+			statement.setInt(3, maThanhVien);
+			statement.setInt(4, maSach);
 
 			if (statement.executeUpdate() > 0) {
 				statusExecute = true;
@@ -79,11 +80,11 @@ public class Tra_MuonDao {
 	//trả sách
 	public boolean TraSach(muon_TraSach muonTra) {
 		boolean statusExecute = false;
-		String sql = "UPDATE `muon_tra_sach` SET `NgayMuon`=?,`tinhTrang`=\"Đã Trả\" WHERE muon_tra_sach.MaThanhVien = ? AND muon_tra_sach.MaSach = ?";
+		String sql = "UPDATE `muon_tra_sach` SET `NgayTra`=?,`tinhTrang`=\"Đã Trả\" WHERE muon_tra_sach.MaThanhVien = ? AND muon_tra_sach.MaSach = ?";
 		conn = DatabaseUtil.getConnect();
 		try {
 			PreparedStatement statement = conn.prepareStatement(sql);
-			statement.setString(1, muonTra.getNgayMuon());
+			statement.setString(1, muonTra.getNgayTra());
 			statement.setInt(2, Integer.parseInt(muonTra.getMaThanhVien().getMaThanhVien()));
 			statement.setInt(3, Integer.parseInt(muonTra.getMaSach().getMaSach()));
 			
@@ -114,7 +115,7 @@ public class Tra_MuonDao {
 			ResultSet result = statement.executeQuery();
 
 			while (result.next()) {
-				if (tenTV.equals(result.getString("maThanhVien"))) {
+				if (tenTV.equals(result.getString("MaThanhVien"))) {
 					kiem = true;
 				}
 			}
@@ -216,7 +217,7 @@ public class Tra_MuonDao {
 	 */
 
 	public ArrayList<muon_TraSach> getAllMuon_Tra() {
-		String sql = "SELECT muon_tra_sach.MaGiaoDich, muon_tra_sach.NgayMuon, muon_tra_sach.tinhTrang, thanh_vien.tenThanhVien, sach.TenSach FROM `muon_tra_sach` INNER JOIN thanh_vien ON muon_tra_sach.MaThanhVien = thanh_vien.MaThanhVien INNER JOIN sach ON muon_tra_sach.MaSach = sach.MaSach";
+		String sql = "SELECT muon_tra_sach.MaGiaoDich, muon_tra_sach.NgayMuon,muon_tra_sach.NgayTra, muon_tra_sach.tinhTrang,thanh_vien.MaThanhVien, thanh_vien.tenThanhVien,sach.MaSach, sach.TenSach FROM `muon_tra_sach` INNER JOIN thanh_vien ON muon_tra_sach.MaThanhVien = thanh_vien.MaThanhVien INNER JOIN sach ON muon_tra_sach.MaSach = sach.MaSach";
 		conn = DatabaseUtil.getConnect();
 		ArrayList<muon_TraSach> listTraMuon = new ArrayList<muon_TraSach>();
 		try {
@@ -229,10 +230,13 @@ public class Tra_MuonDao {
 				muonTra = new muon_TraSach();
 				muonTra.setMaGiaoDich("" + result.getInt("MaGiaoDich"));
 				muonTra.setNgayMuon(result.getString("NgayMuon"));
+				muonTra.setNgayTra(result.getString("NgayTra"));
 				quanly = new QuanLy_BanDoc();
+				quanly.setMaThanhVien(""+result.getString("MaThanhVien"));
 				quanly.setTenThanhVien(result.getString("tenThanhVien"));
 				muonTra.setMaThanhVien(quanly);
 				quanlySach = new QuanLySach();
+				quanlySach.setMaSach(""+result.getString("MaSach"));
 				quanlySach.setTenSach(result.getString("TenSach"));
 				muonTra.setMaSach(quanlySach);
 				muonTra.setTinhTrang(result.getString("tinhTrang"));
@@ -251,23 +255,107 @@ public class Tra_MuonDao {
 	 * 
 	 * 
 	 */
-//	public boolean KiemTraSoluong() {
-//		boolean kiemtra = false;
-//		String sql = "";
-//		conn = DatabaseUtil.getConnect();
-//		try {
-//			PreparedStatement statement = conn.prepareStatement(sql);
-//			ResultSet result = statement.executeQuery();
-//			while (result.next()) {
-//				if () {
-//					kiemtra = true;
-//				}
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		DatabaseUtil.disConnect(conn);
-//
-//		return kiemtra;
-//	}
+	public boolean kiemTraSoLuong(int MaSach) {
+		boolean kiem = false;
+		String sql = "SELECT * FROM `sach` WHERE sach.MaSach = ?";
+		conn = DatabaseUtil.getConnect();
+		try {
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setInt(1, MaSach);
+			ResultSet result = statement.executeQuery();
+			while (result.next()) {
+				if (Integer.parseInt(result.getString("soLuongConLai"))>0) {
+					kiem = true;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DatabaseUtil.disConnect(conn);
+
+		return kiem;
+	}
+	/**
+	 * Tìm Kiếm Danh Sách Theo Mã
+	 */
+	public ArrayList<muon_TraSach> getSeachByMaThanhVien(QuanLy_BanDoc quanlyBan) {
+		String sql = "SELECT muon_tra_sach.MaGiaoDich, muon_tra_sach.NgayMuon,muon_tra_sach.NgayTra, muon_tra_sach.tinhTrang, thanh_vien.tenThanhVien, sach.TenSach FROM `muon_tra_sach` INNER JOIN thanh_vien ON muon_tra_sach.MaThanhVien = thanh_vien.MaThanhVien INNER JOIN sach ON muon_tra_sach.MaSach = sach.MaSach WHERE thanh_vien.MaThanhVien = ?";
+		conn = DatabaseUtil.getConnect();
+		ArrayList<muon_TraSach> listTraMuon = new ArrayList<muon_TraSach>();
+		try {
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setInt(1, Integer.parseInt(quanlyBan.getMaThanhVien()));
+			ResultSet result = statement.executeQuery();
+			muon_TraSach muonTra;
+			QuanLy_BanDoc quanly;
+			QuanLySach quanlySach;
+			while (result.next()) {
+				muonTra = new muon_TraSach();
+				muonTra.setMaGiaoDich("" + result.getInt("MaGiaoDich"));
+				muonTra.setNgayMuon(result.getString("NgayMuon"));
+				muonTra.setNgayTra(result.getString("NgayTra"));
+				quanly = new QuanLy_BanDoc();
+				quanly.setTenThanhVien(result.getString("tenThanhVien"));
+				muonTra.setMaThanhVien(quanly);
+				quanlySach = new QuanLySach();
+				quanlySach.setTenSach(result.getString("TenSach"));
+				muonTra.setMaSach(quanlySach);
+				muonTra.setTinhTrang(result.getString("tinhTrang"));
+				listTraMuon.add(muonTra);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DatabaseUtil.disConnect(conn);
+		return listTraMuon;
+
+	}
+	
+	/**
+	 * Lấy mã giao dịch
+	 * 
+	 * @return
+	 */
+	public int layMaGiaoDich() {
+		int maGD = 0;
+		String sql = "SELECT * FROM `muon_tra_sach` ORDER BY MaGiaoDich DESC LIMIT 1";
+		conn = DatabaseUtil.getConnect();
+		try {
+			PreparedStatement statement = conn.prepareStatement(sql);
+			ResultSet result = statement.executeQuery();
+			while (result.next()) {
+				maGD = result.getInt("MaGiaoDich");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DatabaseUtil.disConnect(conn);
+
+		return maGD;
+	}
+	/**
+	 * đối chiếu khi mượn sách.
+	 * @param MaThanhVien
+	 * @return
+	 */
+	public ArrayList<Integer> KiemTraTinhHinhMuon(int MaThanhVien) {
+		String sql = "SELECT MaSach FROM `muon_tra_sach` WHERE MaThanhVien = ? AND tinhTrang = \"Đang Mượn\"";
+		conn = DatabaseUtil.getConnect();
+		ArrayList<Integer> listTraMuon = new ArrayList<>();
+		try {
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setInt(1, MaThanhVien);
+			ResultSet result = statement.executeQuery();
+			
+			while (result.next()) {
+				listTraMuon.add(result.getInt("MaSach"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DatabaseUtil.disConnect(conn);
+		return listTraMuon;
+
+	}
+	
 }

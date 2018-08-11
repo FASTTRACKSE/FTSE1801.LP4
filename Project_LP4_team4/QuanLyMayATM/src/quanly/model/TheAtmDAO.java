@@ -96,52 +96,20 @@ public class TheAtmDAO {
 	}
 
 	/**
-	 * Lấy mã thẻ theo số tài khoản
+	 * Lấy số tk theo số thẻ
 	 * 
 	 * @param soTK
 	 * @return
 	 */
-	public String layThongTinMaThe(String soTK) {
-		String maThe = null;
-		conn = DatabaseUntil.getConnect();
-		String sql = "SELECT * FROM the_atm WHERE soTK = ?";
-		PreparedStatement statement = null;
-		try {
-			statement = conn.prepareStatement(sql);
-			statement.setString(1, soTK);
-			ResultSet resultSet = statement.executeQuery();
-			while (resultSet.next()) {
-				maThe = resultSet.getString("soTheATM");
-			}
-		} catch (SQLException e) {
-		} finally {
-			if (statement != null) {
-				try {
-					statement.close();
-				} catch (SQLException e) {
-				}
-			}
-		}
-		DatabaseUntil.getConnect();
-		return maThe;
-	}
-
-	/**
-	 * Lấy thông tin số tài khoản
-	 * 
-	 * @param maSoThe
-	 * @return
-	 */
-	public String layThongTinMaTK(String maSoThe) {
+	public String layThongTinMaThe(String soThe) {
 		String soTK = null;
-		PreparedStatement statement = null;
 		conn = DatabaseUntil.getConnect();
-		String sql = "SELECT soTK FROM the_atm WHERE soTheATM = ?";
+		String sql = "SELECT * FROM the_atm WHERE soTheATM = ?";
+		PreparedStatement statement = null;
 		try {
 			statement = conn.prepareStatement(sql);
-			statement.setString(1, maSoThe);
+			statement.setString(1, soThe);
 			ResultSet resultSet = statement.executeQuery();
-
 			while (resultSet.next()) {
 				soTK = resultSet.getString("soTK");
 			}
@@ -154,9 +122,41 @@ public class TheAtmDAO {
 				}
 			}
 		}
+		DatabaseUntil.getConnect();
+		return soTK;
+	}
+
+	/**
+	 * Lấy thông tin số thẻ ATM
+	 * 
+	 * @param soTK
+	 * @return
+	 */
+	public String layThongTinSoTheATM(String soTK) {
+		String soTheATM = null;
+		PreparedStatement statement = null;
+		conn = DatabaseUntil.getConnect();
+		String sql = "SELECT soTheATM FROM the_atm WHERE soTK = ?";
+		try {
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, soTK);
+			ResultSet resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				soTheATM = resultSet.getString("soTheATM");
+			}
+		} catch (SQLException e) {
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
 
 		DatabaseUntil.closeConnection(conn);
-		return soTK;
+		return soTheATM;
 	}
 
 	/**
@@ -189,6 +189,37 @@ public class TheAtmDAO {
 		DatabaseUntil.closeConnection(conn);
 		return listSoThe;
 
+	}
+	
+	/**
+	 * Đổi mã Pin
+	 * @param pass
+	 * @param soTheATM
+	 * @return
+	 */
+	public boolean doiMaPin(String pass, String soTheATM) {
+		boolean kiemTra = false;
+		String sql = "UPDATE the_atm SET pass = ? WHERE soTheATM = ?";
+		conn = DatabaseUntil.getConnect();
+		PreparedStatement statement = null;
+		try {
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, pass);
+			statement.setString(2, soTheATM);
+			if (statement.executeUpdate() > 0) {
+				kiemTra = true;
+			}
+		} catch (SQLException e) {
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+		DatabaseUntil.closeConnection(conn);
+		return kiemTra;
 	}
 
 }

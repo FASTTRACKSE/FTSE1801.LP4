@@ -43,10 +43,10 @@ public class BaoCaoTinhHinhRutTien extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	JPanel pnBaoCaoTH, chon, pnTongTienRut;
+	JPanel pnBaoCaoTH, chon, pnTongTien;
 	JPanel pnLabel, pnBox, pnTim;
-	JLabel title, ngay, ngay1, tongTienRut, maKH;
-	JTextField txtMaKH, txtTongTienRut;
+	JLabel title, ngay, ngay1, tongTienRut, tongtienThem, maKH;
+	JTextField txtMaKH, txtTongTienRut, txtTongTienThem;
 	JComboBox<?> boxThoiGian;
 	JButton tim;
 	DefaultTableModel tableModel;
@@ -58,7 +58,7 @@ public class BaoCaoTinhHinhRutTien extends JFrame {
 	JDatePickerImpl datePicker, datePicker1;
 	Properties p;
 	Date date, date1;
-	
+
 	/**
 	 * Sự kiện cho các JButton
 	 */
@@ -84,30 +84,43 @@ public class BaoCaoTinhHinhRutTien extends JFrame {
 					if (soSanh > 90 || soSanh < 0) {
 						JOptionPane.showMessageDialog(null, "Sai tổng số ngày. Mời nhập lại");
 					} else {
-						GiaoDichDAO giaoDichDAO = new GiaoDichDAO();
-						txtTongTienRut.setText("");
-						tableModel.setRowCount(0);
-						if (giaoDichDAO.kiemTraMaKHDaGiaoDichChua(txtMaKH.getText())) {
-							ArrayList<GiaoDich> listGD = new ArrayList<>();
-							listGD = giaoDichDAO.showGiaoDichTheoMaKHAnDate(txtMaKH.getText(), strDate, strDate1);
-							if (listGD.isEmpty()) {
-								JOptionPane.showMessageDialog(null,
-										"Khách hàng không thực hiện giao dịch trong khoảng thời gian đã chọn");
-							} else {
-								Integer allTien = 0;
-								for (int i = 0; i < listGD.size(); i++) {
-									tableModel.addRow(new String[] { listGD.get(i).getMayATM().getMaMay(),
-											listGD.get(i).getKhachHang().getSoTheATM(), listGD.get(i).getThoiGian(),
-											listGD.get(i).getSoTien() });
-									allTien = allTien + Integer.parseInt(listGD.get(i).getSoTien());
-								}
-								txtTongTienRut.setText("" + allTien);
-							}
+						if (txtMaKH.getText().equals("")) {
+							JOptionPane.showMessageDialog(null, "Yêu cầu nhập mã khách hàng");
 						} else {
-							JOptionPane.showMessageDialog(null,
-									"Mã khách hàng không tồn tại hoặc khách hàng chưa thực hiện giao dịch");
+							GiaoDichDAO giaoDichDAO = new GiaoDichDAO();
+							txtTongTienRut.setText("");
+							txtTongTienThem.setText("");
+							tableModel.setRowCount(0);
+							if (giaoDichDAO.kiemTraMaKHDaGiaoDichChua(txtMaKH.getText())) {
+								ArrayList<GiaoDich> listGD = new ArrayList<>();
+								listGD = giaoDichDAO.showGiaoDichTheoMaKHAnDate(txtMaKH.getText(), strDate, strDate1);
+								
+									Integer allTienRut = 0;
+									Integer allTienThem = 0;
+									for (int i = 0; i < listGD.size(); i++) {
+										if (listGD.get(i).getMayATM().getMaMay().equals("Tại ngân hàng")) {
+											tableModel.addRow(new String[] { listGD.get(i).getMayATM().getMaMay(),
+													listGD.get(i).getKhachHang().getSoTK(), listGD.get(i).getThoiGian(),listGD.get(i).getSoTienThem(),
+													listGD.get(i).getSoTienRut() });
+											allTienRut = allTienRut + Integer.parseInt(listGD.get(i).getSoTienRut());
+											allTienThem = allTienThem + Integer.parseInt(listGD.get(i).getSoTienThem());
+										}else {
+											tableModel.addRow(new String[] { "Máy ATM: "+listGD.get(i).getMayATM().getMaMay(),
+													listGD.get(i).getKhachHang().getSoTK(), listGD.get(i).getThoiGian(),listGD.get(i).getSoTienThem(),
+													listGD.get(i).getSoTienRut() });
+											allTienRut = allTienRut + Integer.parseInt(listGD.get(i).getSoTienRut());
+											allTienThem = allTienThem + Integer.parseInt(listGD.get(i).getSoTienThem());
+										}
+									
+									}
+									txtTongTienRut.setText("" + allTienRut);
+									txtTongTienThem.setText(""+allTienThem);
+								
+							} else {
+								JOptionPane.showMessageDialog(null,
+										"Mã khách hàng không tồn tại hoặc khách hàng chưa thực hiện giao dịch");
+							}
 						}
-
 					}
 
 				}
@@ -158,20 +171,21 @@ public class BaoCaoTinhHinhRutTien extends JFrame {
 		tim = new JButton("Tìm danh sách");
 		tim.addActionListener(actionListener);
 		pnTim.add(tim);
-		chon.add(pnTim);
 		pnBaoCaoTH.add(chon);
+		pnBaoCaoTH.add(pnTim);
 
 		// Bảng báo cáo
 		border = BorderFactory.createLineBorder(Color.BLUE, 3, true);
 		titledBorder = new TitledBorder(border, "Danh sách tình hình rút tiền rút tiền của khách hàng");
 		tableModel = new DefaultTableModel();
-		tableModel.addColumn("Máy ATM");
-		tableModel.addColumn("Số thẻ");
+		tableModel.addColumn("Nơi thực hiện giao dịch");
+		tableModel.addColumn("Số tài khoản");
 		tableModel.addColumn("Thời gian giao dịch");
-		tableModel.addColumn("Số tiền giao dịch");
+		tableModel.addColumn("Số tiền Thêm");
+		tableModel.addColumn("Số tiền rút");
 
 		table = new JTable(tableModel);
-//		table.getTableHeader().setReorderingAllowed(false);
+		// table.getTableHeader().setReorderingAllowed(false);
 		table.setDefaultEditor(Object.class, null);
 
 		JScrollPane jScrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
@@ -179,12 +193,18 @@ public class BaoCaoTinhHinhRutTien extends JFrame {
 		jScrollPane.setBorder(titledBorder);
 		pnBaoCaoTH.add(jScrollPane);
 
-		pnTongTienRut = new JPanel();
-		tongTienRut = new JLabel("Tổng số tiền đã rút:");
+		pnTongTien = new JPanel();
+		tongTienRut = new JLabel("Tổng số tiền rút:");
+		tongtienThem = new JLabel("Tổng tiền thêm:");
 		txtTongTienRut = new JTextField(10);
-		pnTongTienRut.add(tongTienRut);
-		pnTongTienRut.add(txtTongTienRut);
-		pnBaoCaoTH.add(pnTongTienRut);
+		txtTongTienThem = new JTextField(10);
+		pnTongTien.add(tongTienRut);
+		pnTongTien.add(txtTongTienRut);
+		addItem(pnTongTien, tongTienRut, 0, 0, 1, 1, GridBagConstraints.EAST);
+		addItem(pnTongTien, txtTongTienRut, 1, 0, 2, 1, GridBagConstraints.WEST);
+		addItem(pnTongTien, tongtienThem, 0, 1, 1, 1, GridBagConstraints.EAST);
+		addItem(pnTongTien, txtTongTienThem, 1, 1, 2, 1, GridBagConstraints.WEST);
+		pnBaoCaoTH.add(pnTongTien);
 
 		return pnBaoCaoTH;
 
@@ -192,6 +212,7 @@ public class BaoCaoTinhHinhRutTien extends JFrame {
 
 	/**
 	 * Chuyển kiểu String thành kiểu Date
+	 * 
 	 * @author ADMIN
 	 *
 	 */

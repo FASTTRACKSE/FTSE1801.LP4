@@ -114,11 +114,11 @@ public class MonDao {
 	public ArrayList<MonHoc> showTableMonTimKiem(MonHoc monHoc) {
 		conn = DatabasaUltil.getConnect();
 		ArrayList<MonHoc> listMonHoc = new ArrayList<MonHoc>();
-		String sql = "SELECT * FROM `monhoc` WHERE monhoc=?";
+		String sql = "SELECT * FROM `monhoc` WHERE idmon=? AND monhoc=?";
 		try {
 			statement = conn.prepareStatement(sql);
-			statement.setString(1, monHoc.getTenMonHoc());
-
+			statement.setString(1, monHoc.getIdMonHoc());
+			statement.setString(2, monHoc.getTenMonHoc());
 			ResultSet result = statement.executeQuery();
 			MonHoc monHoc1;
 			while (result.next()) {
@@ -190,5 +190,50 @@ public class MonDao {
 		return listTenMonHoc;
 
 	}
+	/**
+	 * Hiển thị tất cả mã môn học trong bảng monhoc(Lọc mã môn học)
+	 * @return
+	 */
+	public ArrayList<String> getAllMaMonHoc() {
+		String sql = "SELECT `idmon` FROM `monhoc`";
+		conn = DatabasaUltil.getConnect();
+		ArrayList<String> listMaMon = new ArrayList<String>();
+		try {
+			PreparedStatement statement = conn.prepareStatement(sql);
+			ResultSet result = statement.executeQuery();
+			while (result.next()) {
+				listMaMon.add(result.getString("idmon"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DatabasaUltil.closeConnection(conn);
+		return listMaMon;
+	}
+	/**
+	 * Hiển thị tên môn học từ mã môn học trong bảng monhoc(Lọc theo tên môn học)
+	 * @param namHoc
+	 * @return
+	 */
+	public ArrayList<String> getAllTenMonHoc(String maMon) {
+		String sql = "SELECT `monhoc` FROM `monhoc` WHERE idmon=?";
+		conn = DatabasaUltil.getConnect();
+		ArrayList<String> listTenMon = new ArrayList<String>();
+		try {
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, maMon);
+			ResultSet result = statement.executeQuery();
+
+			while (result.next()) {
+				listTenMon.add(result.getString("monhoc"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DatabasaUltil.closeConnection(conn);
+		return listTenMon;
+	}
+	
+
 
 }

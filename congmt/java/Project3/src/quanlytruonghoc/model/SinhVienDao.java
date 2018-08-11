@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import quanlytruonghoc.entity.Diem;
 import quanlytruonghoc.entity.Lop;
 import quanlytruonghoc.entity.Phuong;
 import quanlytruonghoc.entity.SinhVien;
@@ -15,7 +14,7 @@ import quanlytruonghoc.model.DatabasaUltil;
 /**
  * SinhVienDao Class
  * 
- * @author CongMT
+ * @author Phạm Ngọc Hợi
  *
  */
 public class SinhVienDao {
@@ -24,12 +23,14 @@ public class SinhVienDao {
 	private PreparedStatement statement;
 	private ResultSet result;
 
+	
 	/**
 	 * Them moi 1 sinh vien
 	 * 
 	 * @param sinhvien
 	 * @return
 	 */
+	
 	public boolean addNewSinhVien(SinhVien sinhvien) {
 		boolean statusExecute = false;
 		conn = DatabasaUltil.getConnect();
@@ -135,13 +136,28 @@ public class SinhVienDao {
 		return statusExecute;
 	}
 	
-	public ArrayList<SinhVien> showTableSinhVienTimKiem(SinhVien sinhvien) {
+	public ArrayList<SinhVien> timSvTheoTen(SinhVien sinhvien) {
 		conn = DatabasaUltil.getConnect();
-		String sql = "SELECT sinhvien.*, xaphuongthitran.name, quanhuyen.name, tinhthanhpho.name FROM `sinhvien` INNER JOIN xaphuongthitran ON sinhvien.xaid=xaphuongthitran.xaid INNER JOIN quanhuyen ON xaphuongthitran.maqh=quanhuyen.maqh INNER JOIN tinhthanhpho ON quanhuyen.matp=tinhthanhpho.matp  WHERE sinhvien.hoten LIKE ?";
+		String sql = "SELECT sinhvien.*, xaphuongthitran.name, quanhuyen.name, tinhthanhpho.name FROM `sinhvien` INNER JOIN xaphuongthitran ON sinhvien.xaid=xaphuongthitran.xaid INNER JOIN quanhuyen ON xaphuongthitran.maqh=quanhuyen.maqh INNER JOIN tinhthanhpho ON quanhuyen.matp=tinhthanhpho.matp ";
+		
+		if(!sinhvien.getThanhpho().equals("")) {
+			sql = sql + " WHERE tinhthanhpho.name = " + "'" + sinhvien.getThanhpho() + "'";
+		}
+		if(!sinhvien.getQuan().equals("")) {
+			sql = sql + " AND quanhuyen.name = " + "'" + sinhvien.getQuan() + "'";
+		}
+		if(!sinhvien.getIdLop().equals("")) {
+			sql = sql + " AND sinhvien.idlop = " + "'" + sinhvien.getIdLop() + "'";
+		}
+		
+		if(!sinhvien.getHoTen().equals("")) {
+			sql = sql + " AND sinhvien.hoten LIKE " + "'" + "%"  + sinhvien.getHoTen() + "%" + "'";
+		}
+		
+		
 		ArrayList<SinhVien> listSinhVien = new ArrayList<SinhVien>();
 		try {
 			PreparedStatement statement = conn.prepareStatement(sql);
-			statement.setString(1, "%" + sinhvien.getHoTen() +"%");
 			ResultSet result = statement.executeQuery();
 			SinhVien sinhvien1;
 			Phuong phuong;
@@ -149,6 +165,7 @@ public class SinhVienDao {
 				sinhvien1 = new SinhVien();
 				sinhvien1.setIdSinhVien(result.getString("idsv"));
 				sinhvien1.setHoTen(result.getString("hoten"));
+				sinhvien1.setIdLop(result.getString("idlop"));
 				sinhvien1.setDiaChi(result.getString("diachi"));
 				sinhvien1.setSdt(result.getString("sdt"));
 				phuong = new Phuong();
@@ -275,26 +292,7 @@ public class SinhVienDao {
 		DatabasaUltil.closeConnection(conn);
 		return listXaPhuong;
 	}
-	/**
-	 * Hiển thị tất cả mã lớp trong bảng lớp trong database
-	 * @return
-	 */
-	public ArrayList<String> getAllMaLop() {
-		String sql = "SELECT `idlop` FROM `lop`";
-		conn = DatabasaUltil.getConnect();
-		ArrayList<String> listMaLop = new ArrayList<String>();
-		try {
-			PreparedStatement statement = conn.prepareStatement(sql);
-			ResultSet result = statement.executeQuery();
-			while (result.next()) {
-				listMaLop.add(result.getString("idlop"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		DatabasaUltil.closeConnection(conn);
-		return listMaLop;
-	}
+	
 	
 	public String getXaId(String tenXa) {
 		String sql = "SELECT `xaid` FROM `xaphuongthitran` WHERE `name` = ?";
@@ -313,4 +311,6 @@ public class SinhVienDao {
 		DatabasaUltil.closeConnection(conn);
 		return xaid;
 	}
+	
+	
 }

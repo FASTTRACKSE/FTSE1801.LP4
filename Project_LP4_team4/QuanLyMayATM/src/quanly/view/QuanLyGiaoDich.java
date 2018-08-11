@@ -1,7 +1,6 @@
 package quanly.view;
 
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -16,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -23,6 +23,12 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+
+import quanly.entity.GiaoDich;
+import quanly.entity.KhachHang;
+import quanly.model.GiaoDichDAO;
+import quanly.model.KhachHangDAO;
+import quanly.model.TheAtmDAO;
 
 public class QuanLyGiaoDich extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -35,18 +41,78 @@ public class QuanLyGiaoDich extends JFrame {
 	TitledBorder titledBorder;
 	DefaultTableModel tableModel;
 	JTable table;
+	KhachHangDAO khachHangDAO;
+	TheAtmDAO theAtmDAO;
+	GiaoDichDAO giaoDichDAO;
+	GiaoDich giaoDich;
+	KhachHang khachHang;
 
 	ActionListener actionListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == huy) {
-				dispose();
+				txtTaiKhoan.setText("");
+				txtCMND.setText("");
+				txtSoTien.setText("");
+			}
+
+			if (e.getSource() == themTien) {
+				if (kiemTraNhapDuLieu()) {
+					if (khachHangDAO.kiemTraSoTKvaSoCMND(txtTaiKhoan.getText(), txtCMND.getText())) {
+						khachHangDAO.updateSoTien(txtCMND.getText(),
+								theAtmDAO.layThongTinSoTheATM(txtTaiKhoan.getText()), txtSoTien.getText());
+							
+							giaoDichDAO.addThongTinGiaoDichKhiThemTienTaiNganHang(txtSoTien.getText(),
+									txtTaiKhoan.getText(),
+									khachHangDAO.layMaKH(theAtmDAO.layThongTinSoTheATM(txtTaiKhoan.getText())));
+							khachHang = khachHangDAO.showKhachHangTheoSoThe(theAtmDAO.layThongTinSoTheATM(txtTaiKhoan.getText()));
+							giaoDich = giaoDichDAO.layMaGiaoDich();
+							tableModel.setRowCount(0);
+							tableModel.addRow(new String[] {""+giaoDich.getMaGiaoDich(), giaoDich.getKhachHang().getSoTK(),giaoDich.getThoiGian(),giaoDich.getSoTienThem(),giaoDich.getSoTienRut(),khachHang.getSoTienTrongTK()});
+							txtCMND.setText("");
+							txtTaiKhoan.setText("");
+							txtSoTien.setText("");
+							JOptionPane.showMessageDialog(null, "Thêm tiền thành công");
+					} else {
+						JOptionPane.showMessageDialog(null, "Sai số tk hoặc số CMND");
+					}
+				}
+			}
+			
+			if (e.getSource() == rutTien) {
+				if (kiemTraNhapDuLieu()) {
+					if (khachHangDAO.kiemTraSoTKvaSoCMND(txtTaiKhoan.getText(), txtCMND.getText())) {
+						if (khachHangDAO.rutTien(khachHangDAO.showKhachHangTheoSoThe(theAtmDAO.layThongTinSoTheATM(txtTaiKhoan.getText())),txtSoTien.getText())) {
+							giaoDichDAO.addThongTinGiaoDichKhiRutTienTaiNganHang(txtSoTien.getText(),
+									txtTaiKhoan.getText(),
+									khachHangDAO.layMaKH(theAtmDAO.layThongTinSoTheATM(txtTaiKhoan.getText())));
+							khachHang = khachHangDAO.showKhachHangTheoSoThe(theAtmDAO.layThongTinSoTheATM(txtTaiKhoan.getText()));
+							giaoDich = giaoDichDAO.layMaGiaoDich();
+							tableModel.setRowCount(0);
+							tableModel.addRow(new String[] {""+giaoDich.getMaGiaoDich(), giaoDich.getKhachHang().getSoTK(),giaoDich.getThoiGian(),giaoDich.getSoTienThem(),giaoDich.getSoTienRut(),khachHang.getSoTienTrongTK()});
+							txtCMND.setText("");
+							txtTaiKhoan.setText("");
+							txtSoTien.setText("");
+							JOptionPane.showMessageDialog(null, "Rút tiền thành công");
+						} else {
+							JOptionPane.showMessageDialog(null, "Số tiền trong tài khoản không đủ để rút");
+						}
+					}else {
+						JOptionPane.showMessageDialog(null, "Sai số tk hoặc số CMND");
+					}
+				}
 			}
 
 		}
 	};
 
-	public void giaoDich() {
+	public JPanel giaoDich() {
+		khachHangDAO = new KhachHangDAO();
+		theAtmDAO = new TheAtmDAO();
+		giaoDichDAO = new GiaoDichDAO();
+		giaoDich = new GiaoDich();
+		khachHang = new KhachHang();
+
 		pnGiaoDich = new JPanel();
 		pnGiaoDich.setLayout(new BoxLayout(pnGiaoDich, BoxLayout.Y_AXIS));
 		// Phần tiêu đề
@@ -83,17 +149,19 @@ public class QuanLyGiaoDich extends JFrame {
 		rutTien = new JButton("Rút tiền");
 		huy = new JButton("Hủy");
 		huy.addActionListener(actionListener);
+		themTien.addActionListener(actionListener);
+		rutTien.addActionListener(actionListener);
 		pnbutton.add(themTien);
 		pnbutton.add(rutTien);
 		pnbutton.add(huy);
 		pnGiaoDich.add(pnNhap);
 		pnGiaoDich.add(pnbutton);
-		
 
 		border = BorderFactory.createLineBorder(Color.BLUE, 3, true);
 		titledBorder = new TitledBorder(border, "Danh sách thông tin khách hàng");
 		tableModel = new DefaultTableModel();
 		tableModel.addColumn("Mã giao dịch");
+		tableModel.addColumn("Số tài khoản");
 		tableModel.addColumn("Thời gian");
 		tableModel.addColumn("Số tiền thêm");
 		tableModel.addColumn("Số tiền rút");
@@ -108,10 +176,36 @@ public class QuanLyGiaoDich extends JFrame {
 		jScrollPane.setBorder(titledBorder);
 		pnGiaoDich.add(jScrollPane);
 		pnGiaoDich.setLayout(new BoxLayout(pnGiaoDich, BoxLayout.Y_AXIS));
+		return pnGiaoDich;
 
-		Container container = getContentPane();
-		container.add(pnGiaoDich);
+	}
 
+	/**
+	 * Kiểm tra nhập dữ liệu
+	 * 
+	 * @return
+	 */
+	public boolean kiemTraNhapDuLieu() {
+		boolean kiemTra = true;
+		String pantterSoTK = "[0-9]{13}";
+		String pantterSoCMND = "[0-9]{9}";
+		String pantterSoTien = "[1-9][0-9]{0,3}0000";
+		if (!txtTaiKhoan.getText().matches(pantterSoTK)) {
+			kiemTra = false;
+			JOptionPane.showMessageDialog(null, "Tài khoản phải nhập đủ 13 số");
+			txtTaiKhoan.setText("");
+		}
+		if (!txtCMND.getText().matches(pantterSoCMND)) {
+			kiemTra = false;
+			JOptionPane.showMessageDialog(null, "Số CMND phải nhập đủ 9 số");
+			txtCMND.setText("");
+		}
+		if (!txtSoTien.getText().matches(pantterSoTien)) {
+			kiemTra = false;
+			JOptionPane.showMessageDialog(null, "Số tiền không quá 100 triệu và phải là bội số của 10000");
+			txtSoTien.setText("");
+		}
+		return kiemTra;
 	}
 
 	/**
@@ -139,16 +233,4 @@ public class QuanLyGiaoDich extends JFrame {
 		p.add(c, gc);
 	}
 
-	public void display() {
-		setSize(700, 500);
-		setLocationRelativeTo(null);
-		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-	}
-
-	public static void main(String[] args) {
-		QuanLyGiaoDich giaoDich = new QuanLyGiaoDich();
-		giaoDich.giaoDich();
-		giaoDich.display();
-	}
 }

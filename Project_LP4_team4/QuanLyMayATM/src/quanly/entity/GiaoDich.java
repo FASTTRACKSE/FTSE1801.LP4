@@ -3,7 +3,8 @@ package quanly.entity;
 public class GiaoDich {
 	private int maGiaoDich;
 	private String thoiGian;
-	private String soTien;
+	private String soTienRut;
+	private String soTienThem;
 	private KhachHang khachHang;
 	private MayATM mayATM;
 
@@ -23,12 +24,20 @@ public class GiaoDich {
 		this.thoiGian = thoiGian;
 	}
 
-	public String getSoTien() {
-		return soTien;
+	public String getSoTienRut() {
+		return soTienRut;
 	}
 
-	public void setSoTien(String soTien) {
-		this.soTien = soTien;
+	public void setSoTienRut(String soTienRut) {
+		this.soTienRut = soTienRut;
+	}
+
+	public String getSoTienThem() {
+		return soTienThem;
+	}
+
+	public void setSoTienThem(String soTienThem) {
+		this.soTienThem = soTienThem;
 	}
 
 	public KhachHang getKhachHang() {

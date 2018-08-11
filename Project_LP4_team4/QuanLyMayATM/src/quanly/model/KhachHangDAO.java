@@ -93,17 +93,17 @@ public class KhachHangDAO {
 	 * @param khachHang
 	 * @return
 	 */
-	public boolean updateSoTien(String maKH, String maSoThe, String soTien) {
+	public boolean updateSoTien(String soCMND, String maSoThe, String soTien) {
 		boolean kiemTra = false;
 		Integer allTien = Integer.parseInt(layThongTinSoTien(maSoThe)) + Integer.parseInt(soTien);
-		String sql = "UPDATE khach_hang SET soTienTrongTK=? WHERE soTheATM = ? AND maKhachHang = ?";
+		String sql = "UPDATE khach_hang SET soTienTrongTK=? WHERE soCMND = ? AND soTheATM = ?";
 		conn = DatabaseUntil.getConnect();
 		PreparedStatement statement = null;
 		try {
 			statement = conn.prepareStatement(sql);
 			statement.setString(1, ("" + allTien));
-			statement.setString(2, maSoThe);
-			statement.setString(3, maKH);
+			statement.setString(2, soCMND);
+			statement.setString(3, maSoThe);
 			if (statement.executeUpdate() > 0) {
 				kiemTra = true;
 			}
@@ -302,19 +302,18 @@ public class KhachHangDAO {
 	/**
 	 * Lấy ra thông tin khách hàng theo số tài khoản
 	 * 
-	 * @param soTk
+	 * @param soThe
 	 * @return
 	 */
-	public KhachHang showKhachHangTheoSoTK(String soTK) {
+	public KhachHang showKhachHangTheoSoThe(String soThe) {
 		PreparedStatement statement = null;
 		KhachHang khachHang = null;
 		conn = DatabaseUntil.getConnect();
-		String sql = "SELECT*FROM khach_hang JOIN phuong ON khach_hang.maPhuong = phuong.maPhuong JOIN quan ON phuong.maQuan = quan.maQuan JOIN the_atm ON khach_hang.soTheATM = the_atm.soTheATM WHERE the_atm.soTK= ?";
+		String sql = "SELECT*FROM khach_hang JOIN phuong ON khach_hang.maPhuong = phuong.maPhuong JOIN quan ON phuong.maQuan = quan.maQuan JOIN the_atm ON khach_hang.soTheATM = the_atm.soTheATM WHERE khach_hang.soTheATM= ?";
 		try {
 			statement = conn.prepareStatement(sql);
-			statement.setString(1, soTK);
+			statement.setString(1, soThe);
 			ResultSet resultSet = statement.executeQuery();
-
 			while (resultSet.next()) {
 				khachHang = new KhachHang();
 				khachHang.setMaKH(resultSet.getString("khach_hang.maKhachHang"));
@@ -375,7 +374,6 @@ public class KhachHangDAO {
 		} else {
 			kiemTra = false;
 		}
-
 		DatabaseUntil.closeConnection(conn);
 		return kiemTra;
 	}
@@ -459,6 +457,33 @@ public class KhachHangDAO {
 
 		DatabaseUntil.closeConnection(conn);
 		return myList;
+	}
+	
+	public boolean kiemTraSoTKvaSoCMND(String soTK, String soCMND) {
+		boolean kiemTra = false;
+		PreparedStatement statement = null;
+		conn = DatabaseUntil.getConnect();
+		String sql = "SELECT * FROM `khach_hang` JOIN the_atm ON khach_hang.soTheATM = the_atm.soTheATM WHERE the_atm.soTK = ? AND khach_hang.soCMND = ?";
+		try {
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, soTK);
+			statement.setString(2, soCMND);
+			ResultSet resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				kiemTra = true;
+			}
+		} catch (SQLException e) {
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+		DatabaseUntil.closeConnection(conn);
+		return kiemTra;
 	}
 
 	/**

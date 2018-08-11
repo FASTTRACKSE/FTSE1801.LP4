@@ -20,6 +20,7 @@ public class TienDien {
 	 * 
 	 * @return listdsbc
 	 */
+	
 	public ArrayList<KhachHang> tienDien() {
 		baoCaoDAO = new BaoCaoDAO();
 		ArrayList<KhachHang> listdsbc = baoCaoDAO.DSKhachHang();
