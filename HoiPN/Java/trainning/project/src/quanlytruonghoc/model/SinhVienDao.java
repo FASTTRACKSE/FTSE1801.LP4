@@ -48,6 +48,7 @@ public class SinhVienDao {
 			int count = statement.executeUpdate();
 			
 			if (count > 0) {
+				System.out.println("Thêm thành công!!");
 				statusExecute = true;
 			}
 		} catch (Exception e) {
@@ -81,6 +82,7 @@ public class SinhVienDao {
 			
 			int count = statement.executeUpdate();
 			if (count > 0) {
+				System.out.println("Cập nhập thành công!!");
 				statusExecute = true;
 			}
 		} catch (Exception e) {
@@ -109,6 +111,7 @@ public class SinhVienDao {
 
 			int count = statement.executeUpdate();
 			if (count > 0) {
+				System.out.println("Xoa thanh cong");
 				statusExecute = true;
 			}
 		} catch (Exception e) {
@@ -123,6 +126,7 @@ public class SinhVienDao {
 
 			int count = statement.executeUpdate();
 			if (count > 0) {
+				System.out.println("Xóa thành công!!");
 				statusExecute = true;
 			}
 		} catch (Exception e) {

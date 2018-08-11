@@ -210,6 +210,7 @@ public class Menu extends JFrame implements ActionListener {
 		pnImg.add(pnImg1);
 		trangChuPanel.add(tieudePanel);
 		trangChuPanel.add(pnImg);
+		// cardPanel.add(trangChuPanel);
 
 		// Trang quản lý sinh
 		// viên.*****************************************************************************
