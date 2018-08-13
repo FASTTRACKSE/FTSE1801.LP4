@@ -33,7 +33,7 @@ public class puzzle extends JFrame implements ActionListener {
 //		con.setLayout(new BoxLayout(con, BoxLayout.Y_AXIS));
 		con.add(jpn1);
 //		con.add(jpn2);
-
+		
 		display();
 		setAction();
 	}

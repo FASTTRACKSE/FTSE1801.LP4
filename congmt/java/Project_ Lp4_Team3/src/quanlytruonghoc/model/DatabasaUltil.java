@@ -29,7 +29,7 @@ public class DatabasaUltil {
 
 			Driver driver = new Driver();
 			conn = driver.connect(URL, pro);
-			System.out.println(" Bạn đăng nhập thành công!!");
+			
 		} catch (SQLException ex) {
 			System.out.println("Đăng nhập bị lỗi!!");
 		}
@@ -44,7 +44,7 @@ public class DatabasaUltil {
 		try {
 			if (conn != null) {
 				conn.close();
-				System.out.println(" Đóng thành công Database.");
+				
 			}
 		} catch (SQLException ex) {
 			System.out.println("Lỗi đóng kết nối!!!");

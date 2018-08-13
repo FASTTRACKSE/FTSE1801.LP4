@@ -22,7 +22,7 @@ public class ThongKeDao {
 	private ResultSet result;
 
 	public double getDiemThiJava(String idsv) {
-		String sql = "SELECT diemthi FROM diem WHERE idsv = ? AND idmon = 'MH001'";
+		String sql = "SELECT diemthi FROM diem WHERE idsv = ? AND idmon = 'MMH001'";
 		conn = DatabasaUltil.getConnect();
 		double diemJava = 0;
 		try {
@@ -40,9 +40,9 @@ public class ThongKeDao {
 	}
 	
 	public double getDiemThiHTML(String idsv) {
-		String sql = "SELECT diemthi FROM diem WHERE idsv = ? AND idmon = 'MH002'";
+		String sql = "SELECT diemthi FROM diem WHERE idsv = ? AND idmon = 'MMH002'";
 		conn = DatabasaUltil.getConnect();
-		double diemHTML = 0;;
+		double diemHTML = 0;
 		try {
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setString(1, idsv);
@@ -58,9 +58,9 @@ public class ThongKeDao {
 	}
 	
 	public double getDiemThiCSS(String idsv) {
-		String sql = "SELECT diemthi FROM diem WHERE idsv = ? AND idmon = 'MH003'";
+		String sql = "SELECT diemthi FROM diem WHERE idsv = ? AND idmon = 'MMH003'";
 		conn = DatabasaUltil.getConnect();
-		double diemCSS = 0;;
+		double diemCSS = 0;
 		try {
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setString(1, idsv);
@@ -76,9 +76,9 @@ public class ThongKeDao {
 	}
 	
 	public double getDiemThiEnligh(String idsv) {
-		String sql = "SELECT diemthi FROM diem WHERE idsv = ? AND idmon = 'MH004'";
+		String sql = "SELECT diemthi FROM diem WHERE idsv = ? AND idmon = 'MMH004'";
 		conn = DatabasaUltil.getConnect();
-		double diemEnligh = 0;;
+		double diemEnligh = 0;
 		try {
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setString(1, idsv);
