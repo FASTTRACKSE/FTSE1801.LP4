@@ -1,4 +1,4 @@
-package java_tuan2_day1;
+package java_tuan2_day11;
 
 public class maytinh {
 	int sum(int a,int b) {

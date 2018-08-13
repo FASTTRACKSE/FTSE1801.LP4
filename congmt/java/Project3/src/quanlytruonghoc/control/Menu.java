@@ -60,7 +60,7 @@ public class Menu extends JFrame implements ActionListener {
 	ArrayList<String> listTp, listQuan, listXaPhuong, listNamHoc, listNamHoc1, listTenLop, listMaLop, listTenMonHoc;
 	JCheckBox chk1, chk2, chk3, chk4;
 	JTextField text;
-	JComboBox<String> lopSeach, tpSeach, quanSeach;
+	JComboBox lopSeach, tpSeach, quanSeach;
 	JPanel pnCheck;
 	String tenTP, tenTP1, tenQuan, tenQuan1, tenPhuong, theoNam, theoLop, maLop;
 	Font font;
@@ -210,7 +210,6 @@ public class Menu extends JFrame implements ActionListener {
 		pnImg.add(pnImg1);
 		trangChuPanel.add(tieudePanel);
 		trangChuPanel.add(pnImg);
-		// cardPanel.add(trangChuPanel);
 
 		// Trang quản lý sinh
 		// viên.*****************************************************************************
@@ -293,6 +292,7 @@ public class Menu extends JFrame implements ActionListener {
 
 		quanComb = new JComboBox<>();
 		quanComb.addItem("Chọn quận/huyện");
+		
 		svPn4.add(quanComb);
 		quanComb.setPreferredSize(new Dimension(150, 30));
 		phuongComb = new JComboBox<>();
@@ -315,12 +315,17 @@ public class Menu extends JFrame implements ActionListener {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
+					
 					tenTP = tpComb.getSelectedItem().toString();
+					
 					quanComb.removeAllItems();
+					
 					listQuan = sinhVienDao.getAllQuanHuyen(tenTP);
 					for (int i = 0; i < listQuan.size(); i++) {
 						quanComb.addItem(listQuan.get(i));
 					}
+					quanComb.addItem("Chọn quận/huyện");
+					phuongComb.addItem("Chọn phường/xã");
 				}
 			}
 		});
@@ -331,6 +336,7 @@ public class Menu extends JFrame implements ActionListener {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
 					tenQuan = quanComb.getSelectedItem().toString();
 					phuongComb.removeAllItems();
+					
 					listXaPhuong = sinhVienDao.getAllXaPhuong(tenQuan);
 					for (int j = 0; j < listXaPhuong.size(); j++) {
 						phuongComb.addItem(listXaPhuong.get(j));
@@ -442,6 +448,7 @@ public class Menu extends JFrame implements ActionListener {
 		TitledBorder borderTitle = BorderFactory.createTitledBorder(border, "Danh sách sinh viên");
 		svBang.setBorder(borderTitle);
 		svBang.add(scMon);
+		displayAllSv(listSinhVien);
 		// displayAllSv(listSinhVien);
 
 		sinhVienPanel.add(svLabel);
@@ -467,13 +474,13 @@ public class Menu extends JFrame implements ActionListener {
 		chk1 = new JCheckBox("Lớp học");
 		pnCheck.add(chk1);
 		chk1.setFont(font32);
-		lopSeach = new JComboBox<>();
+		lopSeach = new JComboBox();
 		pnCheck.add(lopSeach);
 		lopSeach.setEnabled(false);
 		chk2 = new JCheckBox("Tỉnh/Thành phố");
 		pnCheck.add(chk2);
 		chk2.setFont(font32);
-		tpSeach = new JComboBox<>();
+		tpSeach = new JComboBox();
 		pnCheck.add(tpSeach);
 		tpSeach.setEnabled(false);
 		chk3 = new JCheckBox("Tên sinh viên");
@@ -485,7 +492,7 @@ public class Menu extends JFrame implements ActionListener {
 		chk4 = new JCheckBox("Quận/Huyện");
 		pnCheck.add(chk4);
 		chk4.setFont(font32);
-		quanSeach = new JComboBox<>();
+		quanSeach = new JComboBox();
 		pnCheck.add(quanSeach);
 		quanSeach.setEnabled(false);
 
@@ -1183,6 +1190,7 @@ public class Menu extends JFrame implements ActionListener {
 				}
 
 				if (chk3.isSelected()) {
+					
 					text.setEnabled(true);
 				} else {
 					text.setEnabled(false);
@@ -1338,12 +1346,16 @@ public class Menu extends JFrame implements ActionListener {
 			
 		
 			
-		} else {
+		} else if (e.getSource() == taoMoiSvButton){
 			maSvField.setText("");
 			tenSvField.setText("");
 			sdtField.setText("");
 			emailField.setText("");
 			diaChiField.setText("");
+			tpComb.setSelectedItem("Chọn thành phố");
+			quanComb.setSelectedItem("Chọn quận/huyện");
+			phuongComb.setSelectedItem("Chọn phường/xã");
+			lopComb.setSelectedItem("Mã lớp");
 			svDtm.setRowCount(0);
 			displayAllSv(listSinhVien);
 		}

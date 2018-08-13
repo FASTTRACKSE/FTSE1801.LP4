@@ -1,4 +1,4 @@
-package java_tuan2_day1;
+package java_tuan2_day11;
 
 public class HinhTron extends Hinh {
 	private double banKinh;
@@ -19,13 +19,11 @@ public class HinhTron extends Hinh {
 
 	@Override
 	public double chuVi() {
-		// TODO Auto-generated method stub
 		return 3.14*2*banKinh;
 	}
 
 	@Override
 	public double dienTich() {
-		// TODO Auto-generated method stub
 		return 3.14*banKinh*banKinh;
 	}
 	

@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import quanlytruonghoc.entity.MonHoc;
-import quanlytruonghoc.entity.SinhVien;
 
 /**
  * MonDao Class
@@ -39,7 +38,6 @@ public class MonDao {
 
 			int cont = statement.executeUpdate();
 			if (cont > 0) {
-				System.out.println("Thêm thành công !!");
 				test = true;
 			}
 		} catch (Exception e2) {
