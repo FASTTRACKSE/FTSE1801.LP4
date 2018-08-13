@@ -193,7 +193,7 @@ public class QuanLyDiem extends JFrame implements ActionListener {
 		conn.add(diemBang);
 		
 		conn.setLayout(new BoxLayout(conn, BoxLayout.Y_AXIS));
-		
+		displayAllDiem();
 
 	}
 

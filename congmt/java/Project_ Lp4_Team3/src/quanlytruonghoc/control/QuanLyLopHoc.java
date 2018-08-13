@@ -348,7 +348,8 @@ public class QuanLyLopHoc extends JFrame implements ActionListener {
 		lop.setIdLop(idLop1);
 		lop.setTenLop(tenLop1);
 		lop.setNamHoc(namHoc1);
-		List<Lop> listLopDB = lopDao.showTableLopTimKiem(lop);
+		List<Lop> listLopDB = lopDao.showTableLop(lop);// Kiểm tra mã lớp này đã có chưa,có sẽ bắt lỗi 
+		List<Lop> listLopDB1 = lopDao.showTableLopTimKiem(lop);// Kiểm tra lớp này đã có chưa, có sẽ bắt lỗi
 		if (e.getSource() == themLopButton) { // Nút thêm mới lớp học
 			// Bắt lỗi các trường hợp trong nhập văn bản
 			if (idLop1.length() == 0) {
@@ -359,7 +360,7 @@ public class QuanLyLopHoc extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Mã lớp không được nhập đúng.\n Vd: ftse1801 !");
 			} else if (tenLop1.length() == 0) {
 				JOptionPane.showMessageDialog(null, "Tên lớp không đươc để trống !");
-			}  else if (tenLop1.equals(tenLop1)) {
+			}  else if (listLopDB1.size()>0) {
 				JOptionPane.showMessageDialog(null, "Tên lớp này đã có. Mời nhập lại !");
 			}else if (!tenLop1.matches("\\d{4}")) {
 				JOptionPane.showMessageDialog(null, "Tên lớp chỉ được nhập số và phải đủ 4 chữ số. \n Vd: 1801 !");
@@ -376,9 +377,11 @@ public class QuanLyLopHoc extends JFrame implements ActionListener {
 						JOptionPane.showMessageDialog(null, "Thêm thành công!!");
 						lopDtm1.setRowCount(0);
 						displayAllLop(listLop);
+					}else {
+						JOptionPane.showMessageDialog(null, "Thêm thất bại!!");
 					}
 				} else if (output == JOptionPane.NO_OPTION) {
-					JOptionPane.showMessageDialog(null, " Thêm thất bại!!");
+					JOptionPane.showMessageDialog(null, "Mời chọn lại");
 				}
 			}
 		} else if (e.getSource() == suaLopButton) { // Nút sửa lớp học
@@ -399,9 +402,11 @@ public class QuanLyLopHoc extends JFrame implements ActionListener {
 						JOptionPane.showMessageDialog(null, "Sửa thành công!!");
 						lopDtm1.setRowCount(0);
 						displayAllLop(listLop);
+					}else {
+						JOptionPane.showMessageDialog(null, "Sửa thất bại!!");
 					}
 				} else if (output == JOptionPane.NO_OPTION) {
-					JOptionPane.showMessageDialog(null, "Sửa thất bại!!");
+					JOptionPane.showMessageDialog(null, "Mời bạn chọn lại");
 				}
 			}
 		} else if (e.getSource() == xoaLopButton) { // Nút xóa lớp học
@@ -409,12 +414,14 @@ public class QuanLyLopHoc extends JFrame implements ActionListener {
 
 			if (output == JOptionPane.YES_OPTION) {
 				if (lopDao.deletelSinhVien(lop)) {
-					JOptionPane.showMessageDialog(null, "Xoa thành công!!");
+					JOptionPane.showMessageDialog(null, "Xóa thành công!!");
 					lopDtm1.setRowCount(0);
 					displayAllLop(listLop);
+				}else {
+					JOptionPane.showMessageDialog(null, "Xóa thất bại!!");
 				}
 			} else if (output == JOptionPane.NO_OPTION) {
-				JOptionPane.showMessageDialog(null, "Xóa thất bại!!");
+				JOptionPane.showMessageDialog(null, "Mời chọn lại!!");
 			}
 		}else { // Nút làm mới
 			maLopField.setText("");

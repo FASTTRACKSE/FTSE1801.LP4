@@ -104,7 +104,7 @@ public class MonDao {
 	}
 
 	/**
-	 * Tìm kiếm theo tên môn học
+	 * Tìm kiếm theo tên môn học 
 	 * 
 	 * @param monHoc
 	 * @return
@@ -115,8 +115,31 @@ public class MonDao {
 		String sql = "SELECT * FROM `monhoc` WHERE idmon=? AND monhoc=?";
 		try {
 			statement = conn.prepareStatement(sql);
-			statement.setString(1, monHoc.getIdMonHoc());
-			statement.setString(2, monHoc.getTenMonHoc());
+			statement.setString(1, monHoc.getTenMonHoc());
+			ResultSet result = statement.executeQuery();
+			MonHoc monHoc1;
+			while (result.next()) {
+				monHoc1 = new MonHoc();
+				monHoc1.setIdMonHoc(result.getString("idmon"));
+				monHoc1.setTenMonHoc(result.getString("monhoc"));
+				monHoc1.setTinChi(result.getString("tinchi"));
+				monHoc1.setThoiLuongHoc(result.getString("thoiluong"));
+				listMonHoc.add(monHoc1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DatabasaUltil.closeConnection(conn);
+		return listMonHoc;
+
+	}
+	public ArrayList<MonHoc> showTableMon(MonHoc monHoc) {
+		conn = DatabasaUltil.getConnect();
+		ArrayList<MonHoc> listMonHoc = new ArrayList<MonHoc>();
+		String sql = "SELECT * FROM `monhoc` WHERE monhoc=?";
+		try {
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, monHoc.getTenMonHoc());
 			ResultSet result = statement.executeQuery();
 			MonHoc monHoc1;
 			while (result.next()) {

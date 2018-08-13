@@ -131,7 +131,33 @@ public class LopDao {
 		DatabasaUltil.closeConnection(conn);
 		return listLop;
 	}
-
+	/**
+	 * Lấy ra một idlop để kiểm tra điều kiện khi thêm 1 lớp
+	 * @param lop
+	 * @return
+	 */
+	public ArrayList<Lop> showTableLop(Lop lop) {
+		conn = DatabasaUltil.getConnect();
+		String sql = "SELECT * FROM lop WHERE idlop=? ";
+		ArrayList<Lop> listLop = new ArrayList<Lop>();
+		try {
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, lop.getIdLop());
+			ResultSet result = statement.executeQuery();
+			Lop lop1;
+			while (result.next()) {
+				lop1 = new Lop();
+				lop1.setIdLop(result.getString("idlop"));
+				lop1.setTenLop(result.getString("tenlop"));
+				lop1.setNamHoc(result.getString("namhoc"));
+				listLop.add(lop1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		DatabasaUltil.closeConnection(conn);
+		return listLop;
+	}
 	/**
 	 * Hiển thị danh sách tất cả các lớp
 	 * 
