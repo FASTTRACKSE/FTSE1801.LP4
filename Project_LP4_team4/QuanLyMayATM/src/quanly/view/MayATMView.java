@@ -184,7 +184,7 @@ public class MayATMView extends JFrame {
 		//Phần tiêu đề
 		pnTitle = new JPanel();
 		title = new JLabel("TP-BANK MÁY ATM");
-		title.setFont(new Font("Times New Roman", Font.BOLD, 30));
+		title.setFont(new Font("Times New Roman", Font.BOLD, 45));
 		title.setForeground(Color.RED);
 		pnTitle.add(title);
 
