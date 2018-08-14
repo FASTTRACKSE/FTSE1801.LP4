@@ -1,4 +1,4 @@
-package quanly_thuvien.model;
+package quanly_thuvien.model.Dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

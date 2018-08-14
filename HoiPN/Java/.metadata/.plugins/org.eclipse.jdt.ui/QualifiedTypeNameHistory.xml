@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="javax.swing.table.TableModel"/>
-<fullyQualifiedTypeName name="XuLySuKien"/>
-<fullyQualifiedTypeName name="java.awt.event.ContainerListener"/>
-<fullyQualifiedTypeName name="SinhVien"/>
 <fullyQualifiedTypeName name="javax.swing.JComponent"/>
 <fullyQualifiedTypeName name="java.awt.GridBagConstraints"/>
 <fullyQualifiedTypeName name="java.awt.Insets"/>
@@ -60,4 +56,8 @@
 <fullyQualifiedTypeName name="java.awt.CardLayout"/>
 <fullyQualifiedTypeName name="quanlytruonghoc.model.MonDao"/>
 <fullyQualifiedTypeName name="quanlytruonghoc.model.ThongKeDao"/>
+<fullyQualifiedTypeName name="demotruutuong.Hinh"/>
+<fullyQualifiedTypeName name="demotruutuong.HinhChuNhat"/>
+<fullyQualifiedTypeName name="demotruutuong.HinhVuong"/>
+<fullyQualifiedTypeName name="demotruutuong.Tron"/>
 </qualifiedTypeNameHistroy>
