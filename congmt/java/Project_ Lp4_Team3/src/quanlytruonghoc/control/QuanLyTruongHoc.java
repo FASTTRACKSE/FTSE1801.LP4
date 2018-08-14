@@ -101,7 +101,7 @@ public class QuanLyTruongHoc extends JFrame implements ActionListener{
 		ImageIcon img10 = new ImageIcon("img\\ab.jpg");
 		menuPanel.setPreferredSize(new Dimension(270, 50));
 		JLabel lblImg10 = new JLabel(img10);
-		ImageIcon img11 = new ImageIcon("img\\ft1.jpg");
+		ImageIcon img11 = new ImageIcon("img\\images.jpg");
 		menuPanel.setPreferredSize(new Dimension(270, 50));
 		JLabel lblImg11 = new JLabel(img11);
 		menuPanel.add(jPanel2);
@@ -140,7 +140,7 @@ public class QuanLyTruongHoc extends JFrame implements ActionListener{
 
 		JPanel pnImg = new JPanel();
 		pnImg.setLayout(new BoxLayout(pnImg, BoxLayout.X_AXIS));
-		ImageIcon img1 = new ImageIcon("img\\ab1.jpg");
+		ImageIcon img1 = new ImageIcon("img\\ass.jpg");
 		JLabel lblImg1 = new JLabel(img1);
 
 		JPanel pnImg1 = new JPanel();

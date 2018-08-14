@@ -189,6 +189,7 @@ public class QuanLyMonHoc extends JFrame implements ActionListener {
 		monHoc.setTinChi(tinChi1);
 		monHoc.setThoiLuongHoc(thoiLuong1);
 		List<MonHoc> listMonHocDB = monDao.showTableMonTimKiem(monHoc);
+		List<MonHoc> listMonHocDB1 = monDao.showTableMon(monHoc);
 		// Thực hiện lệnh gọi đến nút button thêm , sửa , xóa, tìm kiếm đến trang quản lý môn học
 
 		if (e.getSource() == themMonButton) {// Nút thêm môn học
@@ -201,6 +202,8 @@ public class QuanLyMonHoc extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Mã môn học không được nhập đúng.\n Vd: MH001 !");
 			} else if (tenMonHoc1.length() == 0) {
 				JOptionPane.showMessageDialog(null, "Tên môn học không đươc để trống !");
+			} else if (listMonHocDB1.size()>0) {
+				JOptionPane.showMessageDialog(null, "Tên môn học này đã có !");
 			} else if (tinChi1.length() == 0) {
 				JOptionPane.showMessageDialog(null, "Tín chỉ không được để trống !");
 			} else if (!tinChi1.matches("\\d{1}")) {
