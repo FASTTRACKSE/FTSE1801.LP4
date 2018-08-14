@@ -239,7 +239,11 @@ public class thuvienDao {
 		DatabaseUtil.disConnect(conn);
 		return statusExecute;
 	}
-	
+	/**
+	 * Tìm kiếm bạn đọc
+	 * @param quanLyBanDoc
+	 * @return
+	 */
 	public ArrayList<QuanLy_BanDoc> SeachBanDoc(QuanLy_BanDoc quanLyBanDoc) {
 		boolean statusExecute = false;
 		String sql = "SELECT thanh_vien.MaThanhVien, thanh_vien.tenThanhVien,thanh_vien.SoNha,thanhpho.tenThanhPho AS thanhpho, District.tenQuanHuyen as Quan,phuong_xa.tenPhuongXa as Phuong,thanh_vien.SĐT,thanh_vien.Email FROM thanh_vien INNER JOIN phuong_xa ON thanh_vien.maPhuongXa = phuong_xa.maPhuongXa INNER JOIN quan_huyen as District ON thanh_vien.maQuanHuyen = District.maQuanHuyen INNER JOIN tinh_thanhpho as  thanhpho ON thanh_vien.maThanhPho = thanhpho.maThanhPho WhERE thanh_vien.tenThanhVien LIKE ?";
@@ -270,5 +274,28 @@ public class thuvienDao {
 		DatabaseUtil.disConnect(conn);
 		return list;
 		
+	}
+	/**
+	 * Kiểm tra Thành viên
+	 */
+	public boolean kiemTra(String tenTV) {
+		boolean kiem = false;
+		String sql = "SELECT * FROM `thanh_vien`";
+		conn = DatabaseUtil.getConnect();
+		try {
+			PreparedStatement statement = conn.prepareStatement(sql);
+			ResultSet result = statement.executeQuery();
+
+			while (result.next()) {
+				if (tenTV.equals(result.getString("tenThanhVien"))) {
+					kiem = true;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DatabaseUtil.disConnect(conn);
+
+		return kiem;
 	}
 }

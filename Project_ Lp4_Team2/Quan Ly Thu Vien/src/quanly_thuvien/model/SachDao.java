@@ -57,10 +57,7 @@ public class SachDao {
 		return list;
 	}
 	public ArrayList<QuanLySach> getAllSach(){
-		String sql = "SELECT sach.MaSach, sach.TenSach,sach.TacGia,xuatban.NhaXuatBan AS nxb,tls.TheLoaiSach AS book ,sach.NamXuatBan,sach.soLuong,sach.soLuongConLai FROM sach\r\n" + 
-				"INNER JOIN theloaisach ON sach.TheLoaiSach = theloaisach.TheLoaiSach \r\n" + 
-				"INNER JOIN nhaxuatban as xuatban ON sach.NhaXuatBan = xuatban.NhaXuatBan INNER JOIN theloaisach AS tls ON sach.TheLoaiSach = tls.TheLoaiSach\r\n" + 
-				"";
+		String sql = "SELECT sach.MaSach,sach.TenSach,sach.TacGia,nhaxuatban.NhaXuatBan,theloaisach.TheLoaiSach,sach.NamXuatBan,sach.soLuong,sach.soLuongConLai FROM `sach` INNER JOIN theloaisach ON sach.TheLoaiSach = theloaisach.TheLoaiSach INNER JOIN nhaxuatban ON sach.NhaXuatBan = nhaxuatban.NhaXuatBan";
 		conn = DatabaseUtil.getConnect();
 		ArrayList<QuanLySach> list = new ArrayList<QuanLySach>();
 
@@ -75,8 +72,8 @@ public class SachDao {
 				quanlySach.setMaSach("" + result.getInt("MaSach"));
 				quanlySach.setTenSach(result.getString("TenSach"));
 				quanlySach.setTacGia(result.getString("TacGia"));
-				quanlySach.setNhaXuatBan(result.getString("nxb"));
-				quanlySach.setTheLoaiSach(result.getString("book"));
+				quanlySach.setNhaXuatBan(result.getString("NhaXuatBan"));
+				quanlySach.setTheLoaiSach(result.getString("TheLoaiSach"));
 				quanlySach.setNamXuatBan(result.getString("NamXuatBan"));
 				quanlySach.setSoLuong(result.getString("soLuong"));
 				quanlySach.setSoLuongTonKho(result.getString("soLuongConLai"));
@@ -169,6 +166,11 @@ public class SachDao {
 		DatabaseUtil.disConnect(conn);
 		return statusExecute;
 	}
+	/**
+	 * Tìm kiếm Sách
+	 * @param quanlySach
+	 * @return
+	 */
 	public ArrayList<QuanLySach> SeachSach(QuanLySach quanlySach){
 		String sql = "SELECT sach.MaSach, sach.TenSach,sach.TacGia,xuatban.NhaXuatBan AS nxb,tls.TheLoaiSach AS book ,sach.NamXuatBan,sach.soLuong FROM sach INNER JOIN theloaisach ON sach.TheLoaiSach = theloaisach.TheLoaiSach  INNER JOIN nhaxuatban as xuatban ON sach.NhaXuatBan = xuatban.NhaXuatBan INNER JOIN theloaisach AS tls ON sach.TheLoaiSach = tls.TheLoaiSach WHERE sach.TenSach LIKE ?";
 		conn = DatabaseUtil.getConnect();
@@ -199,5 +201,27 @@ public class SachDao {
 		}
 		DatabaseUtil.disConnect(conn);
 		return list;
+	}
+	/**
+	 * Kiểm tra tên sách
+	 */
+	public boolean kiemTraSach(String tenSach) {
+		boolean kiem = false;
+		String sql = "SELECT * FROM `sach`";
+		conn = DatabaseUtil.getConnect();
+		try {
+			PreparedStatement statement = conn.prepareStatement(sql);
+			ResultSet result = statement.executeQuery();
+			while (result.next()) {
+				if (tenSach.equals(result.getString("TenSach"))) {
+					kiem = true;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DatabaseUtil.disConnect(conn);
+
+		return kiem;
 	}
 }
