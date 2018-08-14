@@ -110,7 +110,7 @@ public class QuanLyKhachHang extends JFrame {
 	};
 
 	/**
-	 * Sự kiện cho chọn phường và quận
+	 * Sự kiện cho chọn thẻ ATM
 	 */
 	ItemListener itemListener1 = new ItemListener() {
 		public void itemStateChanged(ItemEvent e) {
@@ -156,7 +156,7 @@ public class QuanLyKhachHang extends JFrame {
 							tableModel.setRowCount(0);
 							showTable();
 						} else {
-							JOptionPane.showMessageDialog(null, "Trùng số CMND");
+							JOptionPane.showMessageDialog(null, "Trùng số CMND hoặc trùng email hoặc trùng số điện thoại");
 						}
 					}
 				}

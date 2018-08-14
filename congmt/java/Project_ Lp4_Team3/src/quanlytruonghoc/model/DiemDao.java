@@ -8,9 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import quanlytruonghoc.entity.Diem;
-import quanlytruonghoc.entity.Lop;
-import quanlytruonghoc.entity.MonHoc;
-import quanlytruonghoc.entity.SinhVien;
+
 
 /**
  * DiemDao Class
@@ -21,7 +19,7 @@ import quanlytruonghoc.entity.SinhVien;
 public class DiemDao {
 	private Connection conn;
 	private PreparedStatement statement;
-	private ResultSet result;
+	
 
 	/**
 	 * Them diem theo idsv va idmonhoc
@@ -171,7 +169,7 @@ public class DiemDao {
 		String sql = "SELECT * FROM `diem` WHERE idsv=?";
 		try {
 			statement = conn.prepareStatement(sql);
-			statement.setString(1, idsv);
+			statement.setString(1,idsv);
 
 			ResultSet result = statement.executeQuery();
 			Diem diem1;
@@ -185,6 +183,7 @@ public class DiemDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			
 		}
 		DatabasaUltil.closeConnection(conn);
 		return listDiem;
