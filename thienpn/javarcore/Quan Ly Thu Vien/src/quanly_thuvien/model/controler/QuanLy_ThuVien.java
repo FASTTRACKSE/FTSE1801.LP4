@@ -194,7 +194,7 @@ public class QuanLy_ThuVien extends JFrame implements ActionListener {
 	/**
 	 * Date Mượn
 	 * 
-	 * @author TGDD
+	 * @author 
 	 *
 	 */
 	public class DateLabelFormatter extends AbstractFormatter {
@@ -821,19 +821,19 @@ public class QuanLy_ThuVien extends JFrame implements ActionListener {
 
 		/**********************************/
 		panelBaoCao1 = new JPanel();
-		// panelBaoCao1.setLayout(new GridBagLayout());
+		panelBaoCao1.setLayout(new GridBagLayout());
 		listBaoCao = new JButton("Danh Sách");
 		addItem(panelBaoCao1, new JLabel("Mã Thành Viên:"), 0, 0, 1, 1, GridBagConstraints.EAST);
 		addItem(panelBaoCao1, maThanhVien2, 1, 0, 1, 1, GridBagConstraints.WEST);
 		addItem(panelBaoCao1, listBaoCao, 2, 0, 1, 1, GridBagConstraints.WEST);
-
+		addItem(panelBaoCao1, new JLabel("Thành Phố:"), 0, 1, 1, 1, GridBagConstraints.EAST);
+		addItem(panelBaoCao1, ThanhPho1, 1, 1, 1, 1, GridBagConstraints.WEST);
 		// panelBaoCao1.add(listBaoCao);
 		panelBaoCao2 = new JPanel();
-		panelBaoCao2.setLayout(new GridBagLayout());
-
-		addItem(panelBaoCao2, new JLabel("Thành Phố:"), 0, 2, 1, 1, GridBagConstraints.EAST);
-		addItem(panelBaoCao2, ThanhPho1, 1, 2, 1, 1, GridBagConstraints.WEST);
-		panelBaoCao.add(panelBaoCao1);
+		Border borderBaoCao = BorderFactory.createLineBorder(Color.RED);
+		panelBaoCao1.setPreferredSize(new Dimension(500, 200));
+		panelBaoCao1.setBorder(borderBaoCao);
+		panelBaoCao2.add(panelBaoCao1);
 		panelBaoCao.add(panelBaoCao2);
 		/**********************************/
 		JPanel pnTable3 = new JPanel();
@@ -934,10 +934,15 @@ public class QuanLy_ThuVien extends JFrame implements ActionListener {
 		addItem(panelBaoCao4, listBaoCao1, 2, 0, 2, 1, GridBagConstraints.WEST);
 		addItem(panelBaoCao4, nhaXuatBan1, 1, 1, 1, 1, GridBagConstraints.WEST);
 		addItem(panelBaoCao4, theLoaiSach1, 2, 1, 1, 1, GridBagConstraints.WEST);
-		//panelBaoCao5 = new JPanel();
-		//panelBaoCao5.add(listBaoCao1);
-		panelBaoCao3.add(panelBaoCao4);
-		//panelBaoCao3.add(panelBaoCao5);
+		panelBaoCao5 = new JPanel();
+		Border border6 = BorderFactory.createLineBorder(Color.RED);
+		panelBaoCao4.setPreferredSize(new Dimension(750, 200));
+		panelBaoCao4.setBorder(border6);
+		panelBaoCao5.add(panelBaoCao4);
+
+		// panelBaoCao5.add(listBaoCao1);
+		panelBaoCao3.add(panelBaoCao5);
+		// panelBaoCao3.add(panelBaoCao5);
 		/**********************************/
 		JPanel pnTable4 = new JPanel();
 		Border border4 = BorderFactory.createLineBorder(Color.RED);
@@ -1071,25 +1076,29 @@ public class QuanLy_ThuVien extends JFrame implements ActionListener {
 			quanLyBanDoc.setSDT(DienThoai.getText());
 			quanLyBanDoc.setEmail(Email.getText());
 			if (quanLyBanDoc.getTenThanhVien().equals("") || quanLyBanDoc.getSoNha().equals("")
-					|| quanLyBanDoc.getMaPhuongXa().equals("") || quanLyBanDoc.getMaQuanHuyen().equals("")
-					|| quanLyBanDoc.getMaThanhPho().equals("") || quanLyBanDoc.getSDT().equals("")
-					|| quanLyBanDoc.getEmail().equals("")) {
+					|| quanLyBanDoc.getSDT().equals("") || quanLyBanDoc.getEmail().equals("")) {
 				JOptionPane.showMessageDialog(null, "Vui lòng nhập dữ liệu.");
 			} else {
-				thuVienDao.addBanDoc(quanLyBanDoc);
-				ArrayList<QuanLy_BanDoc> list = thuVienDao.getAllBanDoc();
-				model.setRowCount(0);
-				for (QuanLy_BanDoc ql : list) {
-					model.addRow(new String[] { "" + ql.getMaThanhVien(), ql.getTenThanhVien(), ql.getSoNha(),
-							ql.getMaPhuongXa(), ql.getMaQuanHuyen(), ql.getMaThanhPho(), ql.getSDT(), ql.getEmail() });
-				}
-				JOptionPane.showMessageDialog(null, "Thêm thành công");
-				tenThanhVien.setText("");
-				DiaChi.setText("");
-				DienThoai.setText("");
-				Email.setText("");
-				tenThanhVien.requestFocus();
+				int ret = JOptionPane.showConfirmDialog(null, "Bạn có muốn thêm thành viên này?", "Quản Lý Bạn Đọc",
+						JOptionPane.YES_NO_OPTION);
+				if (ret == JOptionPane.YES_OPTION) {
+					thuVienDao.addBanDoc(quanLyBanDoc);
+					ArrayList<QuanLy_BanDoc> list = thuVienDao.getAllBanDoc();
+					model.setRowCount(0);
+					for (QuanLy_BanDoc ql : list) {
+						model.addRow(new String[] { "" + ql.getMaThanhVien(), ql.getTenThanhVien(), ql.getSoNha(),
+								ql.getMaPhuongXa(), ql.getMaQuanHuyen(), ql.getMaThanhPho(), ql.getSDT(),
+								ql.getEmail() });
+					}
+					JOptionPane.showMessageDialog(null, "Thêm thành công");
+					tenThanhVien.setText("");
+					DiaChi.setText("");
+					DienThoai.setText("");
+					Email.setText("");
+					tenThanhVien.requestFocus();
+				} else if (ret == JOptionPane.NO_OPTION) {
 
+				}
 			}
 
 		}
@@ -1108,24 +1117,30 @@ public class QuanLy_ThuVien extends JFrame implements ActionListener {
 			quanLyBanDoc.setSDT(DienThoai.getText());
 			quanLyBanDoc.setEmail(Email.getText());
 			if (quanLyBanDoc.getTenThanhVien().equals("") || quanLyBanDoc.getSoNha().equals("")
-					|| quanLyBanDoc.getMaPhuongXa().equals("") || quanLyBanDoc.getMaQuanHuyen().equals("")
-					|| quanLyBanDoc.getMaThanhPho().equals("") || quanLyBanDoc.getSDT().equals("")
-					|| quanLyBanDoc.getEmail().equals("")) {
+					|| quanLyBanDoc.getSDT().equals("") || quanLyBanDoc.getEmail().equals("")) {
 				JOptionPane.showMessageDialog(null, "Vui lòng nhập dữ liệu.");
 			} else {
-				thuVienDao.UpdateBanDoc(quanLyBanDoc);
-				ArrayList<QuanLy_BanDoc> list = thuVienDao.getAllBanDoc();
-				model.setRowCount(0);
-				for (QuanLy_BanDoc ql : list) {
-					model.addRow(new String[] { "" + ql.getMaThanhVien(), ql.getTenThanhVien(), ql.getSoNha(),
-							ql.getMaPhuongXa(), ql.getMaQuanHuyen(), ql.getMaThanhPho(), ql.getSDT(), ql.getEmail() });
+				int ret = JOptionPane.showConfirmDialog(null, "Bạn có muốn sửa thành viên này?", "Quản Lý Bạn Đọc",
+						JOptionPane.YES_NO_OPTION);
+				if (ret == JOptionPane.YES_OPTION) {
+					thuVienDao.UpdateBanDoc(quanLyBanDoc);
+					ArrayList<QuanLy_BanDoc> list = thuVienDao.getAllBanDoc();
+					model.setRowCount(0);
+					for (QuanLy_BanDoc ql : list) {
+						model.addRow(new String[] { "" + ql.getMaThanhVien(), ql.getTenThanhVien(), ql.getSoNha(),
+								ql.getMaPhuongXa(), ql.getMaQuanHuyen(), ql.getMaThanhPho(), ql.getSDT(),
+								ql.getEmail() });
+					}
+					maThanhVien.setText("");
+					tenThanhVien.setText("");
+					DiaChi.setText("");
+					DienThoai.setText("");
+					Email.setText("");
+					maThanhVien.requestFocus();
+				} else if (ret == JOptionPane.NO_OPTION) {
+
 				}
-				maThanhVien.setText("");
-				tenThanhVien.setText("");
-				DiaChi.setText("");
-				DienThoai.setText("");
-				Email.setText("");
-				maThanhVien.requestFocus();
+
 			}
 
 		}
@@ -1139,18 +1154,26 @@ public class QuanLy_ThuVien extends JFrame implements ActionListener {
 			if (quanLyBanDoc.getMaThanhVien().equals("")) {
 				JOptionPane.showMessageDialog(null, "Vui lòng nhập mã thành viên cần xóa.");
 			} else {
-				thuVienDao.DeleteBanDoc(quanLyBanDoc);
-				ArrayList<QuanLy_BanDoc> list = thuVienDao.getAllBanDoc();
-				model.setRowCount(0);
-				for (QuanLy_BanDoc ql : list) {
-					model.addRow(new String[] { "" + ql.getMaThanhVien(), ql.getTenThanhVien(), ql.getSoNha(),
-							ql.getMaPhuongXa(), ql.getMaQuanHuyen(), ql.getMaThanhPho(), ql.getSDT(), ql.getEmail() });
+				int ret = JOptionPane.showConfirmDialog(null, "Bạn có muốn xóa thành viên này?", "Quản Lý Bạn Đọc",
+						JOptionPane.YES_NO_OPTION);
+				if (ret == JOptionPane.YES_OPTION) {
+					thuVienDao.DeleteBanDoc(quanLyBanDoc);
+					ArrayList<QuanLy_BanDoc> list = thuVienDao.getAllBanDoc();
+					model.setRowCount(0);
+					for (QuanLy_BanDoc ql : list) {
+						model.addRow(new String[] { "" + ql.getMaThanhVien(), ql.getTenThanhVien(), ql.getSoNha(),
+								ql.getMaPhuongXa(), ql.getMaQuanHuyen(), ql.getMaThanhPho(), ql.getSDT(),
+								ql.getEmail() });
+					}
+					maThanhVien.setText("");
+					tenThanhVien.setText("");
+					DiaChi.setText("");
+					DienThoai.setText("");
+					Email.setText("");
+				} else if (ret == JOptionPane.NO_OPTION) {
+
 				}
-				maThanhVien.setText("");
-				tenThanhVien.setText("");
-				DiaChi.setText("");
-				DienThoai.setText("");
-				Email.setText("");
+
 			}
 
 		}
@@ -1236,22 +1259,28 @@ public class QuanLy_ThuVien extends JFrame implements ActionListener {
 			quanly.setNamXuatBan(namXuatBan.getText());
 			quanly.setSoLuong(soLuong.getText());
 			if (quanly.getTenSach().equals("") || quanly.getTacGia().equals("") || quanly.getNamXuatBan().equals("")
-					|| quanly.getTheLoaiSach().equals("") || quanly.getNamXuatBan().equals("")
 					|| quanly.getSoLuong().equals("")) {
 				JOptionPane.showMessageDialog(null, "Vui lòng nhập dữ liệu");
 
 			} else {
-				sachDao.addSach(quanly);
-				ArrayList<QuanLySach> listSach = sachDao.getAllSach();
-				model1.setRowCount(0);
-				for (QuanLySach sach : listSach) {
-					model1.addRow(new String[] { ("" + sach.getMaSach()), sach.getTenSach(), sach.getTacGia(),
-							sach.getNhaXuatBan(), sach.getTheLoaiSach(), sach.getNamXuatBan(), sach.getSoLuong() });
+				int ret = JOptionPane.showConfirmDialog(null, "Bạn có muốn thêm sách này?", "Quản Lý Sách",
+						JOptionPane.YES_NO_OPTION);
+				if (ret == JOptionPane.YES_OPTION) {
+					sachDao.addSach(quanly);
+					ArrayList<QuanLySach> listSach = sachDao.getAllSach();
+					model1.setRowCount(0);
+					for (QuanLySach sach : listSach) {
+						model1.addRow(new String[] { ("" + sach.getMaSach()), sach.getTenSach(), sach.getTacGia(),
+								sach.getNhaXuatBan(), sach.getTheLoaiSach(), sach.getNamXuatBan(), sach.getSoLuong() });
+					}
+					tenSach.setText("");
+					tacGia.setText("");
+					namXuatBan.setText("");
+					soLuong.setText("");
+				} else if (ret == JOptionPane.NO_OPTION) {
+
 				}
-				tenSach.setText("");
-				tacGia.setText("");
-				namXuatBan.setText("");
-				soLuong.setText("");
+
 			}
 		}
 
@@ -1268,22 +1297,28 @@ public class QuanLy_ThuVien extends JFrame implements ActionListener {
 			quanly.setNamXuatBan(namXuatBan.getText());
 			quanly.setSoLuong(soLuong.getText());
 			if (quanly.getTenSach().equals("") || quanly.getTacGia().equals("") || quanly.getNamXuatBan().equals("")
-					|| quanly.getTheLoaiSach().equals("") || quanly.getNamXuatBan().equals("")
 					|| quanly.getSoLuong().equals("")) {
 				JOptionPane.showMessageDialog(null, "Vui lòng nhập dữ liệu");
 			} else {
-				sachDao.UpdateSach(quanly);
-				ArrayList<QuanLySach> listSach = sachDao.getAllSach();
-				model1.setRowCount(0);
-				for (QuanLySach sach : listSach) {
-					model1.addRow(new String[] { ("" + sach.getMaSach()), sach.getTenSach(), sach.getTacGia(),
-							sach.getNhaXuatBan(), sach.getTheLoaiSach(), sach.getNamXuatBan(), sach.getSoLuong() });
+				int ret = JOptionPane.showConfirmDialog(null, "Bạn có muốn sửa sách này?", "Quản Lý Sách",
+						JOptionPane.YES_NO_OPTION);
+				if (ret == JOptionPane.YES_OPTION) {
+					sachDao.UpdateSach(quanly);
+					ArrayList<QuanLySach> listSach = sachDao.getAllSach();
+					model1.setRowCount(0);
+					for (QuanLySach sach : listSach) {
+						model1.addRow(new String[] { ("" + sach.getMaSach()), sach.getTenSach(), sach.getTacGia(),
+								sach.getNhaXuatBan(), sach.getTheLoaiSach(), sach.getNamXuatBan(), sach.getSoLuong() });
+					}
+					maSach.setText("");
+					tenSach.setText("");
+					tacGia.setText("");
+					namXuatBan.setText("");
+					soLuong.setText("");
+				} else if (ret == JOptionPane.NO_OPTION) {
+
 				}
-				maSach.setText("");
-				tenSach.setText("");
-				tacGia.setText("");
-				namXuatBan.setText("");
-				soLuong.setText("");
+
 			}
 
 		}
@@ -1297,15 +1332,22 @@ public class QuanLy_ThuVien extends JFrame implements ActionListener {
 			if (quanly.getMaSach().equals("")) {
 				JOptionPane.showMessageDialog(null, "Vui lòng nhập mã sách cần xóa");
 			} else {
-				sachDao.DeleteSach(quanly);
-				ArrayList<QuanLySach> listSach = sachDao.getAllSach();
-				model1.setRowCount(0);
-				for (QuanLySach sach : listSach) {
-					model1.addRow(new String[] { ("" + sach.getMaSach()), sach.getTenSach(), sach.getTacGia(),
-							sach.getNhaXuatBan(), sach.getTheLoaiSach(), sach.getNamXuatBan(), sach.getSoLuong() });
+				int ret = JOptionPane.showConfirmDialog(null, "Bạn có muốn xóa sách này?", "Quản Lý Sách",
+						JOptionPane.YES_NO_OPTION);
+				if (ret == JOptionPane.YES_OPTION) {
+					sachDao.DeleteSach(quanly);
+					ArrayList<QuanLySach> listSach = sachDao.getAllSach();
+					model1.setRowCount(0);
+					for (QuanLySach sach : listSach) {
+						model1.addRow(new String[] { ("" + sach.getMaSach()), sach.getTenSach(), sach.getTacGia(),
+								sach.getNhaXuatBan(), sach.getTheLoaiSach(), sach.getNamXuatBan(), sach.getSoLuong() });
+					}
+					maSach.setText("");
+					JOptionPane.showMessageDialog(null, "Xóa Thành Công.");
+				} else if (ret == JOptionPane.NO_OPTION) {
+
 				}
-				maSach.setText("");
-				JOptionPane.showMessageDialog(null, "Xóa Thành Công.");
+
 			}
 
 		}
@@ -1399,8 +1441,9 @@ public class QuanLy_ThuVien extends JFrame implements ActionListener {
 							model2.setRowCount(0);
 							for (muon_TraSach muonTra1 : listMuonTra) {
 								model2.addRow(new String[] { ("" + muonTra1.getMaGiaoDich()), muonTra1.getNgayMuon(),
-										muonTra1.getNgayTra(),muonTra.getMaThanhVien().getMaThanhVien(), muonTra1.getMaThanhVien().getTenThanhVien(),
-										muonTra1.getMaSach().getMaSach(),muonTra1.getMaSach().getTenSach(), muonTra1.getTinhTrang() });
+										muonTra1.getNgayTra(), muonTra.getMaThanhVien().getMaThanhVien(),
+										muonTra1.getMaThanhVien().getTenThanhVien(), muonTra1.getMaSach().getMaSach(),
+										muonTra1.getMaSach().getTenSach(), muonTra1.getTinhTrang() });
 							}
 						} else {
 							JOptionPane.showMessageDialog(null, "Sai mã thành viên hoặc mã sách");
@@ -1423,8 +1466,9 @@ public class QuanLy_ThuVien extends JFrame implements ActionListener {
 			model2.setRowCount(0);
 			for (muon_TraSach muonTra : listMuonTra) {
 				model2.addRow(new String[] { ("" + muonTra.getMaGiaoDich()), muonTra.getNgayMuon(),
-						muonTra.getNgayTra(),muonTra.getMaThanhVien().getMaThanhVien(), muonTra.getMaThanhVien().getTenThanhVien(),
-						muonTra.getMaSach().getMaSach(),muonTra.getMaSach().getTenSach(), muonTra.getTinhTrang() });
+						muonTra.getNgayTra(), muonTra.getMaThanhVien().getMaThanhVien(),
+						muonTra.getMaThanhVien().getTenThanhVien(), muonTra.getMaSach().getMaSach(),
+						muonTra.getMaSach().getTenSach(), muonTra.getTinhTrang() });
 			}
 			/**
 			 * Tìm kiếm danh sách mượn-trả theo mã thành viên
@@ -1493,8 +1537,9 @@ public class QuanLy_ThuVien extends JFrame implements ActionListener {
 				model2.setRowCount(0);
 				for (muon_TraSach muonTra : listMuonTra) {
 					model2.addRow(new String[] { ("" + muonTra.getMaGiaoDich()), muonTra.getNgayMuon(),
-							muonTra.getNgayTra(),muonTra.getMaThanhVien().getMaThanhVien(), muonTra.getMaThanhVien().getTenThanhVien(),
-							muonTra.getMaSach().getMaSach(),muonTra.getMaSach().getTenSach(), muonTra.getTinhTrang() });
+							muonTra.getNgayTra(), muonTra.getMaThanhVien().getMaThanhVien(),
+							muonTra.getMaThanhVien().getTenThanhVien(), muonTra.getMaSach().getMaSach(),
+							muonTra.getMaSach().getTenSach(), muonTra.getTinhTrang() });
 				}
 			} else {
 				JOptionPane.showMessageDialog(null, "Số lượng sách không đủ");
