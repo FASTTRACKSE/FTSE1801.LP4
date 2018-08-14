@@ -103,7 +103,7 @@ public class AppQuanLyATM extends JFrame {
 		pnSouth.setBackground(Color.LIGHT_GRAY);
 		pnCenter.setBackground(Color.LIGHT_GRAY);
 
-		logoname = new JLabel("Chương trình quản lý máy ATM");
+		logoname = new JLabel("Chương trình quản lý máy ATM ngân hàng TP-Bank");
 		logoname.setFont(new Font("Times New Roman", Font.BOLD, 45));
 		logoname.setForeground(Color.BLUE);
 		pnTitle.add(logoname);

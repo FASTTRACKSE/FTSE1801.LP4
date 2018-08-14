@@ -99,12 +99,12 @@ public class QuanLyMayATM extends JFrame {
 				for (int i = 0; i < listPhuong.size(); i++) {
 					boxPhuong.addItem(listPhuong.get(i));
 				}
-				xoa.setEnabled(false);
+				if (kiemTra) {
+					xoa.setEnabled(false);
+					sua.setEnabled(true);
+				}
 			}
 
-			// if (e.getStateChange() == ItemEvent.SELECTED) {
-			// tenPhuong = boxPhuong.getSelectedItem().toString();
-			// }
 		}
 	};
 
@@ -145,14 +145,14 @@ public class QuanLyMayATM extends JFrame {
 							JOptionPane.showMessageDialog(null, "Sửa thành công");
 							tableModel.setRowCount(0);
 							showTable();
-							sua.setEnabled(false);
-							xoa.setEnabled(false);
-							them.setEnabled(true);
-							txtMaMayATM.setEnabled(true);
 							txtMaMayATM.setText("");
 							txtTongTien.setText("");
 							txtViTri.setText("");
 							kiemTra = false;
+							sua.setEnabled(false);
+							xoa.setEnabled(false);
+							them.setEnabled(true);
+							txtMaMayATM.setEnabled(true);
 						}
 					}
 				} else if (output == JOptionPane.NO_OPTION) {
@@ -166,14 +166,14 @@ public class QuanLyMayATM extends JFrame {
 						JOptionPane.showMessageDialog(null, "Xóa thành công");
 						tableModel.setRowCount(0);
 						showTable();
-						sua.setEnabled(false);
-						xoa.setEnabled(false);
-						them.setEnabled(true);
-						txtMaMayATM.setEnabled(true);
 						txtMaMayATM.setText("");
 						txtTongTien.setText("");
 						txtViTri.setText("");
 						kiemTra = false;
+						sua.setEnabled(false);
+						xoa.setEnabled(false);
+						them.setEnabled(true);
+						txtMaMayATM.setEnabled(true);
 					}
 				} else if (output == JOptionPane.NO_OPTION) {
 				}
@@ -200,14 +200,14 @@ public class QuanLyMayATM extends JFrame {
 			if (button == huy) {
 				if (output == JOptionPane.YES_OPTION) {
 					
-					sua.setEnabled(false);
-					xoa.setEnabled(false);
-					them.setEnabled(true);
-					txtMaMayATM.setEnabled(true);
 					txtMaMayATM.setText("");
 					txtTongTien.setText("");
 					txtViTri.setText("");
 					kiemTra = false;
+					sua.setEnabled(false);
+					xoa.setEnabled(false);
+					them.setEnabled(true);
+					txtMaMayATM.setEnabled(true);
 				} else if (output == JOptionPane.NO_OPTION) {
 				}
 			}

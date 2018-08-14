@@ -70,11 +70,12 @@
 	</section>
 	<section name="FatJarPackageWizard">
 		<item value="D:\FTSE1801.LP4\FTSE1801.LP4\HoiPN\Java" key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION"/>
-		<item value="Menu - Project3" key="FatJarPackageWizardPage.LAUNCH_CONFIGURATION_SELECTION_NAME"/>
-		<item value="C:\Users\Admin\Desktop\QuanLyTruongHoc.jar" key="FatJarPackageWizardPage.DESTINATION_PATH_SELECTION"/>
+		<item value="puzzle - TaoGiaoDien" key="FatJarPackageWizardPage.LAUNCH_CONFIGURATION_SELECTION_NAME"/>
+		<item value="C:\Users\Admin\Desktop\puzzle1.jar" key="FatJarPackageWizardPage.DESTINATION_PATH_SELECTION"/>
 		<item value="false" key="FatJarPackageWizardPage.ANTSCRIPT_SAVE"/>
 		<item value="2" key="FatJarPackageWizardPage.LIBRARY_HANDLING"/>
 		<list key="FatJarPackageWizardPage.DESTINATION_NAMES_ID">
+			<item value="C:\Users\Admin\Desktop\puzzle1.jar"/>
 			<item value="C:\Users\Admin\Desktop\QuanLyTruongHoc.jar"/>
 			<item value="C:\Users\Admin\Desktop\puzzle.jar"/>
 		</list>

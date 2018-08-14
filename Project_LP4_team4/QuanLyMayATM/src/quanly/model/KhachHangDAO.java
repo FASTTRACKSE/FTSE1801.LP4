@@ -227,7 +227,7 @@ public class KhachHangDAO {
 			FromQuery = FromQuery + " AND " + "khach_hang.email LIKE '%" + khachHangInPut.getEmail() + "%'";
 		}
 		if (!khachHangInPut.getSoCMND().equals("")) {
-			FromQuery = FromQuery + " AND " + "khach_hang.email LIKE '%" + khachHangInPut.getSoCMND() + "%'";
+			FromQuery = FromQuery + " AND " + "khach_hang.soCMND LIKE '%" + khachHangInPut.getSoCMND() + "%'";
 		}
 		
 		String Query = SelectQuery + FromQuery;

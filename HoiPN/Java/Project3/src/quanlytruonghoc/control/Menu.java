@@ -210,7 +210,6 @@ public class Menu extends JFrame implements ActionListener {
 		pnImg.add(pnImg1);
 		trangChuPanel.add(tieudePanel);
 		trangChuPanel.add(pnImg);
-		// cardPanel.add(trangChuPanel);
 
 		// Trang quản lý sinh
 		// viên.*****************************************************************************
@@ -293,6 +292,7 @@ public class Menu extends JFrame implements ActionListener {
 
 		quanComb = new JComboBox<>();
 		quanComb.addItem("Chọn quận/huyện");
+		
 		svPn4.add(quanComb);
 		quanComb.setPreferredSize(new Dimension(150, 30));
 		phuongComb = new JComboBox<>();
@@ -315,12 +315,17 @@ public class Menu extends JFrame implements ActionListener {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
+					
 					tenTP = tpComb.getSelectedItem().toString();
+					
 					quanComb.removeAllItems();
+					
 					listQuan = sinhVienDao.getAllQuanHuyen(tenTP);
 					for (int i = 0; i < listQuan.size(); i++) {
 						quanComb.addItem(listQuan.get(i));
 					}
+					quanComb.addItem("Chọn quận/huyện");
+					phuongComb.addItem("Chọn phường/xã");
 				}
 			}
 		});
@@ -331,6 +336,7 @@ public class Menu extends JFrame implements ActionListener {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
 					tenQuan = quanComb.getSelectedItem().toString();
 					phuongComb.removeAllItems();
+					
 					listXaPhuong = sinhVienDao.getAllXaPhuong(tenQuan);
 					for (int j = 0; j < listXaPhuong.size(); j++) {
 						phuongComb.addItem(listXaPhuong.get(j));
@@ -442,6 +448,7 @@ public class Menu extends JFrame implements ActionListener {
 		TitledBorder borderTitle = BorderFactory.createTitledBorder(border, "Danh sách sinh viên");
 		svBang.setBorder(borderTitle);
 		svBang.add(scMon);
+		displayAllSv(listSinhVien);
 		// displayAllSv(listSinhVien);
 
 		sinhVienPanel.add(svLabel);
@@ -1183,6 +1190,7 @@ public class Menu extends JFrame implements ActionListener {
 				}
 
 				if (chk3.isSelected()) {
+					
 					text.setEnabled(true);
 				} else {
 					text.setEnabled(false);
@@ -1338,12 +1346,16 @@ public class Menu extends JFrame implements ActionListener {
 			
 		
 			
-		} else {
+		} else if (e.getSource() == taoMoiSvButton){
 			maSvField.setText("");
 			tenSvField.setText("");
 			sdtField.setText("");
 			emailField.setText("");
 			diaChiField.setText("");
+			tpComb.setSelectedItem("Chọn thành phố");
+			quanComb.setSelectedItem("Chọn quận/huyện");
+			phuongComb.setSelectedItem("Chọn phường/xã");
+			lopComb.setSelectedItem("Mã lớp");
 			svDtm.setRowCount(0);
 			displayAllSv(listSinhVien);
 		}

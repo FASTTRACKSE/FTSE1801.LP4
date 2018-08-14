@@ -94,31 +94,37 @@ public class BaoCaoTinhHinhRutTien extends JFrame {
 							if (giaoDichDAO.kiemTraMaKHDaGiaoDichChua(txtMaKH.getText())) {
 								ArrayList<GiaoDich> listGD = new ArrayList<>();
 								listGD = giaoDichDAO.showGiaoDichTheoMaKHAnDate(txtMaKH.getText(), strDate, strDate1);
-								
+								if (listGD.isEmpty()) {
+									JOptionPane.showMessageDialog(null,
+											"Khách hàng không thực hiện giao dịch trong khoảng thời gian này");
+								} else {
 									Integer allTienRut = 0;
 									Integer allTienThem = 0;
 									for (int i = 0; i < listGD.size(); i++) {
 										if (listGD.get(i).getMayATM().getMaMay().equals("Tại ngân hàng")) {
 											tableModel.addRow(new String[] { listGD.get(i).getMayATM().getMaMay(),
-													listGD.get(i).getKhachHang().getSoTK(), listGD.get(i).getThoiGian(),listGD.get(i).getSoTienThem(),
-													listGD.get(i).getSoTienRut() });
+													listGD.get(i).getKhachHang().getSoTK(), listGD.get(i).getThoiGian(),
+													listGD.get(i).getSoTienThem(), listGD.get(i).getSoTienRut() });
 											allTienRut = allTienRut + Integer.parseInt(listGD.get(i).getSoTienRut());
 											allTienThem = allTienThem + Integer.parseInt(listGD.get(i).getSoTienThem());
-										}else {
-											tableModel.addRow(new String[] { "Máy ATM: "+listGD.get(i).getMayATM().getMaMay(),
-													listGD.get(i).getKhachHang().getSoTK(), listGD.get(i).getThoiGian(),listGD.get(i).getSoTienThem(),
-													listGD.get(i).getSoTienRut() });
+										} else {
+											tableModel.addRow(new String[] {
+													"Máy ATM: " + listGD.get(i).getMayATM().getMaMay(),
+													listGD.get(i).getKhachHang().getSoTK(), listGD.get(i).getThoiGian(),
+													listGD.get(i).getSoTienThem(), listGD.get(i).getSoTienRut() });
 											allTienRut = allTienRut + Integer.parseInt(listGD.get(i).getSoTienRut());
 											allTienThem = allTienThem + Integer.parseInt(listGD.get(i).getSoTienThem());
 										}
-									
+
 									}
 									txtTongTienRut.setText("" + allTienRut);
-									txtTongTienThem.setText(""+allTienThem);
-								
+									txtTongTienThem.setText("" + allTienThem);
+
+								}
+
 							} else {
 								JOptionPane.showMessageDialog(null,
-										"Mã khách hàng không tồn tại hoặc khách hàng chưa thực hiện giao dịch");
+										"Mã khách hàng không tồn tại hoặc chưa thực hiện giao dịch.");
 							}
 						}
 					}
