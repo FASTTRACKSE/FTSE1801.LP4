@@ -2,9 +2,7 @@ package QuanLyTienDien.model.entity;
 
 import java.util.ArrayList;
 
-import javax.swing.table.DefaultTableModel;
-
-import QuanLyTienDien.model.BaoCaoDAO;
+import QuanLyTienDien.model.DAO.BaoCaoDAO;
 
 /**
  * Tính tiền điện lấy dữ liệu từ database
@@ -20,7 +18,7 @@ public class TienDien {
 	 * 
 	 * @return listdsbc
 	 */
-	
+
 	public ArrayList<KhachHang> tienDien() {
 		baoCaoDAO = new BaoCaoDAO();
 		ArrayList<KhachHang> listdsbc = baoCaoDAO.DSKhachHang();
