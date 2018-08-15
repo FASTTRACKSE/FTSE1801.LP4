@@ -43,10 +43,10 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
-import quanly_thuvien.model.SachDao;
-import quanly_thuvien.model.Tra_MuonDao;
-import quanly_thuvien.model.banDocDao;
-import quanly_thuvien.model.thuvienDao;
+import quanly_thuvien.model.dao.SachDao;
+import quanly_thuvien.model.dao.Tra_MuonDao;
+import quanly_thuvien.model.dao.banDocDao;
+import quanly_thuvien.model.dao.thuvienDao;
 import quanly_thuvien.model.entity.NhaXuatBan;
 import quanly_thuvien.model.entity.Phuong;
 import quanly_thuvien.model.entity.Quan;
@@ -57,8 +57,8 @@ import quanly_thuvien.model.entity.TheLoaiSach;
 import quanly_thuvien.model.entity.muon_TraSach;
 
 /**
- * 
- * @author Phạm Ngọc Thiên
+ * phần mềm quản lý thư viện
+ * @author Phạm Ngọc Thiên AND Hồ Tấn Hiệu
  *
  */
 public class QuanLy_ThuVien extends JFrame implements ActionListener {
@@ -194,7 +194,7 @@ public class QuanLy_ThuVien extends JFrame implements ActionListener {
 	/**
 	 * Date Mượn
 	 * 
-	 * @author 
+	 * @author
 	 *
 	 */
 	public class DateLabelFormatter extends AbstractFormatter {
@@ -486,13 +486,10 @@ public class QuanLy_ThuVien extends JFrame implements ActionListener {
 				int row = tbl.getSelectedRow();
 				String s = (String) tbl.getValueAt(row, 0);
 				maThanhVien.setText(s);
-
 				String y = (String) tbl.getValueAt(row, 1);
 				tenThanhVien.setText(y);
-
 				String z = (String) tbl.getValueAt(row, 6);
 				DienThoai.setText(z);
-
 				String a = (String) tbl.getValueAt(row, 7);
 				Email.setText(a);
 				String b = (String) tbl.getValueAt(row, 5);
@@ -842,12 +839,10 @@ public class QuanLy_ThuVien extends JFrame implements ActionListener {
 		model3 = new DefaultTableModel();
 		model3.addColumn("Mã thành viên");
 		model3.addColumn("Tên thành viên");
-		model3.addColumn("Địa chỉ");
 		model3.addColumn("Phường");
 		model3.addColumn("Quận");
 		model3.addColumn("Thành Phố");
-		model3.addColumn("Điện Thoai");
-		model3.addColumn("Email");
+		model3.addColumn("Tên Sách");
 		model3.addColumn("Tình Trạng Mượn Sách");
 		JTable tbl3 = new JTable(model3);
 		tbl3.getTableHeader().setReorderingAllowed(false);
@@ -877,10 +872,9 @@ public class QuanLy_ThuVien extends JFrame implements ActionListener {
 					model3.setRowCount(0);
 					for (muon_TraSach ql : list) {
 						model3.addRow(new String[] { ("" + ql.getMaThanhVien().getMaThanhVien()),
-								ql.getMaThanhVien().getTenThanhVien(), ql.getMaThanhVien().getSoNha(),
-								ql.getMaThanhVien().getMaPhuongXa(), ql.getMaThanhVien().getMaQuanHuyen(),
-								ql.getMaThanhVien().getMaThanhPho(), ql.getMaThanhVien().getSDT(),
-								ql.getMaThanhVien().getEmail(), ql.getTinhTrang() });
+								ql.getMaThanhVien().getTenThanhVien(), ql.getMaThanhVien().getMaPhuongXa(),
+								ql.getMaThanhVien().getMaQuanHuyen(), ql.getMaThanhVien().getMaThanhPho(),
+								ql.getMaSach().getTenSach(), ql.getTinhTrang() });
 					}
 				}
 
@@ -1058,9 +1052,25 @@ public class QuanLy_ThuVien extends JFrame implements ActionListener {
 		}
 		if (e.getSource() == baocao) {
 			card.show(cardPanel, "baocao1");
+			ArrayList<muon_TraSach> list = banDoc.getAllBaoCaoBanDoc();
+			model3.setRowCount(0);
+			for (muon_TraSach ql : list) {
+				model3.addRow(new String[] { ("" + ql.getMaThanhVien().getMaThanhVien()),
+						ql.getMaThanhVien().getTenThanhVien(), ql.getMaThanhVien().getMaPhuongXa(),
+						ql.getMaThanhVien().getMaQuanHuyen(), ql.getMaThanhVien().getMaThanhPho(),
+						ql.getMaSach().getTenSach(), ql.getTinhTrang() });
+			}
 		}
 		if (e.getSource() == baocao1) {
 			card.show(cardPanel, "baocao2");
+			ArrayList<QuanLySach> listBaoCao = sachDao.getAllSach();
+			model4.setRowCount(0);
+			for (int i = 0; i < listBaoCao.size(); i++) {
+				model4.addRow(new String[] { ("" + listBaoCao.get(i).getMaSach()), listBaoCao.get(i).getTenSach(),
+						listBaoCao.get(i).getTacGia(), listBaoCao.get(i).getNhaXuatBan(),
+						listBaoCao.get(i).getTheLoaiSach(), listBaoCao.get(i).getNamXuatBan(),
+						listBaoCao.get(i).getSoLuong(), listBaoCao.get(i).getSoLuongTonKho() });
+			}
 		}
 		/**
 		 * Thêm danh sách bạn đọc.
@@ -1501,16 +1511,23 @@ public class QuanLy_ThuVien extends JFrame implements ActionListener {
 			QuanLy_BanDoc quanly1 = new QuanLy_BanDoc();
 			quanly1.setMaThanhVien(maThanhVien2.getText());
 			muon.setMaThanhVien(quanly1);
-			ArrayList<muon_TraSach> list1 = banDoc.getBaoCaoBanDocByMa(muon);
-			model3.setRowCount(0);
-			for (muon_TraSach ql : list1) {
-				model3.addRow(new String[] { ("" + ql.getMaThanhVien().getMaThanhVien()),
-						ql.getMaThanhVien().getTenThanhVien(), ql.getMaThanhVien().getSoNha(),
-						ql.getMaThanhVien().getMaPhuongXa(), ql.getMaThanhVien().getMaQuanHuyen(),
-						ql.getMaThanhVien().getMaThanhPho(), ql.getMaThanhVien().getSDT(),
-						ql.getMaThanhVien().getEmail(), ql.getTinhTrang() });
+			if(quanly1.getMaThanhVien().equals("")) {
+				JOptionPane.showMessageDialog(null, "Vui lòng nhập mã thành viên cần tìm");
+			}else {
+				ArrayList<muon_TraSach> list1 = banDoc.getBaoCaoBanDocByMa(muon);
+				model3.setRowCount(0);
+				for (muon_TraSach ql : list1) {
+					model3.addRow(new String[] { ("" + ql.getMaThanhVien().getMaThanhVien()),
+							ql.getMaThanhVien().getTenThanhVien(), ql.getMaThanhVien().getMaPhuongXa(),
+							ql.getMaThanhVien().getMaQuanHuyen(), ql.getMaThanhVien().getMaThanhPho(),
+							ql.getMaSach().getTenSach(), ql.getTinhTrang() });
+				}
 			}
+			
 		}
+		/**
+		 * Thống kê sách theo tác giả
+		 */
 		if (e.getSource() == listBaoCao1) {
 			ArrayList<QuanLySach> listBaoCao = sachDao.getAllSach();
 			model4.setRowCount(0);
@@ -1520,6 +1537,9 @@ public class QuanLy_ThuVien extends JFrame implements ActionListener {
 							listBaoCao.get(i).getTacGia(), listBaoCao.get(i).getNhaXuatBan(),
 							listBaoCao.get(i).getTheLoaiSach(), listBaoCao.get(i).getNamXuatBan(),
 							listBaoCao.get(i).getSoLuong(), listBaoCao.get(i).getSoLuongTonKho() });
+				}else {
+					JOptionPane.showMessageDialog(null, "Vui lòng nhập tác giả muốn hiển thị");
+					break;
 				}
 			}
 			tacGia1.setText("");

@@ -1,4 +1,4 @@
-package quanly_thuvien.model.Dao;
+package quanly_thuvien.model.dao;
 
 
 import java.sql.Connection;
@@ -187,6 +187,11 @@ public class thuvienDao {
 		DatabaseUtil.disConnect(conn);
 		return ma;
 	}
+	/**
+	 * Thay đổi thông tin bạn đọc
+	 * @param quanLyBanDoc
+	 * @return
+	 */
 	public boolean UpdateBanDoc(QuanLy_BanDoc quanLyBanDoc) {
 		boolean statusExecute = false;
 		int[] ma = layMaThanhQuanPhuong(quanLyBanDoc.getMaPhuongXa());
@@ -217,6 +222,11 @@ public class thuvienDao {
 		DatabaseUtil.disConnect(conn);
 		return statusExecute;
 	}
+	/**
+	 * Xóa thông tin bạn đọc
+	 * @param quanLyBanDoc
+	 * @return
+	 */
 	public boolean DeleteBanDoc(QuanLy_BanDoc quanLyBanDoc) {
 		boolean statusExecute = false;
 		

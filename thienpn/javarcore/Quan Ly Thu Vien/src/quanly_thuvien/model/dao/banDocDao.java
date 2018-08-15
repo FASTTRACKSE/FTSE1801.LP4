@@ -1,4 +1,4 @@
-package quanly_thuvien.model.Dao;
+package quanly_thuvien.model.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,7 +15,10 @@ import quanly_thuvien.model.entity.muon_TraSach;
 
 public class banDocDao {
 	Connection conn;
-	
+	/**
+	 * Lấy dữ liệu từ thành phố
+	 * @return
+	 */
 	public ArrayList<ThanhPho> getCiTy1() {
 		String sql = "SELECT `tenThanhPho` FROM `tinh_thanhpho`";
 		conn = DatabaseUtil.getConnect();
@@ -37,10 +40,50 @@ public class banDocDao {
 
 	}
 	
+	public ArrayList<muon_TraSach> getAllBaoCaoBanDoc(){
+		String sql = "SELECT * FROM muon_tra_sach LEFT JOIN thanh_vien ON thanh_vien.MaThanhVien = muon_tra_sach.MaThanhVien LEFT JOIN quan_huyen ON thanh_vien.maQuanHuyen = quan_huyen.maQuanHuyen LEFT JOIN tinh_thanhpho ON thanh_vien.maThanhPho = tinh_thanhpho.maThanhPho LEFT JOIN phuong_xa ON thanh_vien.maPhuongXa = phuong_xa.maPhuongXa LEFT JOIN sach ON sach.MaSach = muon_tra_sach.MaSach";
+		conn = DatabaseUtil.getConnect();
+		ArrayList<muon_TraSach> list = new ArrayList<muon_TraSach>();
+
+		try {
+			PreparedStatement statement = conn.prepareStatement(sql);
+			ResultSet result = statement.executeQuery();
+			
+			QuanLy_BanDoc quanLyBanDoc2;
+			QuanLySach quanLySach2;
+			muon_TraSach muontra;
+			while (result.next()) {
+				quanLyBanDoc2 = new QuanLy_BanDoc();
+				quanLySach2 = new QuanLySach();
+				muontra = new muon_TraSach();
+				quanLyBanDoc2.setMaThanhVien(""+result.getInt("MaThanhVien"));
+				quanLyBanDoc2.setTenThanhVien(result.getString("tenThanhVien"));
+				quanLyBanDoc2.setMaThanhPho(result.getString("tenThanhPho"));
+				quanLyBanDoc2.setMaQuanHuyen(result.getString("tenQuanHuyen"));
+				quanLyBanDoc2.setMaPhuongXa(result.getString("tenPhuongXa"));
+				quanLySach2.setTenSach(result.getString("TenSach"));
+				muontra.setTinhTrang(result.getString("muon_tra_sach.tinhTrang"));
+				muontra.setMaThanhVien(quanLyBanDoc2);
+				muontra.setMaSach(quanLySach2);
+				
+				list.add(muontra);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DatabaseUtil.disConnect(conn);
+		return list;
+		
 	
+	}
 	
+	/**
+	 * Danh sách bạn đọc theo thành phố.
+	 * @param tenThanhPho
+	 * @return
+	 */
 	public ArrayList<muon_TraSach> getBaoCaoBanDoc(String tenThanhPho) {
-		String sql = "SELECT * FROM muon_tra_sach LEFT JOIN thanh_vien ON thanh_vien.MaThanhVien = muon_tra_sach.MaThanhVien LEFT JOIN quan_huyen as District ON thanh_vien.maQuanHuyen = District.maQuanHuyen LEFT JOIN tinh_thanhpho as  thanhpho ON thanh_vien.maThanhPho = thanhpho.maThanhPho LEFT JOIN phuong_xa ON thanh_vien.maPhuongXa = phuong_xa.maPhuongXa WhERE thanhpho.tenThanhPho = ?";
+		String sql = "SELECT * FROM muon_tra_sach LEFT JOIN thanh_vien ON thanh_vien.MaThanhVien = muon_tra_sach.MaThanhVien LEFT JOIN quan_huyen ON thanh_vien.maQuanHuyen = quan_huyen.maQuanHuyen LEFT JOIN tinh_thanhpho ON thanh_vien.maThanhPho = tinh_thanhpho.maThanhPho LEFT JOIN phuong_xa ON thanh_vien.maPhuongXa = phuong_xa.maPhuongXa LEFT JOIN sach ON sach.MaSach = muon_tra_sach.MaSach WHERE tinh_thanhpho.tenThanhPho = ?";
 		conn = DatabaseUtil.getConnect();
 		ArrayList<muon_TraSach> list = new ArrayList<muon_TraSach>();
 
@@ -50,20 +93,21 @@ public class banDocDao {
 			ResultSet result = statement.executeQuery();
 			
 			QuanLy_BanDoc quanLyBanDoc2;
+			QuanLySach quanLySach2;
 			muon_TraSach muontra;
 			while (result.next()) {
 				quanLyBanDoc2 = new QuanLy_BanDoc();
+				quanLySach2 = new QuanLySach();
 				muontra = new muon_TraSach();
 				quanLyBanDoc2.setMaThanhVien(""+result.getInt("MaThanhVien"));
 				quanLyBanDoc2.setTenThanhVien(result.getString("tenThanhVien"));
-				quanLyBanDoc2.setSoNha(result.getString("SoNha"));
-				quanLyBanDoc2.setSDT(result.getString("SĐT"));
-				quanLyBanDoc2.setEmail(result.getString("Email"));
 				quanLyBanDoc2.setMaThanhPho(result.getString("tenThanhPho"));
 				quanLyBanDoc2.setMaQuanHuyen(result.getString("tenQuanHuyen"));
 				quanLyBanDoc2.setMaPhuongXa(result.getString("tenPhuongXa"));
+				quanLySach2.setTenSach(result.getString("TenSach"));
 				muontra.setTinhTrang(result.getString("muon_tra_sach.tinhTrang"));
 				muontra.setMaThanhVien(quanLyBanDoc2);
+				muontra.setMaSach(quanLySach2);
 				
 				list.add(muontra);
 			}
@@ -74,9 +118,13 @@ public class banDocDao {
 		return list;
 		
 	}
-	
+	/**
+	 * Danh sách bạn đọc theo mã thành viên
+	 * @param muontra1
+	 * @return
+	 */
 	public ArrayList<muon_TraSach> getBaoCaoBanDocByMa(muon_TraSach muontra1) {
-		String sql = "SELECT * FROM muon_tra_sach LEFT JOIN thanh_vien ON thanh_vien.MaThanhVien = muon_tra_sach.MaThanhVien LEFT JOIN quan_huyen as District ON thanh_vien.maQuanHuyen = District.maQuanHuyen LEFT JOIN tinh_thanhpho as  thanhpho ON thanh_vien.maThanhPho = thanhpho.maThanhPho LEFT JOIN phuong_xa ON thanh_vien.maPhuongXa = phuong_xa.maPhuongXa WhERE thanh_vien.MaThanhVien = ?";
+		String sql = "SELECT * FROM muon_tra_sach LEFT JOIN thanh_vien ON thanh_vien.MaThanhVien = muon_tra_sach.MaThanhVien LEFT JOIN quan_huyen  ON thanh_vien.maQuanHuyen = quan_huyen.maQuanHuyen LEFT JOIN tinh_thanhpho ON thanh_vien.maThanhPho = tinh_thanhpho.maThanhPho LEFT JOIN phuong_xa ON thanh_vien.maPhuongXa = phuong_xa.maPhuongXa LEFT JOIN sach ON sach.MaSach = muon_tra_sach.MaSach WHERE thanh_vien.MaThanhVien = ?";
 		conn = DatabaseUtil.getConnect();
 		ArrayList<muon_TraSach> list = new ArrayList<muon_TraSach>();
 
@@ -86,20 +134,21 @@ public class banDocDao {
 			ResultSet result = statement.executeQuery();
 			
 			QuanLy_BanDoc quanLyBanDoc2;
+			QuanLySach quanLySach2;
 			muon_TraSach muontra;
 			while (result.next()) {
 				quanLyBanDoc2 = new QuanLy_BanDoc();
+				quanLySach2 = new QuanLySach();
 				muontra = new muon_TraSach();
 				quanLyBanDoc2.setMaThanhVien(""+result.getInt("MaThanhVien"));
 				quanLyBanDoc2.setTenThanhVien(result.getString("tenThanhVien"));
-				quanLyBanDoc2.setSoNha(result.getString("SoNha"));
-				quanLyBanDoc2.setSDT(result.getString("SĐT"));
-				quanLyBanDoc2.setEmail(result.getString("Email"));
 				quanLyBanDoc2.setMaThanhPho(result.getString("tenThanhPho"));
 				quanLyBanDoc2.setMaQuanHuyen(result.getString("tenQuanHuyen"));
 				quanLyBanDoc2.setMaPhuongXa(result.getString("tenPhuongXa"));
+				quanLySach2.setTenSach(result.getString("TenSach"));
 				muontra.setTinhTrang(result.getString("muon_tra_sach.tinhTrang"));
 				muontra.setMaThanhVien(quanLyBanDoc2);
+				muontra.setMaSach(quanLySach2);
 				
 				list.add(muontra);
 			}
@@ -110,6 +159,10 @@ public class banDocDao {
 		return list;
 		
 	}
+	/**
+	 * Danh sách đầu sách theo nhà xuất bản 
+	 * 
+	 */
 	public ArrayList<NhaXuatBan> getBaoCaoNhaXuatBan(){
 		String sql = "SELECT `NhaXuatBan` FROM `nhaxuatban`";
 		conn = DatabaseUtil.getConnect();

@@ -1,4 +1,4 @@
-package quanly_thuvien.model.Dao;
+package quanly_thuvien.model.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,7 +15,14 @@ import quanly_thuvien.model.entity.muon_TraSach;
 
 public class Tra_MuonDao {
 	Connection conn;
-
+     /**
+      * Giao dịch mượn sách
+      * @param ngay
+      * @param maThanhVien
+      * @param maSach
+      * @param maGD
+      * @return
+      */
 	public boolean MuonSach(String ngay, int maThanhVien, int maSach,int maGD) {
 		boolean statusExecute = false;
 		String sql = "INSERT INTO `muon_tra_sach`(`MaGiaoDich`,`NgayMuon`, `MaThanhVien`, `MaSach`, `tinhTrang`) VALUES (?,?,?,?,\"Đang Mượn\")";
@@ -37,7 +44,11 @@ public class Tra_MuonDao {
 		DatabaseUtil.disConnect(conn);
 		return statusExecute;
 	}
-	
+	/**
+	 * Thay đổi số lượng sách sau khi mượn
+	 * @param maSach
+	 * @return
+	 */
 	public boolean UpDateSoLuongSach(int maSach) {
 		boolean statusExecute = false;
 		String sql = "UPDATE `sach` SET `soLuongConLai` = soLuongConLai-1 WHERE sach.MaSach = ?";
@@ -57,7 +68,11 @@ public class Tra_MuonDao {
 		DatabaseUtil.disConnect(conn);
 		return statusExecute;
 	}
-	
+	/**
+	 * Thay đổi số lượng sách sau khi trả
+	 * @param maSach
+	 * @return
+	 */
 	public boolean UpDateSoLuongSachTra(int maSach) {
 		boolean statusExecute = false;
 		String sql = "UPDATE `sach` SET `soLuongConLai` = soLuongConLai+1 WHERE sach.MaSach = ?";
@@ -77,7 +92,11 @@ public class Tra_MuonDao {
 		DatabaseUtil.disConnect(conn);
 		return statusExecute;
 	}
-	//trả sách
+	/**
+	 * Giao dịch trả sách
+	 * @param muonTra
+	 * @return
+	 */
 	public boolean TraSach(muon_TraSach muonTra) {
 		boolean statusExecute = false;
 		String sql = "UPDATE `muon_tra_sach` SET `NgayTra`=?,`tinhTrang`=\"Đã Trả\" WHERE muon_tra_sach.MaThanhVien = ? AND muon_tra_sach.MaSach = ?";
