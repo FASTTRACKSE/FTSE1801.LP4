@@ -1,4 +1,4 @@
-package quanly_thuvien.model.Dao;
+package quanly_thuvien.model.dao;
 
 import java.sql.Connection;
 import java.sql.SQLException;

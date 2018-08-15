@@ -1,4 +1,4 @@
-package quanly_thuvien.model.Dao;
+package quanly_thuvien.model.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,6 +14,12 @@ import quanly_thuvien.model.entity.QuanLySach;
 import quanly_thuvien.model.entity.QuanLy_BanDoc;
 import quanly_thuvien.model.entity.TheLoaiSach;
 
+
+/**
+ * Lấy dữ liệu nhà xuất bản
+ * @author TGDD
+ *
+ */
 public class SachDao {
 	Connection conn;
 	public ArrayList<NhaXuatBan> getNhaXuatBan(){
@@ -35,6 +41,12 @@ public class SachDao {
 		DatabaseUtil.disConnect(conn);
 		return list;
 	}
+	
+	/**
+	 * lấy dữ liệu thể loại sách
+	 * @param NhaXuatBan
+	 * @return
+	 */
 	public ArrayList<TheLoaiSach> getTheLoaiSach(String NhaXuatBan){
 		String sql = "SELECT theloaisach.TheLoaiSach FROM nhaxuatban_theloaisach INNER JOIN theloaisach ON theloaisach.maTheLoaiSach = nhaxuatban_theloaisach.maTheLoaiSach INNER JOIN nhaxuatban ON nhaxuatban.maNhaXuatBan = nhaxuatban_theloaisach.maNhaXuatBan WHERE nhaxuatban.NhaXuatBan = ?";
 		conn = DatabaseUtil.getConnect();
@@ -56,6 +68,8 @@ public class SachDao {
 		DatabaseUtil.disConnect(conn);
 		return list;
 	}
+	
+	
 	public ArrayList<QuanLySach> getAllSach(){
 		String sql = "SELECT sach.MaSach,sach.TenSach,sach.TacGia,nhaxuatban.NhaXuatBan,theloaisach.TheLoaiSach,sach.NamXuatBan,sach.soLuong,sach.soLuongConLai FROM `sach` INNER JOIN theloaisach ON sach.TheLoaiSach = theloaisach.TheLoaiSach INNER JOIN nhaxuatban ON sach.NhaXuatBan = nhaxuatban.NhaXuatBan";
 		conn = DatabaseUtil.getConnect();
@@ -86,7 +100,11 @@ public class SachDao {
 		return list;
 
 	}
-	
+	/**
+	 * Thêm sách vào hệ thống
+	 * @param quanlySach
+	 * @return
+	 */
 	public boolean addSach(QuanLySach quanlySach) {
 		boolean statusExecute = false;
 		
@@ -113,7 +131,11 @@ public class SachDao {
 		return statusExecute;
 	}
 	
-	
+	/**
+	 * Sửa sách từ hệ thống
+	 * @param quanlySach
+	 * @return
+	 */
 	public boolean UpdateSach(QuanLySach quanlySach) {
 		boolean statusExecute = false;
 		
@@ -145,7 +167,11 @@ public class SachDao {
 	
 	
 	
-	
+	/**
+	 * Xóa sách trong hệ thống
+	 * @param quanlySach
+	 * @return
+	 */
 	public boolean DeleteSach(QuanLySach quanlySach) {
 		boolean statusExecute = false;
 		
