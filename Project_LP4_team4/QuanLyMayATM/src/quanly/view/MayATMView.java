@@ -43,9 +43,9 @@ public class MayATMView extends JFrame {
 	JPanel jPanel, pnAllCenter, pnMenu, pnSouth, pnButton, cardLayout;
 	JPanel pnLabel1, pnLabel2, pnThongTinKH, pnLabel3, pnButton2, pnLabel4, pnButton3, pnButton4;
 	JLabel title, title2, logoname, lbAccount, lbPin, lpPinCu, lpPinMoi, lpPinMoi2;
-	JLabel lbMaKH, lbTen, lbDiaChi, lbQuan, lbPhuong, lbSoDT, lbEmail, lbSoThe, lbSoTK, lbSoTien, lbRutTien;
+	JLabel lbSoCMND, lbTen, lbDiaChi, lbQuan, lbPhuong, lbSoDT, lbEmail, lbSoThe, lbSoTK, lbSoTien, lbRutTien;
 	JTextField txtSoTheATM, txtPin, txtRutTien, txtPinCu, txtPinMoi,txtPinMoi2;
-	JTextField maKH, ten, diaChi, quan, phuong, soDT, email, soThe, soTK, soTien;
+	JTextField soCMND, ten, diaChi, quan, phuong, soDT, email, soThe, soTK, soTien;
 	Border border;
 	TitledBorder titledBorder;
 	JButton btDangNhap, btThongTin, btRutTien, btThoatGD, btRut, btDoiPin, btXacNhan, btHuy;
@@ -239,7 +239,7 @@ public class MayATMView extends JFrame {
 		// Phần tiêu đề
 		logoname = new JLabel("TP-BANK MÁY ATM");
 		logoname.setFont(new Font("Times New Roman", Font.BOLD, 45));
-		logoname.setForeground(Color.BLUE);
+		logoname.setForeground(Color.RED);
 		pnTitle.add(logoname);
 		conn.add(pnTitle, "North");
 
@@ -270,14 +270,14 @@ public class MayATMView extends JFrame {
 		pnThongTin.setLayout(new GridLayout(1, 2));
 		pnLabel1 = new JPanel();
 		pnLabel1.setLayout(new GridBagLayout());
-		lbMaKH = new JLabel("Mã khách hàng");
+		lbSoCMND = new JLabel("Số CMND");
 		lbTen = new JLabel("Họ tên khách hàng");
 		lbDiaChi = new JLabel("Địa chỉ nhà");
 		lbQuan = new JLabel("Quận");
 		lbPhuong = new JLabel("Phường");
 
-		maKH = new JTextField(15);
-		maKH.setEditable(false);
+		soCMND = new JTextField(15);
+		soCMND.setEditable(false);
 		ten = new JTextField(15);
 		ten.setEditable(false);
 		diaChi = new JTextField(15);
@@ -287,20 +287,20 @@ public class MayATMView extends JFrame {
 		phuong = new JTextField(15);
 		phuong.setEditable(false);
 
-		maKH.setText(khachHang.getMaKH());
+		soCMND.setText(khachHang.getSoCMND());
 		ten.setText(khachHang.getTenKH());
 		diaChi.setText(khachHang.getDiaChi());
 		phuong.setText(khachHang.getPhuong());
 		quan.setText(khachHang.getQuan());
 
-		addItem(pnLabel1, lbMaKH, 0, 0, 1, 1, GridBagConstraints.EAST);
-		addItem(pnLabel1, lbTen, 0, 1, 1, 1, GridBagConstraints.EAST);
+		addItem(pnLabel1, lbTen, 0, 0, 1, 1, GridBagConstraints.EAST);
+		addItem(pnLabel1, lbSoCMND, 0, 1, 1, 1, GridBagConstraints.EAST);
 		addItem(pnLabel1, lbDiaChi, 0, 2, 1, 1, GridBagConstraints.EAST);
 		addItem(pnLabel1, lbQuan, 0, 3, 1, 1, GridBagConstraints.EAST);
 		addItem(pnLabel1, lbPhuong, 0, 4, 1, 1, GridBagConstraints.EAST);
 
-		addItem(pnLabel1, maKH, 1, 0, 2, 1, GridBagConstraints.WEST);
-		addItem(pnLabel1, ten, 1, 1, 2, 1, GridBagConstraints.WEST);
+		addItem(pnLabel1, ten, 1, 0, 2, 1, GridBagConstraints.WEST);
+		addItem(pnLabel1, soCMND, 1, 1, 2, 1, GridBagConstraints.WEST);
 		addItem(pnLabel1, diaChi, 1, 2, 2, 1, GridBagConstraints.WEST);
 		addItem(pnLabel1, quan, 1, 3, 2, 1, GridBagConstraints.WEST);
 		addItem(pnLabel1, phuong, 1, 4, 2, 1, GridBagConstraints.WEST);
