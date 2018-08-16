@@ -11,6 +11,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -300,10 +301,13 @@ public class QuanLySinhVien extends JFrame implements ActionListener{
 		if (e.getSource() == themSvButton) {
 			// Bắt lỗi các trường hợp trong nhập văn bản
 			// Tao gia tri moi cho bang sinhvien
+			List<SinhVien> listSinhVienDB = sinhVienDao.showTableSinhVien(sinhvien);
 			
 			if (idSv.length() == 0) {
 				JOptionPane.showMessageDialog(null, "Mã sinh viên không được để trống!!!");
-			} else if (tenSv.length() == 0) {
+			}  else if (listSinhVienDB.size()>0) {
+				JOptionPane.showMessageDialog(null, "Mã sinh viên này đã có !");
+			}else if (tenSv.length() == 0) {
 				JOptionPane.showMessageDialog(null, "Tên sinh viên không đươc để trống !");
 			} else if (!email.matches("\\w+@+\\w+\\.\\w+{1,2}")) {
 				JOptionPane.showMessageDialog(null, "Nhập sai định dạng Email \\n vd: demo123.@gmail.com");

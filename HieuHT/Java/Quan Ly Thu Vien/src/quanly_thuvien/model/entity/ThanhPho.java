@@ -9,10 +9,11 @@ public class ThanhPho {
 		this.maThanhPho = maThanhPho;
 		this.tenThanhPho = tenThanhPho;
 	}
-
 	public ThanhPho() {
-
+		
 	}
+		
+	
 
 	public int getMaThanhPho() {
 		return maThanhPho;
@@ -29,7 +30,6 @@ public class ThanhPho {
 	public void setTenThanhPho(String tenThanhPho) {
 		this.tenThanhPho = tenThanhPho;
 	}
-
 	public String toString() {
 		return tenThanhPho;
 	}

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import quanlytruonghoc.entity.Lop;
+import quanlytruonghoc.entity.MonHoc;
 import quanlytruonghoc.entity.Phuong;
 import quanlytruonghoc.entity.SinhVien;
 import quanlytruonghoc.model.DatabasaUltil;
@@ -225,6 +226,45 @@ public class SinhVienDao {
 		}
 		DatabasaUltil.closeConnection(conn);
 		return listSinhVien;
+	}
+	
+	/**
+	 * Hiển thị tất cả tên sinh viên
+	 * @param monHoc
+	 * @return
+	 */
+	public ArrayList<SinhVien> showTableSinhVien(SinhVien sinhVien) {
+		conn = DatabasaUltil.getConnect();
+		ArrayList<SinhVien> listSinhVien = new ArrayList<SinhVien>();
+		String sql = "SELECT * FROM `sinhvien` WHERE idsv=?";
+		try {
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, sinhVien.getIdSinhVien());
+			ResultSet result = statement.executeQuery();
+			SinhVien sinhvien;
+			Phuong phuong;
+			while (result.next()) {
+				sinhvien = new SinhVien();
+				sinhvien.setIdSinhVien(result.getString("idsv"));
+				sinhvien.setHoTen(result.getString("hoten"));
+				sinhvien.setIdLop(result.getString("idlop"));
+				sinhvien.setDiaChi(result.getString("diachi"));
+				sinhvien.setSdt(result.getString("sdt"));
+				phuong = new Phuong();
+				phuong.setNamePhuong(result.getString("xaphuongthitran.name"));
+				sinhvien.setPhuong(phuong);
+				sinhvien.setQuan(result.getString("quanhuyen.name"));
+				sinhvien.setThanhpho(result.getString("tinhthanhpho.name"));
+				sinhvien.setEmail(result.getString("email"));
+				
+				listSinhVien.add(sinhvien);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DatabasaUltil.closeConnection(conn);
+		return listSinhVien;
+
 	}
 	/**
 	 * Hiển thị tên thành phố trong bảng thành phố

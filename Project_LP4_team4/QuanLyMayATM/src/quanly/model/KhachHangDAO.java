@@ -318,6 +318,7 @@ public class KhachHangDAO {
 				khachHang = new KhachHang();
 				khachHang.setMaKH(resultSet.getString("khach_hang.maKhachHang"));
 				khachHang.setTenKH(resultSet.getString("khach_hang.tenKhachHang"));
+				khachHang.setSoCMND(resultSet.getString("khach_hang.soCMND"));
 				khachHang.setDiaChi(resultSet.getString("khach_hang.diaChi"));
 				khachHang.setPhuong(resultSet.getString("phuong.tenPhuong"));
 				khachHang.setQuan(resultSet.getString("quan.tenQuan"));
