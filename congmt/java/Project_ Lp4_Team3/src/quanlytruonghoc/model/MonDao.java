@@ -115,7 +115,8 @@ public class MonDao {
 		String sql = "SELECT * FROM `monhoc` WHERE idmon=? AND monhoc=?";
 		try {
 			statement = conn.prepareStatement(sql);
-			statement.setString(1, monHoc.getTenMonHoc());
+			statement.setString(1, monHoc.getIdMonHoc());
+			statement.setString(2, monHoc.getTenMonHoc());
 			ResultSet result = statement.executeQuery();
 			MonHoc monHoc1;
 			while (result.next()) {
@@ -133,6 +134,11 @@ public class MonDao {
 		return listMonHoc;
 
 	}
+	/**
+	 * Hiển thị tất cả môn học theo tên môn học
+	 * @param monHoc
+	 * @return
+	 */
 	public ArrayList<MonHoc> showTableMon(MonHoc monHoc) {
 		conn = DatabasaUltil.getConnect();
 		ArrayList<MonHoc> listMonHoc = new ArrayList<MonHoc>();
