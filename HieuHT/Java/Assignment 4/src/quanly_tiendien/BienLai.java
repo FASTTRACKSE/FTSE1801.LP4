@@ -1,0 +1,115 @@
+package quanly_tiendien;
+
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+
+
+
+
+public class BienLai {
+     private ArrayList<KhachHang> listKH;
+     
+     public BienLai() {
+    	 listKH = new ArrayList<KhachHang>();
+     }
+     // tính tiền Kh
+     public void TienDienTra() {
+    	 for(int i=0; i<listKH.size(); i++) {
+    		listKH.get(i).setTienDienTra((listKH.get(i).getChiSoMoi()-listKH.get(i).getChiSoCu())*750);
+    	 }
+     }
+     // thêm khách hàng
+     public void addKH(KhachHang kh) {
+    	 listKH.add(kh);
+     }
+     // in danh sách khách hàng.
+     public void printKH() {
+   	 System.out.printf("%20s|%-20s|%20s|%-20s|%20s|%20s%n", "Tên KH","Địa Chỉ",
+   			 "Số Công Tơ","Số Điện Cũ","Số Điện Mới","Tiền điên");
+    	 for(int i = 0; i<listKH.size();  i++) {
+//    		 System.out.println("Ten"+ listKH.get(i).getName());
+//    		 System.out.println("Ten"+ listKH.get(i).getAddress());
+//    		 System.out.println("Ten"+ listKH.get(i).getMaso());
+//    		 System.out.println("Ten"+ listKH.get(i).getChiSoCu());
+//    		 System.out.println("Ten"+ listKH.get(i).getChiSoMoi());
+//    		 System.out.println("Ten"+ listKH.get(i).getTienDienTra());
+   		 System.out.printf("%20s|%-20s|%20s|%-20s|%20s|%20s%n", listKH.get(i).getName(),listKH.get(i).getAddress(),
+        			 listKH.get(i).getMaso(),listKH.get(i).getChiSoCu(),listKH.get(i).getChiSoMoi(),listKH.get(i).getTienDienTra());
+    	 }
+     }
+     public void menu() {
+    	 int chooseMenu;
+			Scanner sc = new Scanner(System.in);
+			BienLai bl = new BienLai();
+			
+			
+		
+			while (true) {
+				
+				System.out.println("* 1 - Thêm thông tin Khách Hàng                                 *");
+				
+				System.out.println("* 2- Hiển thị danh sách Khách Hàng                          *");
+			
+				                                    
+				System.out.println("* 3 - Exit program                                     *");
+				System.out.println("********************************************************");
+		
+				chooseMenu = sc.nextInt();
+		
+				switch (chooseMenu) {
+				case 1:
+					
+					KhachHang kh1 = new KhachHang();
+					
+					System.out.println("Nhập tên KH :");
+					sc.nextLine();
+					String name = sc.nextLine();
+					kh1.setName(name);
+					
+					System.out.println("Nhập địa chỉ KH :");
+					String address = sc.nextLine();
+					kh1.setAddress(address);
+					System.out.println("Nhập điểm số Công tơ :");
+					String maso = sc.nextLine();
+					kh1.setMaso(maso);
+					
+					System.out.println("Nhập chỉ số tiêu dùng cũ :");
+					double ChiSoCu = sc.nextDouble();
+					kh1.setChiSoCu(ChiSoCu);
+					System.out.println("Nhập chỉ số tiêu dùng mới :");
+					double ChiSoMoi = sc.nextDouble();
+					kh1.setChiSoMoi(ChiSoMoi);
+					
+					bl.addKH(kh1);
+					break;
+		
+				
+				case 2:
+					bl.TienDienTra();
+					bl.printKH();
+					break;
+				
+				case 3:
+					sc.close();
+					System.out.println("***Bye bye***");
+					System.exit(0);
+					break;
+		
+				default:
+					System.out.println("\n\n\n\n********Menu not exist feature********");
+					break;
+				}
+		
+				System.out.println("\n\n\n\n\n");
+			}
+		}
+
+     public static void main(String[] args) {
+		BienLai tt = new BienLai();
+		tt.menu();
+	}
+     
+}
+

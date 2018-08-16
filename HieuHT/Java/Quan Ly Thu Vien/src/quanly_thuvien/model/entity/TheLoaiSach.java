@@ -1,12 +1,12 @@
 package quanly_thuvien.model.entity;
 
 public class TheLoaiSach {
-	private int maTheLoaiSach;
-	private String TheLoaiSach;
-
-	public TheLoaiSach() {
-
-	}
+     private int maTheLoaiSach;
+     private String TheLoaiSach;
+     
+     public TheLoaiSach() {
+    	 
+     }
 
 	public TheLoaiSach(int maTheLoaiSach, String theLoaiSach) {
 		super();
@@ -29,5 +29,6 @@ public class TheLoaiSach {
 	public void setTheLoaiSach(String theLoaiSach) {
 		TheLoaiSach = theLoaiSach;
 	}
-
+     
+     
 }

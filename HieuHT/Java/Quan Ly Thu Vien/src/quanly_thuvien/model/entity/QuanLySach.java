@@ -8,9 +8,22 @@ public class QuanLySach {
 	private String TheLoaiSach;
 	private String NamXuatBan;
 	private String soLuong;
+	private String soLuongTonKho;
+
+	
+
+	
+
+	public String getSoLuongTonKho() {
+		return soLuongTonKho;
+	}
+
+	public void setSoLuongTonKho(String soLuongTonKho) {
+		this.soLuongTonKho = soLuongTonKho;
+	}
 
 	public QuanLySach(String maSach, String tenSach, String tacGia, String nhaXuatBan, String theLoaiSach,
-			String namXuatBan, String soLuong) {
+			String namXuatBan, String soLuong, String soLuongTonKho) {
 		super();
 		MaSach = maSach;
 		TenSach = tenSach;
@@ -19,6 +32,7 @@ public class QuanLySach {
 		TheLoaiSach = theLoaiSach;
 		NamXuatBan = namXuatBan;
 		this.soLuong = soLuong;
+		this.soLuongTonKho = soLuongTonKho;
 	}
 
 	public QuanLySach() {
@@ -80,15 +94,6 @@ public class QuanLySach {
 	public void setSoLuong(String soLuong) {
 		this.soLuong = soLuong;
 	}
-
-	public void setMaNhaXuatBan(String string) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void setMaTheLoaiSach(String string) {
-		// TODO Auto-generated method stub
-
-	}
-
+    
+	
 }
