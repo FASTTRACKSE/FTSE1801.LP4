@@ -1,4 +1,4 @@
-package QuanLyTienDien.controler;
+package quanlytiendien.controler;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -43,17 +43,17 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
-import QuanLyTienDien.model.DAO.BaoCaoDAO;
-import QuanLyTienDien.model.DAO.BienLaiDAO;
-import QuanLyTienDien.model.DAO.CongToDienDAO;
-import QuanLyTienDien.model.DAO.KhachHangDAO;
-import QuanLyTienDien.model.entity.BienLai;
-import QuanLyTienDien.model.entity.CongToDien;
-import QuanLyTienDien.model.entity.DateLabelFormatter;
-import QuanLyTienDien.model.entity.KhachHang;
-import QuanLyTienDien.model.entity.Phuong;
-import QuanLyTienDien.model.entity.Quan;
-import QuanLyTienDien.model.entity.TienDien;
+import quanlytiendien.model.DAO.BaoCaoDAO;
+import quanlytiendien.model.DAO.BienLaiDAO;
+import quanlytiendien.model.DAO.CongToDienDAO;
+import quanlytiendien.model.DAO.KhachHangDAO;
+import quanlytiendien.model.entity.BienLai;
+import quanlytiendien.model.entity.CongToDien;
+import quanlytiendien.model.entity.DateLabelFormatter;
+import quanlytiendien.model.entity.KhachHang;
+import quanlytiendien.model.entity.Phuong;
+import quanlytiendien.model.entity.Quan;
+import quanlytiendien.model.entity.TienDien;
 
 /**
  * Chương trình quản lý tiền điện
@@ -440,7 +440,7 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 
 		infoPane1 = new JPanel();
 		infoPane1.setLayout(new GridBagLayout());
-		addItem(infoPane1, new JLabel("Mã biên lai (*)"), 0, 0, 1, 1, GridBagConstraints.EAST);
+		addItem(infoPane1, new JLabel("Mã biên lai"), 0, 0, 1, 1, GridBagConstraints.EAST);
 		addItem(infoPane1, new JLabel("Mã Công Tơ (*):"), 0, 1, 1, 1, GridBagConstraints.EAST);
 		addItem(infoPane1, new JLabel("Ngày nhập (*):"), 0, 2, 1, 1, GridBagConstraints.EAST);
 		addItem(infoPane1, new JLabel("Chu kỳ nhập (*):"), 0, 3, 1, 1, GridBagConstraints.EAST);
@@ -451,6 +451,8 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 		addItem(infoPane1, datePicker, 1, 2, 1, 1, GridBagConstraints.WEST);
 		addItem(infoPane1, txtChuKyNhap, 1, 3, 2, 1, GridBagConstraints.WEST);
 		addItem(infoPane1, txtChiSoCongTo, 1, 4, 2, 1, GridBagConstraints.WEST);
+
+		txtMaBienLai.setEnabled(false);
 
 		list2 = congToDienDAO.getAllCongToDien();
 		for (int i = 0; i < list2.size(); i++) {
@@ -659,6 +661,14 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 		JScrollPane jScrollPane2 = new JScrollPane(jTable2);
 		jScrollPane2.setPreferredSize(new Dimension(1000, 350));
 		tablePane2.add(jScrollPane2);
+
+		ArrayList<KhachHang> listds3 = khachHangDAO.getAllKhachHang();
+		dtm2.setRowCount(0);
+		for (KhachHang khachHang1 : listds3) {
+			dtm2.addRow(new String[] { khachHang1.getMaKhachHang(), khachHang1.getNameKhachHang(),
+					khachHang1.getTenPhuong(), khachHang1.getTenQuan() });
+		}
+
 		card3.setLayout(new BoxLayout(card3, BoxLayout.Y_AXIS));
 		card3.add(tablePane2);
 
@@ -850,6 +860,15 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 		card4.setLayout(new BoxLayout(card4, BoxLayout.Y_AXIS));
 		card4.add(tablePane4);
 
+		ArrayList<KhachHang> listdsbc = tienDien.tienDien();
+		dtm4.setRowCount(0);
+		for (KhachHang khachHang : listdsbc) {
+			dtm4.addRow(new String[] { khachHang.getMaKhachHang(), khachHang.getNameKhachHang(),
+					khachHang.getTenPhuong(), khachHang.getTenQuan(), khachHang.getMaCongTo().getMaCongTo(),
+					"" + khachHang.getBienLai().getChuKyNhap(), khachHang.getBienLai().getChiSoCongTo(),
+					"" + khachHang.getTienDien() });
+		}
+
 		// **************************QUẢN LÝ CÔNG TƠ ĐIỆN******************************
 		JPanel card5 = new JPanel();
 
@@ -979,7 +998,8 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 		ArrayList<CongToDien> list = congToDienDAO.getAllCongToDien();
 		dtm5.setRowCount(0);
 		for (CongToDien congToDien2 : list) {
-			dtm5.addRow(new String[] { congToDien2.getMaCongTo(), congToDien2.getLoaiCongTo(), congToDien2.getNhaSanXuat(), congToDien2.getNamSanXuat()});
+			dtm5.addRow(new String[] { congToDien2.getMaCongTo(), congToDien2.getLoaiCongTo(),
+					congToDien2.getNhaSanXuat(), congToDien2.getNamSanXuat() });
 		}
 		card5.add(tablePane5);
 
@@ -1455,7 +1475,7 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 					txtNhaSanXuat.setText("");
 					txtNamSanXuat.setText("");
 				} else {
-					JOptionPane.showMessageDialog(null, "Mã công tơ hoặc mã khách hàng đã tồn tại");
+					JOptionPane.showMessageDialog(null, "Mã công tơ đã tồn tại");
 				}
 			}
 
@@ -1559,7 +1579,8 @@ public class QuanLyTienDien extends JFrame implements ActionListener {
 					JOptionPane.showMessageDialog(null, "Tìm kiếm thành công");
 					dtm5.setRowCount(0);
 					for (int i = 0; i < myList.size(); i++) {
-						dtm5.addRow(new String[] { myList.get(i).getMaCongTo(), myList.get(i).getLoaiCongTo(), myList.get(i).getNhaSanXuat(), myList.get(i).getNamSanXuat() });
+						dtm5.addRow(new String[] { myList.get(i).getMaCongTo(), myList.get(i).getLoaiCongTo(),
+								myList.get(i).getNhaSanXuat(), myList.get(i).getNamSanXuat() });
 					}
 				}
 			}

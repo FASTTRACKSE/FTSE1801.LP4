@@ -1,4 +1,4 @@
-package QuanLyTienDien.model.entity;
+package quanlytiendien.model.entity;
 
 public class CongToDien {
 	private String maCongTo;
