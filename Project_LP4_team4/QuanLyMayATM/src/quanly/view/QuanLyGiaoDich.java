@@ -47,6 +47,9 @@ public class QuanLyGiaoDich extends JFrame {
 	GiaoDich giaoDich;
 	KhachHang khachHang;
 
+	/**
+	 * Sự kiện cho các button
+	 */
 	ActionListener actionListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
