@@ -1,4 +1,4 @@
-package QuanLyTienDien.model.DAO;
+package quanlytiendien.model.DAO;
 
 import java.sql.Connection;
 import java.sql.SQLException;

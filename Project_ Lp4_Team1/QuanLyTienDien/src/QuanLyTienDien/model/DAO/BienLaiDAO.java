@@ -1,4 +1,4 @@
-package QuanLyTienDien.model.DAO;
+package quanlytiendien.model.DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import QuanLyTienDien.model.entity.BienLai;
-import QuanLyTienDien.model.entity.CongToDien;
+import quanlytiendien.model.entity.BienLai;
+import quanlytiendien.model.entity.CongToDien;
 
 /**
  * Biên Lai DAO

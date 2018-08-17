@@ -1,4 +1,4 @@
-package QuanLyTienDien.model.entity;
+package quanlytiendien.model.entity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
