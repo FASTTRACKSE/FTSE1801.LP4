@@ -318,7 +318,7 @@ public class QuanLy_ThuVien extends JFrame implements ActionListener {
 		 * Buton Trang Chủ.
 		 */
 		panel3 = new JPanel();
-		ImageIcon img1 = new ImageIcon("F:\\thuvien.jpg");
+		ImageIcon img1 = new ImageIcon("D:\\Thuvienanh\\thuvien.png");
 		JLabel lblImg1 = new JLabel(img1);
 		panel3.add(lblImg1);
 
