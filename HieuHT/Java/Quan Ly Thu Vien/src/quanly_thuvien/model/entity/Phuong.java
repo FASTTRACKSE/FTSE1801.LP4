@@ -11,10 +11,11 @@ public class Phuong {
 		this.tenPhuongXa = tenPhuongXa;
 		this.maQuanHuyen = maQuanHuyen;
 	}
-    
+
 	public Phuong() {
-		
+
 	}
+
 	public int getMaPhuongXa() {
 		return maPhuongXa;
 	}
@@ -38,7 +39,8 @@ public class Phuong {
 	public void setMaQuanHuyen(Quan maQuanHuyen) {
 		this.maQuanHuyen = maQuanHuyen;
 	}
-    public String toString() {
-    	return tenPhuongXa;
-    }
+
+	public String toString() {
+		return tenPhuongXa;
+	}
 }

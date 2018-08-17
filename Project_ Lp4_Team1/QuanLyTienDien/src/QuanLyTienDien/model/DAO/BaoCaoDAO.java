@@ -1,4 +1,4 @@
-package QuanLyTienDien.model.DAO;
+package quanlytiendien.model.DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,11 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import QuanLyTienDien.model.entity.BienLai;
-import QuanLyTienDien.model.entity.CongToDien;
-import QuanLyTienDien.model.entity.KhachHang;
-import QuanLyTienDien.model.entity.Phuong;
-import QuanLyTienDien.model.entity.Quan;
+import quanlytiendien.model.entity.BienLai;
+import quanlytiendien.model.entity.CongToDien;
+import quanlytiendien.model.entity.KhachHang;
+import quanlytiendien.model.entity.Phuong;
+import quanlytiendien.model.entity.Quan;
 
 /**
  * Báo Cáo DAO

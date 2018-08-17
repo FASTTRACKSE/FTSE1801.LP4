@@ -1,6 +1,5 @@
 package quanly_thuvien.model.dao;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,15 +13,12 @@ import quanly_thuvien.model.entity.Quan;
 import quanly_thuvien.model.entity.QuanLy_BanDoc;
 import quanly_thuvien.model.entity.ThanhPho;
 
-
-
-
-
 /*
  * lấy dữ liệu từ thành phố
  */
 public class thuvienDao {
 	Connection conn;
+
 	public ArrayList<ThanhPho> getCiTy() {
 		String sql = "SELECT `tenThanhPho` FROM `tinh_thanhpho`";
 		conn = DatabaseUtil.getConnect();
@@ -32,9 +28,9 @@ public class thuvienDao {
 			PreparedStatement statement = conn.prepareStatement(sql);
 			ResultSet result = statement.executeQuery();
 			while (result.next()) {
-			ThanhPho thanhPho = new ThanhPho();
-			thanhPho.setTenThanhPho(result.getString("tenThanhPho"));
-			list.add(thanhPho);
+				ThanhPho thanhPho = new ThanhPho();
+				thanhPho.setTenThanhPho(result.getString("tenThanhPho"));
+				list.add(thanhPho);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -43,7 +39,7 @@ public class thuvienDao {
 		return list;
 
 	}
-	
+
 	/*
 	 * lấy dữ liệu từ Quận.
 	 */
@@ -68,8 +64,10 @@ public class thuvienDao {
 		return list;
 
 	}
+
 	/**
 	 * lấy dữ liệu từ phường
+	 * 
 	 * @param tenQuanHuyen
 	 * @return
 	 */
@@ -94,9 +92,10 @@ public class thuvienDao {
 		return list;
 
 	}
-	
+
 	/**
 	 * in danh sách bạn đọc
+	 * 
 	 * @return
 	 */
 	public ArrayList<QuanLy_BanDoc> getAllBanDoc() {
@@ -107,25 +106,21 @@ public class thuvienDao {
 		try {
 			PreparedStatement statement = conn.prepareStatement(sql);
 			ResultSet result = statement.executeQuery();
-			
+
 			QuanLy_BanDoc quanLyBanDoc;
-			
+
 			while (result.next()) {
 				quanLyBanDoc = new QuanLy_BanDoc();
-				quanLyBanDoc.setMaThanhVien(""+result.getInt("MaThanhVien"));
+				quanLyBanDoc.setMaThanhVien("" + result.getInt("MaThanhVien"));
 				quanLyBanDoc.setTenThanhVien(result.getString("tenThanhVien"));
 				quanLyBanDoc.setSoNha(result.getString("SoNha"));
 				quanLyBanDoc.setSDT(result.getString("SĐT"));
 				quanLyBanDoc.setEmail(result.getString("Email"));
-				
-				
-				
+
 				quanLyBanDoc.setMaThanhPho(result.getString("thanhpho"));
-				
-				
+
 				quanLyBanDoc.setMaQuanHuyen(result.getString("Quan"));
-				
-				
+
 				quanLyBanDoc.setMaPhuongXa(result.getString("Phuong"));
 				list.add(quanLyBanDoc);
 			}
@@ -136,7 +131,7 @@ public class thuvienDao {
 		return list;
 
 	}
-	
+
 	/*
 	 * thêm vào danh sách bạn đọc
 	 */
@@ -165,6 +160,7 @@ public class thuvienDao {
 		DatabaseUtil.disConnect(conn);
 		return statusExecute;
 	}
+
 	public int[] layMaThanhQuanPhuong(String tenPhuongXa) {
 		int[] ma = new int[3];
 		String sql = "SELECT * FROM phuong_xa INNER JOIN quan_huyen ON phuong_xa.maQuanHuyen= quan_huyen.maQuanHuyen INNER JOIN tinh_thanhpho ON quan_huyen.maThanhPho = tinh_thanhpho.maThanhPho WHERE tenPhuongXa = ?";
@@ -176,7 +172,7 @@ public class thuvienDao {
 			ResultSet result = statement.executeQuery();
 
 			while (result.next()) {
-				
+
 				ma[0] = result.getInt("phuong_xa.maPhuongXa");
 				ma[1] = result.getInt("quan_huyen.maQuanHuyen");
 				ma[2] = result.getInt("tinh_thanhpho.maThanhPho");
@@ -187,8 +183,10 @@ public class thuvienDao {
 		DatabaseUtil.disConnect(conn);
 		return ma;
 	}
+
 	/**
 	 * Thay đổi thông tin bạn đọc
+	 * 
 	 * @param quanLyBanDoc
 	 * @return
 	 */
@@ -200,7 +198,7 @@ public class thuvienDao {
 		int maTV = Integer.parseInt(quanLyBanDoc.getMaThanhVien());
 		try {
 			PreparedStatement statement = conn.prepareStatement(sql);
-		
+
 			statement.setString(1, quanLyBanDoc.getTenThanhVien());
 			statement.setString(2, quanLyBanDoc.getSoNha());
 			statement.setInt(3, ma[0]);
@@ -210,10 +208,10 @@ public class thuvienDao {
 			statement.setString(7, quanLyBanDoc.getEmail());
 			statement.setInt(8, maTV);
 			if (statement.executeUpdate() > 0) {
-				JOptionPane.showMessageDialog(null,"Thay đổi thông tin thành công");
+				JOptionPane.showMessageDialog(null, "Thay đổi thông tin thành công");
 				statusExecute = true;
-			}else {
-				JOptionPane.showMessageDialog(null,"Mã thành viên không tồn tại");
+			} else {
+				JOptionPane.showMessageDialog(null, "Mã thành viên không tồn tại");
 			}
 
 		} catch (SQLException e) {
@@ -222,25 +220,27 @@ public class thuvienDao {
 		DatabaseUtil.disConnect(conn);
 		return statusExecute;
 	}
+
 	/**
 	 * Xóa thông tin bạn đọc
+	 * 
 	 * @param quanLyBanDoc
 	 * @return
 	 */
 	public boolean DeleteBanDoc(QuanLy_BanDoc quanLyBanDoc) {
 		boolean statusExecute = false;
-		
+
 		String sql = "DELETE FROM `thanh_vien` WHERE MaThanhVien = ?";
 		conn = DatabaseUtil.getConnect();
 		try {
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setInt(1, Integer.parseInt(quanLyBanDoc.getMaThanhVien()));
-			
+
 			if (statement.executeUpdate() > 0) {
-				JOptionPane.showMessageDialog(null,"Xóa thành công.");
+				JOptionPane.showMessageDialog(null, "Xóa thành công.");
 				statusExecute = true;
-			}else {
-				JOptionPane.showMessageDialog(null,"Mã thành viên không tồn tại");
+			} else {
+				JOptionPane.showMessageDialog(null, "Mã thành viên không tồn tại");
 			}
 
 		} catch (SQLException e) {
@@ -249,8 +249,10 @@ public class thuvienDao {
 		DatabaseUtil.disConnect(conn);
 		return statusExecute;
 	}
+
 	/**
 	 * Tìm kiếm bạn đọc
+	 * 
 	 * @param quanLyBanDoc
 	 * @return
 	 */
@@ -262,13 +264,13 @@ public class thuvienDao {
 
 		try {
 			PreparedStatement statement = conn.prepareStatement(sql);
-			statement.setString(1, "%"+quanLyBanDoc.getTenThanhVien()+"%");
+			statement.setString(1, "%" + quanLyBanDoc.getTenThanhVien() + "%");
 			ResultSet result = statement.executeQuery();
-			
+
 			QuanLy_BanDoc quanLyBanDoc1;
 			while (result.next()) {
 				quanLyBanDoc1 = new QuanLy_BanDoc();
-				quanLyBanDoc1.setMaThanhVien(""+result.getInt("MaThanhVien"));
+				quanLyBanDoc1.setMaThanhVien("" + result.getInt("MaThanhVien"));
 				quanLyBanDoc1.setTenThanhVien(result.getString("tenThanhVien"));
 				quanLyBanDoc1.setSoNha(result.getString("SoNha"));
 				quanLyBanDoc1.setSDT(result.getString("SĐT"));
@@ -283,8 +285,9 @@ public class thuvienDao {
 		}
 		DatabaseUtil.disConnect(conn);
 		return list;
-		
+
 	}
+
 	/**
 	 * Kiểm tra Thành viên
 	 */

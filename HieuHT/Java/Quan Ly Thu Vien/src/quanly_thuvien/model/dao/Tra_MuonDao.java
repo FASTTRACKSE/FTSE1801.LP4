@@ -15,15 +15,17 @@ import quanly_thuvien.model.entity.muon_TraSach;
 
 public class Tra_MuonDao {
 	Connection conn;
-     /**
-      * Giao dịch mượn sách
-      * @param ngay
-      * @param maThanhVien
-      * @param maSach
-      * @param maGD
-      * @return
-      */
-	public boolean MuonSach(String ngay, int maThanhVien, int maSach,int maGD) {
+
+	/**
+	 * Giao dịch mượn sách
+	 * 
+	 * @param ngay
+	 * @param maThanhVien
+	 * @param maSach
+	 * @param maGD
+	 * @return
+	 */
+	public boolean MuonSach(String ngay, int maThanhVien, int maSach, int maGD) {
 		boolean statusExecute = false;
 		String sql = "INSERT INTO `muon_tra_sach`(`MaGiaoDich`,`NgayMuon`, `MaThanhVien`, `MaSach`, `tinhTrang`) VALUES (?,?,?,?,\"Đang Mượn\")";
 		conn = DatabaseUtil.getConnect();
@@ -44,8 +46,10 @@ public class Tra_MuonDao {
 		DatabaseUtil.disConnect(conn);
 		return statusExecute;
 	}
+
 	/**
 	 * Thay đổi số lượng sách sau khi mượn
+	 * 
 	 * @param maSach
 	 * @return
 	 */
@@ -56,7 +60,6 @@ public class Tra_MuonDao {
 		try {
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setInt(1, maSach);
-			
 
 			if (statement.executeUpdate() > 0) {
 				statusExecute = true;
@@ -68,8 +71,10 @@ public class Tra_MuonDao {
 		DatabaseUtil.disConnect(conn);
 		return statusExecute;
 	}
+
 	/**
 	 * Thay đổi số lượng sách sau khi trả
+	 * 
 	 * @param maSach
 	 * @return
 	 */
@@ -80,7 +85,6 @@ public class Tra_MuonDao {
 		try {
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setInt(1, maSach);
-			
 
 			if (statement.executeUpdate() > 0) {
 				statusExecute = true;
@@ -92,8 +96,10 @@ public class Tra_MuonDao {
 		DatabaseUtil.disConnect(conn);
 		return statusExecute;
 	}
+
 	/**
 	 * Giao dịch trả sách
+	 * 
 	 * @param muonTra
 	 * @return
 	 */
@@ -106,7 +112,6 @@ public class Tra_MuonDao {
 			statement.setString(1, muonTra.getNgayTra());
 			statement.setInt(2, Integer.parseInt(muonTra.getMaThanhVien().getMaThanhVien()));
 			statement.setInt(3, Integer.parseInt(muonTra.getMaSach().getMaSach()));
-			
 
 			if (statement.executeUpdate() > 0) {
 				statusExecute = true;
@@ -145,8 +150,6 @@ public class Tra_MuonDao {
 
 		return kiem;
 	}
-	
-	
 
 	/**
 	 * Kiểm tra sách có tồn tại ko
@@ -173,8 +176,6 @@ public class Tra_MuonDao {
 
 		return kiem;
 	}
-	
-	
 
 	/**
 	 * Lấy mã thành viên
@@ -217,8 +218,8 @@ public class Tra_MuonDao {
 			ResultSet result = statement.executeQuery();
 			while (result.next()) {
 				if (tenSach.equals(result.getString("TenSach"))) {
-				maSach = result.getInt("MaSach");
-				
+					maSach = result.getInt("MaSach");
+
 				}
 			}
 		} catch (SQLException e) {
@@ -228,7 +229,6 @@ public class Tra_MuonDao {
 
 		return maSach;
 	}
-	
 
 	/**
 	 * List Mượn Trả Sách.
@@ -251,11 +251,11 @@ public class Tra_MuonDao {
 				muonTra.setNgayMuon(result.getString("NgayMuon"));
 				muonTra.setNgayTra(result.getString("NgayTra"));
 				quanly = new QuanLy_BanDoc();
-				quanly.setMaThanhVien(""+result.getString("MaThanhVien"));
+				quanly.setMaThanhVien("" + result.getString("MaThanhVien"));
 				quanly.setTenThanhVien(result.getString("tenThanhVien"));
 				muonTra.setMaThanhVien(quanly);
 				quanlySach = new QuanLySach();
-				quanlySach.setMaSach(""+result.getString("MaSach"));
+				quanlySach.setMaSach("" + result.getString("MaSach"));
 				quanlySach.setTenSach(result.getString("TenSach"));
 				muonTra.setMaSach(quanlySach);
 				muonTra.setTinhTrang(result.getString("tinhTrang"));
@@ -268,9 +268,9 @@ public class Tra_MuonDao {
 		return listTraMuon;
 
 	}
+
 	/*
-	 * Kiểm tra số lượng
-	 * trong kho
+	 * Kiểm tra số lượng trong kho
 	 * 
 	 * 
 	 */
@@ -283,7 +283,7 @@ public class Tra_MuonDao {
 			statement.setInt(1, MaSach);
 			ResultSet result = statement.executeQuery();
 			while (result.next()) {
-				if (Integer.parseInt(result.getString("soLuongConLai"))>0) {
+				if (Integer.parseInt(result.getString("soLuongConLai")) > 0) {
 					kiem = true;
 				}
 			}
@@ -294,6 +294,7 @@ public class Tra_MuonDao {
 
 		return kiem;
 	}
+
 	/**
 	 * Tìm Kiếm Danh Sách Theo Mã
 	 */
@@ -329,7 +330,7 @@ public class Tra_MuonDao {
 		return listTraMuon;
 
 	}
-	
+
 	/**
 	 * Lấy mã giao dịch
 	 * 
@@ -352,8 +353,10 @@ public class Tra_MuonDao {
 
 		return maGD;
 	}
+
 	/**
 	 * đối chiếu khi mượn sách.
+	 * 
 	 * @param MaThanhVien
 	 * @return
 	 */
@@ -365,7 +368,7 @@ public class Tra_MuonDao {
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setInt(1, MaThanhVien);
 			ResultSet result = statement.executeQuery();
-			
+
 			while (result.next()) {
 				listTraMuon.add(result.getInt("MaSach"));
 			}
@@ -376,5 +379,5 @@ public class Tra_MuonDao {
 		return listTraMuon;
 
 	}
-	
+
 }

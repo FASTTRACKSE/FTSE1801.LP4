@@ -58,6 +58,7 @@ import quanly_thuvien.model.entity.muon_TraSach;
 
 /**
  * phần mềm quản lý thư viện
+ * 
  * @author Phạm Ngọc Thiên AND Hồ Tấn Hiệu
  *
  */
@@ -317,7 +318,7 @@ public class QuanLy_ThuVien extends JFrame implements ActionListener {
 		 * Buton Trang Chủ.
 		 */
 		panel3 = new JPanel();
-		ImageIcon img1 = new ImageIcon("F:\\thuvien.jpg");
+		ImageIcon img1 = new ImageIcon("D:\\Thuvienanh\\thuvien.png");
 		JLabel lblImg1 = new JLabel(img1);
 		panel3.add(lblImg1);
 
@@ -1511,9 +1512,9 @@ public class QuanLy_ThuVien extends JFrame implements ActionListener {
 			QuanLy_BanDoc quanly1 = new QuanLy_BanDoc();
 			quanly1.setMaThanhVien(maThanhVien2.getText());
 			muon.setMaThanhVien(quanly1);
-			if(quanly1.getMaThanhVien().equals("")) {
+			if (quanly1.getMaThanhVien().equals("")) {
 				JOptionPane.showMessageDialog(null, "Vui lòng nhập mã thành viên cần tìm");
-			}else {
+			} else {
 				ArrayList<muon_TraSach> list1 = banDoc.getBaoCaoBanDocByMa(muon);
 				model3.setRowCount(0);
 				for (muon_TraSach ql : list1) {
@@ -1523,7 +1524,7 @@ public class QuanLy_ThuVien extends JFrame implements ActionListener {
 							ql.getMaSach().getTenSach(), ql.getTinhTrang() });
 				}
 			}
-			
+
 		}
 		/**
 		 * Thống kê sách theo tác giả
@@ -1537,7 +1538,7 @@ public class QuanLy_ThuVien extends JFrame implements ActionListener {
 							listBaoCao.get(i).getTacGia(), listBaoCao.get(i).getNhaXuatBan(),
 							listBaoCao.get(i).getTheLoaiSach(), listBaoCao.get(i).getNamXuatBan(),
 							listBaoCao.get(i).getSoLuong(), listBaoCao.get(i).getSoLuongTonKho() });
-				}else {
+				} else {
 					JOptionPane.showMessageDialog(null, "Vui lòng nhập tác giả muốn hiển thị");
 					break;
 				}

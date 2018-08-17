@@ -11,9 +11,9 @@ public class Quan {
 		this.tenQuanHuyen = tenQuanHuyen;
 		this.maThanhPho = maThanhPho;
 	}
-    
+
 	public Quan() {
-		
+
 	}
 
 	public int getMaQuanHhuyen() {
@@ -39,7 +39,8 @@ public class Quan {
 	public void setMaThanhPho(ThanhPho maThanhPho) {
 		this.maThanhPho = maThanhPho;
 	}
-    public String toString() {
-    	return tenQuanHuyen;
-    }
+
+	public String toString() {
+		return tenQuanHuyen;
+	}
 }

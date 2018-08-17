@@ -271,7 +271,7 @@ public class GiaoDichDAO {
 				khachHang = new KhachHang();
 				mayATM = new MayATM();
 
-				khachHang.setSoTheATM(resultSet.getString("soTK"));
+				khachHang.setSoTK(resultSet.getString("soTK"));
 				giaoDich.setThoiGian(resultSet.getString("thoiGian"));
 				giaoDich.setSoTienRut(resultSet.getString("soTienRut"));
 				giaoDich.setSoTienThem(resultSet.getString("soTienThem"));

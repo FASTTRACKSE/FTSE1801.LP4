@@ -1,8 +1,8 @@
-package QuanLyTienDien.model.entity;
+package quanlytiendien.model.entity;
 
 import java.util.ArrayList;
 
-import QuanLyTienDien.model.DAO.BaoCaoDAO;
+import quanlytiendien.model.DAO.BaoCaoDAO;
 
 /**
  * Tính tiền điện lấy dữ liệu từ database

@@ -5,9 +5,10 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 import com.mysql.cj.jdbc.Driver;
- 
+
 /**
  * Phạm Ngọc Thiên 1801014
+ * 
  * @author TGDD
  *
  */
@@ -16,10 +17,12 @@ public class DatabaseUtil {
 	private static final String URL = "jdbc:mysql://localhost/baiduan";
 	private static final String USER = "root";
 	private static final String PASS = "";
-    /**
-     * Kết nối Database
-     * @return
-     */
+
+	/**
+	 * Kết nối Database
+	 * 
+	 * @return
+	 */
 	public static Connection getConnect() {
 		Connection conn = null;
 		try {
@@ -46,5 +49,5 @@ public class DatabaseUtil {
 			System.out.println("lỗi đóng kết nối MYSQL");
 		}
 	}
-	
+
 }

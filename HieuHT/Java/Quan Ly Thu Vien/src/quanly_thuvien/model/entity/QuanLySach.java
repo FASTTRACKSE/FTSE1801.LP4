@@ -10,10 +10,6 @@ public class QuanLySach {
 	private String soLuong;
 	private String soLuongTonKho;
 
-	
-
-	
-
 	public String getSoLuongTonKho() {
 		return soLuongTonKho;
 	}
@@ -94,6 +90,5 @@ public class QuanLySach {
 	public void setSoLuong(String soLuong) {
 		this.soLuong = soLuong;
 	}
-    
-	
+
 }
