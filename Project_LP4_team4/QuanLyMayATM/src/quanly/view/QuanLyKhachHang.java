@@ -156,7 +156,8 @@ public class QuanLyKhachHang extends JFrame {
 							tableModel.setRowCount(0);
 							showTable();
 						} else {
-							JOptionPane.showMessageDialog(null, "Trùng số CMND hoặc trùng email hoặc trùng số điện thoại");
+							JOptionPane.showMessageDialog(null,
+									"Trùng số CMND hoặc trùng email hoặc trùng số điện thoại");
 						}
 					}
 				}
@@ -528,31 +529,26 @@ public class QuanLyKhachHang extends JFrame {
 			JOptionPane.showMessageDialog(null,
 					"Nhập sai định dạng tên khách hàng (Họ và tên phải viết hoa chữ đầu và cách nhau 1 dấu space)");
 			txtTenKH.setText("");
-		}
-		if (!txtDienThoai.getText().matches(pantterSDT)) {
+		} else if (!txtSoCMND.getText().matches(pantterSoCMND)) {
+			kiemTra = false;
+			JOptionPane.showMessageDialog(null, "Nhập sai định dạng số CMND");
+			txtSoCMND.setText("");
+		} else if (!txtDienThoai.getText().matches(pantterSDT)) {
 			kiemTra = false;
 			JOptionPane.showMessageDialog(null,
 					"Nhập sai định dạng số điện thoại khách hàng (Số điện thoại phải số 0 đầu tiên và gồm 10-11 chữ số)");
 			txtDienThoai.setText("");
-		}
-		if (!txtEmail.getText().matches(pantterEmail)) {
+		} else if (!txtEmail.getText().matches(pantterEmail)) {
 			kiemTra = false;
 			JOptionPane.showMessageDialog(null, "Nhập sai định dạng Email");
 			txtEmail.setText("");
-		}
-		if (!txtSoCMND.getText().matches(pantterSoCMND)) {
-			kiemTra = false;
-			JOptionPane.showMessageDialog(null, "Nhập sai định dạng số CMND");
-			txtSoCMND.setText("");
-		}
-		if (txtSoTK.getText().equals("")) {
+		} else if (txtSoTK.getText().equals("")) {
 			kiemTra = false;
 			JOptionPane.showMessageDialog(null, "Nhập sai số thẻ ATM");
-		}
-		if (!txtSoTien.getText().matches(pantterSoTien)) {
+		} else if (!txtSoTien.getText().matches(pantterSoTien)) {
 			kiemTra = false;
 			JOptionPane.showMessageDialog(null,
-					"Nhập sai định dạng số tiền (Số tiền phải bắt đầu từ 1-10 và phải là bội số của 10000 và không quá 99990000)");
+					"Nhập sai định dạng số tiền (Số tiền phải bắt đầu từ 1-10 và phải là bội số của 10,000 và phải nhỏ hơn 100,000,000)");
 			txtSoTien.setText("");
 		}
 
