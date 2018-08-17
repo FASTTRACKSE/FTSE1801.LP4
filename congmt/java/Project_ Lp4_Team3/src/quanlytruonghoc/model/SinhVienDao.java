@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import quanlytruonghoc.entity.Lop;
-import quanlytruonghoc.entity.MonHoc;
 import quanlytruonghoc.entity.Phuong;
 import quanlytruonghoc.entity.SinhVien;
 import quanlytruonghoc.model.DatabasaUltil;
@@ -236,7 +234,14 @@ public class SinhVienDao {
 	public ArrayList<SinhVien> showTableSinhVien(SinhVien sinhVien) {
 		conn = DatabasaUltil.getConnect();
 		ArrayList<SinhVien> listSinhVien = new ArrayList<SinhVien>();
-		String sql = "SELECT * FROM `sinhvien` WHERE idsv=?";
+		String sql = "SELECT sinhvien.*, xaphuongthitran.name, quanhuyen.name, tinhthanhpho.name\r\n" + 
+				"FROM `sinhvien`\r\n" + 
+				"INNER JOIN xaphuongthitran\r\n" + 
+				"ON sinhvien.xaid=xaphuongthitran.xaid\r\n" + 
+				"INNER JOIN quanhuyen\r\n" + 
+				"ON xaphuongthitran.maqh=quanhuyen.maqh\r\n" + 
+				"INNER JOIN tinhthanhpho\r\n" + 
+				"ON quanhuyen.matp=tinhthanhpho.matp WHERE idsv=?";
 		try {
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setString(1, sinhVien.getIdSinhVien());
