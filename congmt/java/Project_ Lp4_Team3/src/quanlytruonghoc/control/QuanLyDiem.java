@@ -194,20 +194,12 @@ public class QuanLyDiem extends JFrame implements ActionListener {
 		
 		conn.setLayout(new BoxLayout(conn, BoxLayout.Y_AXIS));
 		displayAllDiem();
-
 	}
-
-
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
 		// Thực hiện lệnh gọi đến nút button
-		if (e.getSource() == xemDiemButton) {
-
-			diemDtm.setRowCount(0);
-			displayAllDiem();
-		}
 		if (e.getSource() == themDiemButton) {// Nút thêm môn học
 
 			List<Diem> listDiem = new ArrayList<>();
@@ -225,12 +217,12 @@ public class QuanLyDiem extends JFrame implements ActionListener {
 
 			// get id sv in combobox
 			String idSvText = maSinhViencb.getSelectedItem().toString();
-			List<Diem> listDiemDB = diemDao.showTableDiemTimKiem(idSvText);
+			List<Diem> listDiemKT = diemDao.showTableDiemTimKiem(idSvText);// Kiem tra xem sinh vien trong danh sach da co diem hay chua
 			
 			// Bắt lỗi các trường hợp trong nhập văn bản
 			if (idSvText.equals("Nhấp chọn")) {
 				JOptionPane.showMessageDialog(null, "Mời bạn chọn mã sinh viên !");
-			} else if (listDiemDB.size() > 0) {
+			} else if (listDiemKT.size() > 0) {
 				JOptionPane.showMessageDialog(null, "Sinh viên này đã có điểm !");
 			} else if (javaText.length() == 0) {
 				JOptionPane.showMessageDialog(null, "Điểm Java không đươc để trống !");

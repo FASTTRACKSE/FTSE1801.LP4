@@ -20,7 +20,6 @@ public class DiemDao {
 	private Connection conn;
 	private PreparedStatement statement;
 	
-
 	/**
 	 * Them diem theo idsv va idmonhoc
 	 * 

@@ -188,21 +188,21 @@ public class QuanLyMonHoc extends JFrame implements ActionListener {
 		monHoc.setTenMonHoc(tenMonHoc1);
 		monHoc.setTinChi(tinChi1);
 		monHoc.setThoiLuongHoc(thoiLuong1);
-		List<MonHoc> listMonHocDB = monDao.showTableMonTimKiem(monHoc);
-		List<MonHoc> listMonHocDB1 = monDao.showTableMon(monHoc);
+		List<MonHoc> listMonHocKT = monDao.showTableMonTimKiem(monHoc);
+		List<MonHoc> listMonHocKT1 = monDao.showTableMon(monHoc);
 		// Thực hiện lệnh gọi đến nút button thêm , sửa , xóa, tìm kiếm đến trang quản lý môn học
 
 		if (e.getSource() == themMonButton) {// Nút thêm môn học
 			// Bắt lỗi các trường hợp trong nhập văn bản
 			if (idMonHoc1.length() == 0) {
 				JOptionPane.showMessageDialog(null, "Mã môn học không đươc để trống !");
-			} else if (listMonHocDB.size()>0) {
+			} else if (listMonHocKT.size()>0) {
 				JOptionPane.showMessageDialog(null, "Mã môn học này đã có !");
 			}else if (!idMonHoc1.matches("\\w{5}")) {
 				JOptionPane.showMessageDialog(null, "Mã môn học không được nhập đúng.\n Vd: MH001 !");
 			} else if (tenMonHoc1.length() == 0) {
 				JOptionPane.showMessageDialog(null, "Tên môn học không đươc để trống !");
-			} else if (listMonHocDB1.size()>0) {
+			} else if (listMonHocKT1.size()>0) {
 				JOptionPane.showMessageDialog(null, "Tên môn học này đã có !");
 			} else if (tinChi1.length() == 0) {
 				JOptionPane.showMessageDialog(null, "Tín chỉ không được để trống !");
@@ -270,16 +270,7 @@ public class QuanLyMonHoc extends JFrame implements ActionListener {
 			} else if (output == JOptionPane.NO_OPTION) {
 				JOptionPane.showMessageDialog(null, " Mời bạn chọn lại!!");
 			}
-		} else if (e.getSource() == timkiemMonButton) { // Nút tìm kiếm môn học
-			monDtm.setRowCount(0);
-			listMonHoc = new ArrayList<MonHoc>();
-			listMonHoc = monDao.getAllMonHoc();
-			for (MonHoc monHoc1 : listMonHoc) {
-				monDtm.addRow(new String[] { monHoc1.getIdMonHoc(), monHoc1.getTenMonHoc(), monHoc1.getTinChi(),
-						monHoc1.getThoiLuongHoc() });
-			}
-
-		}  else { // Nút làm mới
+		}else { // Nút làm mới
 			maMonField.setText("");
 			tenMonField.setText("");
 			soTinChiField.setText("");

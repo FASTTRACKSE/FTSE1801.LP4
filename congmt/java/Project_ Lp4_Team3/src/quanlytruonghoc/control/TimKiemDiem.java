@@ -40,7 +40,6 @@ import quanlytruonghoc.model.DiemDao;
 public class TimKiemDiem extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	ArrayList<String> listMaSv1;
-	String theoNam, theoLop;
 	Font font;
 	DiemDao diemDao;
 	JButton quayLaiDiemBt, timKiemDiemBt;
@@ -207,7 +206,6 @@ public class TimKiemDiem extends JFrame implements ActionListener {
 			}
 		}
 	}
-
 
 	// Hiển thị điểm của 1 sinh viên
 	public void displayAllDiem1Sv() {

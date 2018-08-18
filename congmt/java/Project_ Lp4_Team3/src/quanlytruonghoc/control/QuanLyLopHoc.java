@@ -43,16 +43,15 @@ import quanlytruonghoc.model.LopDao;
 public class QuanLyLopHoc extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	CardLayout card;
-	ArrayList<String> listNamHoc, listNamHoc1, listTenLop, listMaLop, listTenMon, listTenMonHoc, listMaSv, listMaSv1;
-	String theoNam, theoLop, maLop, theoMaLop;
+	ArrayList<String> listNamHoc, listTenLop;
+	String theoNam, theoLop;
 	Font font;
-	Border border;
 	LopDao lopDao;
-	ArrayList<Lop> listSvTheoLop, listLop, listDsLop;
+	ArrayList<Lop> listSvTheoLop, listLop;
 	JTextField maLopField, tenLopField, namHocField;
 	JButton themLopButton, suaLopButton, xoaLopButton, xemDsButton, xemDsButton1, lamMoiLopButton, timkiemLopButton;
 	JTable lopTable, lopTable1;
-	JPanel lopBang,lopSv, lopMenu, lopNhap, lopLop;
+	JPanel lopBang,lopDSSV, lopMenu, lopNhap, lopDsLop;
 	DefaultTableModel lopDtm, lopDtm1;
 	JComboBox<String> locTheoNam, locTheoLop;
 	Container conn;
@@ -70,9 +69,9 @@ public class QuanLyLopHoc extends JFrame implements ActionListener {
 		lopLabel.setAlignmentX(CENTER_ALIGNMENT);
 
 		// Phần nhập bảng danh sách sinh viên
-		JPanel lopKhu2 = new JPanel();
+		JPanel lopPanel = new JPanel();
 		JPanel lopXemDS = new JPanel();
-		lopKhu2.add(lopXemDS);
+		lopPanel.add(lopXemDS);
 		lopXemDS.setLayout(new BoxLayout(lopXemDS, BoxLayout.Y_AXIS));
 		JLabel label = new JLabel("Danh sách sinh viên");
 		label.setAlignmentX(CENTER_ALIGNMENT);
@@ -151,7 +150,7 @@ public class QuanLyLopHoc extends JFrame implements ActionListener {
 
 		// Tạo phần nhập cho bảng quản lý lớp hoc(bảng 2)
 		lopNhap = new JPanel();
-		lopKhu2.add(lopNhap);
+		lopPanel.add(lopNhap);
 		lopNhap.setLayout(new BoxLayout(lopNhap, BoxLayout.Y_AXIS));
 		JLabel tieuDeLop = new JLabel("Quản lý lớp học");
 		tieuDeLop.setAlignmentX(CENTER_ALIGNMENT);
@@ -226,7 +225,7 @@ public class QuanLyLopHoc extends JFrame implements ActionListener {
 		// Tạo bảng table cho phần hiển thị cho phần xem danh sách sinh viên của trang
 		// quản lý lớp học
 		lopBang = new JPanel();
-		lopSv = new JPanel();
+		lopDSSV = new JPanel();
 
 		lopDtm = new DefaultTableModel();
 		lopDtm.addColumn("Mã lớp");
@@ -245,11 +244,11 @@ public class QuanLyLopHoc extends JFrame implements ActionListener {
 
 		Border borderLop = BorderFactory.createLineBorder(Color.RED, 2);
 		TitledBorder borderTitleLop = BorderFactory.createTitledBorder(borderLop, "Danh sách sinh viên");
-		lopSv.setBorder(borderTitleLop);
-		lopSv.add(scLop);
+		lopDSSV.setBorder(borderTitleLop);
+		lopDSSV.add(scLop);
 
 		// Tạo bảng table cho phần hiển thị lớp học của trang quản lý lớp học
-		lopLop = new JPanel();
+		lopDsLop = new JPanel();
 		lopDtm1 = new DefaultTableModel();
 		lopDtm1.addColumn("Mã lớp");
 		lopDtm1.addColumn("Tên lớp");
@@ -283,17 +282,17 @@ public class QuanLyLopHoc extends JFrame implements ActionListener {
 
 		Border borderLopLop = BorderFactory.createLineBorder(Color.RED, 2);
 		TitledBorder titledLopLop = BorderFactory.createTitledBorder(borderLopLop, "Danh sách lớp học");
-		lopLop.setBorder(titledLopLop);
-		lopLop.add(scLop1);
+		lopDsLop.setBorder(titledLopLop);
+		lopDsLop.add(scLop1);
 
 		card = new CardLayout();
 		lopBang.setLayout(card);
-		lopBang.add(lopSv, "lopSv");
-		lopBang.add(lopLop, "lopLop");
+		lopBang.add(lopDSSV, "lopSv");
+		lopBang.add(lopDsLop, "lopLop");
 
 		conn = getContentPane();
 		conn.add(lopLabel);
-		conn.add(lopKhu2);
+		conn.add(lopPanel);
 		conn.add(lopBang);
 		
 		conn.setLayout(new BoxLayout(conn, BoxLayout.Y_AXIS));
