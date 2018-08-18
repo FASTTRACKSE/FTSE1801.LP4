@@ -18,7 +18,7 @@ public class GiaoDichDAO {
 	/**
 	 * Thêm thông tin giao dịch
 	 * @param soTienRut
-	 * @param soTheATM
+	 * @param soTK
 	 * @param mayATM
 	 * @param maKH
 	 * @return
@@ -54,7 +54,7 @@ public class GiaoDichDAO {
 	/**
 	 * Thêm thông tin giao dịch khi thêm tiền tại ngân hàng
 	 * @param soTienThem
-	 * @param soTheATM
+	 * @param soTK
 	 * @param maKH
 	 * @return
 	 */
@@ -89,7 +89,7 @@ public class GiaoDichDAO {
 	/**
 	 * Thêm thông tin giao dịch khi thêm tiền rút tiền tại ngân hàng
 	 * @param soTienRut
-	 * @param soTheATM
+	 * @param soTK
 	 * @param maKH
 	 * @return
 	 */
@@ -271,7 +271,7 @@ public class GiaoDichDAO {
 				khachHang = new KhachHang();
 				mayATM = new MayATM();
 
-				khachHang.setSoTheATM(resultSet.getString("soTK"));
+				khachHang.setSoTK(resultSet.getString("soTK"));
 				giaoDich.setThoiGian(resultSet.getString("thoiGian"));
 				giaoDich.setSoTienRut(resultSet.getString("soTienRut"));
 				giaoDich.setSoTienThem(resultSet.getString("soTienThem"));

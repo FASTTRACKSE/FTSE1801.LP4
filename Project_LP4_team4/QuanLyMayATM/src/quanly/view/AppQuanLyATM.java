@@ -83,7 +83,8 @@ public class AppQuanLyATM extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 				mayATMView = new MayATMView(e.getActionCommand());
-				mayATMView.mayATM();
+				MayAtmDAO mayAtmDAO = new MayAtmDAO();
+				mayATMView.mayATM(mayAtmDAO.showMayATMMaMay(e.getActionCommand()));
 		}
 	};
 

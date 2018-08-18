@@ -29,6 +29,7 @@ import javax.swing.table.DefaultTableModel;
 
 import quanly.entity.GiaoDich;
 import quanly.entity.KhachHang;
+import quanly.entity.MayATM;
 import quanly.model.DangNhapDAO;
 import quanly.model.GiaoDichDAO;
 import quanly.model.KhachHangDAO;
@@ -39,13 +40,14 @@ public class MayATMView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	JPanel pnCenter, pnTitle, pnNhap, pnDangNhap, pnMayATM, pnThongTin, pnRutTien, pnDoiMaPin, pnThoat;
+	JPanel pnCenter, pnTitle, pnNhap, pnDangNhap, pnMayATM, pnThongTin, pnRutTien, pnDoiMaPin, pnThoat, pnThongTinATM;
 	JPanel jPanel, pnAllCenter, pnMenu, pnSouth, pnButton, cardLayout;
 	JPanel pnLabel1, pnLabel2, pnThongTinKH, pnLabel3, pnButton2, pnLabel4, pnButton3, pnButton4;
 	JLabel title, title2, logoname, lbAccount, lbPin, lpPinCu, lpPinMoi, lpPinMoi2;
-	JLabel lbMaKH, lbTen, lbDiaChi, lbQuan, lbPhuong, lbSoDT, lbEmail, lbSoThe, lbSoTK, lbSoTien, lbRutTien;
-	JTextField txtSoTheATM, txtPin, txtRutTien, txtPinCu, txtPinMoi,txtPinMoi2;
-	JTextField maKH, ten, diaChi, quan, phuong, soDT, email, soThe, soTK, soTien;
+	JLabel lbSoCMND, lbTen, lbDiaChi, lbQuan, lbPhuong, lbSoDT, lbEmail, lbSoThe, lbSoTK, lbSoTien, lbRutTien,
+			lbDiaChi2, lbQuan2, lbPhuong2;
+	JTextField txtSoTheATM, txtPin, txtRutTien, txtPinCu, txtPinMoi, txtPinMoi2;
+	JTextField soCMND, ten, diaChi, quan, phuong, soDT, email, soThe, soTK, soTien, txtDiaChi, txtQuan, txtPhuong;
 	Border border;
 	TitledBorder titledBorder;
 	JButton btDangNhap, btThongTin, btRutTien, btThoatGD, btRut, btDoiPin, btXacNhan, btHuy;
@@ -63,7 +65,8 @@ public class MayATMView extends JFrame {
 	TheAtmDAO theAtmDAO;
 	KhachHang khachHang;
 	GiaoDich giaoDich;
-	
+	MayATM mayATM;
+
 	/**
 	 * Sự kiện cho các button
 	 */
@@ -77,9 +80,10 @@ public class MayATMView extends JFrame {
 				dangNhapDAO = new DangNhapDAO();
 				if (dangNhapDAO.dangNhap(sotheATM, txtPin.getText())) {
 					KhachHang khachHang1 = khachHangDAO.showKhachHangTheoSoThe(sotheATM);
+					
 					MayATMView mayATM = new MayATMView(maMayATM);
 					mayATM.display();
-					mayATM.thongTinKH(khachHang1);
+					mayATM.thongTinKH(khachHang1, mayAtmDAO.showMayATMMaMay(maMayATM));
 					maPinCu = txtPin.getText();
 					txtSoTheATM.setText("");
 					txtPin.setText("");
@@ -117,8 +121,9 @@ public class MayATMView extends JFrame {
 								giaoDich = giaoDichDAO.layMaGiaoDich();
 								khachHang = khachHangDAO.showKhachHangTheoSoThe(sotheATM);
 								soTien.setText(khachHang.getSoTienTrongTK());
-								tableModel.addRow(new String[] { ("" + giaoDich.getMaGiaoDich()),
-										giaoDich.getThoiGian(), giaoDich.getSoTienRut(), khachHang.getSoTienTrongTK() });
+								tableModel
+										.addRow(new String[] { ("" + giaoDich.getMaGiaoDich()), giaoDich.getThoiGian(),
+												giaoDich.getSoTienRut(), khachHang.getSoTienTrongTK() });
 							} else {
 								JOptionPane.showMessageDialog(null, "Số tiền trong thẻ không đủ để rút");
 							}
@@ -126,40 +131,40 @@ public class MayATMView extends JFrame {
 							JOptionPane.showMessageDialog(null, "Số tiền trong máy không đủ để rút");
 						}
 					} else {
-						JOptionPane.showMessageDialog(null, "Số tiền phải là bội số của 10k và không quá 9990000");
+						JOptionPane.showMessageDialog(null, "Số tiền phải là bội số của 10,000 và không quá 5,000,000");
 					}
 				} else if (output == JOptionPane.NO_OPTION) {
 				}
 
 			}
-			
+
 			if (e.getSource() == btHuy) {
 				txtPinCu.setText("");
 				txtPinMoi.setText("");
 				txtPinMoi2.setText("");
 			}
-			
-			if (e.getSource()==btXacNhan) {
+
+			if (e.getSource() == btXacNhan) {
 				if (kiemTraDoiMatKhau()) {
-					if (txtPinCu.getText().equals(maPinCu)&& !txtPinMoi.getText().equals(maPinCu)) {
+					if (txtPinCu.getText().equals(maPinCu) && !txtPinMoi.getText().equals(maPinCu)) {
 						if (txtPinMoi.getText().equals(txtPinMoi2.getText())) {
 							if (theAtmDAO.doiMaPin(txtPinMoi.getText(), sotheATM)) {
 								JOptionPane.showMessageDialog(null, "Đổi mã pin thành công");
 								txtPinCu.setText("");
 								txtPinMoi.setText("");
 								txtPinMoi2.setText("");
-							}else {
+							} else {
 								JOptionPane.showMessageDialog(null, "Đổi mã pin thất bại");
 							}
-						}else {
+						} else {
 							JOptionPane.showMessageDialog(null, "Mã pin mới phải nhập giống nhau");
 						}
-					}else {
+					} else {
 						JOptionPane.showMessageDialog(null, "Nhập sai mã pin hoặc Pin mới trùng với Pin cũ");
 					}
 				}
 			}
-			
+
 		}
 	};
 
@@ -173,28 +178,54 @@ public class MayATMView extends JFrame {
 		mayAtmDAO = new MayAtmDAO();
 		khachHang = new KhachHang();
 		giaoDich = new GiaoDich();
+		mayATM = new MayATM();
 	}
+
 	/**
 	 * Phần đăng nhập máy ATM
 	 */
-	public void mayATM() {
+	public void mayATM(MayATM mayATM) {
 		conn = getContentPane();
 		conn.setLayout(new BorderLayout());
-		
-		//Phần tiêu đề
+
+		// Phần tiêu đề
 		pnTitle = new JPanel();
+		pnTitle.setLayout(new GridLayout(2, 1));
 		title = new JLabel("TP-BANK MÁY ATM");
+		title.setHorizontalAlignment(JLabel.CENTER);
 		title.setFont(new Font("Times New Roman", Font.BOLD, 45));
 		title.setForeground(Color.RED);
 		pnTitle.add(title);
+		
+		pnThongTinATM = new JPanel();
+		lbDiaChi2 = new JLabel("Địa chỉ");
+		lbPhuong2 = new JLabel("Phường");
+		lbQuan2 = new JLabel("Quận");
+		txtDiaChi = new JTextField(15);
+		txtDiaChi.setEditable(false);
+		txtPhuong = new JTextField(15);
+		txtPhuong.setEditable(false);
+		txtQuan = new JTextField(15);
+		txtQuan.setEditable(false);
+		pnThongTinATM.add(lbDiaChi2);
+		pnThongTinATM.add(txtDiaChi);
+		pnThongTinATM.add(lbPhuong2);
+		pnThongTinATM.add(txtPhuong);
+		pnThongTinATM.add(lbQuan2);
+		pnThongTinATM.add(txtQuan);
+		pnTitle.add(pnThongTinATM);
+		
+		txtDiaChi.setText(mayATM.getViTri());
+		txtPhuong.setText(mayATM.getPhuong());
+		txtQuan.setText(mayATM.getQuan());
 
-		//Phần thân chương trình
+		// Phần thân chương trình
 		pnCenter = new JPanel();
 		border = BorderFactory.createLineBorder(Color.BLUE, 3, true);
 		titledBorder = new TitledBorder(border, "Program");
 		pnCenter.setBorder(titledBorder);
 
-		//Phần đăng nhập
+		// Phần đăng nhập
 		pnMayATM = new JPanel();
 		pnMayATM.setLayout(new BoxLayout(pnMayATM, BoxLayout.Y_AXIS));
 		pnDangNhap = new JPanel();
@@ -216,32 +247,54 @@ public class MayATMView extends JFrame {
 		conn.add(pnTitle, "North");
 		conn.add(pnCenter, "Center");
 	}
+
 	/**
-	 * Phần Thông tin khách hàng và rút tiền 
+	 * Phần Thông tin khách hàng và rút tiền
+	 * 
 	 * @param khachHang
 	 */
-	public void thongTinKH(KhachHang khachHang) {
+	public void thongTinKH(KhachHang khachHang, MayATM mayATM) {
 
 		conn = getContentPane();
 		conn.setLayout(new BorderLayout());
 		pnTitle = new JPanel();
+		pnTitle.setLayout(new GridLayout(2, 1));
 		pnMenu = new JPanel();
 		pnAllCenter = new JPanel();
 		pnSouth = new JPanel();
 		pnCenter = new JPanel();
 
-		pnTitle.setBackground(Color.LIGHT_GRAY);
 		pnMenu.setBackground(Color.LIGHT_GRAY);
-		pnAllCenter.setBackground(Color.LIGHT_GRAY);
-		pnSouth.setBackground(Color.LIGHT_GRAY);
-		pnCenter.setBackground(Color.LIGHT_GRAY);
 
 		// Phần tiêu đề
 		logoname = new JLabel("TP-BANK MÁY ATM");
 		logoname.setFont(new Font("Times New Roman", Font.BOLD, 45));
-		logoname.setForeground(Color.BLUE);
+		logoname.setHorizontalAlignment(JLabel.CENTER);
+		logoname.setForeground(Color.RED);
 		pnTitle.add(logoname);
+		
+		pnThongTinATM = new JPanel();
+		lbDiaChi2 = new JLabel("Địa chỉ");
+		lbPhuong2 = new JLabel("Phường");
+		lbQuan2 = new JLabel("Quận");
+		txtDiaChi = new JTextField(15);
+		txtDiaChi.setEditable(false);
+		txtPhuong = new JTextField(15);
+		txtPhuong.setEditable(false);
+		txtQuan = new JTextField(15);
+		txtQuan.setEditable(false);
+		pnThongTinATM.add(lbDiaChi2);
+		pnThongTinATM.add(txtDiaChi);
+		pnThongTinATM.add(lbPhuong2);
+		pnThongTinATM.add(txtPhuong);
+		pnThongTinATM.add(lbQuan2);
+		pnThongTinATM.add(txtQuan);
+		pnTitle.add(pnThongTinATM);
 		conn.add(pnTitle, "North");
+		
+		txtDiaChi.setText(mayATM.getViTri());
+		txtPhuong.setText(mayATM.getPhuong());
+		txtQuan.setText(mayATM.getQuan());
 
 		// Phần Menu
 		pnButton = new JPanel();
@@ -270,14 +323,14 @@ public class MayATMView extends JFrame {
 		pnThongTin.setLayout(new GridLayout(1, 2));
 		pnLabel1 = new JPanel();
 		pnLabel1.setLayout(new GridBagLayout());
-		lbMaKH = new JLabel("Mã khách hàng");
+		lbSoCMND = new JLabel("Số CMND");
 		lbTen = new JLabel("Họ tên khách hàng");
 		lbDiaChi = new JLabel("Địa chỉ nhà");
 		lbQuan = new JLabel("Quận");
 		lbPhuong = new JLabel("Phường");
 
-		maKH = new JTextField(15);
-		maKH.setEditable(false);
+		soCMND = new JTextField(15);
+		soCMND.setEditable(false);
 		ten = new JTextField(15);
 		ten.setEditable(false);
 		diaChi = new JTextField(15);
@@ -287,20 +340,20 @@ public class MayATMView extends JFrame {
 		phuong = new JTextField(15);
 		phuong.setEditable(false);
 
-		maKH.setText(khachHang.getMaKH());
+		soCMND.setText(khachHang.getSoCMND());
 		ten.setText(khachHang.getTenKH());
 		diaChi.setText(khachHang.getDiaChi());
 		phuong.setText(khachHang.getPhuong());
 		quan.setText(khachHang.getQuan());
 
-		addItem(pnLabel1, lbMaKH, 0, 0, 1, 1, GridBagConstraints.EAST);
-		addItem(pnLabel1, lbTen, 0, 1, 1, 1, GridBagConstraints.EAST);
+		addItem(pnLabel1, lbTen, 0, 0, 1, 1, GridBagConstraints.EAST);
+		addItem(pnLabel1, lbSoCMND, 0, 1, 1, 1, GridBagConstraints.EAST);
 		addItem(pnLabel1, lbDiaChi, 0, 2, 1, 1, GridBagConstraints.EAST);
 		addItem(pnLabel1, lbQuan, 0, 3, 1, 1, GridBagConstraints.EAST);
 		addItem(pnLabel1, lbPhuong, 0, 4, 1, 1, GridBagConstraints.EAST);
 
-		addItem(pnLabel1, maKH, 1, 0, 2, 1, GridBagConstraints.WEST);
-		addItem(pnLabel1, ten, 1, 1, 2, 1, GridBagConstraints.WEST);
+		addItem(pnLabel1, ten, 1, 0, 2, 1, GridBagConstraints.WEST);
+		addItem(pnLabel1, soCMND, 1, 1, 2, 1, GridBagConstraints.WEST);
 		addItem(pnLabel1, diaChi, 1, 2, 2, 1, GridBagConstraints.WEST);
 		addItem(pnLabel1, quan, 1, 3, 2, 1, GridBagConstraints.WEST);
 		addItem(pnLabel1, phuong, 1, 4, 2, 1, GridBagConstraints.WEST);
@@ -368,7 +421,7 @@ public class MayATMView extends JFrame {
 		tableModel.addColumn("Số tiền còn lại");
 
 		table = new JTable(tableModel);
-//		table.getTableHeader().setReorderingAllowed(false);
+		// table.getTableHeader().setReorderingAllowed(false);
 		table.setDefaultEditor(Object.class, null);
 
 		JScrollPane jScrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
@@ -385,11 +438,11 @@ public class MayATMView extends JFrame {
 		lpPinCu = new JLabel("Mã Pin cũ");
 		lpPinMoi = new JLabel("Mã Pin mới");
 		lpPinMoi2 = new JLabel("Nhập lại mã Pin mới");
-		
+
 		txtPinCu = new JTextField(10);
 		txtPinMoi = new JTextField(10);
 		txtPinMoi2 = new JTextField(10);
-		
+
 		addItem(pnLabel4, lpPinCu, 0, 0, 1, 1, GridBagConstraints.EAST);
 		addItem(pnLabel4, lpPinMoi, 0, 1, 1, 1, GridBagConstraints.EAST);
 		addItem(pnLabel4, lpPinMoi2, 0, 2, 1, 1, GridBagConstraints.EAST);
@@ -397,7 +450,7 @@ public class MayATMView extends JFrame {
 		addItem(pnLabel4, txtPinCu, 1, 0, 2, 1, GridBagConstraints.WEST);
 		addItem(pnLabel4, txtPinMoi, 1, 1, 2, 1, GridBagConstraints.WEST);
 		addItem(pnLabel4, txtPinMoi2, 1, 2, 2, 1, GridBagConstraints.WEST);
-		
+
 		pnButton4 = new JPanel();
 		btXacNhan = new JButton("Xác nhận");
 		btHuy = new JButton("Hủy");
@@ -405,10 +458,10 @@ public class MayATMView extends JFrame {
 		btHuy.addActionListener(actionListener);
 		pnButton4.add(btXacNhan);
 		pnButton4.add(btHuy);
-		
+
 		pnDoiMaPin.add(pnLabel4);
 		pnDoiMaPin.add(pnButton4);
-		
+
 		// Phần Cardlayout
 		card = new CardLayout();
 		cardLayout = new JPanel();
@@ -446,27 +499,30 @@ public class MayATMView extends JFrame {
 		gc.fill = GridBagConstraints.NONE;
 		p.add(c, gc);
 	}
-	
+
 	public void display() {
 		setSize(800, 750);
 		setVisible(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
+
 	/**
 	 * Kiểm tra nhập số tiền cần rút
+	 * 
 	 * @return
 	 */
 	public boolean kiemTraSoTien() {
-		boolean kiemTra = true;
+		boolean kiemTra = false;
 		String pantter = "[1-9][0-9]{0,2}0000";
-		if (!txtRutTien.getText().matches(pantter)) {
-			kiemTra = false;
+		if (txtRutTien.getText().matches(pantter)&&(Integer.parseInt(txtRutTien.getText()) <= 5000000)) {
+			kiemTra = true;
 		}
 		return kiemTra;
 	}
-	
+
 	/**
 	 * Kiểm tra nhập thông tin đổi mật khẩu
+	 * 
 	 * @return
 	 */
 	public boolean kiemTraDoiMatKhau() {
@@ -484,7 +540,7 @@ public class MayATMView extends JFrame {
 			kiemTra = false;
 			txtPinMoi2.setText("");
 		}
-		if (kiemTra==false) {
+		if (kiemTra == false) {
 			JOptionPane.showMessageDialog(null, "Mã pin nhập số và có 6 kí tự");
 		}
 		return kiemTra;

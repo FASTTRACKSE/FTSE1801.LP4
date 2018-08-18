@@ -60,10 +60,10 @@ public class QuanLyTruongHoc extends JFrame implements ActionListener{
 		JLabel tieuDe = new JLabel("Chương trình quản lý trường học");
 		Font fontTieuDe = new Font("Arial", Font.BOLD | Font.ITALIC, 50);
 		tieuDe.setFont(fontTieuDe);
-
+		
 		headerPanel.add(lblImg);
 		headerPanel.add(tieuDe);
-
+		
 		/**
 		 * Tạo phần menu
 		 */
@@ -140,7 +140,7 @@ public class QuanLyTruongHoc extends JFrame implements ActionListener{
 
 		JPanel pnImg = new JPanel();
 		pnImg.setLayout(new BoxLayout(pnImg, BoxLayout.X_AXIS));
-		ImageIcon img1 = new ImageIcon("img\\ass.jpg");
+		ImageIcon img1 = new ImageIcon("img\\ab1.jpg");
 		JLabel lblImg1 = new JLabel(img1);
 
 		JPanel pnImg1 = new JPanel();
