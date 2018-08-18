@@ -31,6 +31,7 @@ public class QuanLyTruongHoc extends JFrame implements ActionListener{
 	TimKiemLopHoc timKiemLopHoc;
 	TimKiemMonHoc timKiemMonHoc;
 	TimKiemDiem timKiemDiem;
+	
 	public QuanLyTruongHoc() {
 		super("Quản lý trường học");
 		quanLyLopHoc = new QuanLyLopHoc();
@@ -265,6 +266,10 @@ public class QuanLyTruongHoc extends JFrame implements ActionListener{
 	public static void main(String[] args) {
 		QuanLyTruongHoc qlth = new QuanLyTruongHoc();
 		qlth.display();
+		int i = 1;
+		while (i < 20) { 
+			System.out.println("helo"); i=i+2;
+		}
 	}
 	
 	@Override
