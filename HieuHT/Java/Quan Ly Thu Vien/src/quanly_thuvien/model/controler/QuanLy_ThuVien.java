@@ -893,7 +893,7 @@ public class QuanLy_ThuVien extends JFrame implements ActionListener {
 		nhaXuatBan1 = new JComboBox<>();
 		nhaXuatBan1.setPreferredSize(new Dimension(170, 20));
 		/**
-		 * Lấy dữ liệu Thành Phố từ Database.
+		 * Lấy dữ liệu Nhà Xuất Bản từ Database.
 		 */
 		list3 = banDoc.getBaoCaoNhaXuatBan();
 		for (int i = 0; i < list3.size(); i++) {
@@ -1157,7 +1157,7 @@ public class QuanLy_ThuVien extends JFrame implements ActionListener {
 		}
 
 		/**
-		 * Xóa sanh sách bạn đọc.
+		 * Xóa danh sách bạn đọc.
 		 */
 		if (e.getSource() == buton2) {
 			QuanLy_BanDoc quanLyBanDoc = new QuanLy_BanDoc();
@@ -1181,6 +1181,7 @@ public class QuanLy_ThuVien extends JFrame implements ActionListener {
 					DiaChi.setText("");
 					DienThoai.setText("");
 					Email.setText("");
+					tenThanhVien.requestFocus();
 				} else if (ret == JOptionPane.NO_OPTION) {
 
 				}
