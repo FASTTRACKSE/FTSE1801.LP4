@@ -19,9 +19,9 @@
 		<item value="true" key="linkWithEditor"/>
 	</section>
 	<section name="DialogBounds_GenerateConstructorUsingFieldsSelectionDialog">
-		<item value="678" key="DIALOG_WIDTH"/>
-		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
-		<item value="867" key="DIALOG_HEIGHT"/>
+		<item value="520" key="DIALOG_WIDTH"/>
+		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
+		<item value="677" key="DIALOG_HEIGHT"/>
 		<item value="630" key="DIALOG_X_ORIGIN"/>
 		<item value="9" key="DIALOG_Y_ORIGIN"/>
 	</section>
@@ -43,6 +43,13 @@
 		<item value="400" key="org.eclipse.jdt.internal.ui.text.JavaOutlineInformationControlDIALOG_HEIGHT"/>
 		<item value="false" key="GoIntoTopLevelTypeAction.isChecked"/>
 		<item value="false" key="org.eclipse.jdt.internal.ui.text.JavaOutlineInformationControlDIALOG_USE_PERSISTED_LOCATION"/>
+	</section>
+	<section name="org.eclipse.jdt.internal.ui.wizards.buildpaths.NewVariableEntryDialog">
+		<item value="577" key="DIALOG_WIDTH"/>
+		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
+		<item value="397" key="DIALOG_HEIGHT"/>
+		<item value="78" key="DIALOG_X_ORIGIN"/>
+		<item value="13" key="DIALOG_Y_ORIGIN"/>
 	</section>
 	<section name="RenameInformationPopup">
 	</section>
@@ -83,9 +90,9 @@
 		<item value="true" key="org.eclipse.jdt.ui.typecomment.deprecated"/>
 	</section>
 	<section name="DialogBounds_GetterSetterTreeSelectionDialog">
-		<item value="678" key="DIALOG_WIDTH"/>
-		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
-		<item value="887" key="DIALOG_HEIGHT"/>
+		<item value="529" key="DIALOG_WIDTH"/>
+		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
+		<item value="695" key="DIALOG_HEIGHT"/>
 		<item value="630" key="DIALOG_X_ORIGIN"/>
 		<item value="9" key="DIALOG_Y_ORIGIN"/>
 	</section>
@@ -114,7 +121,7 @@
 		<item value="false" key="FinalModifier"/>
 	</section>
 	<section name="ClasspathContainerSelectionPage">
-		<item value="0" key="index"/>
+		<item value="7" key="index"/>
 	</section>
 	<section name="quick_assist_proposal_size">
 	</section>
@@ -122,7 +129,7 @@
 		<item value="false" key="create_package_info_java"/>
 	</section>
 	<section name="BuildPathsPropertyPage">
-		<item value="2" key="pageIndex"/>
+		<item value="3" key="pageIndex"/>
 	</section>
 	<section name="JavaSearchPage">
 		<item value="1" key="HISTORY_SIZE"/>

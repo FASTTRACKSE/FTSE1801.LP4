@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="javax.swing.ButtonGroup"/>
-<fullyQualifiedTypeName name="javax.swing.JComboBox"/>
-<fullyQualifiedTypeName name="javax.swing.JList"/>
-<fullyQualifiedTypeName name="javax.swing.JFrame"/>
-<fullyQualifiedTypeName name="javax.swing.JTable"/>
 <fullyQualifiedTypeName name="javax.swing.JComponent"/>
 <fullyQualifiedTypeName name="java.awt.Insets"/>
 <fullyQualifiedTypeName name="QuanlySV_model.SinhVienDao"/>
@@ -60,4 +55,9 @@
 <fullyQualifiedTypeName name="java.awt.Container"/>
 <fullyQualifiedTypeName name="quanlytruonghoc.model.DiemDao"/>
 <fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="java.io.PrintWriter"/>
+<fullyQualifiedTypeName name="model.bo.UserBo"/>
+<fullyQualifiedTypeName name="model.dao.UserDao"/>
+<fullyQualifiedTypeName name="model.entity.User"/>
 </qualifiedTypeNameHistroy>
